@@ -1,0 +1,2683 @@
+loaderData
+========================================
+actionData
+========================================
+errors
+========================================
+root
+========================================
+routes/share.$shareId.($action)
+========================================
+sharedConversationId
+========================================
+6ab2b62a-0f6c-83ea-8b10-6a7cbb249df1
+========================================
+serverResponse
+========================================
+moderationMode
+========================================
+meta
+========================================
+shareReceivePerformance
+========================================
+loaderDurationMs
+========================================
+apiStartMs
+========================================
+apiDurationMs
+========================================
+pageTitle
+========================================
+Create Feature List
+========================================
+ogTitle
+========================================
+Check out this chat
+========================================
+ogDescription
+========================================
+Here's a chat someone thought you'd want to see.
+========================================
+ogImage
+========================================
+isBetterMetatagsEnabled
+========================================
+hasStoredOgCopy
+========================================
+hasConversationShareOgImageTemplate
+========================================
+hasImagegenConversationOgImageVariant
+========================================
+ogImageQueryParam
+========================================
+xMetadataPolicy
+========================================
+complete_x_card_v1
+========================================
+url
+========================================
+https://cdn.openai.com/chatgpt/share-og.png
+========================================
+width
+========================================
+height
+========================================
+alt
+========================================
+Abstract art featuring a striking contrast of orange gradients on a blue canvas, overlaid with the white ChatGPT logo.
+========================================
+secureUrl
+========================================
+type
+========================================
+data
+========================================
+title
+========================================
+create_time
+========================================
+update_time
+========================================
+moderation_results
+========================================
+conversation_id
+========================================
+is_archived
+========================================
+safe_urls
+========================================
+blocked_urls
+========================================
+default_model_slug
+========================================
+auto
+========================================
+disabled_tool_ids
+========================================
+is_temporary_chat
+========================================
+is_do_not_remember
+========================================
+memory_scope
+========================================
+global_enabled
+========================================
+context_scopes
+========================================
+sugar_item_visible
+========================================
+is_study_mode
+========================================
+mapping
+========================================
+current_node
+========================================
+5e5ce8d2-8946-4613-a2c3-93ff8a3a6f0a
+========================================
+og_title
+========================================
+og_description
+========================================
+is_public
+========================================
+linear_conversation
+========================================
+has_user_editable_context
+========================================
+highlighted_message_id
+========================================
+continue_conversation_url
+========================================
+https://chatgpt.com/share/6ab2b62a-0f6c-83ea-8b10-6a7cbb249df1/continue
+========================================
+model
+========================================
+moderation_state
+========================================
+is_indexable
+========================================
+is_better_metatags_enabled
+========================================
+backing_conversation_id
+========================================
+6ab2b5c5-06e8-83ea-a034-2acf811a6552
+========================================
+og_image_variant
+========================================
+control
+========================================
+x_metadata_policy
+========================================
+is_potion_share
+========================================
+has_been_moderated
+========================================
+has_been_blocked
+========================================
+has_been_accepted
+========================================
+has_been_auto_blocked
+========================================
+has_been_auto_moderated
+========================================
+slug
+========================================
+gpt-5-6
+========================================
+max_tokens
+========================================
+GPT-5.6 Luna
+========================================
+description
+========================================
+Our latest and most advanced model
+========================================
+tags
+========================================
+history_off_approved
+========================================
+id
+========================================
+message
+========================================
+parent
+========================================
+d8cca1bb-fa7f-42c5-b5b8-5d78466d29e0
+========================================
+children
+========================================
+author
+========================================
+content
+========================================
+status
+========================================
+finished_successfully
+========================================
+end_turn
+========================================
+weight
+========================================
+metadata
+========================================
+recipient
+========================================
+all
+========================================
+channel
+========================================
+final
+========================================
+finish_details
+========================================
+is_complete
+========================================
+content_references
+========================================
+search_result_groups
+========================================
+story_events
+========================================
+citations
+========================================
+resolved_model_slug
+========================================
+cot_version
+========================================
+v5
+========================================
+conversation_followup_suggestions_eligible
+========================================
+request_id
+========================================
+058b07ce-6b11-4d11-8d4f-7b596bff353b
+========================================
+message_type
+========================================
+next
+========================================
+turn_exchange_id
+========================================
+ce987e6f-8f76-4cd8-bcc9-ef123a32f3ea
+========================================
+working_turn_id
+========================================
+model_slug
+========================================
+can_save
+========================================
+parent_id
+========================================
+turn_id
+========================================
+d2c60a66-0a22-412c-95da-e2ff83b17815
+========================================
+shared_conversation_id
+========================================
+https://github.com/mungus451/Stellar-Dominion-Game
+========================================
+https://github.com/mungus451/Stellar-Dominion-Game?utm_source=chatgpt.com
+========================================
+search_result_group
+========================================
+domain
+========================================
+github.com
+========================================
+entries
+========================================
+search_result
+========================================
+https://github.com/rspeer/dominiate?utm_source=chatgpt.com
+========================================
+GitHub - rspeer/dominiate: A simulator for Dominion card game strategies · GitHub
+========================================
+snippet
+========================================
+basicAI.coffee  | basicAI.coffee  |    | card_list.txt  | card_list.txt  |    | cards.coffee  | cards.coffee  |    | compileStrategies.coffee  | compileStrategies.coffee  |    | gameState.coffee  | ga...
+========================================
+ref_id
+========================================
+pub_date
+========================================
+attribution
+========================================
+turn_index
+========================================
+ref_type
+========================================
+search
+========================================
+ref_index
+========================================
+https://github.com/cypressf/dominion/blob/master/cards.json?utm_source=chatgpt.com
+========================================
+dominion/cards.json at master · cypressf/dominion · GitHub
+========================================
+CARDS.JSON  Copy path  [Input: Go to file]  Blame More file actions  Blame More file actions  Copy path  Top  FILE METADATA AND CONTROLS  * Code  * Blame  3369 lines (3369 loc) · 96.4 KB   {  "Prospe...
+========================================
+https://github.com/stellar/stellar-docs/blob/main/README.md?utm_source=chatgpt.com
+========================================
+stellar-docs/README.md at main · stellar/stellar-docs · GitHub
+========================================
+README.MD  Copy path  [Input: Go to file]  Blame More file actions  Blame More file actions  LATEST COMMIT    HISTORY  History  main  BREADCRUMBS  1. stellar-docs  /  README.MD  Copy path  Top  FILE...
+========================================
+https://github.com/the-gigi/dominion?utm_source=chatgpt.com
+========================================
+GitHub - the-gigi/dominion: The Dominion board game in Python · GitHub
+========================================
+the-gigi / dominion Public  * Notifications You must be signed in to change notification settings * Fork 0 * Star  * Code * Issues 35 * Pull requests 0 * Actions * Projects * Security and quality 0 *...
+========================================
+https://github.com/stellar/ecosystem-resources/blob/main/building-with-ai/README.md?utm_source=chatgpt.com
+========================================
+ecosystem-resources/building-with-ai/README.md at main · stellar/ecosystem-resources · GitHub
+========================================
+RESOURCES  Stellar-native AI tools:  * Raven — Stellar MCP Server for AI Agents * llms.txt — Machine-Readable Stellar Docs * Stellar Skills Marketplace * Stellar Dev Skill * LumenLoop Skills * stellar...
+========================================
+https://github.com/scummos/dominion?utm_source=chatgpt.com
+========================================
+GitHub - scummos/dominion: A program that plays dominion, guided by very simple instructions in a custom domain-specific language · GitHub
+========================================
+scummos / dominion Public  * Notifications You must be signed in to change notification settings * Fork 0 * Star  * Code * Issues 0 * Pull requests 0 * Actions  A program which plays Dominion. Start...
+========================================
+https://github.com/cypressf/dominion?utm_source=chatgpt.com
+========================================
+GitHub - cypressf/dominion: Randomizer and ranking app for the Dominion card game · GitHub
+========================================
+cypressf / dominion Public  * Notifications You must be signed in to change notification settings * Fork 6 * Star  * Code * Issues 12 * Pull requests 0 * Actions * Projects * Wiki * Security and qual...
+========================================
+https://github.com/TDeVries/Dominion?utm_source=chatgpt.com
+========================================
+GitHub - TDeVries/Dominion: Game engine for the board game Dominion (base set v1). WIP · GitHub
+========================================
+TDeVries / Dominion Public  * Notifications You must be signed in to change notification settings * Fork 2 * Star  * Code * Issues 0 * Pull requests 0 * Actions * Projects * Security and quality 0 *...
+========================================
+https://github.com/sgraaf/dominion-setup?utm_source=chatgpt.com
+========================================
+GitHub - sgraaf/dominion-setup: Python library and CLI tool to set up a game of Dominion, the classic deck-building game · GitHub
+========================================
+DOMINION-SETUP  dominion-setup is a Python library and CLI tool to set up a game of Dominion, the classic deck-building game.  FEATURES  * Complete card database — ships with JSON data for every Domin...
+========================================
+https://github.com/stellar/stellar-docs?utm_source=chatgpt.com
+========================================
+GitHub - stellar/stellar-docs: Documentation for Stellar · GitHub
+========================================
+STELLAR DOCUMENTATION AND API REFERENCE 🌌  Welcome to the official home repository for Documentation for the Stellar network.  TABLE OF CONTENTS  * Contributing * Quick Start * Prerequisites * Develop...
+========================================
+https://github.com/stellar/ecosystem-resources?utm_source=chatgpt.com
+========================================
+GitHub - stellar/ecosystem-resources: Resources, content, tutorials, and developer activations available to the community for in-person events and hackathons. · GitHub
+========================================
+STELLAR ECOSYSTEM RESOURCES  Resources, content, tutorials, and developer activations available to the community for in-person events and hackathons.  If you are interested in running a training, wor...
+========================================
+followup_a
+========================================
+matched_text
+========================================
+including the exact source file/API/page for each feature
+========================================
+start_idx
+========================================
+end_idx
+========================================
+prompt_text
+========================================
+Include the exact source file/API/page for each feature
+========================================
+separating every feature into **Implemented / Partial / Planned / Missing**
+========================================
+Separate every feature into Implemented / Partial / Planned / Missing
+========================================
+turn this into a **master 500–1,000 feature checklist**
+========================================
+Turn this into a master 500–1,000 feature checklist
+========================================
+ 
+========================================
+prefix
+========================================
+refs
+========================================
+
+========================================
+sources_footnote
+========================================
+sources
+========================================
+has_images
+========================================
+GitHub - mungus451/Stellar-Dominion-Game: Stellar Dominion is a persistent, turn-based multiplayer strategy game built with PHP and MySQL, influenced by OpenThrone and DarkThrone Reborn, reimagining DarkThrone by Lazarus Software in a sci‑fi setting. It combines resource management, tactical combat, and alliances with a 10‑minute turn cycle for a modern browser strategy experience. · GitHub
+========================================
+GitHub
+========================================
+citeturn0search4
+========================================
+([GitHub](https://github.com/mungus451/Stellar-Dominion-Game?utm_source=chatgpt.com))
+========================================
+grouped_webpages
+========================================
+items
+========================================
+fallback_items
+========================================
+done
+========================================
+error
+========================================
+style
+========================================
+attribution_segments
+========================================
+supporting_websites
+========================================
+hue
+========================================
+attributions
+========================================
+urlArkansasIo/stellar-dominion3.5https://github.com/ArkansasIo/stellar-dominion3.5
+========================================
+[ArkansasIo/stellar-dominion3.5](https://github.com/ArkansasIo/stellar-dominion3.5?utm_source=chatgpt.com)
+========================================
+ArkansasIo/stellar-dominion3.5
+========================================
+item
+========================================
+layout
+========================================
+logo
+========================================
+https://github.com/ArkansasIo/stellar-dominion3.5?utm_source=chatgpt.com
+========================================
+stop
+========================================
+stop_tokens
+========================================
+content_type
+========================================
+text
+========================================
+parts
+========================================
+I inspected the current `main` branch of urlArkansasIo/stellar-dominion3.5https://github.com/ArkansasIo/stellar-dominion3.5. The repository describes itself as a **TypeScript browser-based persistent MMO/4X strategy game** combining OGame-style resource management, Stellaris-style empire systems, fleet combat, RPG progression, and social systems. citeturn0search4
+
+Below is the consolidated **feature inventory I can identify from the repository's documentation, source structure, configuration, and game-logic files**.
+
+# Stellar Dominion 3.5 — Complete Feature List
+
+## 1. Core Game
+
+- Persistent multiplayer galaxy
+- 4X strategy gameplay
+- MMO architecture
+- Real-time game loop
+- Resource production
+- Construction
+- Research
+- Exploration
+- Colonization
+- Expansion
+- Diplomacy
+- Espionage
+- Fleet management
+- Fleet combat
+- Planetary management
+- Population management
+- Civilization progression
+- Missions
+- Campaigns
+- Events
+- Achievements
+- Crafting
+- Ship fitting
+- Technology trees
+- Alliances
+- PvE
+- PvP
+- AI-controlled entities
+- Persistent player progression
+
+---
+
+# 2. Galaxy / Universe
+
+- Procedurally generated universe
+- Galaxy map
+- Star systems
+- Sectors
+- Regions
+- Coordinates
+- Celestial objects
+- Stars
+- Planets
+- Moons
+- Asteroid fields
+- Debris fields
+- Unclaimed systems
+- Claimed systems
+- Player-controlled systems
+- Dynamic exploration
+- Scanning
+- Planet discovery
+- Celestial-object ownership
+- Planet takeover
+- Planet trading
+- Universe/realm system
+- Realm bonuses
+- Realm restrictions
+- System-distance mechanics
+- Capital distance scaling
+
+The repository has a dedicated Universe System as well as a Celestial Body System covering discovery, ownership, combat, and player-driven trading. citeturn0search4
+
+---
+
+# 3. Planet System
+
+### Planet management
+
+- Planet discovery
+- Planet claiming
+- Planet colonization
+- Planet occupation
+- Planet takeover
+- Planet ownership
+- Planet trading
+- Planet development
+- Planet resources
+- Planet population
+- Planet buildings
+- Planet defenses
+- Planet production
+- Planet management
+- Planet command
+- Planet detail pages
+- Planet dossiers
+- Planet vault
+- Planet statistics
+
+### Planet types
+
+The code/configuration contains numerous planetary classifications, including:
+
+- Terrestrial
+- Super-Earth
+- Mini-Neptune
+- Gas Giant
+- Ice Giant
+- Lava
+- Desert
+- Ocean
+- Paradise
+- Dead
+- Tidally locked
+- Toxic
+- Irradiated
+- High-gravity
+- Low-gravity
+- Paradisial
+- Hellish
+- Sentient
+
+### Planet characteristics
+
+- Atmosphere
+- Atmosphere density
+- Gravity
+- Climate
+- Resources
+- Mineral richness
+- Crystal richness
+- Deuterium richness
+- Seismic activity
+- Development
+- Population
+- Colonization suitability
+
+---
+
+# 4. Colony System
+
+- Colony establishment
+- Colony management
+- Colony development
+- District system
+- Colony population
+- Colony production
+- Colony infrastructure
+- Colony specialization
+- Colony expansion
+- Colony occupation
+- Colony ownership
+
+The repository has a dedicated Colony System and District System. citeturn0search4
+
+---
+
+# 5. Resources
+
+The game contains a resource-management layer supporting:
+
+- Metal
+- Crystal
+- Deuterium
+- Energy
+- Research points
+- Population
+- Resource production
+- Resource consumption
+- Resource storage
+- Resource generation
+- Resource costs
+- Production bonuses
+- Resource multipliers
+- Resource transfer
+- Resource trading
+- Resource protection
+- Planet resource production
+- Fleet resource requirements
+
+There is also a server-side resource manager/game loop responsible for updating resources.
+
+---
+
+# 6. Buildings / Facilities
+
+- Building construction
+- Building upgrades
+- Construction queues
+- Building prerequisites
+- Production buildings
+- Storage buildings
+- Research buildings
+- Shipyard
+- Defense facilities
+- Planetary infrastructure
+- Starbase infrastructure
+- Moon-base infrastructure
+- Megastructures
+- Facility bonuses
+- Facility levels
+- Facility dependencies
+
+---
+
+# 7. Shipyard
+
+- Ship construction
+- Construction queues
+- Ship blueprints
+- Ship classes
+- Ship tiers
+- Ship upgrades
+- Ship fitting
+- Ship modules
+- Ship statistics
+- Ship production
+- Fleet assembly
+
+---
+
+# 8. Fleet System
+
+The documented fleet system includes **13 tiers and 90+ ship classes**.
+
+### Fleet functionality
+
+- Fleet creation
+- Fleet composition
+- Fleet movement
+- Fleet orders
+- Fleet missions
+- Fleet recall
+- Fleet deployment
+- Fleet combat
+- Fleet-vs-fleet combat
+- Fleet strength
+- Fleet power
+- Fleet speed
+- Fleet range
+- Fleet sensor range
+- Fleet detection
+- Fleet evasion
+- Fleet critical hits
+- Fleet logistics
+- Fleet cargo
+- Fleet formations
+- Fleet coordination
+
+### Fleet missions
+
+- Attack
+- Defend
+- Patrol
+- Explore
+- Scout
+- Transport
+- Colonize
+- Occupy
+- Recall
+- Other strategic missions
+
+---
+
+# 9. Ship Classes
+
+The repository supports a large ship-class hierarchy with **90+ classes** across 13 tiers.
+
+The framework supports categories such as:
+
+- Small combat ships
+- Fighters
+- Corvettes
+- Frigates
+- Destroyers
+- Cruisers
+- Battlecruisers
+- Battleships
+- Carriers
+- Capital ships
+- Support ships
+- Logistics ships
+- Exploration ships
+- Specialized vessels
+- Advanced/endgame vessels
+
+---
+
+# 10. Ship Statistics
+
+The Ship Statistics System includes:
+
+### Defensive statistics
+
+- Shields
+- Armor
+- Hull
+- Shield regeneration
+- Armor strength
+- Hull strength
+- Damage resistance
+- Defensive bonuses
+
+### Offensive statistics
+
+- Weapon damage
+- Attack
+- Accuracy
+- Critical-hit chance
+- Critical damage
+- Weapon range
+- Damage types
+
+### Mobility
+
+- Speed
+- Warp speed
+- Maneuverability
+- Evasion
+- Movement capability
+
+### Detection
+
+- Sensor range
+- Detection
+- Stealth
+- Counter-detection
+
+---
+
+# 11. Six-Type Armor System
+
+The repository has a dedicated armor system supporting six armor categories.
+
+This feeds into:
+
+- Armor protection
+- Damage mitigation
+- Ship survivability
+- Weapon/armor interactions
+- Ship fitting
+- Combat calculations
+
+---
+
+# 12. Ship Fitting System
+
+This is one of the larger systems.
+
+The repository documents an **EVE Online-inspired fitting system with 90+ modules**.
+
+Modules include:
+
+### Weapons
+
+- Energy weapons
+- Projectile weapons
+- Missile systems
+- Specialized weapons
+
+### Defense
+
+- Shield modules
+- Armor modules
+- Hull modules
+- Defensive enhancements
+
+### Propulsion
+
+- Engines
+- Speed modules
+- Warp systems
+- Maneuverability modules
+
+### Electronic warfare
+
+- Jamming
+- Targeting disruption
+- Electronic warfare
+- Sensor manipulation
+- Stealth systems
+
+### Engineering
+
+- Power systems
+- Capacitor/energy systems
+- Reactor systems
+- Engineering enhancements
+
+### Module mechanics
+
+- Module slots
+- Module classes
+- Module types
+- Fitting requirements
+- Module bonuses
+- Ship customization
+- Module combinations
+- Specialized builds
+
+The repository explicitly documents the 90+ module system. citeturn0search4
+
+---
+
+# 13. Combat System
+
+The combat engine includes:
+
+- PvP combat
+- PvE combat
+- Fleet-vs-fleet combat
+- Multi-layer damage
+- Shield damage
+- Armor damage
+- Hull damage
+- Weapon calculations
+- Accuracy
+- Evasion
+- Critical hits
+- Damage mitigation
+- Combat effects
+- Battle phases
+- Combat logs
+- Battle reports
+- Loot
+- Debris
+- Combat rewards
+- AI enemies
+- Pirate encounters
+- Scaling enemy strength
+
+The documented combat flow includes enemies spawning in unclaimed systems, with strength scaling based on distance from the capital and loot generated from defeated fleets. citeturn0search4
+
+---
+
+# 14. Orbital Defense
+
+Dedicated orbital-defense infrastructure includes:
+
+- Planetary defenses
+- Rocket launchers
+- Laser turrets
+- Gauss cannons
+- Ion cannons
+- Plasma cannons
+- Missile batteries
+- Shield domes
+- Defense configuration
+- Defensive upgrades
+- Planet defense state
+
+---
+
+# 15. Ground / Army System
+
+The project also has a civilization army layer.
+
+- Army management
+- Army units
+- Workforce
+- Military units
+- Ground combat
+- Battle profiles
+- PvP army combat
+- Combat effects
+- Army routes/API
+- Unit statistics
+- Army deployment
+- Military progression
+
+---
+
+# 16. Research System
+
+The research system provides:
+
+- Technology tree
+- Research projects
+- Research costs
+- Research prerequisites
+- Technology dependencies
+- Research bonuses
+- Production technologies
+- Building unlocks
+- Ship unlocks
+- Module unlocks
+- Military technologies
+- Economic technologies
+- Advanced technologies
+- Research progression
+
+Examples documented in the repository include research unlocking buildings and ships and providing production bonuses. citeturn0search4
+
+---
+
+# 17. Branching Technology Trees
+
+There is also a **World of Warships-style branching technology tree**.
+
+Features:
+
+- Branching progression
+- Race-specific technology
+- Fork points
+- Side branches
+- Cross-dependencies
+- Technology prerequisites
+- Ship progression
+- Technology unlocks
+- Specialized paths
+- Alternative development routes
+
+---
+
+# 18. Civilization System
+
+The project has a substantial civilization layer.
+
+- Civilization development
+- Civilization subsystems
+- Workforce management
+- Governance
+- Civilization bonuses
+- Subsystem upgrades
+- Population
+- Infrastructure
+- Economy
+- Military
+- Research
+- Civilization progression
+
+The server exposes dedicated civilization-system APIs for subsystems, workforce, and governance.
+
+---
+
+# 19. Population System
+
+- Population types
+- Population growth
+- Population management
+- Workforce
+- Population allocation
+- Happiness
+- Population effects
+- Planet population
+- Colony population
+- Workforce bonuses
+- Production effects
+- Civilization development
+
+A dedicated Population System includes population types and a Happiness System. citeturn0search4
+
+---
+
+# 20. Happiness
+
+- Planet happiness
+- Population happiness
+- Happiness modifiers
+- Happiness effects
+- Production effects
+- Civilization effects
+- Population-management interactions
+
+---
+
+# 21. Diplomacy
+
+- Diplomatic relations
+- Relation levels
+- Treaties
+- Diplomatic status
+- Alliances
+- Agreements
+- Diplomatic effects
+- Inter-player relations
+- Strategic cooperation
+- Diplomatic progression
+
+The repository has a dedicated Diplomacy System and Treaty System. citeturn0search4
+
+---
+
+# 22. Alliances
+
+- Alliance creation
+- Alliance membership
+- Alliance management
+- Alliance roles
+- Alliance resources
+- Alliance coordination
+- Alliance warfare
+- Alliance objectives
+- Alliance events
+- Shared strategic operations
+- Alliance fleet coordination
+- Sector control
+
+---
+
+# 23. Espionage
+
+Dedicated espionage mechanics include:
+
+- Espionage missions
+- Intelligence
+- Counter-intelligence
+- Stealth
+- Cryptography
+- Signal theory
+- Signal jamming
+- Reconnaissance
+- Spy technologies
+- Espionage technologies
+- Counter-espionage
+- Information gathering
+
+The repository's espionage technology examples include Cryptography, Stealth Systems, and Signal Theory. citeturn0search4
+
+---
+
+# 24. Crafting
+
+The Crafting System includes:
+
+- Blueprint system
+- Blueprint types
+- Craftable items
+- Blueprint uses
+- Tradeable blueprints
+- Copyable blueprints
+- Durability
+- Crafting requirements
+- Production
+- Advanced equipment creation
+- Technology-dependent crafting
+
+---
+
+# 25. Progression
+
+One of the largest RPG-style systems is the progression framework.
+
+Documented configuration includes:
+
+- **999 levels**
+- **99 tiers**
+- Experience progression
+- Level requirements
+- Tier progression
+- Entity progression
+- Unlocks
+- Stat increases
+- Skill progression
+- Achievement progression
+- High-level/endgame progression
+
+The repository explicitly describes the framework as a **999-level / 99-tier progression system**. citeturn0search4
+
+---
+
+# 26. Skills
+
+The project includes:
+
+- Skills
+- 90-level skill system
+- Skill data
+- Skill progression
+- Skill unlocks
+- Skill effects
+- Character/commander progression
+- Specialized abilities
+
+---
+
+# 27. Commander / RPG System
+
+The Commander layer includes:
+
+- Commander identity
+- Commander progression
+- Commander roles
+- Commander bonuses
+- Commander specializations
+- Military commanders
+- Economic commanders
+- Fleet commanders
+- Research-oriented commanders
+- Commander abilities
+
+Documented commander roles include:
+
+- Admiral
+- Industrialist
+- Fleet-oriented specializations
+- Tactician
+- Corsair
+- Logistician
+- Geologist
+
+---
+
+# 28. Missions
+
+Dedicated Mission & Campaign System:
+
+- Main missions
+- Campaigns
+- Branching missions
+- Narrative progression
+- Tutorial missions
+- Daily missions
+- Weekly missions
+- Side content
+- Mission objectives
+- Mission rewards
+- Multi-stage missions
+- Unlockable campaign phases
+
+The repository describes the campaign system as branching, with daily/weekly side content and tutorial flows. citeturn0search4
+
+---
+
+# 29. Events
+
+The Event System handles:
+
+- Timed events
+- Recurring events
+- Special events
+- Event conditions
+- Event objectives
+- Event rewards
+- Fleet-power requirements
+- Alliance requirements
+- Location requirements
+- Multi-phase events
+- Seasonal/special content
+
+---
+
+# 30. Achievements
+
+- Achievement definitions
+- Achievement tracking
+- Achievement conditions
+- Achievement rewards
+- Progress tracking
+- Milestones
+- Achievement configuration
+- Player achievement records
+
+There is a dedicated `achievementsSystem` and achievement configuration layer.
+
+---
+
+# 31. Economy
+
+- Resource production
+- Resource consumption
+- Storage
+- Resource transfer
+- Trading
+- Planet economies
+- Colony economies
+- Production modifiers
+- Economic technologies
+- Population-driven production
+- Civilization economic bonuses
+- Player economy
+
+---
+
+# 32. Marketplace / Trading
+
+The celestial system specifically supports:
+
+- Planet trading
+- Moon trading
+- Player-driven marketplace
+- Resource transactions
+- Ownership transfer
+- Tradeable assets
+
+---
+
+# 33. Exploration
+
+- Galaxy exploration
+- System discovery
+- Planet discovery
+- Scanning
+- Reconnaissance
+- Exploration missions
+- Unclaimed systems
+- Asteroid fields
+- Anomalies/events
+- Exploration rewards
+- Distant-system mechanics
+
+---
+
+# 34. AI
+
+The server architecture contains an AI manager.
+
+AI functionality includes:
+
+- AI entities
+- AI updates
+- Enemy fleets
+- Pirate fleets
+- Dynamic encounters
+- Enemy scaling
+- AI-controlled systems
+- PvE encounters
+- Event-driven AI
+- Strategic AI integration
+
+---
+
+# 35. Debris
+
+- Debris fields
+- Fleet destruction debris
+- Resource recovery
+- Debris generation
+- Salvage
+- Configurable debris rates
+
+---
+
+# 36. Starbases
+
+The project has expanded infrastructure beyond planets:
+
+- Starbases
+- Starbase construction
+- Starbase modules
+- Starbase defenses
+- Starbase customization
+- Starbase infrastructure
+- Starbase fleet support
+- Starbase module slots
+
+---
+
+# 37. Moon Bases
+
+- Moon discovery
+- Moon colonization
+- Moon bases
+- Moon infrastructure
+- Moon resources
+- Moon production
+- Moon research
+- Moon-specific progression
+- Moon defense
+- Moon management
+
+The repository's update material specifically references Moon Colonization and moon bases generating passive resources and unlocking unique research paths.
+
+---
+
+# 38. Megastructures
+
+- Megastructure construction
+- Strategic megastructures
+- Alliance-controlled megastructures
+- Sector objectives
+- Ancient Gateway-type structures
+- Endgame infrastructure
+- Special strategic bonuses
+- Exclusive access mechanics
+
+---
+
+# 39. Ancient / Special Structures
+
+The game includes infrastructure intended to support:
+
+- Ancient structures
+- Gateways
+- Special locations
+- Unique strategic objectives
+- Sector-control rewards
+- Endgame objectives
+
+---
+
+# 40. Live Game Route System
+
+A notable UI/system architecture feature is the **Live System Route**.
+
+Instead of treating navigation as isolated pages, gameplay hubs expose:
+
+- Current system
+- Next dependency
+- Connected gameplay system
+- Action path
+- Related gameplay loop
+- Cross-system navigation
+
+This links systems such as:
+
+**Planet → Production → Resources → Research → Shipyard → Fleet → Combat → Rewards → Expansion**
+
+---
+
+# 41. Dashboard / Command Center
+
+The frontend contains a command-center-style interface with:
+
+- Resource display
+- Empire information
+- Fleet information
+- Planet information
+- Navigation
+- Alerts
+- Events
+- Missions
+- Progression
+- System status
+- Interactive controls
+- Game views
+
+---
+
+# 42. 3D Browser Interface
+
+The repository contains a dedicated 3D view layer:
+
+- `BrowserStrategyScene`
+- `SceneLayer`
+- 3D scene configuration
+- Placeholder assets
+- 3D strategy scene
+- Celestial visualization
+- Galaxy visualization
+- Interactive scene layer
+
+This provides a path toward a browser-based 3D strategic visualization rather than a purely 2D interface.
+
+---
+
+# 43. UI Component Framework
+
+The frontend contains a large reusable UI component library including:
+
+- Buttons
+- Cards
+- Tables
+- Tabs
+- Dialogs
+- Drawers
+- Menus
+- Navigation
+- Tooltips
+- Progress bars
+- Sliders
+- Select controls
+- Checkboxes
+- Radio groups
+- Switches
+- Toast notifications
+- Alerts
+- Command interfaces
+- Pagination
+- Sidebars
+- Carousels
+- Calendars
+- Charts
+- Forms
+- Inputs
+- Context menus
+- Resizable panels
+- Loading/skeleton components
+
+---
+
+# 44. Authentication
+
+- User authentication
+- Login
+- Account handling
+- Authentication middleware
+- Authenticated API routes
+- Session/user state
+- Protected game systems
+
+---
+
+# 45. Administration
+
+- Admin account
+- Admin configuration
+- Admin setup
+- Admin controls
+- System settings
+- Game-speed settings
+- Production-rate settings
+- Research-speed settings
+- Server management
+- Game configuration
+- Administrative controls
+
+---
+
+# 46. API
+
+The project contains a substantial REST-style API layer.
+
+Examples include APIs for:
+
+- Authentication
+- Game state
+- Resources
+- Fleet
+- Planets
+- Planet occupation
+- Planet defenses
+- Planet vault
+- Civilization
+- Army
+- Research
+- Missions
+- Events
+- Administration
+- System settings
+- News
+- Game actions
+
+---
+
+# 47. Game Engine / Server Loop
+
+The server has a continuous game-processing architecture.
+
+The game loop handles systems such as:
+
+- Resource updates
+- Fleet updates
+- AI updates
+- Event updates
+- Player state
+- Universe state
+- Game actions
+- Periodic processing
+
+This creates the persistent-world foundation required for an MMO.
+
+---
+
+# 48. Game Speed / Turn Configuration
+
+The server configuration supports:
+
+- Turns per minute
+- Resource production rate
+- Research speed multiplier
+- Configurable game speed
+- Server-side balancing
+- Global gameplay modifiers
+
+---
+
+# 49. News System
+
+- Galactic news
+- Update announcements
+- War alerts
+- Event news
+- Strategic alerts
+- System notifications
+- Game-world news
+
+Examples in the repository include fleet movements, sector conflicts, alliance activity, and megastructure objectives.
+
+---
+
+# 50. Notifications / Feedback
+
+Frontend support includes:
+
+- Toasts
+- Alerts
+- Dialogs
+- Status indicators
+- Error messages
+- Loading states
+- Success messages
+- Progress feedback
+- System notifications
+
+---
+
+# 51. Save / Persistent State
+
+The architecture supports persistent game data for:
+
+- Players
+- Planets
+- Resources
+- Fleets
+- Research
+- Civilization
+- Alliances
+- Progression
+- Achievements
+- Events
+- Universe state
+
+---
+
+# 52. Database / Data Layer
+
+The repository contains:
+
+- Database models
+- Server routes
+- Configuration tables
+- Game state
+- Player state
+- Planet state
+- System settings
+- Persistent progression
+- API data structures
+- Shared types
+
+---
+
+# 53. Shared TypeScript Architecture
+
+The project uses shared models/types between client and server for:
+
+- Players
+- Planets
+- Fleets
+- Resources
+- API responses
+- Game state
+- Celestial objects
+- Progression
+- Configuration
+
+This reduces client/server data-model divergence.
+
+---
+
+# 54. Deployment / Infrastructure
+
+Repository support includes:
+
+- Docker
+- Replit
+- Railway
+- Firebase configuration
+- Dev containers
+- Environment configuration
+- Deployment guides
+- Production setup
+- Server configuration
+- Update system
+- Executable/build documentation
+- Hosting documentation
+
+---
+
+# 55. Automatic Update System
+
+The repository contains an update architecture for:
+
+**VS Code → Server Backend → Connected Frontend Clients**
+
+Features include:
+
+- Patch distribution
+- Client updates
+- Server updates
+- Update metadata
+- Version handling
+- Deployment synchronization
+
+---
+
+# 56. Documentation / Development Infrastructure
+
+The repository contains dedicated documentation for:
+
+- Architecture
+- Framework architecture
+- Game design
+- GDD
+- API routes
+- API implementation
+- Fleet system
+- Combat system
+- Research system
+- Diplomacy
+- Espionage
+- Population
+- Colony
+- Universe
+- Crafting
+- Ship fitting
+- Ship statistics
+- Orbital defense
+- Missions
+- Events
+- Progression
+- Deployment
+- Installation
+- Hosting
+- Troubleshooting
+- Administration
+- Developer workflow
+- UML
+- Roadmap
+- TODOs
+- Changelog
+- Validation
+
+---
+
+# 57. Existing OGame-Inspired Systems
+
+The repository also explicitly tracks OGame-style functionality, including:
+
+- Resource production
+- Building construction
+- Construction queues
+- Research
+- Shipyard
+- Fleet movement
+- Fleet missions
+- Flight times
+- Debris fields
+- Planet defenses
+- Colonization
+- Combat
+- Fleet management
+- Galaxy navigation
+
+---
+
+# 58. Stellaris-Inspired Systems
+
+The architecture expands beyond traditional OGame mechanics with:
+
+- Civilization development
+- Population
+- Happiness
+- Diplomacy
+- Technology branches
+- Government
+- Governance
+- Multiple planetary types
+- Exploration
+- Colonization
+- Strategic regions
+- Megastructures
+- Advanced progression
+- RPG commanders
+- 3D galaxy visualization
+
+---
+
+# 59. RPG Layer
+
+The project additionally has:
+
+- Levels
+- Tiers
+- Experience
+- Skills
+- Commander progression
+- Specializations
+- Achievements
+- Missions
+- Rewards
+- Unlocks
+- Equipment
+- Crafting
+- Ship fitting
+- Character-style progression
+
+---
+
+# 60. Overall Game Loop
+
+The systems combine into a larger loop:
+
+**Explore**
+
+→ Discover systems
+
+→ Scan planets
+
+→ Claim/colonize worlds
+
+→ Develop planets
+
+→ Produce resources
+
+→ Build infrastructure
+
+→ Research technology
+
+→ Construct ships
+
+→ Fit ships
+
+→ Create fleets
+
+→ Explore further
+
+→ Fight PvE/PvP enemies
+
+→ Capture/occupy worlds
+
+→ Expand territory
+
+→ Join alliances
+
+→ Conduct diplomacy
+
+→ Conduct espionage
+
+→ Complete missions/events
+
+→ Advance commander/civilization progression
+
+→ Build advanced infrastructure
+
+→ Compete for strategic regions and megastructures.
+
+---
+
+## High-level system map
+
+| Domain | Major systems |
+|---|---|
+| 🌌 Universe | Galaxy, sectors, systems, realms |
+| ⭐ Celestial | Stars, planets, moons, asteroids |
+| 🪐 Planets | Development, ownership, resources, defenses |
+| 🏙️ Colonies | Colonization, districts, development |
+| 👥 Population | Population, workforce, happiness |
+| 💰 Economy | Resources, production, storage, trade |
+| 🏗️ Construction | Buildings, facilities, queues |
+| 🔬 Research | Technology, branches, prerequisites |
+| 🚀 Fleet | Ships, fleets, missions, movement |
+| 🛠️ Fitting | 90+ modules, slots, customization |
+| ⚔️ Combat | PvP, PvE, shields, armor, hull |
+| 🛡️ Defense | Planetary/orbital defenses |
+| 🪖 Army | Ground units and military systems |
+| 🕵️ Espionage | Spies, intelligence, counter-intelligence |
+| 🤝 Diplomacy | Relations, treaties, alliances |
+| 🧑‍✈️ Commander | Roles, abilities, progression |
+| 📈 Progression | 999 levels / 99 tiers |
+| 🎯 Skills | 90-level skill progression |
+| 📜 Missions | Campaigns, daily/weekly missions |
+| 🎉 Events | Timed, recurring, special events |
+| 🏆 Achievements | Milestones and rewards |
+| 🔨 Crafting | Blueprints and item production |
+| 🛰️ Starbases | Infrastructure and modules |
+| 🌙 Moon Bases | Moon infrastructure and research |
+| 🏛️ Megastructures | Endgame strategic structures |
+| 🤖 AI | AI manager, pirates, PvE |
+| 📡 Exploration | Scanning and discovery |
+| 📰 News | Galactic news and alerts |
+| 🎮 UI | Command center + reusable components |
+| 🌐 3D | Browser strategy scene |
+| 🔐 Security | Authentication and protected APIs |
+| ⚙️ Admin | Settings and game configuration |
+| 🔄 Updates | Automated client/server update system |
+| 🗄️ Persistence | Player/world/game state |
+| 🚀 Deployment | Docker, Railway, Replit, Firebase |
+
+**Important distinction:** this is an inventory of systems/features represented in the repository; it should not be read as saying every documented feature is equally complete or production-ready. The repository itself contains `MISSING_FEATURES_FROM_STELLAR_DOMINION_3.5.md`, `TODO.md`, roadmap/status documents, and implementation summaries, so there is a meaningful difference between **implemented, partially implemented, documented/planned, and placeholder** functionality. citeturn0search4
+
+If you want the next step, I can turn this into a **master 500–1,000 feature checklist**, separating every feature into **Implemented / Partial / Planned / Missing**, including the exact source file/API/page for each feature.
+========================================
+role
+========================================
+assistant
+========================================
+real_author
+========================================
+tool:web
+========================================
+8397535a-5c26-4daf-85a1-753d113e9a06
+========================================
+reasoning_status
+========================================
+reasoning_ended
+========================================
+finished_duration_sec
+========================================
+reasoning_start_time
+========================================
+reasoning_end_time
+========================================
+reasoning_recap_type
+========================================
+collapse
+========================================
+hide_inline_actions
+========================================
+reasoning_recap
+========================================
+Worked for 24s
+========================================
+658b554c-9fb0-4f4f-a561-f76ab21bea71
+========================================
+inline_cot_expandable_content
+========================================
+is_reasoning
+========================================
+tool_summary_type
+========================================
+github
+========================================
+tool_icons
+========================================
+/images/ecosystem/apps/github/icon.png
+========================================
+source_message_ids
+========================================
+985f26e1-8fec-4ebc-ae0f-2ba22206a2bc
+========================================
+thoughts
+========================================
+source_analysis_msg_id
+========================================
+13196854-f472-46ef-a1b7-b163af1b4d8a
+========================================
+summary
+========================================
+Searching Repository Files for Feature-Relevant Names
+========================================
+chunks
+========================================
+finished
+========================================
+b0d2292d-bdb3-4ae1-966a-e00b4985fcf0
+========================================
+reasoning_title
+========================================
+is_visually_hidden_from_conversation
+========================================
+is_redacted
+========================================
+The output of this plugin was redacted.
+========================================
+tool
+========================================
+name
+========================================
+functions.exec
+========================================
+2efe4fdb-4e88-41c7-8edd-ab5e418fa39e
+========================================
+commentary
+========================================
+api_tool.call_tool
+========================================
+0fb03462-fcca-45ab-833f-19e0577dcbd6
+========================================
+b0f6fb5b-15df-43eb-a5b0-095af49df62d
+========================================
+75873e0d-1e73-40e5-bf45-39c40463c249
+========================================
+ebf41cf2-24b2-43be-9816-62739ca2986b
+========================================
+c476cf62-c1d5-47ec-a9e1-a89b7936d7ef
+========================================
+b6539169-c240-48d3-aaa2-bf2f8e317571
+========================================
+8495059e-30ec-4fef-8a39-021d612df5a7
+========================================
+d1a6d989-fa85-4a44-8e5b-913a2219c5ec
+========================================
+57746606-0096-4830-a4fa-d286b516d3e2
+========================================
+0f72a29b-9823-4fc3-b738-6d2b45a72e68
+========================================
+5777c460-813e-429e-a576-bdc4b5c13686
+========================================
+a2d1edce-f362-413d-8578-dbcffdc06104
+========================================
+b7fd869a-1f7a-4711-a002-2a308fa8e913
+========================================
+145bf6dc-8cdf-4700-b623-acd75ca62659
+========================================
+277b29fd-cea7-4c41-a1f2-a4b375205cba
+========================================
+ee28ba6c-c81d-4e4d-8891-6eee21f48427
+========================================
+c8a09d29-34ea-4d91-a70f-81c7a1efad25
+========================================
+46cee938-b077-4d8d-af28-015fd9051772
+========================================
+Searching Repository Files for Feature-Relevant Filenames
+========================================
+cb696030-1d2f-4d52-b959-c5739d77cdfa
+========================================
+029e31c5-d754-4fd8-9bd2-c4d0993f8886
+========================================
+bed36fac-4f2d-4daf-88e1-bfefe5c01987
+========================================
+c2f3dcd6-d2f6-401c-a21a-e02947878248
+========================================
+5e2db28b-a253-4dbb-a3d0-04aa44fd8d7c
+========================================
+cd6bf844-e4a8-425c-bf53-8c892a42b13d
+========================================
+83a39d78-5cef-4328-afd2-a54f0aa4c8c6
+========================================
+e3264544-dea6-4a2f-bf80-a026bd180024
+========================================
+fd4ce484-a467-4435-a99c-57f8788f3db0
+========================================
+87b114bd-2e24-499c-8055-823c1c014a86
+========================================
+b3f9d65a-d720-432a-8bdf-468f62e937ea
+========================================
+32f1c8c9-da8d-406e-88da-2b8e5d50b231
+========================================
+af179e73-4f38-4851-b926-3e14fe4f84f4
+========================================
+cc38ab6c-c20d-4e57-b811-9de775f960f0
+========================================
+c4ed2c5d-44e9-4859-b72b-c605f6d59c71
+========================================
+ee425b6d-1a6c-4bed-9fbc-b6218c6b2b4f
+========================================
+92dd74cb-83a0-4c50-bf3e-6d7c96f62bd9
+========================================
+d0142e23-2ece-4c66-9f3f-156ae93ef950
+========================================
+Searching Repository for Achievement-Related Files
+========================================
+0c6487e3-d9eb-41aa-97a6-997c3fd10503
+========================================
+8ef425a5-274e-4ea7-9510-2de5bc740778
+========================================
+eb0976c5-09c2-4a8a-bf90-85fb1b1b68da
+========================================
+9d7471a6-5b7b-4f09-9839-5e7d61c11fab
+========================================
+b2153733-5767-4051-8f47-e29531497f96
+========================================
+e1a90078-724a-46bb-a212-37d869c22495
+========================================
+055ebcb3-a209-46cf-ac17-92d2cfe5efa1
+========================================
+72af30a5-50df-4953-9307-36da574d05b3
+========================================
+0342e3b1-b129-44fc-832a-0e5c06cdbaca
+========================================
+ea5d50a9-ad8b-41ff-ada1-e2adfad3b74c
+========================================
+91da5005-fba0-45c4-9c48-c1f6fa10cd24
+========================================
+ee0d75c5-4772-4312-b08a-372b8b20ae13
+========================================
+cb389b7b-bf69-41da-afa0-d66af8022885
+========================================
+88d435ca-7aef-417c-9934-e2c78df87608
+========================================
+ad0b4b58-5f60-404a-99a7-c8329480d651
+========================================
+aa69467f-e2a7-4831-a440-d555c83c983c
+========================================
+de1baa63-72ba-49cf-92dc-ff137ac375a1
+========================================
+7a1bfd1e-0b37-4c50-b1fa-6d26191aa0a6
+========================================
+c9dad200-074c-4585-9aa4-1faa18d69203
+========================================
+68746398-fd42-4da9-b932-1a380738c049
+========================================
+0053cbcf-3cee-4222-9110-6e9a56252be6
+========================================
+e1b214b7-db8e-407c-9a79-24f2af3977c9
+========================================
+7a39b6ea-6c0b-4126-bdb1-35fe8ddf245b
+========================================
+3ef6c6bf-5a19-4e6b-bcb2-6f52f0b75629
+========================================
+2c6c84a7-6abc-4667-8906-691b32d5d1d4
+========================================
+4ec88e7f-1039-478f-9146-c2be8bb72cec
+========================================
+87d8df18-62d6-4010-8034-13a0f91857c5
+========================================
+71938166-c576-4818-8851-5b39d9b63199
+========================================
+19eb1d4a-512a-4306-aa32-a4692f7159f7
+========================================
+eec93aab-d6a2-401e-a212-5513b57f50a1
+========================================
+0b7c5ca4-fb34-4885-8460-cfbdb0c4a620
+========================================
+b0c1ba7f-8ba3-4f14-bc49-b31c37b0a845
+========================================
+b5d8eb15-6749-4ac7-b33d-ef43be4fab59
+========================================
+f55fe1be-c6a5-45b2-970c-c8d26fe80318
+========================================
+8effc862-7cd8-439e-8463-82cb50cd4f79
+========================================
+d2562a6b-71cf-4789-bb97-91481cedc5b4
+========================================
+Searching repository files for espionage-related features
+========================================
+2dc29a63-4126-4317-af5c-e89afbf36a15
+========================================
+878319a5-8e55-461a-ad67-f1b631658cf2
+========================================
+a8a634d5-80b3-48bd-a053-68686ce5b2e8
+========================================
+609dcb02-3bcd-4de3-b021-94bab0d91ccd
+========================================
+a3737336-addd-4bf4-b988-e8dddc3f277b
+========================================
+5ec5870b-08d1-46f3-86c2-83b9312c8b66
+========================================
+309d40b9-486c-4661-9600-45ac6b132a72
+========================================
+241bfc08-4d08-44ff-a62b-c3ad93945fab
+========================================
+819d0527-f723-4e10-a16a-ad24338d4a0f
+========================================
+59e97856-9714-40ff-9fad-b159dd3245dd
+========================================
+0bc24c82-4e8f-4e12-96bf-9fb4746c380e
+========================================
+ad657652-6243-477c-afcc-89ea813915c1
+========================================
+c79fd2e7-3f02-4ad0-aa93-146679ef71bd
+========================================
+cd566e13-5097-4412-a41e-e3f77b0065c9
+========================================
+34088d26-599d-4a96-9ed2-24d8c4487382
+========================================
+e83550d6-405a-4c30-965c-5da942bab281
+========================================
+5c21f22c-81b6-4687-92f6-1dcf3bfce920
+========================================
+1a28cf60-ef50-4ebb-b354-12bd23321dbf
+========================================
+1a0e5df9-f99f-485d-b5f1-2de77c5c324a
+========================================
+6b7e259a-897c-4329-bd6f-693cb0cef14b
+========================================
+57ae103c-8842-4540-8364-447888fa9304
+========================================
+1e55882a-1493-40b2-acb6-89bac8992936
+========================================
+541177e1-5988-45dc-b922-d498d38f8d49
+========================================
+0ad10d9f-2a76-472b-808d-2613ae467e96
+========================================
+a9ddfed3-7b5d-45ba-b34b-3302efd63694
+========================================
+775ed57a-511b-4d2a-8345-f2a46b781dff
+========================================
+e2b0938f-d6ff-46c8-a03b-97f48af31736
+========================================
+6d231623-d503-4956-b4c9-892a23697712
+========================================
+5b2e66b2-e36a-4226-803f-124a9412ff6c
+========================================
+6284ab6e-e27b-4a8a-9262-1e8ed7f24b6e
+========================================
+a58833cd-2ae0-4af5-8e56-684d34c906a7
+========================================
+2e4c797c-5cf2-4f77-b314-e4dfc98d4bde
+========================================
+761c4b31-9e63-4ee6-a613-d9979b853e7e
+========================================
+bcddc90d-2f48-4ada-94b7-19d23a22f8ff
+========================================
+Searching repository for colony-related files
+========================================
+bf348d9d-ab13-406f-a640-4378c8eff591
+========================================
+8c245a30-5660-4b2c-af30-1a4609db3225
+========================================
+0dc1e7d1-65cd-4ebb-acb0-2479490a0fc8
+========================================
+c47d361f-15f1-4419-8cd9-7b96c00e51bc
+========================================
+277c78b8-d239-4d3d-a098-f2a3674d1072
+========================================
+f3be281e-42b5-4077-8d42-618b932497b7
+========================================
+72fdddd5-03de-495d-b258-704580bc6c89
+========================================
+e6083e29-3291-46bd-83bd-d1182710fb68
+========================================
+53adb69a-94aa-4269-af2f-d23f38d48102
+========================================
+357795f0-e66e-4de5-91de-ae94db663456
+========================================
+783f6759-a3e2-412c-a19a-5936080a85ba
+========================================
+7ba1899d-2e40-46f0-93c4-7e44ac6b93cb
+========================================
+9c7e2024-a645-4ff9-b360-927f92d2a5bd
+========================================
+74c8ee0f-1894-4485-89ec-39ec6587bc2e
+========================================
+59a22551-2e00-466a-ab97-32de5bf7fe63
+========================================
+b04b1476-64a8-42a0-9279-9853a310376e
+========================================
+e696cd11-697b-46ba-ad19-15c537137b6a
+========================================
+7ad6bdeb-7154-450b-b5d9-24be787c3953
+========================================
+Searching Repository for Feature-Relevant Filenames
+========================================
+ccd3ea15-aa24-43ff-b19d-65e803ebe81a
+========================================
+d5d41421-5367-49be-a033-c8173c675f79
+========================================
+0297754f-f151-48c2-8048-078eb18aa724
+========================================
+60209ea1-8908-40ee-acb1-59bd662062c9
+========================================
+f7d52d4e-d07a-453e-9a43-50c1a8080c49
+========================================
+3c18293f-174f-4468-8453-42ccddb5200d
+========================================
+856abae8-a404-4e7d-bb55-4c3b7662c759
+========================================
+29be9f69-d686-4401-b1ce-a8183787f19e
+========================================
+90561beb-04b6-45bf-9850-4115533f4af9
+========================================
+e937ab88-9c6e-471b-ac50-ae9573f4777f
+========================================
+c9aaa9ce-a152-4458-b395-664abcaae0dd
+========================================
+41d6ff76-0acc-4e7c-ae2c-0ec75830d169
+========================================
+b5756e14-d4d3-4d62-a57b-7a6272cf4e34
+========================================
+8a78bd2f-006e-4acf-8a3f-8d250e79dda1
+========================================
+89926980-a3cd-482f-97bb-65560b81bb52
+========================================
+a4006411-7932-4aa8-ba01-eeace90f5050
+========================================
+a162a6bd-4568-4089-8bf4-50b522660c77
+========================================
+72ca3af0-6544-4e84-95c6-6092f9e1df02
+========================================
+Searching Repository Resources and Documentation Filenames
+========================================
+d3bda37b-853e-4725-b885-44a20c53faf7
+========================================
+d7227aa0-6bc1-48fd-8553-3f125880760d
+========================================
+1cd89151-6c71-45c4-9c3f-848a0aa074d4
+========================================
+b75a9863-508a-4042-a68b-e84bcb9c2318
+========================================
+477d50a9-2ad9-4954-b32d-82afc3b78c2a
+========================================
+d513b59e-84b7-4c3a-9044-1c4e671b4d8a
+========================================
+fa6eac07-7997-47c9-9e57-29de072abdbe
+========================================
+c9f6236f-70d7-4f7b-97b6-c5530b8b4472
+========================================
+595cd2d2-fe22-4af4-aff1-004836986226
+========================================
+cc3541bb-e67e-4043-ac24-493f4ff51ed8
+========================================
+0fc52217-7891-4f96-8400-e9b7ebc5af66
+========================================
+d3d97659-a47f-49f5-803d-368e00ca5480
+========================================
+77d1f885-09c2-434b-88f7-ac12ae264a17
+========================================
+3e937c3b-44b7-47f4-996e-ca3a78ca26f9
+========================================
+c58ac36d-8258-4124-8138-92447e95f21b
+========================================
+024da381-c784-4d49-8fd3-cde581e98b20
+========================================
+d377260f-c0af-4ddb-827c-637376910f3b
+========================================
+336cddc7-279f-4e1d-84e1-439435e9294e
+========================================
+Searching Repository Files for Combat Features
+========================================
+ce5e6bb4-eaf2-4b80-aee0-941cb13ef686
+========================================
+4b2f5e09-ebc7-4b9c-9d4b-29fc62d5496b
+========================================
+78e8ccc9-739e-492f-83e0-0dc21ff48d35
+========================================
+8a0bfcb6-853a-423d-96b9-c0e9647366f8
+========================================
+3bb043a3-929b-4074-b0c6-b592db560682
+========================================
+0c960ade-3f94-44b2-a179-e3b60494ab73
+========================================
+2e9928e3-d1bf-44b1-90f6-133b9de35933
+========================================
+518a012a-fe6e-4456-a428-87c410d013f0
+========================================
+f75253df-49b6-431b-a5ae-4e64a1d75f73
+========================================
+5d51b60f-5605-41b8-bce7-d2e33d973062
+========================================
+0ddb7332-41a8-4ebe-b642-9b3e65be3c75
+========================================
+ca9583aa-a4ee-4c4c-b377-eb4df2f271f6
+========================================
+6ffcf046-a4bb-4bcc-b368-9158a4233eb5
+========================================
+dc2b95de-3fd4-42c8-ad70-a9cfc71888fb
+========================================
+9464b883-fe50-4ac3-8396-fd7ea85ce23c
+========================================
+6da0e862-fedc-4196-bb15-3f5504af3f1f
+========================================
+456ca841-ddb1-491d-801b-7c4b274b001c
+========================================
+ece3c8e4-2800-463f-ab2e-8ac62ac6d06f
+========================================
+Searching Repository Files for Relevant Features
+========================================
+fbda4489-1696-40b5-99d1-9f88efa18035
+========================================
+07c72399-976f-4d6b-bcef-0e7a33c9902c
+========================================
+1564bebe-a6fb-4bd5-ae0d-f0c09c328827
+========================================
+60a2c90f-66a4-40eb-95f2-091a11de1e05
+========================================
+e6652ddc-ff79-46de-8279-67046cf9c7f5
+========================================
+55cdc97a-c5f3-4d0b-afd6-a73b13e0241e
+========================================
+e78a654c-1b0c-4146-9e86-f93c973db4cf
+========================================
+1526ac75-19e7-4ecf-b55e-fb82ff1509ff
+========================================
+e4fa4057-a37d-4860-addd-155ba83f9455
+========================================
+18de9d1a-904c-4c5e-bc9c-9eb6565c9733
+========================================
+6122de25-b1ab-4dc0-a6e2-6ae4ad45d318
+========================================
+a422d39b-02f7-4f83-8b8e-7445480f3620
+========================================
+7fba3059-79e1-4aae-9a99-ea915a1b6ef4
+========================================
+82eacaf5-344e-495a-b595-c701d50aae44
+========================================
+9705b669-d6c5-4421-9b6b-8aa3313e8e67
+========================================
+56647263-e1d1-4f6b-a6ed-de90d281af83
+========================================
+e676c753-0f6a-48a7-b1cc-f0071dd4a6f4
+========================================
+Searching Repository Research Files
+========================================
+4a846333-460f-4168-808c-4fbebb52726f
+========================================
+7bc24b77-05ec-4ab3-b57a-2648f7002c51
+========================================
+5cb5c050-fa57-45f4-a675-0942e956d17a
+========================================
+64f73392-a543-4731-a6a1-cc9118696b5f
+========================================
+cee426d6-3d9a-4b5c-9f3f-4de817d59fdf
+========================================
+03744f65-56ac-495e-8638-db0c7aeec0a3
+========================================
+a3f1b2e6-7566-49c5-84ab-d94623bf0e9b
+========================================
+201753fa-6c5b-4bb0-8fb0-85fb552e313d
+========================================
+b4f1235f-dbc8-48b9-88e7-1216da270559
+========================================
+31f33049-936a-4b9f-a5b2-91cb8a1a3829
+========================================
+8b734c1b-1141-4029-acb6-90cfa7a970d4
+========================================
+7ea7d3ae-6369-4045-86c6-954f3334c9ed
+========================================
+77206653-b8c0-453c-962e-a08b6d6a3532
+========================================
+1fa30971-065c-4d7e-84d4-716a837af91f
+========================================
+6adab3d8-8918-4042-9a47-d4111f60d6c4
+========================================
+4ec60d22-dd32-40b1-9480-59fc78b9ed29
+========================================
+1f662e72-a89f-410c-95c2-c6ce6262d4b8
+========================================
+6e0216a7-68d9-45ef-adf8-74784c3ad8db
+========================================
+Searching repository for feature-relevant filenames
+========================================
+1f28231f-242e-4474-afbc-ddd6da4e3231
+========================================
+718712ed-64f6-4260-8741-1081f4a5e5ad
+========================================
+70485f1d-c198-4219-8160-6c2309e8d54b
+========================================
+5f223ef2-09b8-4b57-81cb-d303b828f590
+========================================
+7507c991-7c2e-4f6d-8834-5148f44ebe9e
+========================================
+031ef98b-3e7a-48c5-8fca-990d0730fdc5
+========================================
+183d0d4b-38d7-4e91-92cf-9f38c35db28c
+========================================
+30850476-5caf-4d9e-ba24-b5bae4077884
+========================================
+33305d38-fae5-49c0-b0aa-74e0ec94c9de
+========================================
+4d5cbb8f-0666-447f-9505-b7292c527183
+========================================
+4bc6592d-846f-4675-956d-e25895c36ef2
+========================================
+044dcd30-879e-45ec-aa1b-ccb568816d88
+========================================
+e02d0765-aa58-4e92-b517-1e77a1cb6d37
+========================================
+9f10a593-7c6d-4ac7-b30e-27f0d1317a28
+========================================
+dcaaeaa3-ac9d-44df-8c47-6d0ba3ddcb80
+========================================
+bd4741b0-ebdc-478d-a129-fc4b4d79f5e1
+========================================
+20e4988a-6e50-4963-ac39-505fbb4418a5
+========================================
+5627f62c-7078-471f-a779-15cdf53adcc9
+========================================
+5147bc6d-0603-49cc-bb1e-f8d249910f4f
+========================================
+2e9d269b-447c-43a0-96ed-f160f2411c21
+========================================
+37dc4437-d9ff-4887-9a73-fc383dd2efea
+========================================
+677646c3-c8b1-4944-938c-b672d11aeff7
+========================================
+2aae2603-f52a-4e87-84dd-295cb10d70f8
+========================================
+729abd06-12e3-4514-91b2-491dad39adbc
+========================================
+6ec5afe4-e8de-4032-ae86-e5f11c0fcb0f
+========================================
+8470c80e-c54d-401b-b0e9-d3824b0b224b
+========================================
+1574dfb5-a5e6-4615-b5a0-dd1d60de9985
+========================================
+000f49e8-dab4-418f-9aa0-9284e1f2558c
+========================================
+f7580c7f-0935-46e0-a709-2bf2343f655f
+========================================
+363d8429-0a1d-49a4-bd14-2c082bc16a36
+========================================
+acd5f911-b3b5-4a21-bfae-d46bbfc238d4
+========================================
+4c5b922a-e815-4585-9964-7131dc9a4a2a
+========================================
+82508b7b-a7b8-46f3-aa72-09a3fc81ff04
+========================================
+0896f147-dd94-4e63-9ab4-e65d588a6f9f
+========================================
+36092c0f-8527-48d1-b718-64472a0e14ff
+========================================
+Searching Repository System-Related Files
+========================================
+e67ca8d9-faaf-494c-8e28-d82063df5707
+========================================
+02903dfa-e5f1-4441-8549-e880d3ae3d9b
+========================================
+9887831d-29e6-4f34-b922-3112d308ead9
+========================================
+3ef8bbd9-d184-4e90-8490-bd8c1f3afb6d
+========================================
+0add3def-8df4-488e-80db-bd1bc6adc241
+========================================
+764f6aae-65d1-4d20-8a4e-128975518861
+========================================
+e207be66-d197-4271-9a5f-601f4967f251
+========================================
+405ad690-02d6-44d4-9c57-7e986c832e22
+========================================
+01679e23-b947-4603-8648-29f53ffc3cf6
+========================================
+599dfb13-1caa-46bb-affb-2ba2c7ff76e0
+========================================
+d9e085ae-b003-4da2-8f1d-5567bb6643db
+========================================
+d0a5e4a5-7db7-42ba-b2cd-49d67ec7f815
+========================================
+383837d9-54a8-46a1-a713-72df7d2d766f
+========================================
+1e4e076a-c0a2-46b8-8a6d-ef8f26597ff0
+========================================
+13f3d367-ed47-4e46-8788-50358ac979a5
+========================================
+5aadad46-4f35-4cbc-8541-297fd938b1be
+========================================
+d8908c2d-ade2-46d7-adc7-62d32866c262
+========================================
+464fe87a-1838-4e00-91fc-be1d9e06d2d5
+========================================
+4495ed1f-72a3-46f4-8871-280aaea574ce
+========================================
+Inspecting Stellar Dominion Repository Structure
+========================================
+80e2fe59-75a5-4dde-be03-0450ec8e5e82
+========================================
+795c5ff8-47cd-4af4-ab38-3a6fb4470cd8
+========================================
+e61b7689-9e5e-412a-8a9d-12651d01007c
+========================================
+84b7647e-5b31-42e7-88bf-91b8fa1f6007
+========================================
+0e0f2baf-a662-4652-8dc7-3ac2c70751c1
+========================================
+9645e40d-1213-499b-b5f7-3203fb78c48d
+========================================
+832b4a65-80e7-43e1-a855-54ce09788138
+========================================
+600f5cc8-eccc-4a44-9920-6a2104bb46b2
+========================================
+3fe09a74-b204-4aaa-9797-5148e544d9b0
+========================================
+a6788ce5-a4a2-4d23-9d5e-034489a14945
+========================================
+6e029b74-1899-4ff2-93c0-536a01bc4d17
+========================================
+Reviewing Stellar Dominion Repository Structure
+========================================
+aedc6f6f-3c08-4c27-ae51-4f6f09ea4254
+========================================
+8827d81d-c751-4776-9194-7c835272d35f
+========================================
+ecb38cad-9eab-4b1f-ba7c-a78d1b0a45d4
+========================================
+26459c8f-055b-49a2-acdd-7c6a8063f451
+========================================
+Retrieving GitHub Repository Metadata
+========================================
+0dcc6a2a-d785-444c-837f-f2f8b87ef575
+========================================
+reasoning_titles
+========================================
+88ee82d3-ec81-43ad-b1c0-789f4437b271
+========================================
+web
+========================================
+permissions
+========================================
+notification
+========================================
+requested
+========================================
+notification_channel_id
+========================================
+thinking
+========================================
+notification_channel_name
+========================================
+Thinking
+========================================
+notification_priority
+========================================
+https://www.google.com/s2/favicons?domain=github.com&sz=128
+========================================
+5b05b3b1-999f-4d12-9d4d-d8c074cf32ec
+========================================
+b4fb4154-542f-4fa8-aebc-e291c646e2d1
+========================================
+a41ecc37-fe39-4ac6-bc50-3f629e114cf8
+========================================
+Searching github.com
+========================================
+6df95078-0bfe-4040-a308-bd145378f227
+========================================
+92496ad7-52fa-4707-87f2-a865d9971561
+========================================
+121bfce1-44b7-4125-88dc-2fcef32480a0
+========================================
+e6573396-2a4a-4f9a-91ff-980167b8ab9f
+========================================
+59f0caaa-4378-419d-a2f6-f8f02f68a8b9
+========================================
+cbbe4155-be3f-4118-a59f-1681bc5e4bd6
+========================================
+0145beca-e709-404e-b2b4-bbd539d93b81
+========================================
+77829c3c-96bc-46f8-beba-cffa296da25a
+========================================
+debug_sonic_thread_id
+========================================
+thread_6ab2b5cfb6a88332b0a0a4f63c416ec7
+========================================
+e606b123-2ccc-4b5d-8921-80b4f4242b12
+========================================
+system
+========================================
+ec09b65e-06b6-4adc-9d95-33f17a7ed701
+========================================
+reasoning_title_content_transition
+========================================
+numeric
+========================================
+web.run
+========================================
+tool:web.run
+========================================
+37fb9d7c-0ff5-49f8-a216-86850e953a55
+========================================
+Searching the web
+========================================
+disable_turn_actions
+========================================
+1ea089af-399f-4c03-8c9e-d05f5c118a14
+========================================
+globe
+========================================
+07c76435-b40f-49a8-be2f-af8bc847b507
+========================================
+7b714e60-732f-4a05-ba3a-016b82adec46
+========================================
+afd79f84-c2df-448e-87c8-47fe9aca6ad1
+========================================
+d02ede80-9fa9-44c2-8681-b8f9ba8e81cf
+========================================
+model_editable_context
+========================================
+model_set_context
+========================================
+1231fd14-1925-4113-8931-e4849f41ed8c
+========================================
+d2e00bf6-fab8-417c-8468-59c9cc8483bb
+========================================
+8d564952-5cf3-4ca1-8648-e129644d545b
+========================================
+fcb69452-87a0-4eba-aa58-adc492ae2ffb
+========================================
+is_user_system_message
+========================================
+user_context_message_data
+========================================
+Original custom instructions no longer available
+========================================
+user
+========================================
+8169eb65-cbcd-42fb-822f-fa1b2de20e07
+========================================
+ecdcfd1d-230d-4aab-8d1f-e3bced86b3f9
+========================================
+35e9378d-865f-49a0-b141-8c385f655b1b
+========================================
+rebase_developer_message
+========================================
+31c3965d-f462-4645-83ba-27c32deea1af
+========================================
+rebase_system_message
+========================================
+5b7585a6-35c4-4d27-92ae-af4e46f005c4
+========================================
+serialization_metadata
+========================================
+triggered_by_system_hint_suggestion
+========================================
+dictation
+========================================
+message_source
+========================================
+custom_symbol_offsets
+========================================
+symbol
+========================================
+resourceReference
+========================================
+start_index
+========================================
+https://github.com/ArkansasIo/stellar-dominion3.5.git
+========================================
+inline_reference_type
+========================================
+end_index
+========================================
+https://github.com/ArkansasIo/stellar-dominion3.5.git   Create an list of all features 
+========================================
+GLOBAL
+========================================
+https://www.openai.com
+========================================
+https://www.progressive.com
+========================================
+https://www.apple.com/
+========================================
+https://www.statefarm.com
+========================================
+https://github.com/openclaw/openclaw
+========================================
+dd
+========================================
+disablePrefetch
+========================================
+shouldPrefetchAccount
+========================================
+shouldPrefetchUser
+========================================
+shouldPrefetchSystemHints
+========================================
+manageRootRouteStylesheet
+========================================
+mobileWebHandoffEnabled
+========================================
+promoteCss
+========================================
+disableSSR
+========================================
+stripModulepreloadImports
+========================================
+paidCampaignAppRedirect
+========================================
+statsigGateEvaluationsPromise
+========================================
+traceId
+========================================
+15033107111241794920
+========================================
+traceTime
+========================================

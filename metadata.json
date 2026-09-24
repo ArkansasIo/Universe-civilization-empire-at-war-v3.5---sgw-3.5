@@ -1,0 +1,8 @@
+{
+  "name": "Remix Remix Universe Civilization: Empire at Wars v3.5 sgwv2  ",
+  "description": "Command interface for Universe Civilization: Empire at Wars, featuring strategic empire management, turn processing, military combat, covert espionage, armory, and planetary expansion.version 3.5 sgw-v2",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

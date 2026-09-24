@@ -1,0 +1,1380 @@
+I inspected the current `main` branch of urlArkansasIo/stellar-dominion3.5https://github.com/ArkansasIo/stellar-dominion3.5. The repository describes itself as a **TypeScript browser-based persistent MMO/4X strategy game** combining OGame-style resource management, Stellaris-style empire systems, fleet combat, RPG progression, and social systems. citeturn0search4
+
+Below is the consolidated **feature inventory I can identify from the repository's documentation, source structure, configuration, and game-logic files**.
+
+# Stellar Dominion 3.5 — Complete Feature List
+
+## 1. Core Game
+
+- Persistent multiplayer galaxy
+- 4X strategy gameplay
+- MMO architecture
+- Real-time game loop
+- Resource production
+- Construction
+- Research
+- Exploration
+- Colonization
+- Expansion
+- Diplomacy
+- Espionage
+- Fleet management
+- Fleet combat
+- Planetary management
+- Population management
+- Civilization progression
+- Missions
+- Campaigns
+- Events
+- Achievements
+- Crafting
+- Ship fitting
+- Technology trees
+- Alliances
+- PvE
+- PvP
+- AI-controlled entities
+- Persistent player progression
+
+---
+
+# 2. Galaxy / Universe
+
+- Procedurally generated universe
+- Galaxy map
+- Star systems
+- Sectors
+- Regions
+- Coordinates
+- Celestial objects
+- Stars
+- Planets
+- Moons
+- Asteroid fields
+- Debris fields
+- Unclaimed systems
+- Claimed systems
+- Player-controlled systems
+- Dynamic exploration
+- Scanning
+- Planet discovery
+- Celestial-object ownership
+- Planet takeover
+- Planet trading
+- Universe/realm system
+- Realm bonuses
+- Realm restrictions
+- System-distance mechanics
+- Capital distance scaling
+
+The repository has a dedicated Universe System as well as a Celestial Body System covering discovery, ownership, combat, and player-driven trading. citeturn0search4
+
+---
+
+# 3. Planet System
+
+### Planet management
+
+- Planet discovery
+- Planet claiming
+- Planet colonization
+- Planet occupation
+- Planet takeover
+- Planet ownership
+- Planet trading
+- Planet development
+- Planet resources
+- Planet population
+- Planet buildings
+- Planet defenses
+- Planet production
+- Planet management
+- Planet command
+- Planet detail pages
+- Planet dossiers
+- Planet vault
+- Planet statistics
+
+### Planet types
+
+The code/configuration contains numerous planetary classifications, including:
+
+- Terrestrial
+- Super-Earth
+- Mini-Neptune
+- Gas Giant
+- Ice Giant
+- Lava
+- Desert
+- Ocean
+- Paradise
+- Dead
+- Tidally locked
+- Toxic
+- Irradiated
+- High-gravity
+- Low-gravity
+- Paradisial
+- Hellish
+- Sentient
+
+### Planet characteristics
+
+- Atmosphere
+- Atmosphere density
+- Gravity
+- Climate
+- Resources
+- Mineral richness
+- Crystal richness
+- Deuterium richness
+- Seismic activity
+- Development
+- Population
+- Colonization suitability
+
+---
+
+# 4. Colony System
+
+- Colony establishment
+- Colony management
+- Colony development
+- District system
+- Colony population
+- Colony production
+- Colony infrastructure
+- Colony specialization
+- Colony expansion
+- Colony occupation
+- Colony ownership
+
+The repository has a dedicated Colony System and District System. citeturn0search4
+
+---
+
+# 5. Resources
+
+The game contains a resource-management layer supporting:
+
+- Metal
+- Crystal
+- Deuterium
+- Energy
+- Research points
+- Population
+- Resource production
+- Resource consumption
+- Resource storage
+- Resource generation
+- Resource costs
+- Production bonuses
+- Resource multipliers
+- Resource transfer
+- Resource trading
+- Resource protection
+- Planet resource production
+- Fleet resource requirements
+
+There is also a server-side resource manager/game loop responsible for updating resources.
+
+---
+
+# 6. Buildings / Facilities
+
+- Building construction
+- Building upgrades
+- Construction queues
+- Building prerequisites
+- Production buildings
+- Storage buildings
+- Research buildings
+- Shipyard
+- Defense facilities
+- Planetary infrastructure
+- Starbase infrastructure
+- Moon-base infrastructure
+- Megastructures
+- Facility bonuses
+- Facility levels
+- Facility dependencies
+
+---
+
+# 7. Shipyard
+
+- Ship construction
+- Construction queues
+- Ship blueprints
+- Ship classes
+- Ship tiers
+- Ship upgrades
+- Ship fitting
+- Ship modules
+- Ship statistics
+- Ship production
+- Fleet assembly
+
+---
+
+# 8. Fleet System
+
+The documented fleet system includes **13 tiers and 90+ ship classes**.
+
+### Fleet functionality
+
+- Fleet creation
+- Fleet composition
+- Fleet movement
+- Fleet orders
+- Fleet missions
+- Fleet recall
+- Fleet deployment
+- Fleet combat
+- Fleet-vs-fleet combat
+- Fleet strength
+- Fleet power
+- Fleet speed
+- Fleet range
+- Fleet sensor range
+- Fleet detection
+- Fleet evasion
+- Fleet critical hits
+- Fleet logistics
+- Fleet cargo
+- Fleet formations
+- Fleet coordination
+
+### Fleet missions
+
+- Attack
+- Defend
+- Patrol
+- Explore
+- Scout
+- Transport
+- Colonize
+- Occupy
+- Recall
+- Other strategic missions
+
+---
+
+# 9. Ship Classes
+
+The repository supports a large ship-class hierarchy with **90+ classes** across 13 tiers.
+
+The framework supports categories such as:
+
+- Small combat ships
+- Fighters
+- Corvettes
+- Frigates
+- Destroyers
+- Cruisers
+- Battlecruisers
+- Battleships
+- Carriers
+- Capital ships
+- Support ships
+- Logistics ships
+- Exploration ships
+- Specialized vessels
+- Advanced/endgame vessels
+
+---
+
+# 10. Ship Statistics
+
+The Ship Statistics System includes:
+
+### Defensive statistics
+
+- Shields
+- Armor
+- Hull
+- Shield regeneration
+- Armor strength
+- Hull strength
+- Damage resistance
+- Defensive bonuses
+
+### Offensive statistics
+
+- Weapon damage
+- Attack
+- Accuracy
+- Critical-hit chance
+- Critical damage
+- Weapon range
+- Damage types
+
+### Mobility
+
+- Speed
+- Warp speed
+- Maneuverability
+- Evasion
+- Movement capability
+
+### Detection
+
+- Sensor range
+- Detection
+- Stealth
+- Counter-detection
+
+---
+
+# 11. Six-Type Armor System
+
+The repository has a dedicated armor system supporting six armor categories.
+
+This feeds into:
+
+- Armor protection
+- Damage mitigation
+- Ship survivability
+- Weapon/armor interactions
+- Ship fitting
+- Combat calculations
+
+---
+
+# 12. Ship Fitting System
+
+This is one of the larger systems.
+
+The repository documents an **EVE Online-inspired fitting system with 90+ modules**.
+
+Modules include:
+
+### Weapons
+
+- Energy weapons
+- Projectile weapons
+- Missile systems
+- Specialized weapons
+
+### Defense
+
+- Shield modules
+- Armor modules
+- Hull modules
+- Defensive enhancements
+
+### Propulsion
+
+- Engines
+- Speed modules
+- Warp systems
+- Maneuverability modules
+
+### Electronic warfare
+
+- Jamming
+- Targeting disruption
+- Electronic warfare
+- Sensor manipulation
+- Stealth systems
+
+### Engineering
+
+- Power systems
+- Capacitor/energy systems
+- Reactor systems
+- Engineering enhancements
+
+### Module mechanics
+
+- Module slots
+- Module classes
+- Module types
+- Fitting requirements
+- Module bonuses
+- Ship customization
+- Module combinations
+- Specialized builds
+
+The repository explicitly documents the 90+ module system. citeturn0search4
+
+---
+
+# 13. Combat System
+
+The combat engine includes:
+
+- PvP combat
+- PvE combat
+- Fleet-vs-fleet combat
+- Multi-layer damage
+- Shield damage
+- Armor damage
+- Hull damage
+- Weapon calculations
+- Accuracy
+- Evasion
+- Critical hits
+- Damage mitigation
+- Combat effects
+- Battle phases
+- Combat logs
+- Battle reports
+- Loot
+- Debris
+- Combat rewards
+- AI enemies
+- Pirate encounters
+- Scaling enemy strength
+
+The documented combat flow includes enemies spawning in unclaimed systems, with strength scaling based on distance from the capital and loot generated from defeated fleets. citeturn0search4
+
+---
+
+# 14. Orbital Defense
+
+Dedicated orbital-defense infrastructure includes:
+
+- Planetary defenses
+- Rocket launchers
+- Laser turrets
+- Gauss cannons
+- Ion cannons
+- Plasma cannons
+- Missile batteries
+- Shield domes
+- Defense configuration
+- Defensive upgrades
+- Planet defense state
+
+---
+
+# 15. Ground / Army System
+
+The project also has a civilization army layer.
+
+- Army management
+- Army units
+- Workforce
+- Military units
+- Ground combat
+- Battle profiles
+- PvP army combat
+- Combat effects
+- Army routes/API
+- Unit statistics
+- Army deployment
+- Military progression
+
+---
+
+# 16. Research System
+
+The research system provides:
+
+- Technology tree
+- Research projects
+- Research costs
+- Research prerequisites
+- Technology dependencies
+- Research bonuses
+- Production technologies
+- Building unlocks
+- Ship unlocks
+- Module unlocks
+- Military technologies
+- Economic technologies
+- Advanced technologies
+- Research progression
+
+Examples documented in the repository include research unlocking buildings and ships and providing production bonuses. citeturn0search4
+
+---
+
+# 17. Branching Technology Trees
+
+There is also a **World of Warships-style branching technology tree**.
+
+Features:
+
+- Branching progression
+- Race-specific technology
+- Fork points
+- Side branches
+- Cross-dependencies
+- Technology prerequisites
+- Ship progression
+- Technology unlocks
+- Specialized paths
+- Alternative development routes
+
+---
+
+# 18. Civilization System
+
+The project has a substantial civilization layer.
+
+- Civilization development
+- Civilization subsystems
+- Workforce management
+- Governance
+- Civilization bonuses
+- Subsystem upgrades
+- Population
+- Infrastructure
+- Economy
+- Military
+- Research
+- Civilization progression
+
+The server exposes dedicated civilization-system APIs for subsystems, workforce, and governance.
+
+---
+
+# 19. Population System
+
+- Population types
+- Population growth
+- Population management
+- Workforce
+- Population allocation
+- Happiness
+- Population effects
+- Planet population
+- Colony population
+- Workforce bonuses
+- Production effects
+- Civilization development
+
+A dedicated Population System includes population types and a Happiness System. citeturn0search4
+
+---
+
+# 20. Happiness
+
+- Planet happiness
+- Population happiness
+- Happiness modifiers
+- Happiness effects
+- Production effects
+- Civilization effects
+- Population-management interactions
+
+---
+
+# 21. Diplomacy
+
+- Diplomatic relations
+- Relation levels
+- Treaties
+- Diplomatic status
+- Alliances
+- Agreements
+- Diplomatic effects
+- Inter-player relations
+- Strategic cooperation
+- Diplomatic progression
+
+The repository has a dedicated Diplomacy System and Treaty System. citeturn0search4
+
+---
+
+# 22. Alliances
+
+- Alliance creation
+- Alliance membership
+- Alliance management
+- Alliance roles
+- Alliance resources
+- Alliance coordination
+- Alliance warfare
+- Alliance objectives
+- Alliance events
+- Shared strategic operations
+- Alliance fleet coordination
+- Sector control
+
+---
+
+# 23. Espionage
+
+Dedicated espionage mechanics include:
+
+- Espionage missions
+- Intelligence
+- Counter-intelligence
+- Stealth
+- Cryptography
+- Signal theory
+- Signal jamming
+- Reconnaissance
+- Spy technologies
+- Espionage technologies
+- Counter-espionage
+- Information gathering
+
+The repository's espionage technology examples include Cryptography, Stealth Systems, and Signal Theory. citeturn0search4
+
+---
+
+# 24. Crafting
+
+The Crafting System includes:
+
+- Blueprint system
+- Blueprint types
+- Craftable items
+- Blueprint uses
+- Tradeable blueprints
+- Copyable blueprints
+- Durability
+- Crafting requirements
+- Production
+- Advanced equipment creation
+- Technology-dependent crafting
+
+---
+
+# 25. Progression
+
+One of the largest RPG-style systems is the progression framework.
+
+Documented configuration includes:
+
+- **999 levels**
+- **99 tiers**
+- Experience progression
+- Level requirements
+- Tier progression
+- Entity progression
+- Unlocks
+- Stat increases
+- Skill progression
+- Achievement progression
+- High-level/endgame progression
+
+The repository explicitly describes the framework as a **999-level / 99-tier progression system**. citeturn0search4
+
+---
+
+# 26. Skills
+
+The project includes:
+
+- Skills
+- 90-level skill system
+- Skill data
+- Skill progression
+- Skill unlocks
+- Skill effects
+- Character/commander progression
+- Specialized abilities
+
+---
+
+# 27. Commander / RPG System
+
+The Commander layer includes:
+
+- Commander identity
+- Commander progression
+- Commander roles
+- Commander bonuses
+- Commander specializations
+- Military commanders
+- Economic commanders
+- Fleet commanders
+- Research-oriented commanders
+- Commander abilities
+
+Documented commander roles include:
+
+- Admiral
+- Industrialist
+- Fleet-oriented specializations
+- Tactician
+- Corsair
+- Logistician
+- Geologist
+
+---
+
+# 28. Missions
+
+Dedicated Mission & Campaign System:
+
+- Main missions
+- Campaigns
+- Branching missions
+- Narrative progression
+- Tutorial missions
+- Daily missions
+- Weekly missions
+- Side content
+- Mission objectives
+- Mission rewards
+- Multi-stage missions
+- Unlockable campaign phases
+
+The repository describes the campaign system as branching, with daily/weekly side content and tutorial flows. citeturn0search4
+
+---
+
+# 29. Events
+
+The Event System handles:
+
+- Timed events
+- Recurring events
+- Special events
+- Event conditions
+- Event objectives
+- Event rewards
+- Fleet-power requirements
+- Alliance requirements
+- Location requirements
+- Multi-phase events
+- Seasonal/special content
+
+---
+
+# 30. Achievements
+
+- Achievement definitions
+- Achievement tracking
+- Achievement conditions
+- Achievement rewards
+- Progress tracking
+- Milestones
+- Achievement configuration
+- Player achievement records
+
+There is a dedicated `achievementsSystem` and achievement configuration layer.
+
+---
+
+# 31. Economy
+
+- Resource production
+- Resource consumption
+- Storage
+- Resource transfer
+- Trading
+- Planet economies
+- Colony economies
+- Production modifiers
+- Economic technologies
+- Population-driven production
+- Civilization economic bonuses
+- Player economy
+
+---
+
+# 32. Marketplace / Trading
+
+The celestial system specifically supports:
+
+- Planet trading
+- Moon trading
+- Player-driven marketplace
+- Resource transactions
+- Ownership transfer
+- Tradeable assets
+
+---
+
+# 33. Exploration
+
+- Galaxy exploration
+- System discovery
+- Planet discovery
+- Scanning
+- Reconnaissance
+- Exploration missions
+- Unclaimed systems
+- Asteroid fields
+- Anomalies/events
+- Exploration rewards
+- Distant-system mechanics
+
+---
+
+# 34. AI
+
+The server architecture contains an AI manager.
+
+AI functionality includes:
+
+- AI entities
+- AI updates
+- Enemy fleets
+- Pirate fleets
+- Dynamic encounters
+- Enemy scaling
+- AI-controlled systems
+- PvE encounters
+- Event-driven AI
+- Strategic AI integration
+
+---
+
+# 35. Debris
+
+- Debris fields
+- Fleet destruction debris
+- Resource recovery
+- Debris generation
+- Salvage
+- Configurable debris rates
+
+---
+
+# 36. Starbases
+
+The project has expanded infrastructure beyond planets:
+
+- Starbases
+- Starbase construction
+- Starbase modules
+- Starbase defenses
+- Starbase customization
+- Starbase infrastructure
+- Starbase fleet support
+- Starbase module slots
+
+---
+
+# 37. Moon Bases
+
+- Moon discovery
+- Moon colonization
+- Moon bases
+- Moon infrastructure
+- Moon resources
+- Moon production
+- Moon research
+- Moon-specific progression
+- Moon defense
+- Moon management
+
+The repository's update material specifically references Moon Colonization and moon bases generating passive resources and unlocking unique research paths.
+
+---
+
+# 38. Megastructures
+
+- Megastructure construction
+- Strategic megastructures
+- Alliance-controlled megastructures
+- Sector objectives
+- Ancient Gateway-type structures
+- Endgame infrastructure
+- Special strategic bonuses
+- Exclusive access mechanics
+
+---
+
+# 39. Ancient / Special Structures
+
+The game includes infrastructure intended to support:
+
+- Ancient structures
+- Gateways
+- Special locations
+- Unique strategic objectives
+- Sector-control rewards
+- Endgame objectives
+
+---
+
+# 40. Live Game Route System
+
+A notable UI/system architecture feature is the **Live System Route**.
+
+Instead of treating navigation as isolated pages, gameplay hubs expose:
+
+- Current system
+- Next dependency
+- Connected gameplay system
+- Action path
+- Related gameplay loop
+- Cross-system navigation
+
+This links systems such as:
+
+**Planet → Production → Resources → Research → Shipyard → Fleet → Combat → Rewards → Expansion**
+
+---
+
+# 41. Dashboard / Command Center
+
+The frontend contains a command-center-style interface with:
+
+- Resource display
+- Empire information
+- Fleet information
+- Planet information
+- Navigation
+- Alerts
+- Events
+- Missions
+- Progression
+- System status
+- Interactive controls
+- Game views
+
+---
+
+# 42. 3D Browser Interface
+
+The repository contains a dedicated 3D view layer:
+
+- `BrowserStrategyScene`
+- `SceneLayer`
+- 3D scene configuration
+- Placeholder assets
+- 3D strategy scene
+- Celestial visualization
+- Galaxy visualization
+- Interactive scene layer
+
+This provides a path toward a browser-based 3D strategic visualization rather than a purely 2D interface.
+
+---
+
+# 43. UI Component Framework
+
+The frontend contains a large reusable UI component library including:
+
+- Buttons
+- Cards
+- Tables
+- Tabs
+- Dialogs
+- Drawers
+- Menus
+- Navigation
+- Tooltips
+- Progress bars
+- Sliders
+- Select controls
+- Checkboxes
+- Radio groups
+- Switches
+- Toast notifications
+- Alerts
+- Command interfaces
+- Pagination
+- Sidebars
+- Carousels
+- Calendars
+- Charts
+- Forms
+- Inputs
+- Context menus
+- Resizable panels
+- Loading/skeleton components
+
+---
+
+# 44. Authentication
+
+- User authentication
+- Login
+- Account handling
+- Authentication middleware
+- Authenticated API routes
+- Session/user state
+- Protected game systems
+
+---
+
+# 45. Administration
+
+- Admin account
+- Admin configuration
+- Admin setup
+- Admin controls
+- System settings
+- Game-speed settings
+- Production-rate settings
+- Research-speed settings
+- Server management
+- Game configuration
+- Administrative controls
+
+---
+
+# 46. API
+
+The project contains a substantial REST-style API layer.
+
+Examples include APIs for:
+
+- Authentication
+- Game state
+- Resources
+- Fleet
+- Planets
+- Planet occupation
+- Planet defenses
+- Planet vault
+- Civilization
+- Army
+- Research
+- Missions
+- Events
+- Administration
+- System settings
+- News
+- Game actions
+
+---
+
+# 47. Game Engine / Server Loop
+
+The server has a continuous game-processing architecture.
+
+The game loop handles systems such as:
+
+- Resource updates
+- Fleet updates
+- AI updates
+- Event updates
+- Player state
+- Universe state
+- Game actions
+- Periodic processing
+
+This creates the persistent-world foundation required for an MMO.
+
+---
+
+# 48. Game Speed / Turn Configuration
+
+The server configuration supports:
+
+- Turns per minute
+- Resource production rate
+- Research speed multiplier
+- Configurable game speed
+- Server-side balancing
+- Global gameplay modifiers
+
+---
+
+# 49. News System
+
+- Galactic news
+- Update announcements
+- War alerts
+- Event news
+- Strategic alerts
+- System notifications
+- Game-world news
+
+Examples in the repository include fleet movements, sector conflicts, alliance activity, and megastructure objectives.
+
+---
+
+# 50. Notifications / Feedback
+
+Frontend support includes:
+
+- Toasts
+- Alerts
+- Dialogs
+- Status indicators
+- Error messages
+- Loading states
+- Success messages
+- Progress feedback
+- System notifications
+
+---
+
+# 51. Save / Persistent State
+
+The architecture supports persistent game data for:
+
+- Players
+- Planets
+- Resources
+- Fleets
+- Research
+- Civilization
+- Alliances
+- Progression
+- Achievements
+- Events
+- Universe state
+
+---
+
+# 52. Database / Data Layer
+
+The repository contains:
+
+- Database models
+- Server routes
+- Configuration tables
+- Game state
+- Player state
+- Planet state
+- System settings
+- Persistent progression
+- API data structures
+- Shared types
+
+---
+
+# 53. Shared TypeScript Architecture
+
+The project uses shared models/types between client and server for:
+
+- Players
+- Planets
+- Fleets
+- Resources
+- API responses
+- Game state
+- Celestial objects
+- Progression
+- Configuration
+
+This reduces client/server data-model divergence.
+
+---
+
+# 54. Deployment / Infrastructure
+
+Repository support includes:
+
+- Docker
+- Replit
+- Railway
+- Firebase configuration
+- Dev containers
+- Environment configuration
+- Deployment guides
+- Production setup
+- Server configuration
+- Update system
+- Executable/build documentation
+- Hosting documentation
+
+---
+
+# 55. Automatic Update System
+
+The repository contains an update architecture for:
+
+**VS Code → Server Backend → Connected Frontend Clients**
+
+Features include:
+
+- Patch distribution
+- Client updates
+- Server updates
+- Update metadata
+- Version handling
+- Deployment synchronization
+
+---
+
+# 56. Documentation / Development Infrastructure
+
+The repository contains dedicated documentation for:
+
+- Architecture
+- Framework architecture
+- Game design
+- GDD
+- API routes
+- API implementation
+- Fleet system
+- Combat system
+- Research system
+- Diplomacy
+- Espionage
+- Population
+- Colony
+- Universe
+- Crafting
+- Ship fitting
+- Ship statistics
+- Orbital defense
+- Missions
+- Events
+- Progression
+- Deployment
+- Installation
+- Hosting
+- Troubleshooting
+- Administration
+- Developer workflow
+- UML
+- Roadmap
+- TODOs
+- Changelog
+- Validation
+
+---
+
+# 57. Existing OGame-Inspired Systems
+
+The repository also explicitly tracks OGame-style functionality, including:
+
+- Resource production
+- Building construction
+- Construction queues
+- Research
+- Shipyard
+- Fleet movement
+- Fleet missions
+- Flight times
+- Debris fields
+- Planet defenses
+- Colonization
+- Combat
+- Fleet management
+- Galaxy navigation
+
+---
+
+# 58. Stellaris-Inspired Systems
+
+The architecture expands beyond traditional OGame mechanics with:
+
+- Civilization development
+- Population
+- Happiness
+- Diplomacy
+- Technology branches
+- Government
+- Governance
+- Multiple planetary types
+- Exploration
+- Colonization
+- Strategic regions
+- Megastructures
+- Advanced progression
+- RPG commanders
+- 3D galaxy visualization
+
+---
+
+# 59. RPG Layer
+
+The project additionally has:
+
+- Levels
+- Tiers
+- Experience
+- Skills
+- Commander progression
+- Specializations
+- Achievements
+- Missions
+- Rewards
+- Unlocks
+- Equipment
+- Crafting
+- Ship fitting
+- Character-style progression
+
+---
+
+# 60. Overall Game Loop
+
+The systems combine into a larger loop:
+
+**Explore**
+
+→ Discover systems
+
+→ Scan planets
+
+→ Claim/colonize worlds
+
+→ Develop planets
+
+→ Produce resources
+
+→ Build infrastructure
+
+→ Research technology
+
+→ Construct ships
+
+→ Fit ships
+
+→ Create fleets
+
+→ Explore further
+
+→ Fight PvE/PvP enemies
+
+→ Capture/occupy worlds
+
+→ Expand territory
+
+→ Join alliances
+
+→ Conduct diplomacy
+
+→ Conduct espionage
+
+→ Complete missions/events
+
+→ Advance commander/civilization progression
+
+→ Build advanced infrastructure
+
+→ Compete for strategic regions and megastructures.
+
+---
+
+## High-level system map
+
+| Domain | Major systems |
+|---|---|
+| 🌌 Universe | Galaxy, sectors, systems, realms |
+| ⭐ Celestial | Stars, planets, moons, asteroids |
+| 🪐 Planets | Development, ownership, resources, defenses |
+| 🏙️ Colonies | Colonization, districts, development |
+| 👥 Population | Population, workforce, happiness |
+| 💰 Economy | Resources, production, storage, trade |
+| 🏗️ Construction | Buildings, facilities, queues |
+| 🔬 Research | Technology, branches, prerequisites |
+| 🚀 Fleet | Ships, fleets, missions, movement |
+| 🛠️ Fitting | 90+ modules, slots, customization |
+| ⚔️ Combat | PvP, PvE, shields, armor, hull |
+| 🛡️ Defense | Planetary/orbital defenses |
+| 🪖 Army | Ground units and military systems |
+| 🕵️ Espionage | Spies, intelligence, counter-intelligence |
+| 🤝 Diplomacy | Relations, treaties, alliances |
+| 🧑‍✈️ Commander | Roles, abilities, progression |
+| 📈 Progression | 999 levels / 99 tiers |
+| 🎯 Skills | 90-level skill progression |
+| 📜 Missions | Campaigns, daily/weekly missions |
+| 🎉 Events | Timed, recurring, special events |
+| 🏆 Achievements | Milestones and rewards |
+| 🔨 Crafting | Blueprints and item production |
+| 🛰️ Starbases | Infrastructure and modules |
+| 🌙 Moon Bases | Moon infrastructure and research |
+| 🏛️ Megastructures | Endgame strategic structures |
+| 🤖 AI | AI manager, pirates, PvE |
+| 📡 Exploration | Scanning and discovery |
+| 📰 News | Galactic news and alerts |
+| 🎮 UI | Command center + reusable components |
+| 🌐 3D | Browser strategy scene |
+| 🔐 Security | Authentication and protected APIs |
+| ⚙️ Admin | Settings and game configuration |
+| 🔄 Updates | Automated client/server update system |
+| 🗄️ Persistence | Player/world/game state |
+| 🚀 Deployment | Docker, Railway, Replit, Firebase |
+
+**Important distinction:** this is an inventory of systems/features represented in the repository; it should not be read as saying every documented feature is equally complete or production-ready. The repository itself contains `MISSING_FEATURES_FROM_STELLAR_DOMINION_3.5.md`, `TODO.md`, roadmap/status documents, and implementation summaries, so there is a meaningful difference between **implemented, partially implemented, documented/planned, and placeholder** functionality. citeturn0search4
+
+If you want the next step, I can turn this into a **master 500–1,000 feature checklist**, separating every feature into **Implemented / Partial / Planned / Missing**, including the exact source file/API/page for each feature.
