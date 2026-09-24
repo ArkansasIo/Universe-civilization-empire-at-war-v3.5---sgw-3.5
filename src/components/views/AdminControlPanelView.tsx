@@ -91,6 +91,7 @@ import { AdminMaintenanceTab } from './admin/AdminMaintenanceTab';
 import { AdminLoginPermissionsTab } from './admin/AdminLoginPermissionsTab';
 import { AdminEmpireHistoryTab } from './admin/AdminEmpireHistoryTab';
 import { AdminAuditLogTab } from './admin/AdminAuditLogTab';
+import { AdminDatabaseMySQLTab } from './admin/AdminDatabaseMySQLTab';
 import { AdminLoginModal } from '../modals/AdminLoginModal';
 import { getAdminAuthSession, CANONICAL_ADMIN_ACCOUNTS, getAllAdminAccounts, addAdminAuditLog } from '../../config/adminAuthConfig';
 import { AdminAuthSession } from '../../types';
@@ -114,6 +115,7 @@ export type AdminTabType =
   | 'scheduler'
   | 'logs'
   | 'cli'
+  | 'database-mysql'
   | 'maintenance';
 
 interface AdminControlPanelViewProps {
@@ -886,6 +888,27 @@ export const AdminControlPanelView: React.FC<AdminControlPanelViewProps> = ({
                   type="button"
                   onClick={() => {
                     sound.play('click');
+                    setActiveTab('database-mysql');
+                  }}
+                  className={`w-full flex items-center justify-between px-2.5 py-2 text-xs font-bold transition-all text-left cursor-pointer border-l-4 ${
+                    activeTab === 'database-mysql'
+                      ? 'bg-[#111111] text-white border-amber-400 shadow-sm'
+                      : 'bg-white text-[#444444] hover:bg-[#f5f5f5] hover:text-[#111111] border-transparent'
+                  }`}
+                >
+                  <div className="flex items-center gap-2 truncate">
+                    <Database size={14} className={activeTab === 'database-mysql' ? 'text-amber-400' : 'text-amber-600'} />
+                    <span className="truncate">MySQL & phpMyAdmin</span>
+                  </div>
+                  <span className="text-[9px] px-1 py-0.2 bg-amber-100 text-amber-900 font-bold rounded">
+                    SQL
+                  </span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    sound.play('click');
                     setActiveTab('maintenance');
                   }}
                   className={`w-full flex items-center justify-between px-2.5 py-2 text-xs font-bold transition-all text-left cursor-pointer border-l-4 ${
@@ -1129,6 +1152,10 @@ export const AdminControlPanelView: React.FC<AdminControlPanelViewProps> = ({
           events={adminGlobalEvents}
           onToggleEvent={onToggleGlobalEvent}
         />
+      )}
+
+      {activeTab === 'database-mysql' && (
+        <AdminDatabaseMySQLTab />
       )}
 
       {activeTab === 'maintenance' && (

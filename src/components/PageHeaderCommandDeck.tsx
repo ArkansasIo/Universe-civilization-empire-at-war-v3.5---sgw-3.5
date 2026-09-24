@@ -21,6 +21,7 @@ import {
   Activity,
   Compass,
   Sparkles,
+  RotateCw,
 } from 'lucide-react';
 import { sound } from '../sound';
 import { PlayerProfile, PlayerResources } from '../types';
@@ -32,6 +33,7 @@ interface PageHeaderCommandDeckProps {
   profile: PlayerProfile;
   resources: PlayerResources;
   onProcessTurn?: (turns: number) => void;
+  onUpdateAllSystems?: () => void;
   planetsCount?: number;
 }
 
@@ -41,6 +43,7 @@ export const PageHeaderCommandDeck: React.FC<PageHeaderCommandDeckProps> = ({
   profile,
   resources,
   onProcessTurn,
+  onUpdateAllSystems,
   planetsCount = 1,
 }) => {
   // Find current section
@@ -139,6 +142,26 @@ export const PageHeaderCommandDeck: React.FC<PageHeaderCommandDeckProps> = ({
               </button>
             </div>
           )}
+
+          {/* Universal UPDATE ALL SYSTEMS Action Button */}
+          <button
+            type="button"
+            id="deck-update-all-systems-btn"
+            onClick={() => {
+              sound.play('confirm');
+              if (onUpdateAllSystems) {
+                onUpdateAllSystems();
+              } else if (onProcessTurn) {
+                onProcessTurn(1);
+              }
+            }}
+            className="flex items-center gap-1.5 px-2.5 py-1.5 bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white font-mono text-[10px] font-extrabold uppercase rounded-xs border border-emerald-500/50 shadow-2xs cursor-pointer transition-all hover:scale-[1.02] active:scale-[0.98]"
+            title="Synchronize & Update All Imperial Systems (Mines, Factories, Shipyards, R&D Labs, Gate Relays, Bank Vault)"
+          >
+            <RotateCw size={11} className="text-emerald-200" />
+            <span className="hidden sm:inline">UPDATE ALL SYSTEMS</span>
+            <span className="sm:hidden">UPDATE ALL</span>
+          </button>
 
           {/* Turn Engine Link Shortcut */}
           <button

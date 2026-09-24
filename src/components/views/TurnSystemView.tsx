@@ -21,12 +21,14 @@ interface TurnSystemViewProps {
   resources: PlayerResources;
   onUpdateResources: (res: Partial<PlayerResources>) => void;
   onProcessTurn: (multiplier?: number) => void;
+  onUpdateAllSystems?: () => void;
 }
 
 export const TurnSystemView: React.FC<TurnSystemViewProps> = ({
   resources,
   onUpdateResources,
   onProcessTurn,
+  onUpdateAllSystems,
 }) => {
   const [turnCap, setTurnCap] = useState<number>(5000);
   const [turnsPerMinute, setTurnsPerMinute] = useState<number>(6);
@@ -97,6 +99,66 @@ export const TurnSystemView: React.FC<TurnSystemViewProps> = ({
               </strong>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* Universal Systems Update & Matrix Controller */}
+      <div className="border-2 border-emerald-600/60 bg-gradient-to-br from-emerald-950/5 via-white to-teal-950/5 p-6 sm:p-7 shadow-xs">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-5 border-b border-[#e2e8f0]">
+          <div>
+            <div className="flex items-center gap-2 mb-1.5">
+              <span className="inline-flex items-center gap-1.5 px-2 py-0.5 bg-emerald-100 text-emerald-900 border border-emerald-300 font-mono text-[10px] font-extrabold uppercase">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                SYSTEMS SYNCHRONIZER ONLINE
+              </span>
+              <span className="text-[10px] font-mono text-[#666666]">ALL 8 SUBSYSTEMS NOMINAL</span>
+            </div>
+            <h3 className="text-xl sm:text-2xl font-extrabold text-[#111111] tracking-tight font-mono">
+              Universal Systems Pulse & Macro Engine
+            </h3>
+            <p className="text-xs text-[#555555] mt-1 max-w-2xl leading-relaxed">
+              Initiate a coordinated pulse across all imperial infrastructure: recalculate mining output, advance research lab breakthroughs, cycle shipyard drydocks, recharge planetary defense shields, and compound bank vault interest.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-3">
+            <button
+              type="button"
+              id="turn-view-update-all-systems-btn"
+              onClick={() => {
+                sound.play('confirm');
+                if (onUpdateAllSystems) {
+                  onUpdateAllSystems();
+                } else {
+                  handleExecuteTurns(1);
+                }
+                setFeedback('⚡ Universal Systems Pulse Completed! Mines, Factories, Shipyards, R&D Labs, Defenses & Bank Vault synchronized.');
+              }}
+              className="px-6 py-3.5 bg-gradient-to-r from-emerald-600 via-teal-700 to-cyan-800 hover:from-emerald-500 hover:to-teal-600 text-white font-mono text-xs font-black uppercase tracking-wider shadow-md hover:shadow-lg cursor-pointer transition-all hover:scale-[1.02] active:scale-[0.98] flex items-center gap-2 border border-emerald-400"
+            >
+              <RotateCw size={15} className="text-emerald-200" />
+              <span>UPDATE ALL SYSTEMS (ONE-CLICK PULSE)</span>
+            </button>
+          </div>
+        </div>
+
+        {/* 8 Live Subsystem Health Status Badges */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5 mt-5 font-mono text-center">
+          {[
+            { name: 'Planetary Mines', status: 'ACTIVE', color: 'text-amber-700 bg-amber-50 border-amber-200' },
+            { name: 'Nanite Foundries', status: 'RUNNING', color: 'text-orange-700 bg-orange-50 border-orange-200' },
+            { name: 'Orbital Shipyard', status: 'FABRICATING', color: 'text-blue-700 bg-blue-50 border-blue-200' },
+            { name: 'Quantum R&D', status: 'DISCOVERING', color: 'text-purple-700 bg-purple-50 border-purple-200' },
+            { name: 'Defense Grids', status: 'ARMED', color: 'text-emerald-700 bg-emerald-50 border-emerald-200' },
+            { name: 'Stargate Relays', status: 'CALIBRATED', color: 'text-cyan-700 bg-cyan-50 border-cyan-200' },
+            { name: 'Bank Citadel', status: 'SECURED', color: 'text-lime-700 bg-lime-50 border-lime-200' },
+            { name: 'Strike Academy', status: 'DRILLING', color: 'text-rose-700 bg-rose-50 border-rose-200' },
+          ].map((sys) => (
+            <div key={sys.name} className={`p-2 rounded-xs border ${sys.color}`}>
+              <span className="text-[9px] font-bold block uppercase tracking-wider truncate">{sys.name}</span>
+              <span className="text-[10px] font-black block mt-0.5">{sys.status}</span>
+            </div>
+          ))}
         </div>
       </div>
 

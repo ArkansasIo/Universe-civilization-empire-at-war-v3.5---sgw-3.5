@@ -14,11 +14,17 @@ import {
   LogOut,
   Sliders,
   Fingerprint,
+  Link,
+  Terminal,
+  ExternalLink,
 } from 'lucide-react';
 import {
   CANONICAL_ADMIN_ACCOUNTS,
   getAllAdminAccounts,
+  getAllRootAdminAccounts,
   saveCustomAdminAccount,
+  createRootAdminAccount,
+  generateAdminUrlLogin,
   ADMIN_PERMISSIONS_REGISTRY,
   getAdminAuthSession,
   setAdminAuthSession,
@@ -26,6 +32,7 @@ import {
   validateAdminCredentials,
 } from '../../../config/adminAuthConfig';
 import { AdminAuthSession, AdminCredentialAccount, AdminPermission, AdminUserRole } from '../../../types';
+import { RootAdminUrlLoginModal } from '../../modals/RootAdminUrlLoginModal';
 import { sound } from '../../../sound';
 
 interface AdminLoginPermissionsTabProps {
@@ -47,6 +54,7 @@ export const AdminLoginPermissionsTab: React.FC<AdminLoginPermissionsTabProps> =
 
   // New Custom Admin Form State
   const [showAddForm, setShowAddForm] = useState<boolean>(false);
+  const [showUrlModal, setShowUrlModal] = useState<boolean>(false);
   const [newUsername, setNewUsername] = useState<string>('');
   const [newLoginCode, setNewLoginCode] = useState<string>('');
   const [newPasscode, setNewPasscode] = useState<string>('');
@@ -212,6 +220,122 @@ export const AdminLoginPermissionsTab: React.FC<AdminLoginPermissionsTabProps> =
               <Key className="w-4 h-4" />
               <span>Authenticate Root Session</span>
             </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Root Admin URL Login & Access Generator Showcase Card */}
+      <div className="p-5 border-2 border-amber-500/50 bg-[#0f172a] text-slate-100 font-mono space-y-4 shadow-md">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-3">
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="px-2 py-0.5 bg-amber-400 text-black text-[9px] font-black uppercase tracking-wider">
+                1-CLICK URL AUTHENTICATION
+              </span>
+              <span className="text-[10px] text-emerald-400 font-bold">
+                ✓ URL QUERY & HASH FRAGMENT ENABLED
+              </span>
+            </div>
+            <h3 className="text-base font-bold text-white uppercase flex items-center gap-2 mt-1">
+              <Link className="w-4 h-4 text-amber-400" />
+              <span>Root Admin URL Access & Instant Login Links</span>
+            </h3>
+            <p className="text-xs text-slate-400 mt-0.5">
+              Authenticate root admin accounts instantly via direct URL parameters, encrypted magic tokens, or auto-create root commands.
+            </p>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => {
+              sound.play('click');
+              setShowUrlModal(true);
+            }}
+            className="px-4 py-2 bg-amber-400 hover:bg-amber-300 text-black font-mono text-xs font-black uppercase transition-all cursor-pointer shadow-sm active:scale-95 flex items-center gap-1.5 shrink-0"
+          >
+            <Terminal size={14} />
+            <span>Launch URL Terminal & Generator</span>
+          </button>
+        </div>
+
+        {/* Quick URL Cards for Canonical Root Accounts */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+          {/* Stargate Root Admin */}
+          <div className="border border-slate-800 bg-slate-950/80 p-3 space-y-2">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
+                <span className="font-bold text-amber-300">Stargate_Root_Admin</span>
+                <span className="text-[10px] text-slate-400">(s.sstargate@gmail.com)</span>
+              </div>
+              <span className="text-[9px] px-1.5 py-0.2 bg-amber-500/20 text-amber-300 border border-amber-500/30 font-bold">
+                SUPER ADMIN
+              </span>
+            </div>
+            <div className="p-2 bg-black border border-slate-800 text-[11px] text-slate-300 break-all select-all font-mono">
+              {generateAdminUrlLogin(CANONICAL_ADMIN_ACCOUNTS[1] || CANONICAL_ADMIN_ACCOUNTS[0], { mode: 'direct', tab: 'crown' })}
+            </div>
+            <div className="flex items-center justify-between gap-2 pt-1">
+              <button
+                type="button"
+                onClick={() =>
+                  handleCopy(
+                    generateAdminUrlLogin(CANONICAL_ADMIN_ACCOUNTS[1] || CANONICAL_ADMIN_ACCOUNTS[0], { mode: 'direct', tab: 'crown' }),
+                    'url-sgw-root'
+                  )
+                }
+                className="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-[11px] font-bold flex items-center gap-1 cursor-pointer"
+              >
+                {copiedKey === 'url-sgw-root' ? <Check size={12} className="text-emerald-400" /> : <Copy size={12} />}
+                <span>{copiedKey === 'url-sgw-root' ? 'Copied URL!' : 'Copy Direct URL'}</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => handleQuickLoginAs(CANONICAL_ADMIN_ACCOUNTS[1] || CANONICAL_ADMIN_ACCOUNTS[0])}
+                className="px-3 py-1 bg-amber-400 hover:bg-amber-300 text-black text-[11px] font-black uppercase cursor-pointer"
+              >
+                Sign In Now
+              </button>
+            </div>
+          </div>
+
+          {/* System Root Master */}
+          <div className="border border-slate-800 bg-slate-950/80 p-3 space-y-2">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="font-bold text-emerald-300">SystemRoot_Admin</span>
+                <span className="text-[10px] text-slate-400">(root@systems-mainframe.root)</span>
+              </div>
+              <span className="text-[9px] px-1.5 py-0.2 bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-bold">
+                KERNEL ROOT
+              </span>
+            </div>
+            <div className="p-2 bg-black border border-slate-800 text-[11px] text-slate-300 break-all select-all font-mono">
+              {generateAdminUrlLogin(CANONICAL_ADMIN_ACCOUNTS[0], { mode: 'direct', tab: 'crown' })}
+            </div>
+            <div className="flex items-center justify-between gap-2 pt-1">
+              <button
+                type="button"
+                onClick={() =>
+                  handleCopy(
+                    generateAdminUrlLogin(CANONICAL_ADMIN_ACCOUNTS[0], { mode: 'direct', tab: 'crown' }),
+                    'url-sys-root'
+                  )
+                }
+                className="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-[11px] font-bold flex items-center gap-1 cursor-pointer"
+              >
+                {copiedKey === 'url-sys-root' ? <Check size={12} className="text-emerald-400" /> : <Copy size={12} />}
+                <span>{copiedKey === 'url-sys-root' ? 'Copied URL!' : 'Copy Direct URL'}</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => handleQuickLoginAs(CANONICAL_ADMIN_ACCOUNTS[0])}
+                className="px-3 py-1 bg-amber-400 hover:bg-amber-300 text-black text-[11px] font-black uppercase cursor-pointer"
+              >
+                Sign In Now
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -485,6 +609,17 @@ export const AdminLoginPermissionsTab: React.FC<AdminLoginPermissionsTabProps> =
           </div>
         </div>
       )}
+
+      {/* Root Admin URL Login & Generator Modal */}
+      <RootAdminUrlLoginModal
+        isOpen={showUrlModal}
+        onClose={() => setShowUrlModal(false)}
+        onAuthSuccess={(session, account) => {
+          onUpdateSession(session);
+          setShowUrlModal(false);
+          sound.play('confirm');
+        }}
+      />
     </div>
   );
 };

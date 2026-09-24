@@ -3,7 +3,6 @@ import {
   RotateCw,
   Sparkles,
   User,
-  RefreshCw,
   Cpu,
   Database,
   Shield,
@@ -58,7 +57,8 @@ interface TopbarProps {
   netIncome?: number;
   bankCapacity?: number;
   onProcessTurn: (count?: number) => void;
-  onResetGame: () => void;
+  onUpdateAllSystems?: () => void;
+  onResetGame?: () => void;
   onNavigate?: (route: string) => void;
   onOpenPatchNotes?: () => void;
   onOpenUpdateInfo?: () => void;
@@ -170,7 +170,7 @@ export const Topbar: React.FC<TopbarProps> = ({
   netIncome = 18500,
   bankCapacity = 350000,
   onProcessTurn,
-  onResetGame,
+  onUpdateAllSystems,
   onNavigate,
   onOpenPatchNotes,
   onOpenUpdateInfo,
@@ -527,19 +527,23 @@ export const Topbar: React.FC<TopbarProps> = ({
             </span>
           </div>
 
-          {/* Reset Demo State Button */}
+          {/* Universal "UPDATE ALL SYSTEMS" Quick Action Button */}
           <button
             type="button"
-            id="reset-game-state-btn"
+            id="update-all-systems-btn"
             onClick={() => {
-              sound.play('warning');
-              onResetGame();
+              sound.play('confirm');
+              if (onUpdateAllSystems) {
+                onUpdateAllSystems();
+              } else if (onProcessTurn) {
+                onProcessTurn(1);
+              }
             }}
-            title="Reset universe back to default state"
-            className="flex items-center gap-1 px-2 py-1 text-[#777777] hover:text-[#111111] hover:bg-neutral-100 border border-transparent hover:border-[#dedede] transition-colors cursor-pointer text-[11px]"
+            title="Update & Synchronize All Imperial Systems (Mines, Factories, Shipyards, R&D Labs, Defenses & Bank Vault)"
+            className="flex items-center gap-1.5 px-2.5 py-1 bg-gradient-to-r from-emerald-600 via-teal-700 to-cyan-800 hover:from-emerald-500 hover:to-teal-600 text-white font-mono text-[10px] font-extrabold uppercase tracking-wider rounded-xs shadow-2xs border border-emerald-400/40 cursor-pointer transition-all hover:scale-[1.02] active:scale-[0.98]"
           >
-            <RefreshCw size={11} />
-            <span className="hidden sm:inline">Reset</span>
+            <RotateCw size={11} className="text-emerald-200" />
+            <span>UPDATE ALL SYSTEMS</span>
           </button>
 
           {/* Quick Header Access: Dev Team Credits beside Update & Patch Info */}

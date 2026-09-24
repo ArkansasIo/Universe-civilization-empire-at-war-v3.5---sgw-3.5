@@ -179,7 +179,8 @@ import {
 import { PatchNotesModal } from './components/modals/PatchNotesModal';
 import { SaveStateManagerModal } from './components/modals/SaveStateManagerModal';
 import { AdminLoginModal } from './components/modals/AdminLoginModal';
-import { getAdminAuthSession } from './config/adminAuthConfig';
+import { RootAdminUrlLoginModal } from './components/modals/RootAdminUrlLoginModal';
+import { getAdminAuthSession, processUrlAdminLogin } from './config/adminAuthConfig';
 import {
   MasterUpgradesState,
   BankVaultUpgradeState,
@@ -401,9 +402,75 @@ export default function App() {
   const [isCreditsModalOpen, setIsCreditsModalOpen] = useState<boolean>(false);
   const [isSaveManagerOpen, setIsSaveManagerOpen] = useState<boolean>(false);
   const [showAdminLoginModal, setShowAdminLoginModal] = useState<boolean>(false);
+  const [showRootAdminUrlModal, setShowRootAdminUrlModal] = useState<boolean>(false);
   const [adminSession, setAdminSession] = useState(getAdminAuthSession);
+  const [urlLoginNotification, setUrlLoginNotification] = useState<{
+    message: string;
+    username: string;
+    created?: boolean;
+  } | null>(null);
 
   const isAdminUser = profile.role === 'admin' || profile.isAdmin === true || (adminSession && adminSession.isAuthenticated);
+
+  // Auto-Detect and Process Root Admin URL Login & Creation
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    try {
+      const urlResult = processUrlAdminLogin();
+      if (urlResult.success && urlResult.session && urlResult.account) {
+        sound.play('confirm');
+        setAdminSession(urlResult.session);
+        setIsLoggedIn(true);
+        localStorage.setItem('uc_state_isLoggedIn', JSON.stringify(true));
+
+        setProfile((prev) => ({
+          ...prev,
+          username: urlResult.account!.username,
+          email: urlResult.account!.email,
+          role: 'admin',
+          isAdmin: true,
+        }));
+
+        const targetTab = urlResult.targetTab || 'crown';
+        setActiveRoute(targetTab === 'crown' ? 'admin' : `admin-${targetTab}`);
+
+        setUrlLoginNotification({
+          message: urlResult.message || `Root Admin [${urlResult.account.username}] authenticated via URL.`,
+          username: urlResult.account.username,
+          created: urlResult.created,
+        });
+
+        // Clean query/hash parameters to prevent exposing secrets in browser history
+        try {
+          const cleanPath = window.location.pathname;
+          window.history.replaceState({}, document.title, cleanPath);
+        } catch {
+          // ignore
+        }
+      }
+    } catch (err) {
+      console.error('Root Admin URL Login Parser Error:', err);
+    }
+  }, []);
+
+  const handleRootAdminLoginSuccess = (session: any, account: any) => {
+    setAdminSession(session);
+    setIsLoggedIn(true);
+    localStorage.setItem('uc_state_isLoggedIn', JSON.stringify(true));
+    setProfile((prev) => ({
+      ...prev,
+      username: account.username,
+      email: account.email,
+      role: 'admin',
+      isAdmin: true,
+    }));
+    setActiveRoute('admin');
+    sound.play('confirm');
+    setUrlLoginNotification({
+      message: `Root Admin "${account.username}" authenticated successfully! Clearance Level 10 Active.`,
+      username: account.username,
+    });
+  };
 
   useEffect(() => {
     applyThemeToDOM(getActiveThemeId());
@@ -3064,6 +3131,7 @@ export default function App() {
           setIsLoggedIn(true);
           localStorage.setItem('uc_state_isLoggedIn', JSON.stringify(true));
         }}
+        onRootAdminLogin={handleRootAdminLoginSuccess}
       />
     );
   }
@@ -3086,6 +3154,27 @@ export default function App() {
 
       {/* Main Content Area */}
       <div id="main-content-wrapper" className="flex-1 flex flex-col min-w-0 bg-[#ffffff] w-full">
+        {/* Root Admin URL Login Live Notification Banner */}
+        {urlLoginNotification && (
+          <div className="bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 text-black px-4 py-2 text-xs font-mono font-bold flex items-center justify-between border-b-2 border-amber-600 shadow-md z-40">
+            <div className="flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-black animate-ping shrink-0" />
+              <span>SOVEREIGN ROOT ADMIN URL ACCESS: {urlLoginNotification.message}</span>
+              <span className="px-1.5 py-0.5 bg-black text-amber-300 text-[10px] uppercase font-black tracking-wider">
+                CLEARANCE LEVEL 10
+              </span>
+            </div>
+            <button
+              type="button"
+              onClick={() => setUrlLoginNotification(null)}
+              className="p-1 hover:bg-black/15 text-black font-black text-xs cursor-pointer ml-2"
+              title="Dismiss notification"
+            >
+              ✕
+            </button>
+          </div>
+        )}
+
         {/* Topbar */}
         <Topbar
           activeRoute={activeRoute}
@@ -4068,6 +4157,15 @@ export default function App() {
         onAuthSuccess={(session) => {
           setAdminSession(session);
           setShowAdminLoginModal(false);
+        }}
+      />
+
+      <RootAdminUrlLoginModal
+        isOpen={showRootAdminUrlModal}
+        onClose={() => setShowRootAdminUrlModal(false)}
+        onAuthSuccess={(session, account) => {
+          handleRootAdminLoginSuccess(session, account);
+          setShowRootAdminUrlModal(false);
         }}
       />
     </div>

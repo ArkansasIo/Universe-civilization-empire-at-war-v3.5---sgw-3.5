@@ -21,12 +21,16 @@ import {
   BarChart3,
   Rocket,
   Award,
+  Key,
+  Terminal,
+  Link,
 } from 'lucide-react';
 import { sound } from '../../sound';
-import { PlayerProfile, RaceId } from '../../types';
+import { PlayerProfile, RaceId, AdminAuthSession, AdminCredentialAccount } from '../../types';
 import { RACES, GOVERNMENTS } from '../../gameData';
 import { DevelopmentCreditsView } from '../views/DevelopmentCreditsView';
 import { PatchNotesModal } from '../modals/PatchNotesModal';
+import { RootAdminUrlLoginModal } from '../modals/RootAdminUrlLoginModal';
 
 interface TitleScreenProps {
   profile: PlayerProfile;
@@ -44,6 +48,7 @@ interface TitleScreenProps {
     }
   ) => void;
   onQuickStart: () => void;
+  onRootAdminLogin?: (session: AdminAuthSession, account: AdminCredentialAccount) => void;
 }
 
 export const TitleScreen: React.FC<TitleScreenProps> = ({
@@ -51,11 +56,13 @@ export const TitleScreen: React.FC<TitleScreenProps> = ({
   onLogin,
   onRegister,
   onQuickStart,
+  onRootAdminLogin,
 }) => {
   const [authMode, setAuthMode] = useState<'splash' | 'login' | 'register' | 'servers'>('splash');
   const [regStep, setRegStep] = useState<1 | 2 | 3 | 4>(1);
   const [showCreditsModal, setShowCreditsModal] = useState<boolean>(false);
   const [showPatchModal, setShowPatchModal] = useState<boolean>(false);
+  const [showRootAdminModal, setShowRootAdminModal] = useState<boolean>(false);
   const [patchModalTab, setPatchModalTab] = useState<'update' | 'patch'>('patch');
 
   // Login Form States
@@ -134,6 +141,19 @@ export const TitleScreen: React.FC<TitleScreenProps> = ({
             <span>Lead Architect: <strong className="text-amber-300">Stephen</strong></span>
             <span className="text-[9px] font-black uppercase px-1.5 py-0.2 bg-amber-400 text-black ml-1">Credits</span>
           </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              sound.play('click');
+              setShowRootAdminModal(true);
+            }}
+            className="flex items-center gap-1.5 px-3 py-1 bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 border border-amber-400/50 transition-all cursor-pointer text-xs font-mono font-bold"
+            title="Root Admin URL Login Terminal"
+          >
+            <Key size={13} className="text-amber-400" />
+            <span>Root Admin URL Access</span>
+          </button>
         </div>
       </header>
 
@@ -178,6 +198,17 @@ export const TitleScreen: React.FC<TitleScreenProps> = ({
                   className="w-full sm:w-auto px-8 py-3.5 bg-amber-400 text-black font-bold text-xs uppercase tracking-widest hover:bg-amber-300 transition-colors cursor-pointer"
                 >
                   Register New Empire
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    sound.play('click');
+                    setShowRootAdminModal(true);
+                  }}
+                  className="w-full sm:w-auto px-6 py-3.5 bg-neutral-900 border border-amber-400/50 text-amber-300 font-bold text-xs uppercase tracking-widest hover:bg-neutral-800 transition-colors cursor-pointer flex items-center justify-center gap-2"
+                >
+                  <Key size={14} className="text-amber-400" />
+                  <span>Root Admin URL</span>
                 </button>
                 <button
                   type="button"
@@ -877,6 +908,20 @@ export const TitleScreen: React.FC<TitleScreenProps> = ({
         onOpenCredits={() => {
           setShowPatchModal(false);
           setShowCreditsModal(true);
+        }}
+      />
+
+      {/* Root Admin URL Login & Creation Modal */}
+      <RootAdminUrlLoginModal
+        isOpen={showRootAdminModal}
+        onClose={() => setShowRootAdminModal(false)}
+        onAuthSuccess={(session, account) => {
+          setShowRootAdminModal(false);
+          if (onRootAdminLogin) {
+            onRootAdminLogin(session, account);
+          } else {
+            onLogin(account.username, 'tauri');
+          }
         }}
       />
     </div>

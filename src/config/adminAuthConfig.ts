@@ -391,3 +391,390 @@ export function checkAdminPermission(
   if (session.activeAdmin.role === 'super_admin') return true;
   return session.activeAdmin.permissions.includes(permission);
 }
+
+export function getAllRootAdminAccounts(): AdminCredentialAccount[] {
+  return getAllAdminAccounts().filter((acc) => acc.role === 'super_admin');
+}
+
+export interface CreateRootAdminParams {
+  username?: string;
+  email?: string;
+  loginCode?: string;
+  passcode?: string;
+  securityPin?: string;
+  title?: string;
+}
+
+/**
+ * Creates and persists a new Super Admin / Root Admin account with Level 10 Clearance
+ * and all system permissions.
+ */
+export function createRootAdminAccount(params?: CreateRootAdminParams): AdminCredentialAccount {
+  const customList = getCustomAdminAccounts();
+  const timestamp = Date.now();
+  const id = `admin_root_${timestamp}`;
+
+  const username = params?.username?.trim() || `RootAdmin_${timestamp.toString().slice(-4)}`;
+  const email = params?.email?.trim() || `root_${timestamp.toString().slice(-4)}@universe.stargate`;
+  const loginCode = (params?.loginCode?.trim() || `ROOT-${timestamp.toString().slice(-6)}`).toUpperCase();
+  const passcode = params?.passcode?.trim() || `rootpass_${timestamp.toString().slice(-6)}`;
+  const securityPin = params?.securityPin?.trim() || '0000';
+  const title = params?.title?.trim() || 'Sovereign Root Administrator & Master Archon';
+
+  // Check if an account with this username or login code already exists
+  const existing = getAllAdminAccounts().find(
+    (a) =>
+      a.username.toLowerCase() === username.toLowerCase() ||
+      a.loginCode.toLowerCase() === loginCode.toLowerCase() ||
+      (email && a.email.toLowerCase() === email.toLowerCase())
+  );
+
+  if (existing) {
+    // If existing account is already root, update and return it
+    const updatedAccount: AdminCredentialAccount = {
+      ...existing,
+      passcode: params?.passcode ? params.passcode.trim() : existing.passcode,
+      securityPin: params?.securityPin ? params.securityPin.trim() : existing.securityPin,
+      role: 'super_admin',
+      permissions: ALL_ADMIN_PERMISSIONS,
+    };
+    saveCustomAdminAccount(updatedAccount);
+    addAdminAuditLog({
+      adminUsername: updatedAccount.username,
+      action: 'ROOT_ADMIN_UPDATED',
+      details: `Root Admin account [${updatedAccount.username}] refreshed with super_admin privileges`,
+      status: 'SUCCESS',
+    });
+    return updatedAccount;
+  }
+
+  const newRootAccount: AdminCredentialAccount = {
+    id,
+    username,
+    email,
+    loginCode,
+    passcode,
+    securityPin,
+    role: 'super_admin',
+    title,
+    permissions: ALL_ADMIN_PERMISSIONS,
+  };
+
+  saveCustomAdminAccount(newRootAccount);
+
+  addAdminAuditLog({
+    adminUsername: newRootAccount.username,
+    action: 'ROOT_ADMIN_CREATED',
+    details: `Created new Root Admin Account [${newRootAccount.username}] with full super_admin clearance`,
+    status: 'SUCCESS',
+  });
+
+  return newRootAccount;
+}
+
+export type AdminUrlLoginMode = 'direct' | 'params' | 'magic' | 'create';
+
+export interface GenerateAdminUrlOptions {
+  mode?: AdminUrlLoginMode;
+  tab?: string;
+  baseUrl?: string;
+  includePin?: boolean;
+}
+
+/**
+ * Generates an instant URL to authenticate as a Root Admin account
+ */
+export function generateAdminUrlLogin(
+  account: AdminCredentialAccount,
+  options?: GenerateAdminUrlOptions
+): string {
+  const mode = options?.mode || 'direct';
+  const tab = options?.tab || 'crown';
+  const origin =
+    options?.baseUrl ||
+    (typeof window !== 'undefined' && window.location.origin
+      ? `${window.location.origin}${window.location.pathname}`
+      : 'https://ais-dev-c7i6yvhg3xaoacnmly6yhc-7901660537.us-east1.run.app/');
+
+  const cleanBase = origin.split('?')[0].split('#')[0];
+
+  if (mode === 'direct') {
+    return `${cleanBase}?root_admin=1&admin_key=${encodeURIComponent(account.passcode)}&code=${encodeURIComponent(account.loginCode)}&admin_tab=${tab}`;
+  }
+
+  if (mode === 'params') {
+    const pinPart = options?.includePin ? `&pin=${encodeURIComponent(account.securityPin)}` : '';
+    return `${cleanBase}?admin_login=1&code=${encodeURIComponent(account.loginCode)}&passcode=${encodeURIComponent(account.passcode)}${pinPart}&admin_tab=${tab}`;
+  }
+
+  if (mode === 'magic') {
+    const payload = {
+      u: account.username,
+      c: account.loginCode,
+      p: account.passcode,
+      pin: account.securityPin,
+      t: Date.now(),
+      exp: Date.now() + 86400000 * 30, // 30-day validity
+    };
+    const token = typeof btoa === 'function' ? btoa(JSON.stringify(payload)) : '';
+    return `${cleanBase}?magic_token=${encodeURIComponent(token)}&admin_tab=${tab}`;
+  }
+
+  if (mode === 'create') {
+    return `${cleanBase}?create_root=1&username=${encodeURIComponent(account.username)}&email=${encodeURIComponent(account.email)}&code=${encodeURIComponent(account.loginCode)}&passcode=${encodeURIComponent(account.passcode)}&pin=${encodeURIComponent(account.securityPin)}&admin_tab=${tab}`;
+  }
+
+  return `${cleanBase}?root_admin=1&code=${encodeURIComponent(account.loginCode)}&admin_tab=${tab}`;
+}
+
+export interface UrlLoginResult {
+  success: boolean;
+  account?: AdminCredentialAccount;
+  session?: AdminAuthSession;
+  message?: string;
+  targetTab?: string;
+  created?: boolean;
+}
+
+/**
+ * Analyzes the browser URL query string and hash fragment for Root Admin Login commands
+ */
+export function processUrlAdminLogin(searchStr?: string, hashStr?: string): UrlLoginResult {
+  if (typeof window === 'undefined' && !searchStr && !hashStr) {
+    return { success: false };
+  }
+
+  const query = searchStr !== undefined ? searchStr : (window.location.search || '');
+  const hash = hashStr !== undefined ? hashStr : (window.location.hash || '');
+
+  const params = new URLSearchParams(query.startsWith('?') ? query.slice(1) : query);
+
+  // Also parse hash parameters if query params didn't have admin instructions
+  if (!params.has('admin_login') && !params.has('root_admin') && !params.has('create_root') && !params.has('admin_key') && !params.has('magic_token')) {
+    if (hash && hash.includes('=')) {
+      const hashContent = hash.startsWith('#') ? hash.slice(1) : hash;
+      const hashParams = new URLSearchParams(hashContent);
+      hashParams.forEach((v, k) => params.set(k, v));
+    }
+  }
+
+  const targetTab = params.get('admin_tab') || params.get('tab') || 'crown';
+
+  // 1. Case: CREATE ROOT ADMIN FROM URL (?create_root=1&username=...&passcode=...)
+  const isCreateRoot =
+    params.get('create_root') === '1' ||
+    params.get('create_root_admin') === '1' ||
+    params.get('create_admin') === 'root';
+
+  if (isCreateRoot) {
+    const username = params.get('username') || params.get('user') || 'Stargate_Root_Admin';
+    const email = params.get('email') || 's.sstargate@gmail.com';
+    const loginCode = params.get('code') || params.get('loginCode') || 'ROOT-SGW-0001';
+    const passcode = params.get('passcode') || params.get('password') || params.get('pass') || 'stargateRoot2026';
+    const securityPin = params.get('pin') || params.get('securityPin') || '0001';
+    const title = params.get('title') || 'Master Universe Civilization Root Admin';
+
+    const rootAccount = createRootAdminAccount({
+      username,
+      email,
+      loginCode,
+      passcode,
+      securityPin,
+      title,
+    });
+
+    const session: AdminAuthSession = {
+      isAuthenticated: true,
+      activeAdmin: rootAccount,
+      authenticatedAt: new Date().toISOString(),
+      securityClearanceLevel: 5,
+    };
+
+    setAdminAuthSession(session);
+
+    addAdminAuditLog({
+      adminUsername: rootAccount.username,
+      action: 'ADMIN_URL_CREATE_AND_LOGIN',
+      details: `Root Admin account dynamically created and authenticated via URL invocation [Clearance Level 5]`,
+      status: 'SUCCESS',
+    });
+
+    return {
+      success: true,
+      account: rootAccount,
+      session,
+      message: `Root Admin account "${rootAccount.username}" created and authenticated via URL.`,
+      targetTab,
+      created: true,
+    };
+  }
+
+  // 2. Case: MAGIC TOKEN LOGIN (?magic_token=... or ?admin_magic_token=...)
+  const magicToken = params.get('magic_token') || params.get('admin_magic_token');
+  if (magicToken) {
+    try {
+      const decodedStr = typeof atob === 'function' ? atob(decodeURIComponent(magicToken)) : '';
+      if (decodedStr) {
+        const payload = JSON.parse(decodedStr);
+        if (payload && (payload.c || payload.u)) {
+          // Check expiration
+          if (payload.exp && Date.now() > payload.exp) {
+            return {
+              success: false,
+              message: 'Root Admin Magic Link Token has expired. Please generate a new URL.',
+            };
+          }
+
+          const allAccounts = getAllAdminAccounts();
+          let matched = allAccounts.find(
+            (a) =>
+              (payload.c && a.loginCode.toLowerCase() === payload.c.toLowerCase()) ||
+              (payload.u && a.username.toLowerCase() === payload.u.toLowerCase())
+          );
+
+          if (!matched && payload.p) {
+            // Provision the root account from the magic token payload if not in storage
+            matched = createRootAdminAccount({
+              username: payload.u,
+              loginCode: payload.c,
+              passcode: payload.p,
+              securityPin: payload.pin || '0000',
+            });
+          }
+
+          if (matched) {
+            const session: AdminAuthSession = {
+              isAuthenticated: true,
+              activeAdmin: matched,
+              authenticatedAt: new Date().toISOString(),
+              securityClearanceLevel: 5,
+            };
+            setAdminAuthSession(session);
+            addAdminAuditLog({
+              adminUsername: matched.username,
+              action: 'ADMIN_URL_MAGIC_LOGIN',
+              details: `Root Admin authenticated via encrypted Magic Token URL`,
+              status: 'SUCCESS',
+            });
+
+            return {
+              success: true,
+              account: matched,
+              session,
+              message: `Root Admin "${matched.username}" authenticated via Magic URL Token.`,
+              targetTab,
+            };
+          }
+        }
+      }
+    } catch (e) {
+      console.error('Failed to parse magic admin token', e);
+    }
+  }
+
+  // 3. Case: DIRECT ROOT KEY OR TOKEN LOGIN (?admin_key=... or ?root_key=...)
+  const adminKey = params.get('admin_key') || params.get('root_key') || params.get('admin_token');
+  if (adminKey) {
+    const keyVal = adminKey.trim();
+    const allAccounts = getAllAdminAccounts();
+    // Prioritize super_admin accounts
+    const matched =
+      allAccounts.find((a) => a.role === 'super_admin' && (a.passcode === keyVal || a.loginCode === keyVal)) ||
+      allAccounts.find((a) => a.passcode === keyVal || a.loginCode === keyVal);
+
+    if (matched) {
+      const session: AdminAuthSession = {
+        isAuthenticated: true,
+        activeAdmin: matched,
+        authenticatedAt: new Date().toISOString(),
+        securityClearanceLevel: matched.role === 'super_admin' ? 5 : 4,
+      };
+      setAdminAuthSession(session);
+      addAdminAuditLog({
+        adminUsername: matched.username,
+        action: 'ADMIN_URL_KEY_LOGIN',
+        details: `Admin authenticated via Direct Security Key URL parameter`,
+        status: 'SUCCESS',
+      });
+
+      return {
+        success: true,
+        account: matched,
+        session,
+        message: `Admin "${matched.username}" authenticated via Security Key URL.`,
+        targetTab,
+      };
+    }
+  }
+
+  // 4. Case: STANDARD ADMIN LOGIN VIA URL (?admin_login=1 or ?root_admin=1)
+  const isAdminLogin =
+    params.get('admin_login') === '1' ||
+    params.get('root_admin') === '1' ||
+    params.get('root_login') === '1' ||
+    params.get('autologin_root') === '1';
+
+  if (isAdminLogin) {
+    const code = params.get('code') || params.get('loginCode') || params.get('user') || params.get('username');
+    const passcode = params.get('passcode') || params.get('pass') || params.get('password');
+    const pin = params.get('pin') || params.get('securityPin');
+
+    if (code && passcode) {
+      const matched = validateAdminCredentials(code, passcode, pin || undefined);
+      if (matched) {
+        const session: AdminAuthSession = {
+          isAuthenticated: true,
+          activeAdmin: matched,
+          authenticatedAt: new Date().toISOString(),
+          securityClearanceLevel: matched.role === 'super_admin' ? 5 : 4,
+        };
+        setAdminAuthSession(session);
+        addAdminAuditLog({
+          adminUsername: matched.username,
+          action: 'ADMIN_URL_CREDENTIALS_LOGIN',
+          details: `Admin authenticated via URL query credentials`,
+          status: 'SUCCESS',
+        });
+
+        return {
+          success: true,
+          account: matched,
+          session,
+          message: `Admin "${matched.username}" authenticated via URL credentials.`,
+          targetTab,
+        };
+      }
+    } else if (params.get('autologin_root') === '1' || params.get('root_admin') === '1') {
+      // 1-Click Autologin to canonical primary root admin
+      const rootAcc =
+        getAllAdminAccounts().find((a) => a.id === 'admin_sstargate_root') ||
+        getAllAdminAccounts().find((a) => a.id === 'admin_systems_root') ||
+        CANONICAL_ADMIN_ACCOUNTS[0];
+
+      const session: AdminAuthSession = {
+        isAuthenticated: true,
+        activeAdmin: rootAcc,
+        authenticatedAt: new Date().toISOString(),
+        securityClearanceLevel: 5,
+      };
+      setAdminAuthSession(session);
+      addAdminAuditLog({
+        adminUsername: rootAcc.username,
+        action: 'ADMIN_URL_AUTOLOGIN_ROOT',
+        details: `Root Admin 1-Click Sovereign autologin invoked via URL`,
+        status: 'SUCCESS',
+      });
+
+      return {
+        success: true,
+        account: rootAcc,
+        session,
+        message: `Sovereign Root Administrator "${rootAcc.username}" authenticated via 1-Click Root URL.`,
+        targetTab,
+      };
+    }
+  }
+
+  return { success: false };
+}
+

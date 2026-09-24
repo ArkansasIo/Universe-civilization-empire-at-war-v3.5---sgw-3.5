@@ -11,6 +11,9 @@ import {
   Sparkles,
   ArrowRight,
   Filter,
+  Plus,
+  Minus,
+  Activity,
 } from 'lucide-react';
 import { sound } from '../../sound';
 import { PlayerResources } from '../../types';
@@ -86,12 +89,24 @@ export const TrainingView: React.FC<TrainingViewProps> = ({
   };
 
   const setQuickAmount = (type: string, val: number) => {
+    sound.play('click');
     setTrainAmounts((prev) => ({ ...prev, [type]: Math.max(1, val) }));
   };
 
   const setMaxAmount = (type: string, costPerUnit: number = 1) => {
+    sound.play('click');
     const maxAvailable = Math.floor((resources.untrainedUnits ?? 0) / costPerUnit);
     setTrainAmounts((prev) => ({ ...prev, [type]: Math.max(1, maxAvailable) }));
+  };
+
+  const adjustAmount = (type: string, delta: number, costPerUnit: number = 1) => {
+    sound.play('click');
+    const maxAvailable = Math.max(1, Math.floor((resources.untrainedUnits ?? 0) / costPerUnit));
+    setTrainAmounts((prev) => {
+      const current = prev[type] || 1;
+      const next = Math.min(maxAvailable, Math.max(1, current + delta));
+      return { ...prev, [type]: next };
+    });
   };
 
   return (
@@ -205,251 +220,324 @@ export const TrainingView: React.FC<TrainingViewProps> = ({
 
       {/* Training Roles Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {/* Attack Troops */}
-        {(selectedFilter === 'all' || selectedFilter === 'combat') && (
-          <div className="border border-[#dedede] bg-white p-5 space-y-3 shadow-2xs">
-            <div className="flex items-center justify-between border-b border-[#eeeeee] pb-2">
-              <div className="flex items-center gap-2">
-                <Crosshair size={16} className="text-rose-600" />
-                <strong className="text-xs font-bold text-[#111111] uppercase font-mono">Attack Troops</strong>
-              </div>
-              <span className="font-mono text-xs font-bold text-rose-700">{resources.attackUnits.toLocaleString()} active</span>
-            </div>
-            <p className="text-[11px] text-[#666666] min-h-[32px]">
-              Frontline shock troops that pilot boarding craft and execute ground invasions on enemy worlds.
-            </p>
-            <div className="flex items-center gap-1 text-[10px] font-mono text-[#888888]">
-              <span>Quick:</span>
-              <button type="button" onClick={() => setQuickAmount('attack', 10)} className="px-1.5 py-0.5 bg-neutral-100 hover:bg-neutral-200">10</button>
-              <button type="button" onClick={() => setQuickAmount('attack', 50)} className="px-1.5 py-0.5 bg-neutral-100 hover:bg-neutral-200">50</button>
-              <button type="button" onClick={() => setQuickAmount('attack', 250)} className="px-1.5 py-0.5 bg-neutral-100 hover:bg-neutral-200">250</button>
-              <button type="button" onClick={() => setMaxAmount('attack')} className="px-1.5 py-0.5 bg-neutral-100 hover:bg-neutral-200 font-bold text-[#111111]">Max</button>
-            </div>
-            <div className="flex gap-2">
-              <input
-                type="number"
-                min="1"
-                max={resources.untrainedUnits}
-                value={trainAmounts.attack}
-                onChange={(e) => setAmount('attack', parseInt(e.target.value, 10) || 1)}
-                className="w-24 border border-[#cccccc] px-2 py-1 text-xs font-mono"
-              />
-              <button
-                type="button"
-                onClick={() => handleTrain('attack')}
-                disabled={resources.untrainedUnits < trainAmounts.attack}
-                className="flex-1 py-1.5 bg-[#111111] text-white text-xs font-bold uppercase hover:bg-[#333333] disabled:opacity-50 font-mono cursor-pointer"
-              >
-                Enlist Troops
-              </button>
-            </div>
-          </div>
-        )}
+        {[
+          {
+            key: 'attack' as const,
+            category: 'combat' as const,
+            code: 'DIV-01 // ASSAULT',
+            name: 'Assault Shock Troops',
+            subtitle: 'Orbital Dropship Boarding Infantry',
+            icon: Crosshair,
+            accentColor: 'text-rose-600',
+            borderHover: 'hover:border-rose-400',
+            bgIcon: 'bg-rose-50 border-rose-200 text-rose-700',
+            badgeBg: 'bg-rose-50 text-rose-800 border-rose-200',
+            status: 'COMBAT READY',
+            activeCount: resources.attackUnits ?? 0,
+            costPerUnit: 1,
+            costLabel: '1 recruit / troop',
+            description: 'Frontline shock assault divisions engineered for high-risk planetary drops, hostile warship boarding operations, and fortress breaches.',
+            metrics: [
+              { label: 'BOARDING IMPACT', value: '+120% Force Rating', sub: 'Shock Troops' },
+              { label: 'TACTICAL DOCTRINE', value: 'Drop Insertion', sub: 'Heavy Infantry' },
+            ],
+            presets: [25, 100, 500, 2500],
+            btnText: 'Enlist Assault Troops',
+          },
+          {
+            key: 'defense' as const,
+            category: 'combat' as const,
+            code: 'DIV-02 // GARRISON',
+            name: 'Planetary Defense Garrison',
+            subtitle: 'Hardened Citadel & Shield Guards',
+            icon: Shield,
+            accentColor: 'text-blue-600',
+            borderHover: 'hover:border-blue-400',
+            bgIcon: 'bg-blue-50 border-blue-200 text-blue-700',
+            badgeBg: 'bg-blue-50 text-blue-800 border-blue-200',
+            status: 'FORTIFIED',
+            activeCount: resources.defenseUnits ?? 0,
+            costPerUnit: 1,
+            costLabel: '1 recruit / guard',
+            description: 'Entrenched defensive sentinels stationed within fortified planetary bunkers, heavy energy shield arrays, and stargate access redoubts.',
+            metrics: [
+              { label: 'CITADEL RESISTANCE', value: '+150% Bunker Armor', sub: 'Hardened Array' },
+              { label: 'TACTICAL DOCTRINE', value: 'Chokepoint Defense', sub: 'Phalanx Shield' },
+            ],
+            presets: [25, 100, 500, 2500],
+            btnText: 'Deploy Garrison Guards',
+          },
+          {
+            key: 'miners' as const,
+            category: 'miners' as const,
+            code: 'DIV-03 // EXTRACTION',
+            name: 'Naquadah Core Miners',
+            subtitle: 'Geothermal Magma Drill Operatives',
+            icon: Pickaxe,
+            accentColor: 'text-amber-600',
+            borderHover: 'hover:border-amber-400',
+            bgIcon: 'bg-amber-50 border-amber-200 text-amber-700',
+            badgeBg: 'bg-amber-50 text-amber-800 border-amber-200',
+            status: 'DRILLING ACTIVE',
+            activeCount: resources.miners ?? 0,
+            costPerUnit: 1,
+            costLabel: '1 recruit / miner',
+            description: 'Industrial drilling specialists operating seismic magma extraction rigs deep within planetary crusts to extract refined weapon-grade liquid Naquadah.',
+            metrics: [
+              { label: 'EXTRACTION YIELD', value: '+80 NQ / turn', sub: 'Per drill operative' },
+              { label: 'TOTAL WORKFORCE', value: `+${((resources.miners ?? 0) * 80).toLocaleString()} NQ/t`, sub: 'Current economy yield' },
+            ],
+            presets: [25, 100, 500, 2500],
+            btnText: 'Assign Drill Miners',
+          },
+          {
+            key: 'spies' as const,
+            category: 'espionage' as const,
+            code: 'DIV-04 // INTELLIGENCE',
+            name: 'Covert Infiltration Spies',
+            subtitle: 'Phase-Cloaked Espionage Syndicate',
+            icon: Eye,
+            accentColor: 'text-purple-600',
+            borderHover: 'hover:border-purple-400',
+            bgIcon: 'bg-purple-50 border-purple-200 text-purple-700',
+            badgeBg: 'bg-purple-50 text-purple-800 border-purple-200',
+            status: 'COVERT OPS ACTIVE',
+            activeCount: resources.spies ?? 0,
+            costPerUnit: 1,
+            costLabel: '1 recruit / operative',
+            description: 'Subterfuge operatives fitted with phase-shifting cloaks and subspace sniffers to scout enemy fleets, monitor communications, and sabotage rival tech.',
+            metrics: [
+              { label: 'PHASE CLOAK FIDELITY', value: '96.4% Index', sub: 'Deep infiltration' },
+              { label: 'TACTICAL DOCTRINE', value: 'Signal Intercept', sub: 'Covert Sabotage' },
+            ],
+            presets: [5, 20, 100, 500],
+            btnText: 'Deploy Intelligence Agents',
+          },
+          {
+            key: 'antiSpies' as const,
+            category: 'espionage' as const,
+            code: 'DIV-05 // COUNTER-INTEL',
+            name: 'Counter-Intelligence Marshals',
+            subtitle: 'Stargate Iris Interception Command',
+            icon: ShieldAlert,
+            accentColor: 'text-indigo-600',
+            borderHover: 'hover:border-indigo-400',
+            bgIcon: 'bg-indigo-50 border-indigo-200 text-indigo-700',
+            badgeBg: 'bg-indigo-50 text-indigo-800 border-indigo-200',
+            status: 'SCANNING VORTEX',
+            activeCount: resources.antiSpies ?? 0,
+            costPerUnit: 1,
+            costLabel: '1 recruit / marshal',
+            description: 'Homeland security forces and Iris vortex scanners monitoring incoming wormhole worm signatures to detect, expose, and neutralize alien spies.',
+            metrics: [
+              { label: 'INTERCEPT RATE', value: '98.8% Protocol', sub: 'Iris gate security' },
+              { label: 'TACTICAL DOCTRINE', value: 'Counter-Espionage', sub: 'Jamming Sweep' },
+            ],
+            presets: [5, 20, 100, 500],
+            btnText: 'Station Counter-Intel',
+          },
+          {
+            key: 'superUnits' as const,
+            category: 'super' as const,
+            code: 'DIV-06 // APEX SYNTHESIS',
+            name: 'Bio-Engineered Super Units',
+            subtitle: 'Kull Hybrid / Asgard Battle Titans',
+            icon: Zap,
+            accentColor: 'text-amber-500',
+            borderHover: 'hover:border-amber-400',
+            bgIcon: 'bg-amber-50 border-amber-300 text-amber-600',
+            badgeBg: 'bg-amber-100 text-amber-900 border-amber-300',
+            status: 'APEX GENOME READY',
+            activeCount: resources.superUnits ?? 0,
+            costPerUnit: 5,
+            costLabel: '5 recruits / apex unit',
+            description: 'Genetically synthesized biomechanical juggernauts engineered with ancient telepathic nanites and hyper-dense armor plating to dominate combat theaters.',
+            metrics: [
+              { label: 'FORCE MULTIPLIER', value: '5× Heavy Ratio', sub: 'Consumes 5 recruits' },
+              { label: 'TACTICAL DOCTRINE', value: 'Titan Annihilation', sub: 'Hull Breaching Apex' },
+            ],
+            presets: [1, 5, 25, 100],
+            btnText: 'Synthesize Apex Units',
+          },
+        ].map((division) => {
+          if (selectedFilter !== 'all' && selectedFilter !== division.category) {
+            return null;
+          }
 
-        {/* Defense Troops */}
-        {(selectedFilter === 'all' || selectedFilter === 'combat') && (
-          <div className="border border-[#dedede] bg-white p-5 space-y-3 shadow-2xs">
-            <div className="flex items-center justify-between border-b border-[#eeeeee] pb-2">
-              <div className="flex items-center gap-2">
-                <Shield size={16} className="text-blue-600" />
-                <strong className="text-xs font-bold text-[#111111] uppercase font-mono">Defense Troops</strong>
-              </div>
-              <span className="font-mono text-xs font-bold text-blue-700">{resources.defenseUnits.toLocaleString()} active</span>
-            </div>
-            <p className="text-[11px] text-[#666666] min-h-[32px]">
-              Stationary garrison guards defending bunker perimeters, planetary shields, and stargate blast doors.
-            </p>
-            <div className="flex items-center gap-1 text-[10px] font-mono text-[#888888]">
-              <span>Quick:</span>
-              <button type="button" onClick={() => setQuickAmount('defense', 10)} className="px-1.5 py-0.5 bg-neutral-100 hover:bg-neutral-200">10</button>
-              <button type="button" onClick={() => setQuickAmount('defense', 50)} className="px-1.5 py-0.5 bg-neutral-100 hover:bg-neutral-200">50</button>
-              <button type="button" onClick={() => setQuickAmount('defense', 250)} className="px-1.5 py-0.5 bg-neutral-100 hover:bg-neutral-200">250</button>
-              <button type="button" onClick={() => setMaxAmount('defense')} className="px-1.5 py-0.5 bg-neutral-100 hover:bg-neutral-200 font-bold text-[#111111]">Max</button>
-            </div>
-            <div className="flex gap-2">
-              <input
-                type="number"
-                min="1"
-                max={resources.untrainedUnits}
-                value={trainAmounts.defense}
-                onChange={(e) => setAmount('defense', parseInt(e.target.value, 10) || 1)}
-                className="w-24 border border-[#cccccc] px-2 py-1 text-xs font-mono"
-              />
-              <button
-                type="button"
-                onClick={() => handleTrain('defense')}
-                disabled={resources.untrainedUnits < trainAmounts.defense}
-                className="flex-1 py-1.5 bg-[#111111] text-white text-xs font-bold uppercase hover:bg-[#333333] disabled:opacity-50 font-mono cursor-pointer"
-              >
-                Deploy Guards
-              </button>
-            </div>
-          </div>
-        )}
+          const targetCount = trainAmounts[division.key] || 1;
+          const requiredRecruits = targetCount * division.costPerUnit;
+          const canEnlist = (resources.untrainedUnits ?? 0) >= requiredRecruits && targetCount > 0;
+          const maxPossible = Math.floor((resources.untrainedUnits ?? 0) / division.costPerUnit);
+          const DivIcon = division.icon;
 
-        {/* Industrial Miners */}
-        {(selectedFilter === 'all' || selectedFilter === 'miners') && (
-          <div className="border border-[#dedede] bg-white p-5 space-y-3 shadow-2xs">
-            <div className="flex items-center justify-between border-b border-[#eeeeee] pb-2">
-              <div className="flex items-center gap-2">
-                <Pickaxe size={16} className="text-amber-600" />
-                <strong className="text-xs font-bold text-[#111111] uppercase font-mono">Naquadah Miners</strong>
-              </div>
-              <span className="font-mono text-xs font-bold text-amber-700">{resources.miners.toLocaleString()} active</span>
-            </div>
-            <p className="text-[11px] text-[#666666] min-h-[32px]">
-              Specialized deep-core drill engineers extracting liquid Naquadah ore (+80 NQ/turn per miner).
-            </p>
-            <div className="flex items-center gap-1 text-[10px] font-mono text-[#888888]">
-              <span>Quick:</span>
-              <button type="button" onClick={() => setQuickAmount('miners', 10)} className="px-1.5 py-0.5 bg-neutral-100 hover:bg-neutral-200">10</button>
-              <button type="button" onClick={() => setQuickAmount('miners', 50)} className="px-1.5 py-0.5 bg-neutral-100 hover:bg-neutral-200">50</button>
-              <button type="button" onClick={() => setQuickAmount('miners', 250)} className="px-1.5 py-0.5 bg-neutral-100 hover:bg-neutral-200">250</button>
-              <button type="button" onClick={() => setMaxAmount('miners')} className="px-1.5 py-0.5 bg-neutral-100 hover:bg-neutral-200 font-bold text-[#111111]">Max</button>
-            </div>
-            <div className="flex gap-2">
-              <input
-                type="number"
-                min="1"
-                max={resources.untrainedUnits}
-                value={trainAmounts.miners}
-                onChange={(e) => setAmount('miners', parseInt(e.target.value, 10) || 1)}
-                className="w-24 border border-[#cccccc] px-2 py-1 text-xs font-mono"
-              />
-              <button
-                type="button"
-                onClick={() => handleTrain('miners')}
-                disabled={resources.untrainedUnits < trainAmounts.miners}
-                className="flex-1 py-1.5 bg-[#111111] text-white text-xs font-bold uppercase hover:bg-[#333333] disabled:opacity-50 font-mono cursor-pointer"
-              >
-                Assign Drillers
-              </button>
-            </div>
-          </div>
-        )}
+          return (
+            <div
+              key={division.key}
+              className={`border border-[#dedede] ${division.borderHover} bg-white p-5 flex flex-col justify-between transition-all duration-150 shadow-xs hover:shadow-sm group`}
+            >
+              {/* Card Header & Designation */}
+              <div className="space-y-3">
+                <div className="flex items-center justify-between border-b border-[#eeeeee] pb-2.5">
+                  <div className="flex items-center gap-2">
+                    <div className={`p-1.5 border ${division.bgIcon}`}>
+                      <DivIcon size={16} />
+                    </div>
+                    <div>
+                      <span className="text-[9px] font-mono font-bold text-[#888888] tracking-widest uppercase block">
+                        {division.code}
+                      </span>
+                      <h4 className="text-xs font-bold text-[#111111] uppercase tracking-wide">
+                        {division.name}
+                      </h4>
+                    </div>
+                  </div>
 
-        {/* Spies */}
-        {(selectedFilter === 'all' || selectedFilter === 'espionage') && (
-          <div className="border border-[#dedede] bg-white p-5 space-y-3 shadow-2xs">
-            <div className="flex items-center justify-between border-b border-[#eeeeee] pb-2">
-              <div className="flex items-center gap-2">
-                <Eye size={16} className="text-purple-600" />
-                <strong className="text-xs font-bold text-[#111111] uppercase font-mono">Covert Spies</strong>
-              </div>
-              <span className="font-mono text-xs font-bold text-purple-700">{resources.spies.toLocaleString()} active</span>
-            </div>
-            <p className="text-[11px] text-[#666666] min-h-[32px]">
-              Espionage operatives trained in phase cloak camouflage, signal interception, and covert surveillance.
-            </p>
-            <div className="flex items-center gap-1 text-[10px] font-mono text-[#888888]">
-              <span>Quick:</span>
-              <button type="button" onClick={() => setQuickAmount('spies', 5)} className="px-1.5 py-0.5 bg-neutral-100 hover:bg-neutral-200">5</button>
-              <button type="button" onClick={() => setQuickAmount('spies', 20)} className="px-1.5 py-0.5 bg-neutral-100 hover:bg-neutral-200">20</button>
-              <button type="button" onClick={() => setQuickAmount('spies', 100)} className="px-1.5 py-0.5 bg-neutral-100 hover:bg-neutral-200">100</button>
-              <button type="button" onClick={() => setMaxAmount('spies')} className="px-1.5 py-0.5 bg-neutral-100 hover:bg-neutral-200 font-bold text-[#111111]">Max</button>
-            </div>
-            <div className="flex gap-2">
-              <input
-                type="number"
-                min="1"
-                max={resources.untrainedUnits}
-                value={trainAmounts.spies}
-                onChange={(e) => setAmount('spies', parseInt(e.target.value, 10) || 1)}
-                className="w-24 border border-[#cccccc] px-2 py-1 text-xs font-mono"
-              />
-              <button
-                type="button"
-                onClick={() => handleTrain('spies')}
-                disabled={resources.untrainedUnits < trainAmounts.spies}
-                className="flex-1 py-1.5 bg-[#111111] text-white text-xs font-bold uppercase hover:bg-[#333333] disabled:opacity-50 font-mono cursor-pointer"
-              >
-                Train Agents
-              </button>
-            </div>
-          </div>
-        )}
+                  <div className="text-right">
+                    <span className="text-[8px] font-mono text-[#888888] uppercase block tracking-wider">
+                      IN SERVICE
+                    </span>
+                    <span className="font-mono text-sm font-black text-[#111111]">
+                      {division.activeCount.toLocaleString()}
+                    </span>
+                  </div>
+                </div>
 
-        {/* Anti-Spies */}
-        {(selectedFilter === 'all' || selectedFilter === 'espionage') && (
-          <div className="border border-[#dedede] bg-white p-5 space-y-3 shadow-2xs">
-            <div className="flex items-center justify-between border-b border-[#eeeeee] pb-2">
-              <div className="flex items-center gap-2">
-                <ShieldAlert size={16} className="text-indigo-600" />
-                <strong className="text-xs font-bold text-[#111111] uppercase font-mono">Counter-Intel</strong>
-              </div>
-              <span className="font-mono text-xs font-bold text-indigo-700">{resources.antiSpies.toLocaleString()} active</span>
-            </div>
-            <p className="text-[11px] text-[#666666] min-h-[32px]">
-              Homeland security agents monitoring stargate wormholes to detect and neutralize foreign spies.
-            </p>
-            <div className="flex items-center gap-1 text-[10px] font-mono text-[#888888]">
-              <span>Quick:</span>
-              <button type="button" onClick={() => setQuickAmount('antiSpies', 5)} className="px-1.5 py-0.5 bg-neutral-100 hover:bg-neutral-200">5</button>
-              <button type="button" onClick={() => setQuickAmount('antiSpies', 20)} className="px-1.5 py-0.5 bg-neutral-100 hover:bg-neutral-200">20</button>
-              <button type="button" onClick={() => setQuickAmount('antiSpies', 100)} className="px-1.5 py-0.5 bg-neutral-100 hover:bg-neutral-200">100</button>
-              <button type="button" onClick={() => setMaxAmount('antiSpies')} className="px-1.5 py-0.5 bg-neutral-100 hover:bg-neutral-200 font-bold text-[#111111]">Max</button>
-            </div>
-            <div className="flex gap-2">
-              <input
-                type="number"
-                min="1"
-                max={resources.untrainedUnits}
-                value={trainAmounts.antiSpies}
-                onChange={(e) => setAmount('antiSpies', parseInt(e.target.value, 10) || 1)}
-                className="w-24 border border-[#cccccc] px-2 py-1 text-xs font-mono"
-              />
-              <button
-                type="button"
-                onClick={() => handleTrain('antiSpies')}
-                disabled={resources.untrainedUnits < trainAmounts.antiSpies}
-                className="flex-1 py-1.5 bg-[#111111] text-white text-xs font-bold uppercase hover:bg-[#333333] disabled:opacity-50 font-mono cursor-pointer"
-              >
-                Deploy Patrol
-              </button>
-            </div>
-          </div>
-        )}
+                {/* Subtitle & Status indicator */}
+                <div className="flex items-center justify-between text-[10px] font-mono">
+                  <span className="text-[#666666] font-medium">{division.subtitle}</span>
+                  <span className="inline-flex items-center gap-1.5 px-1.5 py-0.5 border border-[#e5e5e5] bg-[#fafafa] text-[#444444] text-[9px] font-semibold">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span>{division.status}</span>
+                  </span>
+                </div>
 
-        {/* Super Units */}
-        {(selectedFilter === 'all' || selectedFilter === 'super') && (
-          <div className="border border-[#dedede] bg-white p-5 space-y-3 shadow-2xs">
-            <div className="flex items-center justify-between border-b border-[#eeeeee] pb-2">
-              <div className="flex items-center gap-2">
-                <Zap size={16} className="text-amber-500" />
-                <strong className="text-xs font-bold text-[#111111] uppercase font-mono">Super Units</strong>
+                {/* Description */}
+                <p className="text-[11px] text-[#555555] leading-relaxed min-h-[38px]">
+                  {division.description}
+                </p>
+
+                {/* Tactical Specifications / Doctrine Grid */}
+                <div className="grid grid-cols-2 gap-2 pt-1 font-mono text-[10px]">
+                  {division.metrics.map((m, idx) => (
+                    <div
+                      key={idx}
+                      className="border border-[#ededed] bg-[#fcfcfc] p-2 flex flex-col justify-between"
+                    >
+                      <span className="text-[8px] font-bold text-[#777777] uppercase tracking-wider truncate">
+                        {m.label}
+                      </span>
+                      <strong className="text-[11px] font-bold text-[#111111] mt-0.5 truncate">
+                        {m.value}
+                      </strong>
+                      <span className="text-[8px] text-[#999999] truncate">{m.sub}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
-              <span className="font-mono text-xs font-bold text-amber-600">{resources.superUnits.toLocaleString()} active</span>
+
+              {/* Commissioning Controls */}
+              <div className="space-y-3 pt-4 mt-3 border-t border-[#eeeeee]">
+                {/* Quick Preset Buttons */}
+                <div className="flex items-center justify-between gap-1 text-[10px] font-mono">
+                  <span className="text-[9px] font-bold text-[#777777] uppercase tracking-wider shrink-0">
+                    Quick:
+                  </span>
+                  <div className="flex items-center gap-1 flex-wrap justify-end">
+                    {division.presets.map((val) => (
+                      <button
+                        key={val}
+                        type="button"
+                        onClick={() => setQuickAmount(division.key, val)}
+                        className={`px-2 py-0.5 border text-[10px] font-bold transition-all cursor-pointer ${
+                          targetCount === val
+                            ? 'bg-[#111111] text-amber-400 border-[#111111]'
+                            : 'border-[#dedede] bg-[#f9f9f9] text-[#555555] hover:bg-[#111111] hover:text-white hover:border-[#111111]'
+                        }`}
+                      >
+                        +{val}
+                      </button>
+                    ))}
+                    <button
+                      type="button"
+                      onClick={() => setMaxAmount(division.key, division.costPerUnit)}
+                      className="px-2 py-0.5 border border-[#111111] bg-[#111111] text-white hover:bg-neutral-800 text-[10px] font-bold transition-colors cursor-pointer"
+                    >
+                      MAX
+                    </button>
+                  </div>
+                </div>
+
+                {/* Quantity Stepper & Numerical Input */}
+                <div className="flex items-center gap-1.5">
+                  <button
+                    type="button"
+                    title="Decrease by 1"
+                    onClick={() => adjustAmount(division.key, -1, division.costPerUnit)}
+                    disabled={targetCount <= 1}
+                    className="p-2 border border-[#dedede] bg-[#fafafa] hover:bg-[#eeeeee] disabled:opacity-40 text-[#111111] transition-colors cursor-pointer shrink-0"
+                  >
+                    <Minus size={13} />
+                  </button>
+
+                  <div className="relative flex-1">
+                    <input
+                      type="number"
+                      min="1"
+                      max={Math.max(1, maxPossible)}
+                      value={targetCount}
+                      onChange={(e) =>
+                        setAmount(division.key, parseInt(e.target.value, 10) || 1)
+                      }
+                      className="w-full border border-[#cccccc] focus:border-[#111111] px-3 py-1.5 text-xs font-mono font-bold text-center bg-white outline-none"
+                    />
+                    <span className="absolute right-2 top-2 text-[9px] font-mono text-[#888888] pointer-events-none">
+                      UNITS
+                    </span>
+                  </div>
+
+                  <button
+                    type="button"
+                    title="Increase by 1"
+                    onClick={() => adjustAmount(division.key, 1, division.costPerUnit)}
+                    disabled={targetCount >= maxPossible}
+                    className="p-2 border border-[#dedede] bg-[#fafafa] hover:bg-[#eeeeee] disabled:opacity-40 text-[#111111] transition-colors cursor-pointer shrink-0"
+                  >
+                    <Plus size={13} />
+                  </button>
+                </div>
+
+                {/* Cost Calculation Readout */}
+                <div className="flex items-center justify-between text-[10px] font-mono px-0.5">
+                  <span className="text-[#666666]">
+                    Rate: <strong className="text-[#111111]">{division.costLabel}</strong>
+                  </span>
+                  <span
+                    className={
+                      canEnlist ? 'text-emerald-700 font-bold' : 'text-rose-600 font-bold'
+                    }
+                  >
+                    Requires: {requiredRecruits.toLocaleString()} Pop
+                  </span>
+                </div>
+
+                {/* Primary Action Button */}
+                <button
+                  type="button"
+                  onClick={() => handleTrain(division.key)}
+                  disabled={!canEnlist}
+                  className={`w-full py-2.5 px-3 font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer transition-all shadow-xs ${
+                    canEnlist
+                      ? 'bg-[#111111] hover:bg-neutral-800 text-amber-400 active:scale-[0.99]'
+                      : 'bg-neutral-200 text-neutral-400 cursor-not-allowed border border-neutral-300'
+                  }`}
+                >
+                  <span>{division.btnText}</span>
+                  <ArrowRight size={13} />
+                </button>
+              </div>
             </div>
-            <p className="text-[11px] text-[#666666] min-h-[32px]">
-              Elite bio-engineered warriors (Kull hybrids / Asgard battle drones) providing massive combat power.
-            </p>
-            <div className="flex items-center gap-1 text-[10px] font-mono text-[#888888]">
-              <span>Quick:</span>
-              <button type="button" onClick={() => setQuickAmount('superUnits', 1)} className="px-1.5 py-0.5 bg-neutral-100 hover:bg-neutral-200">1</button>
-              <button type="button" onClick={() => setQuickAmount('superUnits', 5)} className="px-1.5 py-0.5 bg-neutral-100 hover:bg-neutral-200">5</button>
-              <button type="button" onClick={() => setQuickAmount('superUnits', 25)} className="px-1.5 py-0.5 bg-neutral-100 hover:bg-neutral-200">25</button>
-              <button type="button" onClick={() => setMaxAmount('superUnits', 5)} className="px-1.5 py-0.5 bg-neutral-100 hover:bg-neutral-200 font-bold text-[#111111]">Max</button>
-            </div>
-            <div className="flex gap-2">
-              <input
-                type="number"
-                min="1"
-                max={Math.floor(resources.untrainedUnits / 5)}
-                value={trainAmounts.superUnits}
-                onChange={(e) => setAmount('superUnits', parseInt(e.target.value, 10) || 1)}
-                className="w-24 border border-[#cccccc] px-2 py-1 text-xs font-mono"
-              />
-              <button
-                type="button"
-                onClick={() => handleTrain('superUnits')}
-                disabled={resources.untrainedUnits < trainAmounts.superUnits * 5}
-                className="flex-1 py-1.5 bg-[#111111] text-amber-400 text-xs font-bold uppercase hover:bg-[#333333] disabled:opacity-50 font-mono cursor-pointer shadow-2xs"
-              >
-                Synthesize (5 pop/ea)
-              </button>
-            </div>
-          </div>
-        )}
+          );
+        })}
       </div>
     </div>
   );

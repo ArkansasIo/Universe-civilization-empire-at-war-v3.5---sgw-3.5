@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { ArrowRight, Shield, Target, Users, Zap, Globe, Coins, Award, Trophy, Star, Crown } from 'lucide-react';
+import { ArrowRight, Shield, Target, Users, Zap, Globe, Coins, Award, Trophy, Star, Crown, RotateCw, Activity, Sparkles, RefreshCw } from 'lucide-react';
 import { sound } from '../../sound';
 import { PlayerProfile, PlayerResources, Race, PlanetColony } from '../../types';
 import { RACES } from '../../gameData';
@@ -12,6 +12,7 @@ interface DashboardViewProps {
   naturalIncome: number;
   bankCapacity: number;
   planets?: PlanetColony[];
+  onUpdateAllSystems?: () => void;
 }
 
 export const DashboardView: React.FC<DashboardViewProps> = ({
@@ -21,6 +22,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
   naturalIncome,
   bankCapacity,
   planets = [],
+  onUpdateAllSystems,
 }) => {
   const currentRace = RACES.find((r) => r.id === profile.race);
 
@@ -51,6 +53,21 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         <div className="flex flex-wrap gap-3">
           <button
             type="button"
+            id="dashboard-update-all-systems-btn"
+            onClick={() => {
+              sound.play('confirm');
+              if (onUpdateAllSystems) {
+                onUpdateAllSystems();
+              }
+            }}
+            className="px-5 py-3 bg-gradient-to-r from-emerald-600 via-teal-700 to-cyan-800 hover:from-emerald-500 hover:to-teal-600 text-white text-xs font-mono font-black tracking-wide uppercase transition-all shadow-sm hover:shadow-md flex items-center gap-2 cursor-pointer border border-emerald-400/50"
+            title="Perform Full Empire Systems Synchronization"
+          >
+            <RotateCw size={14} className="text-emerald-200" />
+            <span>Update All Systems</span>
+          </button>
+          <button
+            type="button"
             id="choose-target-btn"
             onClick={() => {
               sound.play('click');
@@ -72,6 +89,73 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           >
             <span>Train Troops</span>
           </button>
+        </div>
+      </div>
+
+      {/* Empire Systems Matrix & Real-Time Synchronizer */}
+      <div className="border border-[#dedede] bg-white p-5 sm:p-6 space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#eeeeee] pb-4">
+          <div>
+            <div className="flex items-center gap-2 mb-1">
+              <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#666666] flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                DOMINION OPERATIONAL MATRIX
+              </span>
+              <span className="text-[9px] font-mono px-1.5 py-0.5 bg-neutral-100 text-neutral-700 font-bold">10 SYSTEMS LIVE</span>
+            </div>
+            <h3 className="text-base font-bold text-[#111111] tracking-tight">
+              Galactic Empire Systems Status & Synchronizer
+            </h3>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              id="matrix-update-all-systems-btn"
+              onClick={() => {
+                sound.play('confirm');
+                if (onUpdateAllSystems) {
+                  onUpdateAllSystems();
+                }
+              }}
+              className="px-4 py-2 bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white text-xs font-mono font-black uppercase tracking-wider rounded-xs transition-all flex items-center gap-2 cursor-pointer shadow-2xs border border-emerald-400/40"
+            >
+              <RotateCw size={13} className="text-emerald-200" />
+              <span>SYNC ALL SYSTEMS</span>
+            </button>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 font-mono">
+          {[
+            { id: 'factories', title: '01. Planetary Mines', status: 'ACTIVE', desc: 'Naquadah & Ores', color: 'border-amber-200 bg-amber-50/50 text-amber-800' },
+            { id: 'factories', title: '02. Heavy Foundries', status: 'ONLINE', desc: 'Deut & Metal Plants', color: 'border-orange-200 bg-orange-50/50 text-orange-800' },
+            { id: 'tech-tree', title: '03. Research Labs', status: 'DISCOVERING', desc: 'Quantum Tech Tree', color: 'border-purple-200 bg-purple-50/50 text-purple-800' },
+            { id: 'shipyard', title: '04. Orbital Shipyard', status: 'OPERATIONAL', desc: 'Hull Assembly', color: 'border-blue-200 bg-blue-50/50 text-blue-800' },
+            { id: 'defenses', title: '05. Defense Grid', status: 'ARMED', desc: 'Shields & Turrets', color: 'border-emerald-200 bg-emerald-50/50 text-emerald-800' },
+            { id: 'stargate-network', title: '06. Stargate Network', status: 'LINKED', desc: 'Subspace Wormholes', color: 'border-cyan-200 bg-cyan-50/50 text-cyan-800' },
+            { id: 'bank-vault', title: '07. Imperial Citadel', status: 'PROTECTED', desc: 'Bank & Vault Reserves', color: 'border-lime-200 bg-lime-50/50 text-lime-800' },
+            { id: 'workforce-academy', title: '08. Strike Academy', status: 'TRAINING', desc: 'Troops & Wings', color: 'border-rose-200 bg-rose-50/50 text-rose-800' },
+            { id: 'ship', title: '09. Flagship Mothership', status: 'STATIONED', desc: 'Titan Subsystems', color: 'border-indigo-200 bg-indigo-50/50 text-indigo-800' },
+            { id: 'turn-system', title: '10. Chrono Turn Engine', status: '6 TURNS/MIN', desc: 'Macro Economy Tick', color: 'border-teal-200 bg-teal-50/50 text-teal-800' },
+          ].map((sys) => (
+            <button
+              key={sys.title}
+              type="button"
+              onClick={() => {
+                sound.play('click');
+                onNavigate(sys.id);
+              }}
+              className={`p-3 text-left border rounded-xs hover:border-[#111111] hover:bg-white transition-all cursor-pointer group shadow-2xs ${sys.color}`}
+            >
+              <div className="flex items-center justify-between text-[9px] font-bold uppercase tracking-wider text-[#666666]">
+                <span className="truncate">{sys.title}</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
+              </div>
+              <strong className="text-xs font-bold text-[#111111] block mt-1">{sys.status}</strong>
+              <span className="text-[10px] text-[#777777] block mt-0.5 group-hover:text-[#111111] transition-colors">{sys.desc} →</span>
+            </button>
+          ))}
         </div>
       </div>
 
