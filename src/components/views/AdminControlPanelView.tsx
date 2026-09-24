@@ -92,6 +92,7 @@ import { AdminLoginPermissionsTab } from './admin/AdminLoginPermissionsTab';
 import { AdminEmpireHistoryTab } from './admin/AdminEmpireHistoryTab';
 import { AdminAuditLogTab } from './admin/AdminAuditLogTab';
 import { AdminDatabaseMySQLTab } from './admin/AdminDatabaseMySQLTab';
+import { AdminIngameSystemsTab } from './admin/AdminIngameSystemsTab';
 import { AdminLoginModal } from '../modals/AdminLoginModal';
 import { getAdminAuthSession, CANONICAL_ADMIN_ACCOUNTS, getAllAdminAccounts, addAdminAuditLog } from '../../config/adminAuthConfig';
 import { AdminAuthSession } from '../../types';
@@ -110,6 +111,7 @@ export type AdminTabType =
   | 'tickets'
   | 'security'
   | 'events'
+  | 'ingame-features'
   | 'cheats'
   | 'operations'
   | 'scheduler'
@@ -445,12 +447,42 @@ export const AdminControlPanelView: React.FC<AdminControlPanelViewProps> = ({
               </span>
             </div>
             <span className="px-1.5 py-0.5 bg-[#111111] text-amber-300 text-[9px] font-bold uppercase">
-              18 Tools
+              20 Tools
             </span>
           </div>
 
           {/* Sidebar Nav Categories */}
           <div className="space-y-4">
+            {/* Master Hub Category: All In-Game Systems Features */}
+            <div className="space-y-1">
+              <div className="text-[10px] font-extrabold uppercase text-sky-700 tracking-wider px-2 py-0.5 border-b border-sky-200 bg-sky-50 flex items-center justify-between">
+                <span>In-Game Features Master</span>
+                <Sparkles className="w-3 h-3 text-sky-600 animate-pulse" />
+              </div>
+              <div className="space-y-0.5">
+                <button
+                  type="button"
+                  onClick={() => {
+                    sound.play('click');
+                    setActiveTab('ingame-features');
+                  }}
+                  className={`w-full flex items-center justify-between px-2.5 py-2 text-xs font-bold transition-all text-left cursor-pointer border-l-4 ${
+                    activeTab === 'ingame-features'
+                      ? 'bg-[#111111] text-white border-sky-400 shadow-sm'
+                      : 'bg-white text-[#444444] hover:bg-[#f5f5f5] hover:text-[#111111] border-transparent'
+                  }`}
+                >
+                  <div className="flex items-center gap-2 truncate">
+                    <Layers size={14} className={activeTab === 'ingame-features' ? 'text-sky-400' : 'text-sky-600'} />
+                    <span className="truncate">All In-Game Systems</span>
+                  </div>
+                  <span className="text-[9px] px-1.5 py-0.2 bg-sky-100 text-sky-900 font-bold rounded border border-sky-300">
+                    10-in-1
+                  </span>
+                </button>
+              </div>
+            </div>
+
             {/* Category 1: Security & Accounts */}
             <div className="space-y-1">
               <div className="text-[10px] font-extrabold uppercase text-[#777777] tracking-wider px-2 py-0.5 border-b border-[#eee] flex items-center justify-between">
@@ -1151,6 +1183,21 @@ export const AdminControlPanelView: React.FC<AdminControlPanelViewProps> = ({
         <AdminGlobalEventsTab
           events={adminGlobalEvents}
           onToggleEvent={onToggleGlobalEvent}
+        />
+      )}
+
+      {activeTab === 'ingame-features' && (
+        <AdminIngameSystemsTab
+          profile={profile}
+          resources={resources}
+          onUpdateResources={onUpdateResources}
+          onUpdateProfile={onUpdateProfile}
+          onInstantFinishBuildings={onInstantFinishBuildings}
+          onInstantFinishResearch={onInstantFinishResearch}
+          onInstantFinishShipyard={onInstantFinishShipyard}
+          onUnlockAllTechs={onUnlockAllTechs}
+          onSpawnArmada={onSpawnArmada}
+          onBroadcastMessage={onBroadcastMessage}
         />
       )}
 
