@@ -21,45 +21,25 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Configure Pages
-        uses: actions/configure-pages@v5
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
 
-      - name: Build static web edition
-        shell: bash
-        run: |
-          rm -rf dist
-          mkdir -p dist
-          if [ -d web ]; then
-            cp -R web/. dist/
-          elif [ -f index.html ]; then
-            cp index.html dist/index.html
-          elif [ -f README.md ]; then
-            cat > dist/index.html <<'EOF'
-          <!doctype html>
-          <html lang="en">
-          <head>
-            <meta charset="utf-8">
-            <meta name="viewport" content="width=device-width,initial-scale=1">
-            <title>Universe Civilization Empire at War — SGW 3.5</title>
-            <style>
-              body{margin:0;background:#070b14;color:#d9e4f2;font:16px system-ui,sans-serif}
-              main{max-width:1000px;margin:8vh auto;padding:32px}
-              a{color:#8fc7ff}
-              .panel{border:1px solid #26364d;background:#0d1422;padding:24px;border-radius:12px}
-            </style>
-          </head>
-          <body><main><div class="panel">
-            <h1>Universe Civilization Empire at War — SGW 3.5</h1>
-            <p>Static web edition and project portal.</p>
-            <p>The repository contains the project source. Native/server components must run outside GitHub Pages.</p>
-            <p><a href="https://github.com/ArkansasIo/Universe-civilization-empire-at-war-v3.5---sgw-3.5">View source on GitHub</a></p>
-          </div></main></body>
-          </html>
-          EOF
-          else
-            echo "No web entry point found." >&2
-            exit 1
-          fi
+      - name: Install dependencies
+        run: npm install
+
+      - name: Type-check
+        run: npm run lint
+
+      - name: Build Vite application for GitHub Pages
+        env:
+          VITE_BASE_PATH: /Universe-civilization-empire-at-war-v3.5---sgw-3.5/
+        run: npm run build
+
+      - name: Verify built entry point
+        run: test -s dist/index.html
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
