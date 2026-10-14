@@ -1212,7 +1212,7 @@ export const AdminIngameSystemsTab: React.FC<AdminIngameSystemsTabProps> = ({
                 onClick={() => {
                   setCommandersLevelMax(true);
                   if (onUpdateProfile) {
-                    onUpdateProfile({ level: 100, xp: 999999 });
+                    onUpdateProfile({ level: 100 });
                   }
                   showNotify('All 72 Legendary Commanders unlocked at Level 100 with +500 Skill Points!');
                 }}
