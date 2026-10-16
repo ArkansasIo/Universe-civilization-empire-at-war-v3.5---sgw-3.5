@@ -39,7 +39,6 @@ public final class MainActivity extends Activity {
     private WebView webView;
     private ProgressBar progress;
     private View offlinePanel;
-    private boolean firstLoad = true;
 
     @Override
     protected void onCreate(Bundle state) {
@@ -133,7 +132,6 @@ public final class MainActivity extends Activity {
             }
 
             @Override public void onPageStarted(WebView view, String url, android.graphics.Bitmap favicon) {
-                firstLoad = false;
                 offlinePanel.setVisibility(View.GONE);
                 progress.setVisibility(View.VISIBLE);
                 progress.setProgress(5);
@@ -148,6 +146,11 @@ public final class MainActivity extends Activity {
             @Override public void onReceivedError(WebView view, WebResourceRequest request,
                                                    WebResourceError error) {
                 if (request.isForMainFrame()) showOffline();
+            }
+
+            @Override public void onReceivedHttpError(WebView view, WebResourceRequest request,
+                                                       android.webkit.WebResourceResponse response) {
+                if (request.isForMainFrame() && response.getStatusCode() >= 400) showOffline();
             }
         });
     }
