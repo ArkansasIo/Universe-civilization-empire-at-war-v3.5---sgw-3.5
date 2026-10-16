@@ -3,6 +3,7 @@ name: Android APK
 on:
   workflow_dispatch:
   push:
+    branches: [main]
     paths:
       - "android/**"
       - ".github/workflows/android-apk.yml"
@@ -23,11 +24,12 @@ jobs:
           distribution: temurin
           java-version: "17"
 
-      - name: Set up Android SDK
+      # Install SDK packages explicitly. setup-android@v3 currently attempts
+      # to install the removed "tools" package, which fails on current SDKs.
+      - name: Install Android command-line tools
         uses: android-actions/setup-android@v3
-
-      - name: Install Android platform
-        run: sdkmanager "platforms;android-35" "build-tools;35.0.0"
+        with:
+          packages: "platform-tools platforms;android-35 build-tools;35.0.0"
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
