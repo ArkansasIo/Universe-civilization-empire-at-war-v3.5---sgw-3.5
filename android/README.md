@@ -1,34 +1,45 @@
-# Universe Civilization Android Companion
+# Universe Civilization: Empire at Wars — Android
 
-Native Android project for the Universe Civilization: Empire at Wars repository.
+This Android application is a native, mobile-sized shell around the repository's existing React/TypeScript game. It opens the deployed GitHub Pages game so the existing game screens and mechanics are reused rather than duplicated in a separate, incomplete native port.
 
 ## Build
 
-Requires JDK 17 and Android SDK platform/build tools installed by Android Studio or GitHub Actions.
+Requires JDK 17 and Android SDK platform 35 / build tools 35.0.0.
 
 ```bash
 cd android
-gradle assembleDebug
+gradle --no-daemon assembleDebug
 ```
 
-The debug APK is written to:
+APK output: `android/app/build/outputs/apk/debug/app-debug.apk`.
 
-`android/app/build/outputs/apk/debug/app-debug.apk`
+The GitHub Actions workflow builds and uploads the debug APK as the `universe-civilization-debug-apk` artifact.
 
-The GitHub Actions workflow `.github/workflows/android-apk.yml` builds the APK and uploads it as an Actions artifact.
+## Android implementation
 
-## Current implementation
+- Mobile-friendly WebView host for the existing full React game.
+- Navigation controls for Game, Reload and API settings.
+- Loading indicator and offline/retry page when the hosted game cannot be reached.
+- WebView JavaScript and DOM storage enabled for the game; file access, mixed content and cleartext traffic disabled.
+- HTTPS-only API base URL configuration.
+- Asynchronous JSON API client for the routes documented in `../API_CONTRACT.md`.
+- External links open in the device browser; links on the game's GitHub Pages origin stay in-app.
+- Back button navigates within game history before exiting.
+- App target SDK 35; minimum SDK 23 (Android 6+) and compatible with Android 10 / Huawei P20.
 
-- Native Java Android launcher application.
-- Command dashboard and navigable companion sections.
-- Internet permission for future API calls.
-- Android application ID: `com.arkansasio.universecivilization`.
-- Version: `3.5.0`.
+## Live game and backend status
 
-## API integration
+The APK does not contain the PHP/MySQL production server. The game UI is loaded from:
 
-See `API_CONTRACT.md`. The app deliberately does not point to localhost or invent a production server. Configure a deployed HTTPS API base URL before connecting live game accounts/data. Do not put database credentials, service-account keys, or private tokens in the APK.
+`https://arkansasio.github.io/Universe-civilization-empire-at-war-v3.5---sgw-3.5/`
 
-## Note
+That URL must be successfully deployed to GitHub Pages for the full browser game to load. When it is offline, the app shows a retry page instead of inventing live game state.
 
-This is a mobile companion shell and APK build scaffold. It does not port the entire React game engine to native Android, and live game APIs must be deployed and authenticated separately.
+API routes are defined in `../API_CONTRACT.md`. An API URL can be entered from **API** in the Android toolbar. The included Java client supports HTTPS JSON requests, but the server must implement and deploy the routes before live accounts, synchronized resources, fleets, planets, or turns can work. A client wrapper is not a substitute for a running authenticated backend.
+
+## Security
+
+- No database passwords, signing secrets, API keys or service credentials are bundled.
+- The API URL must use HTTPS.
+- Never disable certificate validation or send account credentials to an untrusted endpoint.
+- This workflow creates a debug APK. A distributable release APK should be signed with GitHub Actions secrets or a local protected keystore; do not commit keystores or passwords.
