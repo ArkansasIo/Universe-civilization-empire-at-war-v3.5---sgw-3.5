@@ -13,8 +13,7 @@ import android.widget.TextView;
 
 /**
  * Native starter screen for the Universe Civilization mobile companion.
- * The screen is intentionally offline-safe; backend integration is configured
- * through the API contract and should use HTTPS in deployed environments.
+ * The screen is intentionally offline-safe; backend integration must use HTTPS.
  */
 public final class MainActivity extends Activity {
     private static final int BG = Color.rgb(8, 15, 28);
@@ -32,9 +31,10 @@ public final class MainActivity extends Activity {
         scroll.setFillViewport(true);
         content = new LinearLayout(this);
         content.setOrientation(LinearLayout.VERTICAL);
-        content.setPadding(dp(20), dp(28), dp(20), dp(28));
+        content.setPadding(dp(20), dp(24), dp(20), dp(28));
         content.setBackgroundColor(BG);
-        scroll.addView(content);
+        scroll.addView(content, new ScrollView.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         setContentView(scroll);
         renderOverview();
     }
@@ -43,19 +43,20 @@ public final class MainActivity extends Activity {
         content.removeAllViews();
         TextView eyebrow = text("GALACTIC COMMAND // MOBILE", 12, ACCENT, true);
         content.addView(eyebrow);
+
         TextView title = text("UNIVERSE\nCIVILIZATION", 30, Color.WHITE, true);
         title.setPadding(0, dp(10), 0, dp(4));
         content.addView(title);
-        TextView subtitle = text("Empire at Wars • Android Companion v3.5.0", 13,
-                Color.rgb(170, 190, 210), false);
-        content.addView(subtitle);
+
+        content.addView(text("Empire at Wars • Android Companion v3.5.0",
+                13, Color.rgb(170, 190, 210), false));
 
         LinearLayout resources = panel();
         resources.addView(text("COMMAND STATUS", 12, ACCENT, true));
-        resources.addView(text("Naquadah       — API not connected", 15, Color.WHITE, false));
-        resources.addView(text("Fleet           — Ready for synchronization", 15, Color.WHITE, false));
-        resources.addView(text("Research        — Local companion mode", 15, Color.WHITE, false));
-        resources.addView(text("Galaxy          — Awaiting server configuration", 15, Color.WHITE, false));
+        resources.addView(text("Naquadah — API not connected", 15, Color.WHITE, false));
+        resources.addView(text("Fleet — Ready for synchronization", 15, Color.WHITE, false));
+        resources.addView(text("Research — Local companion mode", 15, Color.WHITE, false));
+        resources.addView(text("Galaxy — Awaiting server configuration", 15, Color.WHITE, false));
         content.addView(resources);
 
         addAction("OVERVIEW", "View commander status and resources", "Overview");
@@ -74,15 +75,16 @@ public final class MainActivity extends Activity {
 
     private void addAction(String label, String description, String section) {
         LinearLayout card = panel();
-        TextView heading = text(label, 16, Color.WHITE, true);
-        card.addView(heading);
+        card.addView(text(label, 16, Color.WHITE, true));
         TextView detail = text(description, 13, Color.rgb(170, 190, 210), false);
         detail.setPadding(0, dp(4), 0, dp(10));
         card.addView(detail);
+
         Button button = new Button(this);
         button.setText("OPEN " + section.toUpperCase());
         button.setTextColor(Color.WHITE);
-        button.setBackgroundTintList(android.content.res.ColorStateList.valueOf(ACCENT));
+        button.setBackgroundTintList(
+                android.content.res.ColorStateList.valueOf(ACCENT));
         button.setOnClickListener(v -> showSection(section));
         card.addView(button);
         content.addView(card);
@@ -94,6 +96,7 @@ public final class MainActivity extends Activity {
         back.setText("← COMMAND OVERVIEW");
         back.setOnClickListener(v -> renderOverview());
         content.addView(back);
+
         content.addView(text(section.toUpperCase(), 26, Color.WHITE, true));
         LinearLayout card = panel();
         card.addView(text("LIVE BACKEND NOT CONFIGURED", 14, ACCENT, true));
@@ -108,15 +111,13 @@ public final class MainActivity extends Activity {
     private LinearLayout panel() {
         LinearLayout card = new LinearLayout(this);
         card.setOrientation(LinearLayout.VERTICAL);
-        card.setPadding(dp(16), dp(16), dp(16), dp(16));
-        card.setBackgroundTintList(android.content.res.ColorStateList.valueOf(PANEL));
+        card.setPadding(dp(16), dp(14), dp(16), dp(14));
         card.setBackgroundColor(PANEL);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lp.topMargin = dp(16);
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp.topMargin = dp(14);
         content.addView(card, lp);
-        // Caller also adds returned card only where convenient; avoid duplicates by removing parent below.
-        ((ViewGroup) card.getParent()).removeView(card);
         return card;
     }
 
