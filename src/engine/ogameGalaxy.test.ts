@@ -6,6 +6,7 @@ import {
   OGAME_SYSTEMS_PER_GALAXY,
   createOGameGalaxyLayout,
   getOGameCoordinate,
+  getOGameGalaxyIndex,
   getOGameSystem,
 } from "./ogameGalaxy";
 
@@ -16,6 +17,13 @@ assert.equal(layout.planetPositionsPerSystem, 15);
 assert.equal(layout.expeditionPosition, 16);
 assert.equal(layout.totalSystems, 90 * 499);
 assert.equal(layout.totalPlanetSlots, 90 * 499 * 15);
+
+for (const universeId of [1, 2, 23, 90]) {
+  const index = getOGameGalaxyIndex(universeId);
+  assert.equal(index.length, OGAME_GALAXIES_PER_UNIVERSE);
+  assert.equal(index[0]!.firstSystemCoordinate, `${universeId}:1:1`);
+  assert.equal(index[89]!.lastSystemCoordinate, `${universeId}:90:499`);
+}
 
 const system = getOGameSystem(7, 90, 499);
 assert.equal(system.id, "u7-g90-s499");
