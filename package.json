@@ -15,6 +15,7 @@
     "engine:universe:test": "tsx src/engine/universe/universe.test.ts",
     "engine:universe:chunks": "tsx src/engine/universe/chunk.test.ts && tsx src/engine/universe/chunkStream.test.ts",
     "engine:universe:stream:test": "tsx src/engine/universe/streaming.test.ts",
+    "engine:universe:shard:test": "tsx src/engine/universe/sharding.test.ts",
     "engine:universe:generate": "tsx scripts/generate-universe.ts"
   },
   "dependencies": {
