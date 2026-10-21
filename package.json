@@ -13,6 +13,7 @@
     "game:command:smoke": "tsx scripts/game-command-smoke.ts",
     "engine:universe:smoke": "tsx scripts/procedural-universe-smoke.ts",
     "engine:universe:test": "tsx src/engine/universe/universe.test.ts",
+    "engine:universe:chunks": "tsx src/engine/universe/chunk.test.ts && tsx src/engine/universe/chunkStream.test.ts",
     "engine:universe:generate": "tsx scripts/generate-universe.ts"
   },
   "dependencies": {
