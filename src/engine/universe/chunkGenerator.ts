@@ -1,13 +1,16 @@
 import { hashSeed, mulberry32, randomFloat, randomInt } from "./rng";
-import { chunkBounds, chunkId, type ChunkCoord, type UniverseChunk } from "./chunk";
+import { chunkBounds, chunkId, sectorOf, type ChunkCoord, type UniverseChunk } from "./chunk";
 import { deriveChunkSeed } from "./chunkSeed";
 
-export interface ChunkGenerationOptions { chunkSize?:number; generatorVersion?:number; maxSystemsPerChunk?:number; }
+export interface ChunkGenerationOptions { chunkSize?:number; sectorSizeInChunks?:number; generatorVersion?:number; maxSystemsPerChunk?:number; }
 
 export function generateChunk(universeSeed:number|string, coord:ChunkCoord, options:ChunkGenerationOptions={}):UniverseChunk {
   const chunkSize=options.chunkSize??400;
+  const sectorSize=options.sectorSizeInChunks??8;
   const version=options.generatorVersion??1;
   const maxSystems=options.maxSystemsPerChunk??12;
+  if(!Number.isInteger(maxSystems)||maxSystems<0)throw new RangeError("maxSystemsPerChunk must be a non-negative integer");
+  if(!Number.isInteger(sectorSize)||sectorSize<1)throw new RangeError("sectorSizeInChunks must be positive");
   const seed=deriveChunkSeed(universeSeed,coord,version);
   const rng=mulberry32(seed);
   const count=randomInt(rng,0,maxSystems);
@@ -20,5 +23,5 @@ export function generateChunk(universeSeed:number|string, coord:ChunkCoord, opti
     const sz=Math.floor(randomFloat(localRng,coord.z*chunkSize,(coord.z+1)*chunkSize));
     systemIds.push(`G${coord.galaxy}-C${coord.x}_${coord.y}_${coord.z}-S${i}-${sx}_${sy}_${sz}`);
   }
-  return {id:chunkId(coord),coord,sector:{galaxy:coord.galaxy,x:Math.floor(coord.x/8),y:Math.floor(coord.y/8),z:Math.floor(coord.z/8)},seed,version,bounds:chunkBounds(coord,chunkSize),systemIds,generatedAtTick:0};
+  return {id:chunkId(coord),coord,sector:sectorOf(coord,sectorSize),seed,version,bounds:chunkBounds(coord,chunkSize),systemIds,generatedAtTick:0};
 }
