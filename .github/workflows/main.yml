@@ -1,1 +1,21 @@
+name: Repository CI
 
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  repository-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Confirm repository checkout
+        run: test -f README.md && test -f package.json
+      - name: Report required application checks
+        run: |
+          echo "Use the Pages workflow for the production Vite build."
+          echo "Type-checking remains non-blocking there until existing errors are repaired."
+          echo "See docs/RELEASE_VERIFICATION.md for release acceptance criteria."
