@@ -37,8 +37,8 @@ assert.equal(rejected.resources.naquadah, 1000);
 const turnResult = processTurns(baseResources, [], 3);
 assert.equal(turnResult.processedTurns, 3);
 assert.equal(turnResult.resources.attackTurns, 7);
-assert.equal(turnResult.generatedNaquadah, 880); // 10 miners * 20 + 2 lifers * 80
-assert.equal(turnResult.resources.naquadah, 1880);
+assert.equal(turnResult.generatedNaquadah, 1080); // 3 * ((10 miners * 20) + (2 lifers * 80))
+assert.equal(turnResult.resources.naquadah, 2080);
 
 const battle = resolveCombat(
   { id: 'attacker', attack: 20, defense: 10, units: 100 },
