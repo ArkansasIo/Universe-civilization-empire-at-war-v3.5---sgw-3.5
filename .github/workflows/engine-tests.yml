@@ -1,28 +1,13 @@
 name: Engine Tests
-
 on:
   push:
     branches: [main]
-    paths:
-      - 'src/engine/**'
-      - 'src/server/**'
-      - 'scripts/engine-smoke.ts'
-      - 'scripts/game-command-smoke.ts'
-      - 'package.json'
-      - '.github/workflows/engine-tests.yml'
+    paths: ['src/engine/**','src/server/**','scripts/engine-smoke.ts','scripts/game-command-smoke.ts','scripts/procedural-universe-smoke.ts','src/engine/universe/**','package.json','.github/workflows/engine-tests.yml']
   pull_request:
-    paths:
-      - 'src/engine/**'
-      - 'src/server/**'
-      - 'scripts/engine-smoke.ts'
-      - 'scripts/game-command-smoke.ts'
-      - 'package.json'
-      - '.github/workflows/engine-tests.yml'
+    paths: ['src/engine/**','src/server/**','scripts/engine-smoke.ts','scripts/game-command-smoke.ts','scripts/procedural-universe-smoke.ts','src/engine/universe/**','package.json','.github/workflows/engine-tests.yml']
   workflow_dispatch:
-
 permissions:
   contents: read
-
 jobs:
   engine-smoke:
     runs-on: ubuntu-latest
@@ -39,3 +24,7 @@ jobs:
         run: npm run engine:smoke
       - name: Run authenticated command tests
         run: npm run game:command:smoke
+      - name: Run procedural universe tests
+        run: npm run engine:universe:test
+      - name: TypeScript check
+        run: npm run lint
