@@ -14,3 +14,6 @@ export * from "./chunk";
 export * from "./chunkSeed";
 export * from "./chunkGenerator";
 export * from "./streaming";
+export * from "./sharding";
+export * from "./generationQueue";
+export * from "./gatewayTopology";
