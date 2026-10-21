@@ -200,11 +200,16 @@ function positionInGalaxy(shape: GalaxyShape, radius: number, random: () => numb
 function round(value: number): number { return Math.round(value * 1000) / 1000; }
 
 function generateResources(random: () => number): ResourceDeposit[] {
-  const shuffled = [...RESOURCES].sort(() => random() - 0.5);
+  const shuffled = [...RESOURCES];
+  // Fisher–Yates avoids the biased, non-transitive comparator pattern.
+  for (let i = shuffled.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j]!, shuffled[i]!];
+  }
   const count = intBetween(random, 1, 4);
   return shuffled.slice(0, count).map((type) => {
     const abundance = intBetween(random, 5, 100);
-    const richness = abundance >= 90 ? "exceptional" : abundance >= 70 ? "high" : abundance >= 45 ? "moderate" : abundance >= 20 ? "low" : "trace";
+    const richness: ResourceDeposit["richness"] = abundance >= 90 ? "exceptional" : abundance >= 70 ? "high" : abundance >= 45 ? "moderate" : abundance >= 20 ? "low" : "trace";
     return { type, abundance, richness };
   });
 }
@@ -217,10 +222,11 @@ function generatePlanet(
   const sizeClass = isHomeworld ? "large" : pick(random, ["small", "standard", "large", "super"] as const);
   const habitability = isHomeworld ? 95 : Math.max(0, Math.min(100, BIOME_HABITABILITY[biome] + intBetween(random, -15, 15)));
   const systemPrefix = `g${galaxyIndex + 1}-s${systemIndex + 1}`;
+  const planetNameRandom = createRandom(hashSeed(`planet-name:${galaxyIndex}:${systemIndex}:${planetIndex}`));
   return {
     id: `planet-${systemPrefix}-p${planetIndex + 1}`,
     index: planetIndex + 1,
-    name: `${systemName(galaxyIndex, systemIndex, random)} ${["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"][planetIndex % 9]}`,
+    name: `${systemName(galaxyIndex, systemIndex, planetNameRandom)} ${["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"][planetIndex % 9]}`,
     biome,
     habitability,
     sizeClass,
@@ -300,11 +306,12 @@ export function generateProceduralUniverse(config: UniverseGenerationConfig): Ge
       });
       const anomalies = random() < 0.22 ? [pick(random, ANOMALIES)] : [];
       const controllingFactionId = factionIndex >= 0 ? factionDrafts[factionIndex]!.id : null;
+      const starClass = pick(random, STAR_CLASSES);
       systems.push({
         id, index: si + 1, name: systemName(gi, si, random),
         position: positionInGalaxy(shape, normalized.galaxyRadius, random, si, normalized.systemsPerGalaxy),
-        starClass: pick(random, STAR_CLASSES),
-        starTemperatureKelvin: STAR_TEMPERATURE[pick(random, STAR_CLASSES)],
+        starClass,
+        starTemperatureKelvin: STAR_TEMPERATURE[starClass],
         dangerLevel: intBetween(random, 0, 9),
         controllingFactionId, planets, anomalies, links: [],
       });
