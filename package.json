@@ -11,7 +11,9 @@
     "lint": "tsc --noEmit",
     "engine:smoke": "tsx scripts/engine-smoke.ts",
     "game:command:smoke": "tsx scripts/game-command-smoke.ts",
-    "engine:universe:smoke": "tsx scripts/procedural-universe-smoke.ts"
+    "engine:universe:smoke": "tsx scripts/procedural-universe-smoke.ts",
+    "engine:universe:test": "tsx src/engine/universe/universe.test.ts",
+    "engine:universe:generate": "tsx scripts/generate-universe.ts"
   },
   "dependencies": {
     "@google/genai": "^2.4.0",
