@@ -10,7 +10,8 @@
     "clean": "rm -rf dist server.js",
     "lint": "tsc --noEmit",
     "engine:smoke": "tsx scripts/engine-smoke.ts",
-    "game:command:smoke": "tsx scripts/game-command-smoke.ts"
+    "game:command:smoke": "tsx scripts/game-command-smoke.ts",
+    "engine:universe:smoke": "tsx scripts/procedural-universe-smoke.ts"
   },
   "dependencies": {
     "@google/genai": "^2.4.0",
