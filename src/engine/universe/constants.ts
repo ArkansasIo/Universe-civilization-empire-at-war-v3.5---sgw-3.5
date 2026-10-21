@@ -1,0 +1,12 @@
+import type { AnomalyType, FactionArchetype, GalaxyShape, PlanetBiome, ResourceType, StarClass } from "./types";
+export const GALAXY_SHAPES:readonly GalaxyShape[]=["spiral","barred-spiral","elliptical","ring","irregular","nebula"];
+export const STAR_CLASSES:readonly StarClass[]=["O","B","A","F","G","K","M","X"];
+export const STAR_TEMPERATURE:Record<StarClass,number>={O:35000,B:20000,A:8500,F:6500,G:5600,K:4400,M:3000,X:1200};
+export const BIOMES:readonly PlanetBiome[]=["terran","oceanic","desert","tundra","volcanic","jungle","toxic","barren","ice","crystalline","radiated","shattered"];
+export const HABITABILITY:Record<PlanetBiome,number>={terran:92,oceanic:78,desert:43,tundra:38,volcanic:20,jungle:76,toxic:8,barren:12,ice:27,crystalline:31,radiated:5,shattered:2};
+export const RESOURCES:readonly ResourceType[]=["naquadah","metal","crystal","deuterium","dark-matter"];
+export const ANOMALIES:readonly AnomalyType[]=["ancient-ruins","wormhole","derelict-fleet","precursor-beacon","spatial-rift","resource-rich-nebula"];
+export const ARCHETYPES:readonly FactionArchetype[]=["industrial","scientific","military","exploration","ancient","raider"];
+export const FACTION_NAMES=["Terran Coalition","Asgard Stellar Accord","Goa'uld System Lords","Replicator Nexus","Jaffa Free Alliance","Ori Ascendancy","Ancient Custodians","Independent Worlds","Tau'ri Expeditionary Fleet","Void Corsairs","Crystal Directorate","Naquadah Consortium"] as const;
+export const FACTION_COLORS=["#35b9ff","#58d68d","#e74c3c","#a66bff","#f5b041","#ecf0f1","#00d1b2","#ff5da2","#7ed6df","#c8d6e5","#f368e0","#ff9f43"] as const;
+export const GALAXY_NAMES=["Avalon Reach","Pegasus Veil","Orion Spur","Epsilon Rift","Helios Crown","Khepri Expanse","Meridian Deep","Tantalus Arm","Vesper Nebula","Sagan Frontier"] as const;
