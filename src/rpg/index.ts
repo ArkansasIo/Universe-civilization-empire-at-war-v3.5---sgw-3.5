@@ -12,3 +12,5 @@ export * from "./masterworking.js";
 export * from "./crafting.js";
 export * from "./crafting-persistence.js";
 export * from "./crafting-service.js";
+export * from "./crafting-api.js";
+export * from "./crafting-controller.js";
