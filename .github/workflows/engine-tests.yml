@@ -7,6 +7,7 @@ on:
       - 'src/engine/**'
       - 'src/server/**'
       - 'scripts/engine-smoke.ts'
+      - 'scripts/authoritative-engine-smoke.ts'
       - 'scripts/game-command-smoke.ts'
       - 'package.json'
       - '.github/workflows/engine-tests.yml'
@@ -15,6 +16,7 @@ on:
       - 'src/engine/**'
       - 'src/server/**'
       - 'scripts/engine-smoke.ts'
+      - 'scripts/authoritative-engine-smoke.ts'
       - 'scripts/game-command-smoke.ts'
       - 'package.json'
       - '.github/workflows/engine-tests.yml'
@@ -38,5 +40,7 @@ jobs:
         run: npm install
       - name: Run deterministic engine tests
         run: npm run engine:smoke
+      - name: Run authoritative engine tests
+        run: npm run authoritative:smoke
       - name: Run authenticated command tests
         run: npm run game:command:smoke
