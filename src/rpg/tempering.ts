@@ -1,5 +1,5 @@
 import { clamp, finiteNonNegative } from "./rules.js";
-import type { GameMode, ItemDefinition, ItemModeProfile, StatBonuses } from "./types.js";
+import type { ItemDefinition, ItemModeProfile, StatBonuses } from "./types.js";
 
 export type CraftingTrack = "tempering" | "masterworking";
 export type UpgradeFailurePolicy = "retain" | "downgrade" | "damage" | "destroy";
