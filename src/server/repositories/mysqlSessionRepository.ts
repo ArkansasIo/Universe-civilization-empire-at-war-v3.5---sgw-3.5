@@ -15,8 +15,7 @@ interface SessionRow {
 export class MySqlSessionRepository implements SessionRepository {
   constructor(private readonly db: SqlExecutor) {}
 
-  async getByToken(token: string): Promise<SessionRecord | null> {
-    const tokenHash = hashToken(token);
+  async getByTokenHash(tokenHash: string): Promise<SessionRecord | null> {
     const rows = await this.db.execute<SessionRow[]>(
       'SELECT id, player_id, username, token_hash, created_at, expires_at, revoked_at FROM game_sessions WHERE token_hash = ? LIMIT 1',
       [tokenHash],
@@ -25,12 +24,16 @@ export class MySqlSessionRepository implements SessionRepository {
     return row ? mapRow(row) : null;
   }
 
+  async getByToken(token: string): Promise<SessionRecord | null> {
+    return this.getByTokenHash(hashToken(token));
+  }
+
   async save(session: SessionRecord): Promise<void> {
     await this.db.execute(
       `INSERT INTO game_sessions (id, token_hash, player_id, username, created_at, expires_at, revoked_at)
        VALUES (?, ?, ?, ?, ?, ?, ?)
        ON DUPLICATE KEY UPDATE expires_at = VALUES(expires_at), revoked_at = VALUES(revoked_at)`,
-      [session.id, hashToken(session.token), session.playerId, session.username, session.createdAt, session.expiresAt, session.revokedAt ?? null],
+      [session.id, session.tokenHash, session.playerId, session.username, session.createdAt, session.expiresAt, session.revokedAt ?? null],
     );
   }
 
@@ -39,7 +42,7 @@ export class MySqlSessionRepository implements SessionRepository {
   }
 }
 
-function hashToken(token: string): string {
+export function hashToken(token: string): string {
   return createHash('sha256').update(token, 'utf8').digest('hex');
 }
 
@@ -48,7 +51,6 @@ function mapRow(row: SessionRow): SessionRecord {
     id: row.id,
     playerId: row.player_id,
     username: row.username,
-    token: '',
     tokenHash: row.token_hash,
     createdAt: Number(row.created_at),
     expiresAt: Number(row.expires_at),
