@@ -16,34 +16,42 @@ export class EffectSystem {
         case "independent": break;
       }
     }
-    let magnitudeScale=1;
+    let durationScale=1;
     if(definition.ccDiminishingCategory && ccCategories.has(definition.ccDiminishingCategory)) {
       const recent=target.effects.filter(e=>e.definition.ccDiminishingCategory===definition.ccDiminishingCategory && e.remainingSeconds>0).length;
-      magnitudeScale=[1,.5,.25,0][Math.min(3,recent)]??0;
-      if(magnitudeScale===0)return;
+      durationScale=[1,.5,.25,0][Math.min(3,recent)]??0;
+      if(durationScale===0)return;
     }
-    const finalDefinition=magnitudeScale===1?definition:{...definition,durationSeconds:duration*magnitudeScale};
+    const finalDefinition=durationScale===1?definition:{...definition,durationSeconds:duration*durationScale};
     const effect:ActiveEffect={definition:finalDefinition,stacks:1,remainingSeconds:finalDefinition.durationSeconds,sourceId,elapsedForTick:0};
     target.effects.push(effect);
     return effect;
   }
-  tick(target:Combatant,deltaSeconds:number):Array<{effectId:string;damage:number}> {
-    const delta=clamp(finiteNonNegative(deltaSeconds),0,60), damageEvents:Array<{effectId:string;damage:number}>=[];
+  tick(target:Combatant,deltaSeconds:number):Array<{effectId:string;damage:number;healing?:number}> {
+    const delta=clamp(finiteNonNegative(deltaSeconds),0,60), events:Array<{effectId:string;damage:number;healing?:number}>=[];
     for(const effect of target.effects) {
-      effect.remainingSeconds=Math.max(0,effect.remainingSeconds-delta);
+      const before=effect.remainingSeconds;
+      effect.remainingSeconds=Math.max(0,before-delta);
       effect.elapsedForTick=(effect.elapsedForTick??0)+delta;
       const interval=effect.definition.tickSeconds;
-      if(interval && interval>0 && effect.definition.category==="dot") {
-        while((effect.elapsedForTick??0)>=interval) {
+      if(interval && interval>0) {
+        while((effect.elapsedForTick??0)>=interval && before>0) {
           effect.elapsedForTick=(effect.elapsedForTick??0)-interval;
-          const damage=Math.max(0,effect.definition.magnitude*effect.stacks);
+          const amount=Math.max(0,effect.definition.magnitude*effect.stacks);
           const hp=target.stats.resources.hp;
-          if(hp && target.alive) { const dealt=Math.min(hp.current,damage); hp.current-=dealt; damageEvents.push({effectId:effect.definition.id,damage:dealt}); if(hp.current<=0)target.alive=false; }
+          if(effect.definition.category==="dot" && hp && target.alive) {
+            const dealt=Math.min(hp.current,amount); hp.current-=dealt;
+            events.push({effectId:effect.definition.id,damage:dealt});
+            if(hp.current<=0)target.alive=false;
+          } else if(effect.definition.id==="regeneration" && hp && target.alive) {
+            const healed=Math.min(hp.max-hp.current,amount); hp.current+=healed;
+            events.push({effectId:effect.definition.id,damage:0,healing:healed});
+          }
         }
       }
     }
     target.effects=target.effects.filter(e=>e.remainingSeconds>0);
-    return damageEvents;
+    return events;
   }
   cleanse(target:Combatant,type:CleanseType):number {
     const before=target.effects.length;
