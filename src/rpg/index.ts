@@ -13,7 +13,7 @@ export * from "./crafting-materials.js";
 export * from "./masterworking.js";
 export { previewUpgrade, calculateUpgradeCost, executeServerUpgrade, executeRepair, walletFromInventory } from "./crafting.js";
 export type { CraftingInventory, CraftingPreview } from "./crafting.js";
-export type { UpgradeResult as CraftingFacadeUpgradeResult } from "./crafting.js";
+export type { UpgradeResult as CraftingFacadeUpgradeResult } from "./tempering.js";
 export * from "./crafting-persistence.js";
 export * from "./mysql-crafting-persistence.js";
 export * from "./crafting-service.js";
