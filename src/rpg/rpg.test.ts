@@ -36,4 +36,28 @@ const defender={...target,id:"defender",teamId:"b",stats:structuredClone(SAMPLE_
 const damage=resolveDamage({attacker,defender,baseDamage:100,damageType:"physical",mode:"pvp",canCrit:false},.99);
 assert.ok(damage.finalDamage>=0 && damage.finalDamage<=100);
 assert.equal(damage.critical,false);
+
+import { attemptUpgrade, createCraftingUpgradeState, DEFAULT_TEMPERING_CONFIG, applyUpgradeBonuses, estimateUpgradeCost, repairUpgradedItem } from "./index.js";
+const craftItem=STARTER_ITEMS[0];
+const freshState=createCraftingUpgradeState(craftItem);
+const baseWallet={currency:1000000,materials:{"tempering-stone":100,"refined-ore":20,"star-metal":20,"astral-core":20,"primordial-ingot":20,"masterwork-core":20,"void-crystal":20,"world-boss-heart":5,"warding-rune":20,"greater-warding-rune":20,"masterwork-seal":20}};
+const temperRule=DEFAULT_TEMPERING_CONFIG.levels[0];
+const upgraded=attemptUpgrade({item:craftItem,state:freshState,wallet:baseWallet,playerId:"test-player",track:"tempering",rules:temperRule,roll:0.01,timestamp:100});
+assert.equal(upgraded.success,true);
+assert.equal(upgraded.state.temperLevel,1);
+assert.equal(upgraded.wallet.materials["tempering-stone"],98);
+const failRule=DEFAULT_TEMPERING_CONFIG.levels[3];
+const failState={...upgraded.state,temperLevel:3};
+const protectedFail=attemptUpgrade({item:craftItem,state:failState,wallet:upgraded.wallet,playerId:"test-player",track:"tempering",rules:failRule,roll:.99,timestamp:200,useProtection:true});
+assert.equal(protectedFail.success,false);
+assert.equal(protectedFail.state.temperLevel,3,"protection must prevent downgrade");
+const baseProfilePower=calculateItemPower(craftItem,"pve");
+const applied=applyUpgradeBonuses(craftItem,upgraded.state);
+assert.ok(calculateItemPower(applied,"pve")>baseProfilePower);
+assert.equal(calculateItemPower(applyUpgradeBonuses(craftItem,upgraded.state),"pve"),calculateItemPower(applied,"pve"),"applying upgrades must be idempotent");
+const estimate=estimateUpgradeCost("tempering",3);
+assert.ok(estimate.currency>0 && estimate.materials.length>0);
+const damaged={...upgraded.state,damaged:true};
+const repaired=repairUpgradedItem(damaged,baseWallet,{currencyCost:100,materials:[{itemId:"repair-kit",quantity:1}],clearsDamage:true});
+
 console.log("RPG/MMORPG unit smoke tests passed");
