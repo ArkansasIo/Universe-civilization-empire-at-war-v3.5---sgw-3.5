@@ -1,5 +1,5 @@
 import { clamp, finiteNonNegative } from "./rules.js";
-import type { ItemDefinition, ItemModeProfile, StatBonuses } from "./types.js";
+import type { GameMode, ItemDefinition, ItemModeProfile, StatBonuses } from "./types.js";
 
 export type CraftingTrack = "tempering" | "masterworking";
 export type UpgradeFailurePolicy = "retain" | "downgrade" | "damage" | "destroy";
@@ -78,95 +78,49 @@ function combineMaterials(cost:MaterialCost[],protection?:MaterialCost):Material
 function scaleProfile(profile:ItemModeProfile,multiplier:number):ItemModeProfile {
   const out=clone(profile);
   for(const key of ["baseDamage","armor","magicResistance","pvpPower","pvpResilience"] as const) if(out[key]!==undefined) out[key]=out[key]!*multiplier;
-  if(out.stats?.attributes) for(const key of Object.keys(out.stats.attributes) as (keyof NonNullable<StatBonuses["attributes"]>)[]) {
-    out.stats.attributes[key]=out.stats.attributes[key]!*multiplier;
-  }
-  if(out.stats?.derived) for(const key of Object.keys(out.stats.derived) as (keyof NonNullable<StatBonuses["derived"]>)[]) {
-    out.stats.derived[key]=out.stats.derived[key]!*multiplier;
-  }
+  if(out.stats?.attributes) for(const key of Object.keys(out.stats.attributes) as (keyof NonNullable<StatBonuses["attributes"]>)[]) out.stats.attributes[key]=out.stats.attributes[key]!*multiplier;
+  if(out.stats?.derived) for(const key of Object.keys(out.stats.derived) as (keyof NonNullable<StatBonuses["derived"]>)[]) out.stats.derived[key]=out.stats.derived[key]!*multiplier;
   return out;
 }
-/** Calculate effective item profiles from base item data; never repeatedly multiplies an already-upgraded profile. */
 export function applyUpgradeBonuses(base:ItemDefinition,state:CraftingUpgradeState,config:TemperingConfig=DEFAULT_TEMPERING_CONFIG):ItemDefinition {
-  const item=clone(base);
-  const temper=config.levels.find(x=>x.level===state.temperLevel);
-  const master=config.masterworkRanks.find(x=>x.rank===state.masterworkRank);
+  const item=clone(base), temper=config.levels.find(x=>x.level===state.temperLevel), master=config.masterworkRanks.find(x=>x.rank===state.masterworkRank);
   const multiplier=(temper?.statMultiplier??1)*(master?.statMultiplier??1);
-  item.pve=scaleProfile(base.pve,multiplier);
-  item.pvp=scaleProfile(base.pvp,multiplier);
-  if(master?.bonusStat&&master.bonusStatAmount) {
-    for(const profile of [item.pve,item.pvp]) {
-      profile.stats=profile.stats??{};
-      profile.stats.derived=profile.stats.derived??{};
-      profile.stats.derived[master.bonusStat]=(profile.stats.derived[master.bonusStat]??0)+master.bonusStatAmount;
-    }
+  item.pve=scaleProfile(base.pve,multiplier); item.pvp=scaleProfile(base.pvp,multiplier);
+  if(master?.bonusStat&&master.bonusStatAmount) for(const profile of [item.pve,item.pvp]) {
+    profile.stats=profile.stats??{}; profile.stats.derived=profile.stats.derived??{};
+    profile.stats.derived[master.bonusStat]=(profile.stats.derived[master.bonusStat]??0)+master.bonusStatAmount;
   }
   return item;
 }
-function upgradeRule(request:UpgradeRequest):TemperingLevel|MasterworkRank|undefined {
-  return request.track==="tempering"
-    ? (request.rules as TemperingLevel)
-    : (request.rules as MasterworkRank);
-}
+function upgradeRule(request:UpgradeRequest):TemperingLevel|MasterworkRank|undefined { return request.track==="tempering"?(request.rules as TemperingLevel):(request.rules as MasterworkRank); }
 export function attemptUpgrade(request:UpgradeRequest):UpgradeResult {
-  const state=clone(request.state), wallet=clone(request.wallet);
-  const item=clone(request.item), rules=upgradeRule(request);
-  if(!rules) throw new Error("Upgrade rule is required");
-  if(state.itemId!==item.id) throw new Error("Upgrade state does not match item");
-  if(state.locked) throw new Error("Item is locked for crafting");
-  if(state.damaged) throw new Error("Item is damaged; repair it before upgrading");
+  const state=clone(request.state), wallet=clone(request.wallet), item=clone(request.item), rules=upgradeRule(request);
+  if(!rules) throw new Error("Upgrade rule is required"); if(state.itemId!==item.id) throw new Error("Upgrade state does not match item");
+  if(state.locked) throw new Error("Item is locked for crafting"); if(state.damaged) throw new Error("Item is damaged; repair it before upgrading");
   if(!Number.isFinite(request.roll)||request.roll<0||request.roll>=1) throw new Error("roll must be in [0, 1)");
-  const current=request.track==="tempering"?state.temperLevel:state.masterworkRank;
-  const next=request.track==="tempering"?(rules as TemperingLevel).level:(rules as MasterworkRank).rank;
+  const current=request.track==="tempering"?state.temperLevel:state.masterworkRank, next=request.track==="tempering"?(rules as TemperingLevel).level:(rules as MasterworkRank).rank;
   const cap=request.track==="tempering"?state.maxTemperLevel:state.maxMasterworkRank;
-  if(next!==current+1) throw new Error("Upgrades must be performed one level/rank at a time");
-  if(next>cap) throw new Error("Maximum upgrade level reached");
+  if(next!==current+1) throw new Error("Upgrades must be performed one level/rank at a time"); if(next>cap) throw new Error("Maximum upgrade level reached");
   if(request.track==="masterworking"&&item.itemLevel<(rules as MasterworkRank).unlockLevel) throw new Error("Item level is too low for this masterwork rank");
-  const baseMaterials=rules.materials;
-  const protectionCost=request.useProtection&&rules.protectionMaterialId
-    ? {itemId:rules.protectionMaterialId,quantity:rules.protectionMaterialQuantity??1}:undefined;
-  const materials=combineMaterials(baseMaterials,protectionCost);
-  if(!costAvailable(wallet,rules.currencyCost,materials)) throw new Error("Insufficient currency or crafting materials");
-  const nextWallet=spend(wallet,rules.currencyCost,materials);
-  const success=request.roll<clamp(rules.successChance,0,1);
-  const from=current;
-  let to=current, message:string;
-  if(success) {
-    to=next;
-    if(request.track==="tempering") state.temperLevel=to; else state.masterworkRank=to;
-    state[request.track==="tempering"?"temperXp":"masterworkXp"]+=100;
-    message=`Upgrade succeeded: ${request.track} ${from} → ${to}`;
-  } else if(!protectionCost && rules.failurePolicy==="downgrade") {
-    const delta=request.track==="tempering"?(rules as TemperingLevel).downgradeLevels??1:(rules as MasterworkRank).downgradeRanks??1;
-    to=Math.max(0,current-delta);
-    if(request.track==="tempering") state.temperLevel=to; else state.masterworkRank=to;
-    message=`Upgrade failed; ${request.track} decreased to ${to}`;
-  } else if(!protectionCost && rules.failurePolicy==="damage") {
-    state.damaged=true; message="Upgrade failed; item durability is damaged and repair is required";
-  } else if(!protectionCost && rules.failurePolicy==="destroy") {
-    state.damaged=true; message="Upgrade failed; item is marked destroyed and must be restored by a recovery service";
-  } else message="Upgrade failed; current upgrade level was preserved";
-  const materialsSpent=materials.map(m=>({...m}));
-  state.history.push({id:`upgrade-${request.playerId}-${request.timestamp??Date.now()}-${state.history.length+1}`,track:request.track,fromLevel:from,toLevel:to,success,timestamp:request.timestamp??Date.now(),playerId:request.playerId,materialsSpent,currencySpent:rules.currencyCost,message});
+  const protectionCost=request.useProtection&&rules.protectionMaterialId?{itemId:rules.protectionMaterialId,quantity:rules.protectionMaterialQuantity??1}:undefined;
+  const materials=combineMaterials(rules.materials,protectionCost); if(!costAvailable(wallet,rules.currencyCost,materials)) throw new Error("Insufficient currency or crafting materials");
+  const nextWallet=spend(wallet,rules.currencyCost,materials), success=request.roll<clamp(rules.successChance,0,1), from=current; let to=current, message:string;
+  if(success){to=next;if(request.track==="tempering")state.temperLevel=to;else state.masterworkRank=to;state[request.track==="tempering"?"temperXp":"masterworkXp"]+=100;message=`Upgrade succeeded: ${request.track} ${from} → ${to}`;}
+  else if(!protectionCost&&rules.failurePolicy==="downgrade"){const delta=request.track==="tempering"?(rules as TemperingLevel).downgradeLevels??1:(rules as MasterworkRank).downgradeRanks??1;to=Math.max(0,current-delta);if(request.track==="tempering")state.temperLevel=to;else state.masterworkRank=to;message=`Upgrade failed; ${request.track} decreased to ${to}`;}
+  else if(!protectionCost&&rules.failurePolicy==="damage"){state.damaged=true;message="Upgrade failed; item durability is damaged and repair is required";}
+  else if(!protectionCost&&rules.failurePolicy==="destroy"){state.damaged=true;message="Upgrade failed; item is marked destroyed and must be restored by a recovery service";}
+  else message="Upgrade failed; current upgrade level was preserved";
+  const materialsSpent=materials.map(m=>({...m})); state.history.push({id:`upgrade-${request.playerId}-${request.timestamp??Date.now()}-${state.history.length+1}`,track:request.track,fromLevel:from,toLevel:to,success,timestamp:request.timestamp??Date.now(),playerId:request.playerId,materialsSpent,currencySpent:rules.currencyCost,message});
   return {success,state,wallet:nextWallet,item:applyUpgradeBonuses(item,state),currencySpent:rules.currencyCost,materialsSpent,message};
 }
 export interface RepairRule { currencyCost:number; materials:MaterialCost[]; clearsDamage:boolean; }
 export function repairUpgradedItem(state:CraftingUpgradeState,wallet:CraftingWallet,rule:RepairRule):{state:CraftingUpgradeState;wallet:CraftingWallet} {
-  if(!state.damaged)return {state:clone(state),wallet:clone(wallet)};
-  if(!rule.clearsDamage)throw new Error("Repair recipe does not restore this damage state");
-  if(!costAvailable(wallet,finiteNonNegative(rule.currencyCost),rule.materials))throw new Error("Insufficient currency or repair materials");
-  const nextState=clone(state); nextState.damaged=false;
-  return {state:nextState,wallet:spend(wallet,rule.currencyCost,rule.materials)};
+  if(!state.damaged)return {state:clone(state),wallet:clone(wallet)}; if(!rule.clearsDamage)throw new Error("Repair recipe does not restore this damage state");
+  if(!costAvailable(wallet,finiteNonNegative(rule.currencyCost),rule.materials))throw new Error("Insufficient currency or repair materials"); const nextState=clone(state); nextState.damaged=false; return {state:nextState,wallet:spend(wallet,rule.currencyCost,rule.materials)};
 }
 export function estimateUpgradeCost(track:CraftingTrack,target:number,config:TemperingConfig=DEFAULT_TEMPERING_CONFIG):{currency:number;materials:MaterialCost[]} {
-  const rules=track==="tempering"?config.levels.filter(r=>r.level<=target):config.masterworkRanks.filter(r=>r.rank<=target);
-  const totals=new Map<string,number>(); let currency=0;
-  for(const r of rules) { currency+=r.currencyCost; for(const m of r.materials)totals.set(m.itemId,(totals.get(m.itemId)??0)+m.quantity); }
-  return {currency,materials:[...totals].map(([itemId,quantity])=>({itemId,quantity}))};
+  const rules=track==="tempering"?config.levels.filter(r=>r.level<=target):config.masterworkRanks.filter(r=>r.rank<=target); const totals=new Map<string,number>(); let currency=0;
+  for(const r of rules){currency+=r.currencyCost;for(const m of r.materials)totals.set(m.itemId,(totals.get(m.itemId)??0)+m.quantity);} return {currency,materials:[...totals].map(([itemId,quantity])=>({itemId,quantity}))};
 }
-export function temperingSuccessChance(level:number,config:TemperingConfig=DEFAULT_TEMPERING_CONFIG):number {
-  return clamp(config.levels.find(x=>x.level===level)?.successChance??0,0,1);
-}
-export function masterworkSuccessChance(rank:number,config:TemperingConfig=DEFAULT_TEMPERING_CONFIG):number {
-  return clamp(config.masterworkRanks.find(x=>x.rank===rank)?.successChance??0,0,1);
-}
+export function temperingSuccessChance(level:number,config:TemperingConfig=DEFAULT_TEMPERING_CONFIG):number{return clamp(config.levels.find(x=>x.level===level)?.successChance??0,0,1);}
+export function masterworkSuccessChance(rank:number,config:TemperingConfig=DEFAULT_TEMPERING_CONFIG):number{return clamp(config.masterworkRanks.find(x=>x.rank===rank)?.successChance??0,0,1);}
