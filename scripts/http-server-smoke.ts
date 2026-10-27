@@ -5,6 +5,8 @@ import { executeGameCommand, InMemoryGameStateStore, InMemoryIdempotencyStore, t
 
 const sessions = new Map<string, { id: string; playerId: string; username: string }>();
 const players = new Map<string, unknown>();
+const initializedPlayers: string[] = [];
+const initializedResources: string[] = [];
 const state: GameState = {
   playerId: 'player-commander',
   resources: {
@@ -56,6 +58,8 @@ const app = createApiApp({
       return session;
     },
   },
+  initializeAuthoritativeState: async player => { initializedPlayers.push(player.id); },
+  initializeResources: async playerId => { initializedResources.push(playerId); },
   getPlayer: async id => players.get(id) ?? { id },
   getResources: async id => stateStore.load(id)?.resources ?? {},
   executeCommand: async (request, principal) => executeGameCommand(request, {
@@ -73,6 +77,25 @@ try {
 
   const unauthorized = await fetch(`http://127.0.0.1:${server.port}/api/v1/player`);
   assert.equal(unauthorized.status, 401);
+
+  const registration = await fetch(`http://127.0.0.1:${server.port}/api/v1/auth/register`, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ username: 'new_commander', password: 'password123', commanderName: 'New Commander', race: 'tauri' }),
+  });
+  assert.equal(registration.status, 201);
+  const registered = await registration.json() as { playerId: string; sessionToken: string };
+  assert.ok(registered.playerId);
+  assert.ok(registered.sessionToken);
+  assert.deepEqual(initializedPlayers, [registered.playerId]);
+  assert.deepEqual(initializedResources, [registered.playerId]);
+
+  const badRegistration = await fetch(`http://127.0.0.1:${server.port}/api/v1/auth/register`, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ username: 'x', password: 'short', commanderName: 'X', race: 'tauri' }),
+  });
+  assert.equal(badRegistration.status, 400);
 
   const login = await fetch(`http://127.0.0.1:${server.port}/api/v1/auth/login`, {
     method: 'POST',
