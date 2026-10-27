@@ -5,3 +5,4 @@ export * from './fleetRepository';
 export * from './researchRepository';
 export * from './battleRepository';
 export * from './auditRepository';
+export * from './sessionRepository';
