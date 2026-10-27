@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import {
   applyResourceDelta,
   processTurns,
-  resolveCombat,
+  resolveNaquadahCombat,
 } from '../src/engine/index';
 
 const baseResources = {
@@ -40,7 +40,7 @@ assert.equal(turnResult.resources.attackTurns, 7);
 assert.equal(turnResult.generatedNaquadah, 1080); // 3 * ((10 miners * 20) + (2 lifers * 80))
 assert.equal(turnResult.resources.naquadah, 2080);
 
-const battle = resolveCombat(
+const battle = resolveNaquadahCombat(
   { id: 'attacker', attack: 20, defense: 10, units: 100 },
   { id: 'defender', attack: 10, defense: 10, units: 50 },
   10000,
