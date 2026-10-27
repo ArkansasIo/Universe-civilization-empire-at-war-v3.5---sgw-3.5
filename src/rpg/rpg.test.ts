@@ -40,7 +40,7 @@ const damage=resolveDamage({attacker,defender,baseDamage:100,damageType:"physica
 assert.ok(damage.finalDamage>=0 && damage.finalDamage<=100);
 assert.equal(damage.critical,false);
 
-import { attemptUpgrade, createCraftingUpgradeState, DEFAULT_TEMPERING_CONFIG, applyUpgradeBonuses, estimateUpgradeCost, repairUpgradedItem, rollLoot, STARTER_LOOT_TABLES } from "./index.js";
+import { attemptUpgrade, createCraftingUpgradeState, DEFAULT_TEMPERING_CONFIG, applyUpgradeBonuses, estimateUpgradeCost, repairUpgradedItem } from "./index.js";
 const craftItem=STARTER_ITEMS[0];
 const freshState=createCraftingUpgradeState(craftItem);
 const baseWallet={currency:1000000,materials:{"tempering-stone":100,"refined-ore":20,"star-metal":20,"astral-core":20,"primordial-ingot":20,"masterwork-core":20,"void-crystal":20,"world-boss-heart":5,"warding-rune":20,"greater-warding-rune":20,"masterwork-seal":20}};
