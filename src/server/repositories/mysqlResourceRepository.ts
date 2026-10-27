@@ -2,15 +2,19 @@ import type { Resources, ID } from '../../engine/types';
 import type { ResourceRepository } from './resourceRepository';
 import type { SqlExecutor } from './mysqlRepository';
 
-interface ResourceRow extends Resources {
-  player_id: string;
-  updated_at: number;
+interface ResourceRow {
+  naquadah: number;
+  metal: number;
+  crystal: number;
+  deuterium: number;
+  energy: number;
+  darkMatter: number;
 }
 
 export class MySqlResourceRepository implements ResourceRepository {
   constructor(private readonly db: SqlExecutor) {}
 
-  async getByPlayerId(playerId: ID): Promise<Resources | null> {
+  async get(playerId: ID): Promise<Resources | null> {
     const rows = await this.db.execute<ResourceRow[]>(
       `SELECT naquadah, metal, crystal, deuterium, energy, dark_matter AS darkMatter
        FROM game_resources WHERE player_id = ? LIMIT 1`,
