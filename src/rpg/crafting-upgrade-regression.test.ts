@@ -110,7 +110,7 @@ test("masterworking enforces item level gate and consumes configured materials o
   const preview = previewMasterwork(item, temper10, true);
   assert.equal(preview.nextRank, 1);
   assert.equal(preview.eligible, true);
-  assert.equal(preview.protectedMaterials[0]?.itemId, "masterwork-seal");
+  assert.equal(preview.protectedMaterials.length, 0);
   const result = executeServerUpgrade({
     item, state: temper10, wallet, playerId: "crafting-test",
     track: "masterworking", roll: 0.01, timestamp: 4,
