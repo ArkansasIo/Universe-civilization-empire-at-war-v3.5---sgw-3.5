@@ -1,5 +1,6 @@
 export * from "./types.js";
-export * from "./rules.js";
+export { DEFAULT_STAT_WEIGHTS, MODE_MULTIPLIERS, RANK_MULTIPLIERS, STAT_CAPS, clamp, finiteNonNegative, softCap, diminishingReturns, normalizeAttribute, statValuePower, getModeMultiplier, deriveStats, scaleEnemyStats, scaleEnemyDamage } from "./rules.js";
+export { requiredXp as requiredXpFromRules } from "./rules.js";
 export * from "./combat.js";
 export * from "./effects.js";
 export * from "./items.js";
@@ -9,7 +10,9 @@ export * from "./catalog.js";
 export * from "./tempering.js";
 export * from "./crafting-materials.js";
 export * from "./masterworking.js";
-export * from "./crafting.js";
+export { previewUpgrade, calculateUpgradeCost, executeServerUpgrade, executeRepair, walletFromInventory } from "./crafting.js";
+export type { CraftingInventory, CraftingPreview } from "./crafting.js";
+export type { UpgradeResult as CraftingFacadeUpgradeResult } from "./crafting.js";
 export * from "./crafting-persistence.js";
 export * from "./mysql-crafting-persistence.js";
 export * from "./crafting-service.js";
