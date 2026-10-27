@@ -18,13 +18,22 @@ export class MySqlAuthoritativeCommandExecutor {
 
   async execute(request: GameCommandRequest, principal: AuthenticatedPrincipal): Promise<CommandResult> {
     const requestHash = hashCommandRequest(request.command, request.commandId, request.payload);
-    const existing = await this.idempotencyRepository.get(principal.userId, request.idempotencyKey);
-    if (existing) {
-      if (existing.requestHash !== requestHash) return rejected(request, 'IDEMPOTENCY_KEY_REUSED_WITH_DIFFERENT_REQUEST');
-      if (existing.response) return existing.response;
-    }
 
     return withSqlTransaction(this.db, async (tx) => {
+      const existing = await this.idempotencyRepository.get(principal.userId, request.idempotencyKey, tx);
+      if (existing) {
+        if (existing.requestHash !== requestHash) return rejected(request, 'IDEMPOTENCY_KEY_REUSED_WITH_DIFFERENT_REQUEST');
+        if (existing.response) return existing.response;
+        return rejected(request, 'COMMAND_ALREADY_IN_PROGRESS');
+      }
+
+      const existingCommand = await this.idempotencyRepository.getByCommandId(principal.userId, request.commandId, tx);
+      if (existingCommand) {
+        if (existingCommand.requestHash !== requestHash) return rejected(request, 'COMMAND_ID_REUSED_WITH_DIFFERENT_REQUEST');
+        if (existingCommand.response) return existingCommand.response;
+        return rejected(request, 'COMMAND_ALREADY_IN_PROGRESS');
+      }
+
       const claimed = await this.idempotencyRepository.claim(tx, {
         playerId: principal.userId,
         idempotencyKey: request.idempotencyKey,
@@ -36,9 +45,13 @@ export class MySqlAuthoritativeCommandExecutor {
       });
 
       if (!claimed) {
-        const duplicate = await this.idempotencyRepository.get(principal.userId, request.idempotencyKey);
-        if (duplicate?.requestHash !== requestHash) return rejected(request, 'IDEMPOTENCY_KEY_REUSED_WITH_DIFFERENT_REQUEST');
-        if (duplicate?.response) return duplicate.response;
+        const duplicateKey = await this.idempotencyRepository.get(principal.userId, request.idempotencyKey, tx);
+        if (duplicateKey?.requestHash !== requestHash) return rejected(request, 'IDEMPOTENCY_KEY_REUSED_WITH_DIFFERENT_REQUEST');
+        if (duplicateKey?.response) return duplicateKey.response;
+
+        const duplicateCommand = await this.idempotencyRepository.getByCommandId(principal.userId, request.commandId, tx);
+        if (duplicateCommand?.requestHash !== requestHash) return rejected(request, 'COMMAND_ID_REUSED_WITH_DIFFERENT_REQUEST');
+        if (duplicateCommand?.response) return duplicateCommand.response;
         return rejected(request, 'COMMAND_ALREADY_IN_PROGRESS');
       }
 
@@ -84,7 +97,8 @@ async function loadState(tx: SqlTransaction, playerId: string): Promise<GameStat
   const rows = await tx.execute<Array<{ player_id: string; state_version: number | string; state_json: string }>>(
     `SELECT player_id, state_version, state_json
        FROM game_authoritative_state
-      WHERE player_id = ? LIMIT 1`,
+      WHERE player_id = ?
+      FOR UPDATE`,
     [playerId],
   );
   if (!rows[0]) return null;
