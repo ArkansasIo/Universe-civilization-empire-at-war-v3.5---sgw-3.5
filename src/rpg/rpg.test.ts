@@ -15,8 +15,7 @@ assert.ok(calculateItemPower(STARTER_ITEMS[0],"pve")>calculateItemPower(STARTER_
 const loot=rollLoot(STARTER_LOOT_TABLES[0],{random:()=>0.1});
 assert.equal(loot.length,1);
 assert.ok(loot[0].quantity>=1);
-const table=STARTER_LOOT_TABLES[1];
-assert.deepEqual(rollLoot(table,{pityCount:10}),[{itemId:"ashen-blade",quantity:1}]);
+assert.deepEqual(rollLoot(STARTER_LOOT_TABLES[1],{pityCount:10}),[{itemId:"ashen-blade",quantity:1}]);
 const target={id:"target",name:"Target",teamId:"b",mode:"pve",stats:structuredClone(SAMPLE_STAT_BLOCK),effects:[],threat:{},alive:true};
 const effects=new EffectSystem();
 effects.apply(target,DEFAULT_EFFECTS.find(e=>e.id==="poison")!,"enemy");
