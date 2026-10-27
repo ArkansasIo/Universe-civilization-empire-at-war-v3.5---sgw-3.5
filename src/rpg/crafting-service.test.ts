@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { InMemoryCraftingStateStore } from "./crafting-persistence.js";
+import { MemoryCraftingStateStore } from "./crafting-persistence.js";
 import { CraftingService } from "./crafting-service.js";
 import { createCraftingUpgradeState } from "./tempering.js";
 import { STARTER_ITEMS } from "./catalog.js";
@@ -8,7 +8,7 @@ const item = STARTER_ITEMS[0];
 if (!item) throw new Error("Starter item missing");
 
 const state = createCraftingUpgradeState(item);
-const store = new InMemoryCraftingStateStore();
+const store = new MemoryCraftingStateStore();
 const service = new CraftingService(store, () => 0.01);
 
 const first = await service.upgrade({
