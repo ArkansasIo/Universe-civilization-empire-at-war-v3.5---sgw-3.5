@@ -31,3 +31,25 @@ The browser may calculate previews only. Persistent PvP results, inventory owner
 
 ## Validation
 The repository uses TypeScript 7 and bundler module resolution. Run `npm run lint` for the full project type check, and `npm run build` for the browser build. Existing project diagnostics may be unrelated to this module.
+
+## Tempering and masterworking
+
+- Tempering improves item profile stats through levels +1 to +10; higher levels have lower success chances and may downgrade on failure.
+- Masterworking unlocks rank-specific stat multipliers and bonus stats from rank +1 to +5, gated by the item's item level.
+- Both tracks spend currency and named materials. Optional protection materials prevent downgrade/damage outcomes on a failed attempt, but do not make the attempt succeed.
+- Failed attempts still consume the listed cost. The state stores a history entry for server audit.
+- `applyUpgradeBonuses(baseItem, state)` always computes from the original base item, avoiding repeated multiplication when recalculating previews.
+- `repairUpgradedItem` supports repairable damaged states. Do not expose a client-controlled success roll in production: the server must generate the roll, verify inventory/currency, and save the resulting state in one transaction.
+
+Example API:
+```ts
+import { attemptUpgrade, createCraftingUpgradeState, STARTER_ITEMS, DEFAULT_TEMPERING_CONFIG } from "./index.js";
+const baseItem = STARTER_ITEMS[0];
+const state = createCraftingUpgradeState(baseItem);
+const result = attemptUpgrade({
+  item: baseItem, state,
+  wallet: { currency: 5000, materials: { "tempering-stone": 20 } },
+  playerId: "player-123", track: "tempering",
+  rules: DEFAULT_TEMPERING_CONFIG.levels[0], roll: 0.1, timestamp: 123456,
+});
+```
