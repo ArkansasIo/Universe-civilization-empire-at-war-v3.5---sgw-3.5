@@ -1,0 +1,42 @@
+CREATE TABLE IF NOT EXISTS game_sessions (
+  id VARCHAR(64) PRIMARY KEY,
+  player_id VARCHAR(64) NOT NULL,
+  state_version BIGINT NOT NULL DEFAULT 0,
+  last_turn_at TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+  created_at TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+  updated_at TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),
+  INDEX idx_game_sessions_player (player_id)
+);
+
+CREATE TABLE IF NOT EXISTS empire_resources (
+  player_id VARCHAR(64) PRIMARY KEY,
+  naquadah BIGINT NOT NULL DEFAULT 0,
+  metal BIGINT NOT NULL DEFAULT 0,
+  crystal BIGINT NOT NULL DEFAULT 0,
+  deuterium BIGINT NOT NULL DEFAULT 0,
+  energy BIGINT NOT NULL DEFAULT 0,
+  dark_matter BIGINT NOT NULL DEFAULT 0,
+  banked_naquadah BIGINT NOT NULL DEFAULT 0,
+  turns INT NOT NULL DEFAULT 0,
+  updated_at TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3)
+);
+
+CREATE TABLE IF NOT EXISTS fleets (
+  id VARCHAR(64) PRIMARY KEY,
+  player_id VARCHAR(64) NOT NULL,
+  name VARCHAR(120) NOT NULL,
+  galaxy INT NOT NULL,
+  system INT NOT NULL,
+  planet INT NOT NULL,
+  order_type VARCHAR(32) NOT NULL DEFAULT 'move',
+  destination_galaxy INT NULL,
+  destination_system INT NULL,
+  destination_planet INT NULL,
+  departure_at TIMESTAMP(3) NULL,
+  arrival_at TIMESTAMP(3) NULL,
+  state_version BIGINT NOT NULL DEFAULT 0,
+  created_at TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+  updated_at TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),
+  INDEX idx_fleets_player (player_id),
+  INDEX idx_fleets_arrival (arrival_at)
+);
