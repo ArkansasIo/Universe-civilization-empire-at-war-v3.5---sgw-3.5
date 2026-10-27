@@ -17,7 +17,8 @@
     "auth:smoke": "tsx scripts/auth-smoke.ts",
     "server:http:smoke": "tsx scripts/http-server-smoke.ts",
     "mysql:authoritative:smoke": "tsx scripts/mysql-authoritative-smoke.ts",
-    "crafting:service:smoke": "tsx scripts/crafting-service-smoke.ts"
+    "crafting:service:smoke": "tsx scripts/crafting-service-smoke.ts",
+    "crafting:http:smoke": "tsx scripts/crafting-http-smoke.ts"
   },
   "dependencies": {
     "@google/genai": "^2.4.0",
