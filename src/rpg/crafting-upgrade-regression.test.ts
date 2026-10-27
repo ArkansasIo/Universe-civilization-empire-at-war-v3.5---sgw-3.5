@@ -51,14 +51,14 @@ test("successful tempering increments state and consumes exact materials", () =>
 });
 
 test("failed protected tempering consumes protection but preserves the level", () => {
-  const state = { ...initialState, temperLevel: 4 };
+  const state = { ...initialState, temperLevel: 5 };
   const result = attemptUpgrade({
     item, state, wallet, playerId: "crafting-test", track: "tempering",
     rules: DEFAULT_TEMPERING_CONFIG.levels[5]!, roll: 0.99,
     useProtection: true, timestamp: 2,
   });
   assert.equal(result.success, false);
-  assert.equal(result.state.temperLevel, 4);
+  assert.equal(result.state.temperLevel, 5);
   assert.equal(result.wallet.materials["warding-rune"], 20);
   assert.equal(result.wallet.materials["greater-warding-rune"], 19);
   assert.ok(result.state.history[0]?.message.includes("preserved"));
