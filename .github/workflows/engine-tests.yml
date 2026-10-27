@@ -10,6 +10,7 @@ on:
       - 'scripts/authoritative-engine-smoke.ts'
       - 'scripts/game-command-smoke.ts'
       - 'scripts/server-service-smoke.ts'
+      - 'scripts/auth-smoke.ts'
       - 'package.json'
       - '.github/workflows/engine-tests.yml'
   pull_request:
@@ -20,6 +21,7 @@ on:
       - 'scripts/authoritative-engine-smoke.ts'
       - 'scripts/game-command-smoke.ts'
       - 'scripts/server-service-smoke.ts'
+      - 'scripts/auth-smoke.ts'
       - 'package.json'
       - '.github/workflows/engine-tests.yml'
   workflow_dispatch:
@@ -48,3 +50,5 @@ jobs:
         run: npm run game:command:smoke
       - name: Run server service integration tests
         run: npm run server:service:smoke
+      - name: Run authentication integration tests
+        run: npm run auth:smoke
