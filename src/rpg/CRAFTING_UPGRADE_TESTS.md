@@ -1,11 +1,11 @@
-# Tempering and Masterworking Regression Tests
+# Crafting Upgrade Regression Tests
 
-This file exercises the crafting upgrade state machine independently of the larger application's test suite.
+Use `npm run crafting:regression` to execute deterministic regression checks for tempering and masterworking.
 
-Run with:
+The test suite covers preview values, success material/currency costs, protection consumption, failure downgrades, invalid item state and random rolls, insufficient wallet rejection without input mutation, masterwork gating and material costs, cumulative upgrade cost estimation, and default rule-table completeness.
 
-```bash
-npx tsx src/rpg/crafting-upgrade-regression.test.ts
-```
+Related integration checks:
+- `npm run crafting:service:smoke`
+- `npm run crafting:http:smoke`
 
-Coverage includes previews, exact material/currency spending, protection behavior, failure downgrades, invalid-state rejection, immutable input handling, masterwork progression, and cumulative cost estimation. This is regression coverage for the current rules; it is not a substitute for a transactional integration test against the production database.
+These checks are wired into the Engine Tests workflow. Production database transactional behavior should also be verified in an environment with the configured MySQL test database.
