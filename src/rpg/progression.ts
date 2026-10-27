@@ -1,5 +1,8 @@
 import type { CoreStats, StatBonuses } from "./types.js";
 
+/** Class-level bonuses use runtime derived-stat names and are normalized by the progression consumer. */
+export interface ClassStatBonuses { physicalPower?: number; magicalPower?: number; maxHp?: number; maxMana?: number; armor?: number; critChance?: number; critDamage?: number; evasion?: number; healingPower?: number; cooldownReduction?: number; }
+
 export type RpgClassId = "warrior" | "ranger" | "mage" | "rogue" | "paladin" | "engineer";
 
 export interface RpgClassDefinition {
@@ -7,7 +10,7 @@ export interface RpgClassDefinition {
   name: string;
   description: string;
   primaryStats: (keyof CoreStats)[];
-  baseBonuses: StatBonuses;
+  baseBonuses: ClassStatBonuses;
 }
 
 export interface CharacterProgression {
