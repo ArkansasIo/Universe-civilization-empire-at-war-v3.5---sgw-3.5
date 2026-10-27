@@ -8,4 +8,5 @@ export * from './auditRepository';
 export * from './sessionRepository';
 export * from './mysqlRepository';
 export * from './mysqlPlayerRepository';
+export * from './mysqlResourceRepository';
 export * from './mysqlSessionRepository';
