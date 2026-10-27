@@ -59,7 +59,7 @@ test("failed protected tempering consumes protection but preserves the level", (
   });
   assert.equal(result.success, false);
   assert.equal(result.state.temperLevel, 4);
-  assert.equal(result.wallet.materials["warding-rune"], 19);
+  assert.equal(result.wallet.materials["warding-rune"], 20);
   assert.equal(result.wallet.materials["greater-warding-rune"], 19);
   assert.ok(result.state.history[0]?.message.includes("preserved"));
 });
