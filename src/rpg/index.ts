@@ -6,3 +6,4 @@ export * from "./items.js";
 export * from "./enemies.js";
 export * from "./loot.js";
 export * from "./catalog.js";
+export * from "./tempering.js";
