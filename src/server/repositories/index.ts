@@ -6,3 +6,6 @@ export * from './researchRepository';
 export * from './battleRepository';
 export * from './auditRepository';
 export * from './sessionRepository';
+export * from './mysqlRepository';
+export * from './mysqlPlayerRepository';
+export * from './mysqlSessionRepository';
