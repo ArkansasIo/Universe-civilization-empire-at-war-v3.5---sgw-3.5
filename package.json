@@ -11,6 +11,7 @@
     "lint": "tsc --noEmit",
     "engine:smoke": "tsx scripts/engine-smoke.ts",
     "authoritative:smoke": "tsx scripts/authoritative-engine-smoke.ts",
+    "authoritative:state:init:smoke": "tsx scripts/authoritative-state-init-smoke.ts",
     "game:command:smoke": "tsx scripts/game-command-smoke.ts",
     "server:service:smoke": "tsx scripts/server-service-smoke.ts",
     "auth:smoke": "tsx scripts/auth-smoke.ts",
