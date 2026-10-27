@@ -5,4 +5,4 @@ export const dailyMissions:DailyMission[]=[
 {id:'daily-arena',name:'Arena Combat',description:'Win PvP matches.',objective:'pvp',required:3,rewardXp:2500,rewardCurrency:800},
 {id:'daily-craft',name:'Field Engineer',description:'Craft useful equipment or consumables.',objective:'craft',required:5,rewardXp:1200,rewardCurrency:600},
 ];
-export function missionComplete(progress:number,mission:DailyMission):boolean{returnprogress>=mission.required;}
+export function missionComplete(progress:number,mission:DailyMission):boolean{return progress>=mission.required;}
