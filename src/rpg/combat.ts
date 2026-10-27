@@ -26,7 +26,6 @@ export function resolveDamage(req:DamageRequest,roll=Math.random()):DamageResult
   if(req.canCrit!==false && roll<critChance) { critical=true; afterResistance*=1+attacker.stats.derived.critDamage*(pvp?MODE_MULTIPLIERS.pvp.critDamage:1); }
   const blocked=(defender.stats.derived.blockChance>0 && roll>=critChance && roll<critChance+defender.stats.derived.blockChance);
   if(blocked) afterResistance=Math.max(0,afterResistance-defender.stats.derived.blockValue);
-  if(req.isBossTarget) afterResistance=Math.max(0,afterResistance);
   const finalDamage=Math.round(afterResistance*100)/100;
   return {raw,afterArmor,afterResistance,finalDamage,critical,blocked};
 }
