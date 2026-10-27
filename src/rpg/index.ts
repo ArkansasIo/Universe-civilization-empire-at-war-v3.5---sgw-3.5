@@ -7,3 +7,6 @@ export * from "./enemies.js";
 export * from "./loot.js";
 export * from "./catalog.js";
 export * from "./tempering.js";
+export * from "./crafting-materials.js";
+export * from "./masterworking.js";
+export * from "./crafting.js";
