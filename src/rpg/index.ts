@@ -34,3 +34,7 @@ export * from "./alliance.js";
 export * from "./space-service.js";
 export * from "./planet-buildings.js";
 export * from "./planet-colonies.js";
+export * from "./space-combat.js";
+export * from "./fleet-production.js";
+export * from "./espionage.js";
+export * from "./moons.js";
