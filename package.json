@@ -12,7 +12,8 @@
     "engine:smoke": "tsx scripts/engine-smoke.ts",
     "authoritative:smoke": "tsx scripts/authoritative-engine-smoke.ts",
     "game:command:smoke": "tsx scripts/game-command-smoke.ts",
-    "server:service:smoke": "tsx scripts/server-service-smoke.ts"
+    "server:service:smoke": "tsx scripts/server-service-smoke.ts",
+    "auth:smoke": "tsx scripts/auth-smoke.ts"
   },
   "dependencies": {
     "@google/genai": "^2.4.0",
