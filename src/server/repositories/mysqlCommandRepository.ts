@@ -66,17 +66,30 @@ function mapRow(row: CommandRow): CommandIdempotencyRecord {
   };
 }
 
+const SELECT_COLUMNS = `player_id, idempotency_key, command_id, command_name, request_hash, status,
+              event_id, response_json, state_version, created_at, completed_at`;
+
 export class MySqlCommandIdempotencyRepository {
   constructor(private readonly db: SqlExecutor) {}
 
-  async get(playerId: string, idempotencyKey: string): Promise<CommandIdempotencyRecord | null> {
-    const rows = await this.db.execute<CommandRow[]>(
-      `SELECT player_id, idempotency_key, command_id, command_name, request_hash, status,
-              event_id, response_json, state_version, created_at, completed_at
+  async get(playerId: string, idempotencyKey: string, executor: SqlExecutor = this.db): Promise<CommandIdempotencyRecord | null> {
+    const rows = await executor.execute<CommandRow[]>(
+      `SELECT ${SELECT_COLUMNS}
          FROM game_command_idempotency
         WHERE player_id = ? AND idempotency_key = ?
         LIMIT 1`,
       [playerId, idempotencyKey],
+    );
+    return rows[0] ? mapRow(rows[0]) : null;
+  }
+
+  async getByCommandId(playerId: string, commandId: string, executor: SqlExecutor = this.db): Promise<CommandIdempotencyRecord | null> {
+    const rows = await executor.execute<CommandRow[]>(
+      `SELECT ${SELECT_COLUMNS}
+         FROM game_command_idempotency
+        WHERE player_id = ? AND command_id = ?
+        LIMIT 1`,
+      [playerId, commandId],
     );
     return rows[0] ? mapRow(rows[0]) : null;
   }
