@@ -6,6 +6,12 @@ on:
     paths:
       - 'src/engine/**'
       - 'src/server/**'
+      - 'src/rpg/crafting*.ts'
+      - 'src/rpg/tempering.ts'
+      - 'src/rpg/masterworking.ts'
+      - 'src/rpg/catalog.ts'
+      - 'scripts/crafting-service-smoke.ts'
+      - 'scripts/crafting-http-smoke.ts'
       - 'scripts/engine-smoke.ts'
       - 'scripts/authoritative-engine-smoke.ts'
       - 'scripts/game-command-smoke.ts'
@@ -56,3 +62,9 @@ jobs:
         run: npm run auth:smoke
       - name: Run HTTP server integration tests
         run: npm run server:http:smoke
+      - name: Run crafting service integration tests
+        run: npm run crafting:service:smoke
+      - name: Run crafting HTTP integration tests
+        run: npm run crafting:http:smoke
+      - name: Run tempering and masterworking regression tests
+        run: npm run crafting:regression
