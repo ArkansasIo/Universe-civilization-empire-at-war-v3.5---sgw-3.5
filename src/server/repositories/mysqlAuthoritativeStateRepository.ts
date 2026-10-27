@@ -21,6 +21,16 @@ export class MySqlAuthoritativeStateRepository {
     return rows[0] ? mapState(rows[0]) : null;
   }
 
+  /** Initialize a player's authoritative snapshot without overwriting an existing state. */
+  async initialize(state: GameState, executor: SqlExecutor = this.db): Promise<void> {
+    await executor.execute(
+      `INSERT IGNORE INTO game_authoritative_state
+        (player_id, state_version, state_json, updated_at)
+       VALUES (?, ?, ?, ?)`,
+      [state.playerId, state.version, JSON.stringify(state), Date.now()],
+    );
+  }
+
   async saveInitial(tx: SqlTransaction, state: GameState): Promise<void> {
     await tx.execute(
       `INSERT INTO game_authoritative_state
