@@ -1,0 +1,20 @@
+import { strict as assert } from 'node:assert';
+import { createInventory, addItem, countItem } from '../src/rpg/inventory';
+import { getLootTable, rollLoot } from '../src/rpg/loot';
+import { bosses } from '../src/rpg/catalog';
+import { createBossRuntime, evaluateBossPhase } from '../src/rpg/bossRuntime';
+import { createParty, addMember, partyComposition } from '../src/rpg/party';
+import { abilities } from '../src/rpg/abilities';
+
+const inventory=createInventory(10);
+const withItem=addItem(inventory,{itemId:'phoenix-revival-tonic',quantity:3},{id:'phoenix-revival-tonic',name:'Phoenix Revival Tonic',description:'',kind:'consumable',rarity:'rare',itemLevel:1,requiredLevel:1,stackLimit:10});
+assert.equal(countItem(withItem,'phoenix-revival-tonic'),3);
+const loot=rollLoot(getLootTable('system-lord-cache'),'integration-seed');
+assert.equal(loot.rolls.length,3);
+assert.ok(abilities.length>=5);
+const boss=bosses[0]; const runtime=createBossRuntime(boss,0);
+const phase=evaluateBossPhase(boss,runtime,{id:'boss',level:50,context:'pve',attributes:boss.attributes,stats:boss.baseStats,resources:{hp:boss.baseResources.maxHp*.70,maxHp:boss.baseResources.maxHp,mp:1,maxMp:1,stamina:1,maxStamina:1}},1);
+assert.equal(phase.state.phaseIndex,0);
+const party=addMember(createParty('p1'),{playerId:'p2',role:'healer',joinedAt:Date.now(),online:true});
+assert.equal(partyComposition(party).healers,1);
+console.log('RPG/MMORPG integration invariants passed.');
