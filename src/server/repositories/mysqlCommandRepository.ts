@@ -83,7 +83,7 @@ export class MySqlCommandIdempotencyRepository {
 
   async claim(tx: SqlTransaction, record: CommandIdempotencyRecord): Promise<boolean> {
     const result = await tx.execute<SqlWriteResult>(
-      `INSERT INTO game_command_idempotency
+      `INSERT IGNORE INTO game_command_idempotency
         (player_id, idempotency_key, command_id, command_name, request_hash, status, created_at)
        VALUES (?, ?, ?, ?, ?, 'pending', ?)`,
       [record.playerId, record.idempotencyKey, record.commandId, record.command, record.requestHash, record.createdAt],
@@ -97,6 +97,15 @@ export class MySqlCommandIdempotencyRepository {
           SET status = 'completed', event_id = ?, response_json = ?, state_version = ?, completed_at = ?
         WHERE player_id = ? AND idempotency_key = ?`,
       [result.eventId, JSON.stringify(result), result.stateVersion ?? null, completedAt, playerId, idempotencyKey],
+    );
+  }
+
+  async fail(tx: SqlTransaction, playerId: string, idempotencyKey: string, result: CommandResult, completedAt: number): Promise<void> {
+    await tx.execute(
+      `UPDATE game_command_idempotency
+          SET status = 'failed', response_json = ?, completed_at = ?
+        WHERE player_id = ? AND idempotency_key = ?`,
+      [JSON.stringify(result), completedAt, playerId, idempotencyKey],
     );
   }
 }
