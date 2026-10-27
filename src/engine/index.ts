@@ -1,6 +1,9 @@
 export * from './resourceTransactions';
 export * from './turnEngine';
-export * from './combatEngine';
+export { DEFAULT_COMBAT_CONFIG } from './combatEngine';
+export type { Combatant, CombatConfig, CombatResult as LegacyCombatResult } from './combatEngine';
+export { resolveCombat as resolveNaquadahCombat } from './combatEngine';
+export type { CombatResult as NaquadahCombatResult } from './combatEngine';
 export * from './types';
 export * from './constants';
 export * from './economy';
@@ -10,4 +13,5 @@ export * from './fleetEngine';
 export * from './researchEngine';
 export * from './stargateEngine';
 export * from './diplomacyEngine';
-export * from './combatResolver';
+export { resolveCombat } from './combatResolver';
+export type { CombatUnit, CombatResult as FleetCombatResult } from './combatResolver';
