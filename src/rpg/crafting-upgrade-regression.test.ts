@@ -54,7 +54,7 @@ test("failed protected tempering consumes protection but preserves the level", (
   const state = { ...initialState, temperLevel: 4 };
   const result = attemptUpgrade({
     item, state, wallet, playerId: "crafting-test", track: "tempering",
-    rules: DEFAULT_TEMPERING_CONFIG.levels[4]!, roll: 0.99,
+    rules: DEFAULT_TEMPERING_CONFIG.levels[5]!, roll: 0.99,
     useProtection: true, timestamp: 2,
   });
   assert.equal(result.success, false);
