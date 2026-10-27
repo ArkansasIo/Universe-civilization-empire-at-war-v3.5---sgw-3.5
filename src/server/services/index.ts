@@ -7,3 +7,4 @@ export * from './fleetMovementService';
 export * from './researchService';
 export * from './combatService';
 export * from './stargateService';
+export * from './sessionService';
