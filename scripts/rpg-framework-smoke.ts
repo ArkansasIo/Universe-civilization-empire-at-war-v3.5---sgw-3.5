@@ -1,0 +1,21 @@
+import { strict as assert } from 'node:assert';
+import { bosses, enemies, items, statusEffects, encounters } from '../src/rpg/catalog';
+import { calculateEncounterScaling, calculateItemPower, calculateMaxHp, armorMitigation, hitChance, calculateThreat } from '../src/rpg/formulas';
+
+assert.ok(bosses.length >= 1, 'must include at least one boss');
+assert.ok(enemies.length >= 1, 'must include mobs / elite enemies');
+assert.ok(items.some(item => item.pve && item.pvp), 'shared item should define separate PvE and PvP tuning');
+assert.ok(statusEffects.some(effect => effect.category === 'buff'));
+assert.ok(statusEffects.some(effect => effect.category === 'debuff' || effect.category === 'damageOverTime'));
+assert.ok(encounters.some(encounter => encounter.kind === 'raid'));
+assert.equal(calculateMaxHp(10, 10, 100), 350);
+assert.equal(armorMitigation(0, 10), 0);
+assert.ok(hitChance(100, 100) >= 0.05 && hitChance(100, 100) <= 0.95);
+assert.ok(calculateThreat({ damage: 100, healing: 50, threatMultiplier: 2 }) > 0);
+const solo = calculateEncounterScaling({ baseHp: 1000, baseDamage: 100, enemyLevel: 10, playerLevel: 10, players: 1, difficultyMultiplier: 1 });
+const group = calculateEncounterScaling({ baseHp: 1000, baseDamage: 100, enemyLevel: 10, playerLevel: 10, players: 5, difficultyMultiplier: 1 });
+assert.ok(group.hp > solo.hp, 'party scaling should increase HP');
+assert.ok(group.damage > solo.damage, 'party scaling should increase damage');
+const testItem = items[0];
+assert.ok(calculateItemPower(testItem, 'pve') > calculateItemPower(testItem, 'pvp'), 'PvP should normalize PvE damage-oriented item');
+console.log('RPG/MMORPG framework smoke tests passed.');
