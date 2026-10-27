@@ -37,7 +37,7 @@ const damage=resolveDamage({attacker,defender,baseDamage:100,damageType:"physica
 assert.ok(damage.finalDamage>=0 && damage.finalDamage<=100);
 assert.equal(damage.critical,false);
 
-import { attemptUpgrade, createCraftingUpgradeState, DEFAULT_TEMPERING_CONFIG, applyUpgradeBonuses, estimateUpgradeCost, repairUpgradedItem } from "./index.js";
+import { attemptUpgrade, createCraftingUpgradeState, DEFAULT_TEMPERING_CONFIG, applyUpgradeBonuses, estimateUpgradeCost, repairUpgradedItem, rollLoot, STARTER_LOOT_TABLES } from "./index.js";
 const craftItem=STARTER_ITEMS[0];
 const freshState=createCraftingUpgradeState(craftItem);
 const baseWallet={currency:1000000,materials:{"tempering-stone":100,"refined-ore":20,"star-metal":20,"astral-core":20,"primordial-ingot":20,"masterwork-core":20,"void-crystal":20,"world-boss-heart":5,"warding-rune":20,"greater-warding-rune":20,"masterwork-seal":20}};
@@ -58,6 +58,25 @@ assert.equal(calculateItemPower(applyUpgradeBonuses(craftItem,upgraded.state),"p
 const estimate=estimateUpgradeCost("tempering",3);
 assert.ok(estimate.currency>0 && estimate.materials.length>0);
 const damaged={...upgraded.state,damaged:true};
-const repaired=repairUpgradedItem(damaged,baseWallet,{currencyCost:100,materials:[{itemId:"repair-kit",quantity:1}],clearsDamage:true});
+const repaired=repairUpgradedItem(damaged,{...baseWallet,materials:{...baseWallet.materials,"repair-kit":1}},{currencyCost:100,materials:[{itemId:"repair-kit",quantity:1}],clearsDamage:true});
+assert.equal(repaired.state.damaged,false);
+const protectedFailureCosts=protectedFail.wallet.materials["warding-rune"];
+assert.equal(protectedFailureCosts,19,"protection material must be consumed");
+const noProtectionFailure=attemptUpgrade({
+  item:craftItem,
+  state:{...upgraded.state,temperLevel:3},
+  wallet:{currency:baseWallet.currency,materials:{...baseWallet.materials,"tempering-stone":100,"refined-ore":20}},
+  playerId:"test-player",track:"tempering",rules:failRule,roll:.99,timestamp:201
+});
+assert.equal(noProtectionFailure.state.temperLevel,2,"failed unprotected +4 attempt must downgrade by one");
+const bonusMasterworkRule=DEFAULT_TEMPERING_CONFIG.masterworkRanks[0];
+const masterworked=attemptUpgrade({
+  item:craftItem,state:{...freshState,temperLevel:10},
+  wallet:baseWallet,playerId:"test-player",track:"masterworking",
+  rules:bonusMasterworkRule,roll:.01,timestamp:300
+});
+assert.equal(masterworked.state.masterworkRank,1);
+assert.ok(masterworked.item.pve.stats?.derived?.physicalPower);
+assert.equal(rollLoot(STARTER_LOOT_TABLES[0],{random:()=>0,alreadyUnique:new Set(["guardian-plate"])}).length,1);
 
 console.log("RPG/MMORPG unit smoke tests passed");
