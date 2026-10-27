@@ -32,3 +32,5 @@ export * from "./research.js";
 export * from "./space-missions.js";
 export * from "./alliance.js";
 export * from "./space-service.js";
+export * from "./planet-buildings.js";
+export * from "./planet-colonies.js";
