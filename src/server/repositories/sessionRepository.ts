@@ -1,21 +1,23 @@
 export interface SessionRecord {
-  tokenHash: string;
+  id: string;
   playerId: string;
+  username: string;
+  tokenHash: string;
   createdAt: number;
   expiresAt: number;
   revokedAt?: number;
 }
 
 export interface SessionRepository {
-  get(tokenHash: string): Promise<SessionRecord | null>;
+  getByTokenHash(tokenHash: string): Promise<SessionRecord | null>;
   save(session: SessionRecord): Promise<void>;
-  revoke(tokenHash: string, revokedAt: number): Promise<void>;
+  revoke(id: string, revokedAt: number): Promise<void>;
 }
 
 export class InMemorySessionRepository implements SessionRepository {
   private readonly sessions = new Map<string, SessionRecord>();
 
-  async get(tokenHash: string): Promise<SessionRecord | null> {
+  async getByTokenHash(tokenHash: string): Promise<SessionRecord | null> {
     const session = this.sessions.get(tokenHash);
     return session ? structuredClone(session) : null;
   }
@@ -24,8 +26,9 @@ export class InMemorySessionRepository implements SessionRepository {
     this.sessions.set(session.tokenHash, structuredClone(session));
   }
 
-  async revoke(tokenHash: string, revokedAt: number): Promise<void> {
-    const session = this.sessions.get(tokenHash);
-    if (session) this.sessions.set(tokenHash, { ...session, revokedAt });
+  async revoke(id: string, revokedAt: number): Promise<void> {
+    for (const [key, session] of this.sessions) {
+      if (session.id === id) this.sessions.set(key, { ...session, revokedAt });
+    }
   }
 }
