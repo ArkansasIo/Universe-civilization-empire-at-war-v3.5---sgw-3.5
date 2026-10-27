@@ -1,0 +1,43 @@
+import assert from "node:assert/strict";
+import { STARTER_ITEMS } from "./catalog.js";
+import { CRAFTING_MATERIALS, materialSellValue } from "./crafting-materials.js";
+import { calculateUpgradeCost, executeServerUpgrade, previewUpgrade } from "./crafting.js";
+import { createCraftingUpgradeState, DEFAULT_TEMPERING_CONFIG } from "./tempering.js";
+import { listMasterworkRanks, masterworkCostToRank, previewMasterwork } from "./masterworking.js";
+
+const item=STARTER_ITEMS[0];
+const state=createCraftingUpgradeState(item);
+const wallet={currency:1_000_000,materials:{"tempering-stone":100,"refined-ore":20,"star-metal":20,"astral-core":20,"primordial-ingot":20,"masterwork-core":20,"void-crystal":20,"world-boss-heart":5,"warding-rune":20,"greater-warding-rune":20,"masterwork-seal":20}};
+
+assert.ok(CRAFTING_MATERIALS["tempering-stone"]);
+assert.ok(materialSellValue("tempering-stone",10)>0);
+
+const temperPreview=previewUpgrade(item,state,"tempering");
+assert.equal(temperPreview.nextLevel,1);
+assert.equal(temperPreview.successChance,1);
+assert.equal(temperPreview.materials[0].itemId,"tempering-stone");
+
+const upgraded=executeServerUpgrade({item,state,wallet,playerId:"crafting-test",track:"tempering",roll:.01,timestamp:1});
+assert.equal(upgraded.success,true);
+assert.equal(upgraded.state.temperLevel,1);
+
+const ranks=listMasterworkRanks();
+assert.equal(ranks.length,5);
+assert.equal(ranks[0].unlockLevel,10);
+assert.ok(masterworkCostToRank(5).currency>0);
+
+const masterPreview=previewMasterwork(item,{...upgraded.state,temperLevel:10},true);
+assert.equal(masterPreview.nextRank,1);
+assert.equal(masterPreview.eligible,true);
+assert.equal(masterPreview.protectedMaterials[0].itemId,"masterwork-seal"===masterPreview.protectedMaterials[0].itemId?"masterwork-seal":masterPreview.protectedMaterials[0].itemId);
+
+const masterworked=executeServerUpgrade({item,state:{...upgraded.state,temperLevel:10},wallet,playerId:"crafting-test",track:"masterworking",roll:.01,timestamp:2});
+assert.equal(masterworked.success,true);
+assert.equal(masterworked.state.masterworkRank,1);
+
+const costs=calculateUpgradeCost("tempering",10);
+assert.ok(costs.currency>0);
+assert.ok(costs.materials.some(material=>material.itemId==="primordial-ingot"));
+assert.equal(DEFAULT_TEMPERING_CONFIG.levels.length,10);
+
+console.log("Crafting subsystem tests passed");
