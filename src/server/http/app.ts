@@ -1,5 +1,8 @@
 import express, { type Express, type Response } from 'express';
+import type { GameCommandRequest, CommandResult } from '../gameCommands';
+import { executeGameCommand } from '../gameCommands';
 import { requestId, jsonOnly, securityHeaders, createRateLimitMiddleware, requireBearer } from './middleware';
+import { registerCommandRoutes, type GameCommandExecutor } from './commandRoutes';
 import type { AuthenticatedRequest } from './httpTypes';
 
 export interface ApiServices {
@@ -14,6 +17,7 @@ export interface ApiServices {
   getPlanets?: (playerId: string) => Promise<unknown>;
   getFleets?: (playerId: string) => Promise<unknown>;
   getResearch?: (playerId: string) => Promise<unknown>;
+  executeCommand?: GameCommandExecutor;
 }
 
 function sendError(res: Response, status: number, code: string, message: string): void {
@@ -39,6 +43,7 @@ export function createApiApp(services: ApiServices): Express {
 
   app.get('/healthz', (_req, res) => res.status(200).json({ ok: true, service: 'universe-civilization-api' }));
   app.get('/readyz', (_req, res) => res.status(200).json({ ok: true }));
+  app.get('/api/v1/health', (_req, res) => res.status(200).json({ status: 'ok', service: 'universe-civilization-api', version: '1.0.0' }));
 
   app.post('/api/v1/auth/login', async (req, res) => {
     const { username, password } = req.body ?? {};
@@ -68,6 +73,10 @@ export function createApiApp(services: ApiServices): Express {
     if (!requireService(services.getPlayer, res, 'Player service')) return;
     res.json(await services.getPlayer(req.auth!.playerId));
   });
+  protectedRouter.get('/commander', async (req: AuthenticatedRequest, res) => {
+    if (!requireService(services.getPlayer, res, 'Player service')) return;
+    res.json(await services.getPlayer(req.auth!.playerId));
+  });
   protectedRouter.get('/resources', async (req: AuthenticatedRequest, res) => {
     if (!requireService(services.getResources, res, 'Resource service')) return;
     res.json(await services.getResources(req.auth!.playerId));
@@ -80,10 +89,18 @@ export function createApiApp(services: ApiServices): Express {
     if (!requireService(services.getFleets, res, 'Fleet service')) return;
     res.json(await services.getFleets(req.auth!.playerId));
   });
+  protectedRouter.get('/fleet', async (req: AuthenticatedRequest, res) => {
+    if (!requireService(services.getFleets, res, 'Fleet service')) return;
+    res.json(await services.getFleets(req.auth!.playerId));
+  });
   protectedRouter.get('/research', async (req: AuthenticatedRequest, res) => {
     if (!requireService(services.getResearch, res, 'Research service')) return;
     res.json(await services.getResearch(req.auth!.playerId));
   });
+
+  if (services.executeCommand) {
+    registerCommandRoutes(protectedRouter, services.executeCommand);
+  }
 
   app.use('/api/v1', protectedRouter);
 
@@ -95,4 +112,8 @@ export function createApiApp(services: ApiServices): Express {
     sendError(res, 500, 'INTERNAL_ERROR', 'An unexpected server error occurred.');
   });
   return app;
+}
+
+export function createInMemoryCommandExecutor(contextFactory: (playerId: string) => Parameters<typeof executeGameCommand>[1]): GameCommandExecutor {
+  return async (request: GameCommandRequest, principal): Promise<CommandResult> => executeGameCommand(request, contextFactory(principal.userId));
 }
