@@ -16,6 +16,8 @@ export class SessionService {
     if (!playerId) throw new Error('INVALID_PLAYER_ID');
     const token = this.tokens.createToken();
     const session: SessionRecord = {
+      id: token,
+      username: playerId,
       tokenHash: this.tokens.hashToken(token),
       playerId,
       createdAt: now,
@@ -27,13 +29,14 @@ export class SessionService {
 
   async authenticate(token: string, now: number): Promise<SessionRecord> {
     if (!token) throw new Error('INVALID_SESSION');
-    const session = await this.sessions.get(this.tokens.hashToken(token));
+    const session = await this.sessions.getByTokenHash(this.tokens.hashToken(token));
     if (!session || session.revokedAt !== undefined || session.expiresAt <= now) throw new Error('SESSION_INVALID');
     return session;
   }
 
   async revoke(token: string, now: number): Promise<void> {
     if (!token) return;
-    await this.sessions.revoke(this.tokens.hashToken(token), now);
+    const session = await this.sessions.getByTokenHash(this.tokens.hashToken(token));
+    if (session) await this.sessions.revoke(session.id, now);
   }
 }
