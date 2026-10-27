@@ -11,7 +11,8 @@
     "lint": "tsc --noEmit",
     "engine:smoke": "tsx scripts/engine-smoke.ts",
     "authoritative:smoke": "tsx scripts/authoritative-engine-smoke.ts",
-    "game:command:smoke": "tsx scripts/game-command-smoke.ts"
+    "game:command:smoke": "tsx scripts/game-command-smoke.ts",
+    "server:service:smoke": "tsx scripts/server-service-smoke.ts"
   },
   "dependencies": {
     "@google/genai": "^2.4.0",
