@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { deriveStats, hitChance, armorMitigation, resolveHealing, scaleEnemyStats, calculateItemPower, validateItem, rollLoot, EffectSystem, SAMPLE_STAT_BLOCK, STARTER_ITEMS, STARTER_LOOT_TABLES, DEFAULT_EFFECTS, STARTER_ENEMIES, createScaledEnemy, chooseEnemyAbility } from "./index.js";
+import { deriveStats, hitChance, armorMitigation, resolveHealing, scaleEnemyStats, calculateItemPower, validateItem, rollLoot, EffectSystem, SAMPLE_STAT_BLOCK, STARTER_ITEMS, STARTER_LOOT_TABLES, DEFAULT_EFFECTS, STARTER_ENEMIES, createScaledEnemy, chooseEnemyAbility, resolveDamage } from "./index.js";
 const attrs={STR:20,DEX:15,CON:12,INT:18,WIS:12,VIT:20,SPI:10,LCK:7,WIL:12,CHA:5};
 const d=deriveStats(attrs);
 assert.equal(d.maxHP,420);
@@ -19,13 +19,21 @@ assert.deepEqual(rollLoot(STARTER_LOOT_TABLES[1],{pityCount:10}),[{itemId:"ashen
 const target={id:"target",name:"Target",teamId:"b",mode:"pve",stats:structuredClone(SAMPLE_STAT_BLOCK),effects:[],threat:{},alive:true};
 const effects=new EffectSystem();
 effects.apply(target,DEFAULT_EFFECTS.find(e=>e.id==="poison")!,"enemy");
+target.stats.resources.hp!.current=500;
+const regen=effects.apply(target,DEFAULT_EFFECTS.find(e=>e.id==="regeneration")!,"ally");
 const events=effects.tick(target,2);
 assert.equal(events.length,1);
 assert.ok(target.stats.resources.hp!.current<1000);
+assert.ok(target.stats.resources.hp!.current>500,"regeneration must heal rather than damage");
 effects.apply(target,DEFAULT_EFFECTS.find(e=>e.id==="stun")!,"enemy");
 assert.equal(effects.cleanse(target,"physical"),1);
 const scaled=createScaledEnemy(STARTER_ENEMIES[0],{playerLevel:20,playerCount:4});
 assert.ok(scaled.resources.hp!.max>0);
 const ability=chooseEnemyAbility(STARTER_ENEMIES[2].abilities,{distance:4,targetHpPercent:.15,cooldownReady:true,phaseAllowed:true,playerClusterSize:5});
 assert.ok(ability);
+const attacker={...target,id:"attacker",teamId:"a",stats:structuredClone(SAMPLE_STAT_BLOCK),alive:true,effects:[],threat:{}};
+const defender={...target,id:"defender",teamId:"b",stats:structuredClone(SAMPLE_STAT_BLOCK),alive:true,effects:[],threat:{}};
+const damage=resolveDamage({attacker,defender,baseDamage:100,damageType:"physical",mode:"pvp",canCrit:false},.99);
+assert.ok(damage.finalDamage>=0 && damage.finalDamage<=100);
+assert.equal(damage.critical,false);
 console.log("RPG/MMORPG unit smoke tests passed");
