@@ -42,8 +42,8 @@ try {
     body: JSON.stringify({ requestId: 'upgrade-1', playerId: 'player-1', item, state: { ...createCraftingUpgradeState(item), temperLevel: 0, masterworkRank: 0, damaged: false }, inventory: { materials: { 'tempering-stone': 10 } }, currency: 5000, track: 'tempering' }),
   });
   assert.equal(upgrade.status, 200);
-  const upgradeBody = await upgrade.json() as { ok: boolean; result: { success: boolean; state: { temperLevel: number } } };
-  assert.equal(upgradeBody.ok, true); assert.equal(upgradeBody.result.success, true); assert.equal(upgradeBody.result.state.temperLevel, 1);
+  const upgradeBody = await upgrade.json() as { ok: boolean; result: { result: { success: boolean }; state: { temperLevel: number; version: number } } };
+  assert.equal(upgradeBody.ok, true); assert.equal(upgradeBody.result.result.success, true); assert.equal(upgradeBody.result.state.temperLevel, 1); assert.equal(upgradeBody.result.state.version, 1);
 
   const state = await fetch(`${base}/api/v1/crafting/ashen-blade/state`, { headers });
   assert.equal(state.status, 200);
