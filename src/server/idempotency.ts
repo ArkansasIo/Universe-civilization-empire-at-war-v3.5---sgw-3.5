@@ -1,0 +1,3 @@
+export interface IdempotencyStore { get(key:string):Promise<unknown|undefined>; set(key:string,value:unknown):Promise<void>; }
+export class MemoryIdempotencyStore implements IdempotencyStore { private values=new Map<string,unknown>(); async get(key:string){return this.values.get(key);} async set(key:string,value:unknown){this.values.set(key,value);} }
+export async function once<T>(store:IdempotencyStore,key:string,action:()=>Promise<T>):Promise<T>{ const prior=await store.get(key); if(prior!==undefined) return prior as T; const result=await action(); await store.set(key,result); return result; }
