@@ -3,20 +3,19 @@ import type { EnemyDefinition, EnemyRank, StatBlock } from "./types.js";
 export interface EncounterScaling { playerLevel:number; playerCount:number; difficultyMultiplier?:number; }
 export function createScaledEnemy(enemy:EnemyDefinition,options:EncounterScaling):StatBlock {
   const levelDiff=options.playerLevel-enemy.level, tier=RANK_MULTIPLIERS[enemy.rank];
-  const base=enemy.baseStats;
-  const copy=structuredClone(base);
-  const hp=base.resources.hp;
+  const copy=structuredClone(enemy.baseStats);
+  const hp=copy.resources.hp;
   if(hp) { hp.max=scaleEnemyStats(hp.max,levelDiff,tier,options.playerCount,options.difficultyMultiplier); hp.current=hp.max; }
-  copy.derived.physicalPower=scaleEnemyDamage(base.derived.physicalPower,levelDiff,tier,options.playerCount,options.difficultyMultiplier);
-  copy.derived.spellPower=scaleEnemyDamage(base.derived.spellPower,levelDiff,tier,options.playerCount,options.difficultyMultiplier);
-  copy.derived.armor=scaleEnemyStats(base.derived.armor,levelDiff,Math.sqrt(tier),options.playerCount,options.difficultyMultiplier);
+  copy.derived.physicalPower=scaleEnemyDamage(enemy.baseStats.derived.physicalPower,levelDiff,tier,options.playerCount,options.difficultyMultiplier);
+  copy.derived.spellPower=scaleEnemyDamage(enemy.baseStats.derived.spellPower,levelDiff,tier,options.playerCount,options.difficultyMultiplier);
+  copy.derived.armor=scaleEnemyStats(enemy.baseStats.derived.armor,levelDiff,Math.sqrt(tier),options.playerCount,options.difficultyMultiplier);
   copy.level=Math.max(1,Math.floor(options.playerLevel));
   return copy;
 }
 export interface AbilityContext { distance:number; targetHpPercent:number; cooldownReady:boolean; phaseAllowed:boolean; playerClusterSize:number; targetRole?:"tank"|"healer"|"dps"; }
 export function abilityUtilityScore(context:AbilityContext,ability:{range:number;tags:string[];utilityWeights?:Record<string,number>}):number {
   const w=ability.utilityWeights??{};
-  let score=(context.distance<=ability.range?1:-1)* (w.range??1);
+  let score=(context.distance<=ability.range?1:-1)*(w.range??1);
   if(context.targetHpPercent<.25&&ability.tags.includes("execute"))score+=w.execute??2;
   if(context.cooldownReady)score+=w.cooldown??2;
   if(context.phaseAllowed)score+=w.phase??2;
