@@ -38,7 +38,7 @@ import {
   Target,
   Share2,
 } from 'lucide-react';
-import { PlayerProfile, PlayerResources } from '../../../types';
+import { PlayerProfile, PlayerResources, CronConfig, CronJob, CronJobId, CronExecutionLog } from '../../../types';
 import { sound } from '../../../sound';
 
 interface AdminIngameSystemsTabProps {
@@ -53,6 +53,14 @@ interface AdminIngameSystemsTabProps {
   onSpawnArmada?: () => void;
   onBroadcastMessage?: (message: string) => void;
   onNavigate?: (route: string) => void;
+  onRunCronJob?: (jobId: CronJobId, isAuto?: boolean, multiplier?: number) => void;
+  onRunAllCronJobs?: () => void;
+  onToggleCronJob?: (jobId: CronJobId) => void;
+  onUpdateCronConfig?: (config: Partial<CronConfig>) => void;
+  cronJobs?: CronJob[];
+  cronConfig?: CronConfig;
+  nextTickSeconds?: number;
+  cronLogs?: CronExecutionLog[];
 }
 
 type FeatureCategory =
@@ -80,6 +88,14 @@ export const AdminIngameSystemsTab: React.FC<AdminIngameSystemsTabProps> = ({
   onSpawnArmada,
   onBroadcastMessage,
   onNavigate,
+  onRunCronJob,
+  onRunAllCronJobs,
+  onToggleCronJob,
+  onUpdateCronConfig,
+  cronJobs = [],
+  cronConfig,
+  nextTickSeconds,
+  cronLogs = [],
 }) => {
   const [activeCategory, setActiveCategory] = useState<FeatureCategory>('all');
   const [notification, setNotification] = useState<{ message: string; type: 'success' | 'info' | 'warning' } | null>(null);
@@ -240,7 +256,9 @@ export const AdminIngameSystemsTab: React.FC<AdminIngameSystemsTabProps> = ({
           </div>
           <div className="bg-slate-900/90 border border-slate-800 p-2">
             <span className="text-[10px] text-slate-400 uppercase block">Turn Engine Speed</span>
-            <span className="font-bold text-emerald-400 uppercase">{engineTickSpeed}</span>
+            <span className="font-bold text-emerald-400 uppercase">
+              {cronConfig?.autoTickEnabled ? `${cronConfig.tickIntervalSeconds}s tick` : 'frozen'}
+            </span>
           </div>
         </div>
       </div>
@@ -1212,7 +1230,7 @@ export const AdminIngameSystemsTab: React.FC<AdminIngameSystemsTabProps> = ({
                 onClick={() => {
                   setCommandersLevelMax(true);
                   if (onUpdateProfile) {
-                    onUpdateProfile({ level: 100, xp: 999999 });
+                    onUpdateProfile({ level: 100 });
                   }
                   showNotify('All 72 Legendary Commanders unlocked at Level 100 with +500 Skill Points!');
                 }}
@@ -1432,36 +1450,54 @@ export const AdminIngameSystemsTab: React.FC<AdminIngameSystemsTabProps> = ({
               </div>
             </div>
 
-            {/* Tick Speed Regulator */}
+            {/* Tick Speed Regulator (live cron engine) */}
             <div className="border border-neutral-200 bg-neutral-50/80 p-3.5 space-y-3">
               <span className="font-bold text-[#111111] uppercase block border-b pb-1.5">
-                Engine Tick Rate Regulator
+                Engine Tick Rate Regulator (Live)
               </span>
+              <div className="text-[11px] text-[#666666]">
+                Next auto-tick:{' '}
+                <strong className="text-emerald-700">
+                  {cronConfig?.autoTickEnabled ? `${nextTickSeconds ?? 0}s` : 'PAUSED'}
+                </strong>{' '}
+                • Current interval: <strong>{cronConfig?.tickIntervalSeconds ?? '—'}s</strong>
+              </div>
               <div className="grid grid-cols-3 gap-2">
-                {(
-                  [
-                    { id: 'normal', label: '60s Normal' },
-                    { id: 'turbo', label: '10s Turbo' },
-                    { id: 'frozen', label: 'Freeze Lock' },
-                  ] as const
-                ).map((spd) => (
+                {[10, 30, 60].map((seconds) => (
                   <button
-                    key={spd.id}
+                    key={seconds}
                     type="button"
                     onClick={() => {
-                      setEngineTickSpeed(spd.id);
-                      showNotify(`Engine tick rate set to ${spd.label}.`);
+                      onUpdateCronConfig?.({ tickIntervalSeconds: seconds, autoTickEnabled: true });
+                      setEngineTickSpeed(seconds <= 10 ? 'turbo' : 'normal');
+                      showNotify(`Engine tick interval set to ${seconds}s (auto-tick enabled).`);
                     }}
                     className={`py-1.5 font-bold text-xs uppercase cursor-pointer border ${
-                      engineTickSpeed === spd.id
+                      cronConfig?.tickIntervalSeconds === seconds
                         ? 'bg-[#111111] text-emerald-400 border-[#111111]'
                         : 'bg-white text-[#444444] border-neutral-300'
                     }`}
                   >
-                    {spd.label}
+                    {seconds}s Tick
                   </button>
                 ))}
               </div>
+              <button
+                type="button"
+                onClick={() => {
+                  const next = !cronConfig?.autoTickEnabled;
+                  onUpdateCronConfig?.({ autoTickEnabled: next });
+                  setEngineTickSpeed(next ? 'normal' : 'frozen');
+                  showNotify(next ? 'Turn engine auto-tick resumed.' : 'Turn engine auto-tick paused.', next ? 'success' : 'warning');
+                }}
+                className={`w-full py-1.5 font-bold text-xs uppercase cursor-pointer border ${
+                  cronConfig?.autoTickEnabled
+                    ? 'bg-rose-600 text-white border-rose-700'
+                    : 'bg-emerald-600 text-white border-emerald-700'
+                }`}
+              >
+                {cronConfig?.autoTickEnabled ? 'Pause Auto-Tick' : 'Resume Auto-Tick'}
+              </button>
             </div>
 
             {/* Emergency Freeze Switch */}
@@ -1475,11 +1511,37 @@ export const AdminIngameSystemsTab: React.FC<AdminIngameSystemsTabProps> = ({
               <button
                 type="button"
                 onClick={() => {
-                  showNotify('Universe status: Server maintenance flag toggled. Fleet attacks halted.');
+                  onRunCronJob?.('turn_cron');
+                  showNotify('Turn Engine cron job executed manually.');
                 }}
-                className="w-full py-2 bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs uppercase cursor-pointer"
+                className="w-full py-1.5 bg-emerald-700 hover:bg-emerald-600 text-white font-bold text-xs uppercase cursor-pointer"
               >
-                Toggle Maintenance Mode
+                Run Turn Cron Now
+              </button>
+              <div className="grid grid-cols-3 gap-2">
+                {[1, 5, 10].map((n) => (
+                  <button
+                    key={n}
+                    type="button"
+                    onClick={() => {
+                      onRunCronJob?.('turn_cron', false, n);
+                      showNotify(`Processed ${n} production turn(s).`);
+                    }}
+                    className="py-1.5 bg-white text-[#111111] border border-neutral-300 hover:bg-neutral-100 font-bold text-xs uppercase cursor-pointer"
+                  >
+                    +{n} Turn{n > 1 ? 's' : ''}
+                  </button>
+                ))}
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  onRunAllCronJobs?.();
+                  showNotify('All enabled cron jobs executed.');
+                }}
+                className="w-full py-1.5 bg-[#111111] hover:bg-neutral-800 text-white font-bold text-xs uppercase cursor-pointer"
+              >
+                Run All Cron Jobs ({cronJobs.filter((j) => j.enabled).length} Enabled)
               </button>
             </div>
           </div>

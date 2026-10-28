@@ -137,6 +137,8 @@ import { SpaceStationView } from './components/views/SpaceStationView';
 import { MoonBaseView } from './components/views/MoonBaseView';
 import { BankVaultView } from './components/views/BankVaultView';
 import { EveBlueprintsView } from './components/views/EveBlueprintsView';
+import { TemperingForgeView } from './components/views/TemperingForgeView';
+import { ConstructionYardView } from './components/views/ConstructionYardView';
 import { NMSUniverseView } from './components/views/NMSUniverseView';
 import { UnitRoster90View } from './components/views/UnitRoster90View';
 import { StargateNetworkView } from './components/views/StargateNetworkView';
@@ -3707,6 +3709,20 @@ export default function App() {
 
             {activeRoute === 'eve-blueprints' && (
               <EveBlueprintsView
+                resources={resources}
+                onUpdateResources={(res) => setResources((prev) => ({ ...prev, ...res }))}
+              />
+            )}
+
+            {activeRoute === 'tempering-forge' && (
+              <TemperingForgeView
+                resources={resources}
+                onUpdateResources={(res) => setResources((prev) => ({ ...prev, ...res }))}
+              />
+            )}
+
+            {activeRoute === 'construction-yard' && (
+              <ConstructionYardView
                 resources={resources}
                 onUpdateResources={(res) => setResources((prev) => ({ ...prev, ...res }))}
               />

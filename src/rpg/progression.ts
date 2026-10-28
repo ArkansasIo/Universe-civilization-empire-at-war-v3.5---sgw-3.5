@@ -1,4 +1,4 @@
-import type { CoreStats, StatBonuses } from "./types.js";
+import type { CoreStats, FlatClassBonuses } from "./types.js";
 
 export type RpgClassId = "warrior" | "ranger" | "mage" | "rogue" | "paladin" | "engineer";
 
@@ -7,7 +7,7 @@ export interface RpgClassDefinition {
   name: string;
   description: string;
   primaryStats: (keyof CoreStats)[];
-  baseBonuses: StatBonuses;
+  baseBonuses: FlatClassBonuses;
 }
 
 export interface CharacterProgression {

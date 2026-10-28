@@ -28,6 +28,8 @@ export interface StatBlock {
   tags:string[]; gearScore?:number; pvpPower?:number; pvpResilience?:number;
 }
 export interface StatBonuses { attributes?:Partial<CoreStats>; derived?:Partial<DerivedStats>; resistances?:Partial<Record<DamageType,number>>; }
+/** Flat class/talent bonus conveniences mapped onto the derived stat sheet. */
+export interface FlatClassBonuses extends StatBonuses { physicalPower?:number; magicalPower?:number; healingPower?:number; maxHp?:number; maxMana?:number; armor?:number; critChance?:number; critDamage?:number; evasion?:number; cooldownReduction?:number; }
 export interface EffectDefinition {
   id:string; name:string; category:EffectCategory; durationSeconds:number; stackMode:StackMode; maxStacks?:number;
   magnitude:number; stat?:keyof DerivedStats | CoreAttribute; isPercent?:boolean; damageType?:DamageType; tickSeconds?:number;

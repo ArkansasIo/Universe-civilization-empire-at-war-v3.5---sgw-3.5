@@ -106,6 +106,8 @@ export const OGAME_NAV_SECTIONS: OGameNavSection[] = [
     defaultRoute: 'master-upgrades',
     items: [
       { id: 'master-upgrades', label: 'Master Facilities Hub' },
+      { id: 'construction-yard', label: 'Construction Yard' },
+      { id: 'tempering-forge', label: 'Forge & Masterworks Anvil' },
       { id: 'shipyard', label: 'Orbital Shipyard Drydocks' },
       { id: 'tech-library', label: 'Research Laboratories' },
       { id: 'megastructures', label: 'Stellar Megastructures' },

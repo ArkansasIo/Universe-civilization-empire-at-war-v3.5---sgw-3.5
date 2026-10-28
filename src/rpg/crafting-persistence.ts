@@ -4,6 +4,8 @@ export interface PersistedCraftingState extends CraftingUpgradeState { itemId:st
 export interface CraftingAuditEvent { eventId:string; requestId:string; ownerId:string; itemId:string; track:"tempering"|"masterwork"|"repair"; fromLevel:number; toLevel:number; success?:boolean; roll?:number; currencySpent:number; materialsSpent:Record<string,number>; createdAt:number; }
 export interface CraftingStateStore { load(ownerId:string,itemId:string):Promise<PersistedCraftingState|null>; save(state:PersistedCraftingState,expectedVersion:number):Promise<PersistedCraftingState>; appendAudit(event:CraftingAuditEvent):Promise<void>; }
 
+export { MemoryCraftingStateStore as InMemoryCraftingStateStore };
+
 export class MemoryCraftingStateStore implements CraftingStateStore {
   private readonly states=new Map<string,PersistedCraftingState>();
   readonly audit:CraftingAuditEvent[]=[];

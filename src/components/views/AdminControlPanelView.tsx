@@ -160,7 +160,7 @@ interface AdminControlPanelViewProps {
   onInstantFinishShipyard: () => void;
   onUnlockAllTechs: () => void;
   onSpawnArmada: () => void;
-  onRunCronJob: (jobId: CronJobId) => void;
+  onRunCronJob: (jobId: CronJobId, isAuto?: boolean, multiplier?: number) => void;
   onRunAllCronJobs: () => void;
   onToggleCronJob: (jobId: CronJobId) => void;
   onUpdateCronConfig: (config: Partial<CronConfig>) => void;
@@ -1198,6 +1198,14 @@ export const AdminControlPanelView: React.FC<AdminControlPanelViewProps> = ({
           onUnlockAllTechs={onUnlockAllTechs}
           onSpawnArmada={onSpawnArmada}
           onBroadcastMessage={onBroadcastMessage}
+          onRunCronJob={onRunCronJob}
+          onRunAllCronJobs={onRunAllCronJobs}
+          onToggleCronJob={onToggleCronJob}
+          onUpdateCronConfig={onUpdateCronConfig}
+          cronJobs={cronJobs}
+          cronConfig={cronConfig}
+          nextTickSeconds={nextTickSeconds}
+          cronLogs={cronLogs}
         />
       )}
 

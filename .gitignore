@@ -6,3 +6,15 @@ coverage/
 *.log
 .env*
 !.env.example
+
+# Build/QA artifacts
+android/.gradle/
+.vscode/
+qa-*.mjs
+qa-*.png
+remains.png
+yard.png
+forge*.png
+page.png
+vite.err
+.codegpt-game.json

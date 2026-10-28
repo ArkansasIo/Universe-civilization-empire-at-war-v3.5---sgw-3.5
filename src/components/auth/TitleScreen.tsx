@@ -274,7 +274,7 @@ export const TitleScreen: React.FC<TitleScreenProps> = ({
               <form onSubmit={handleLoginSubmit} className="space-y-4 text-xs">
                 <div>
                   <label className="block text-[11px] font-bold text-white/80 uppercase tracking-wider mb-2">
-                    Commander Callsign / Username
+                    Account Name / Username
                   </label>
                   <div className="relative">
                     <User size={16} className="absolute left-3 top-3 text-white/40" />
@@ -284,7 +284,7 @@ export const TitleScreen: React.FC<TitleScreenProps> = ({
                       onChange={(e) => setUsernameInput(e.target.value)}
                       required
                       className="w-full bg-white/5 border border-white/20 px-10 py-2.5 text-white placeholder-white/30 text-sm focus:outline-none focus:border-white"
-                      placeholder="Commander Name..."
+                      placeholder="Account Name..."
                     />
                   </div>
                 </div>
@@ -398,7 +398,7 @@ export const TitleScreen: React.FC<TitleScreenProps> = ({
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block font-bold text-white/80 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
-                        <User size={14} className="text-amber-400" /> Commander Callsign / Username *
+                        <User size={14} className="text-amber-400" /> Account Name / Username *
                       </label>
                       <input
                         type="text"
@@ -740,7 +740,7 @@ export const TitleScreen: React.FC<TitleScreenProps> = ({
                         👑 COMMANDER DOSSIER
                       </span>
                       <div className="flex justify-between text-white/80">
-                        <span>Commander Name:</span>
+                        <span>Account Name:</span>
                         <strong className="text-white">{regUsername}</strong>
                       </div>
                       <div className="flex justify-between text-white/80">

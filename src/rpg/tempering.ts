@@ -1,7 +1,7 @@
 import { clamp, finiteNonNegative } from "./rules.js";
 import type { GameMode, ItemDefinition, ItemModeProfile, StatBonuses } from "./types.js";
 
-export type CraftingTrack = "tempering" | "masterworking";
+export type CraftingTrack = "tempering" | "masterworking" | "masterwork";
 export type UpgradeFailurePolicy = "retain" | "downgrade" | "damage" | "destroy";
 export interface MaterialCost { itemId:string; quantity:number; }
 export interface CraftingWallet { currency:number; materials:Record<string,number>; }
@@ -96,6 +96,7 @@ function upgradeRule(request:UpgradeRequest):TemperingLevel|MasterworkRank|undef
 export function attemptUpgrade(request:UpgradeRequest):UpgradeResult {
   const state=clone(request.state), wallet=clone(request.wallet), item=clone(request.item), rules=upgradeRule(request);
   if(!rules) throw new Error("Upgrade rule is required"); if(state.itemId!==item.id) throw new Error("Upgrade state does not match item");
+  if(request.track==="masterwork") request.track="masterworking";
   if(state.locked) throw new Error("Item is locked for crafting"); if(state.damaged) throw new Error("Item is damaged; repair it before upgrading");
   if(!Number.isFinite(request.roll)||request.roll<0||request.roll>=1) throw new Error("roll must be in [0, 1)");
   const current=request.track==="tempering"?state.temperLevel:state.masterworkRank, next=request.track==="tempering"?(rules as TemperingLevel).level:(rules as MasterworkRank).rank;

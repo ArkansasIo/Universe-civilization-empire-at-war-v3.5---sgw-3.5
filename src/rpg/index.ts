@@ -1,5 +1,13 @@
 export * from "./types.js";
-export * from "./rules.js";
+import * as rules from "./rules.js";
+import * as progression from "./progression.js";
+import * as tempering from "./tempering.js";
+// Resolve re-export collisions: rules.ts vs progression.ts both export `requiredXp`,
+// and tempering.ts vs space-service.ts both export `UpgradeResult`.
+export const requiredXp = rules.requiredXp ?? progression.requiredXp;
+export const deriveStats = rules.deriveStats;
+export const scaleEnemyStats = rules.scaleEnemyStats;
+export type { UpgradeResult } from "./tempering.js";
 export * from "./combat.js";
 export * from "./effects.js";
 export * from "./items.js";
@@ -8,6 +16,7 @@ export * from "./loot.js";
 export * from "./catalog.js";
 export * from "./tempering.js";
 export * from "./crafting-materials.js";
+export * from "./remains.js";
 export * from "./masterworking.js";
 export * from "./crafting.js";
 export * from "./crafting-persistence.js";

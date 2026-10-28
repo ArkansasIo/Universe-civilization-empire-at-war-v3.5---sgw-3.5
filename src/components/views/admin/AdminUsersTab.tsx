@@ -239,7 +239,7 @@ export const AdminUsersTab: React.FC<AdminUsersTabProps> = ({
               <Search size={14} className="absolute left-3 top-3 text-[#888888]" />
               <input
                 type="text"
-                placeholder="Search username, email, IP, or coords..."
+                placeholder="Search account name, email, IP, or coords..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full pl-8 pr-3 py-2 text-xs font-mono border border-[#dedede] bg-[#fafafa] focus:border-[#111111] outline-hidden"
@@ -295,7 +295,7 @@ export const AdminUsersTab: React.FC<AdminUsersTabProps> = ({
                   >
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="font-bold text-xs font-mono">{u.username}</span>
+                        <span className="font-bold text-xs font-mono">Account: {u.username}</span>
                         {u.allianceTag && (
                           <span
                             className={`text-[10px] px-1 font-mono font-bold ${
@@ -390,7 +390,7 @@ export const AdminUsersTab: React.FC<AdminUsersTabProps> = ({
                 <div>
                   <div className="flex items-center gap-2">
                     <h4 className="text-xl font-bold font-mono text-[#111111]">
-                      {selectedUser.username}
+                      Account: {selectedUser.username}
                     </h4>
                     {selectedUser.allianceTag && (
                       <span className="px-2 py-0.5 bg-[#111111] text-white text-xs font-mono font-bold">
@@ -399,7 +399,7 @@ export const AdminUsersTab: React.FC<AdminUsersTabProps> = ({
                     )}
                   </div>
                   <div className="text-xs font-mono text-[#777777] mt-0.5">
-                    User ID: {selectedUser.id} • Registered:{' '}
+                    Account Name: {selectedUser.username} • User ID: {selectedUser.id} • Registered:{' '}
                     {new Date(selectedUser.registeredAt).toLocaleDateString()}
                   </div>
                 </div>
@@ -942,7 +942,7 @@ export const AdminUsersTab: React.FC<AdminUsersTabProps> = ({
             </div>
           ) : (
             <div className="border border-[#dedede] bg-white p-12 text-center text-xs text-[#888888] font-mono">
-              Select a player account from the list to inspect.
+              Select an account name from the list to inspect.
             </div>
           )}
         </div>

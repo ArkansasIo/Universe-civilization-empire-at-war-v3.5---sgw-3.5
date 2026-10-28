@@ -67,7 +67,7 @@ export function applyResourceDelta(
     if (after < 0) {
       return { ok: false, reason: `Insufficient ${rawKey}`, resources: { ...current } };
     }
-    (next as Record<string, number | undefined>)[key] = after;
+    (next as unknown as Record<string, number | undefined>)[key] = after;
   }
 
   return { ok: true, resources: next };

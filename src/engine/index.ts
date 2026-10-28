@@ -10,4 +10,7 @@ export * from './fleetEngine';
 export * from './researchEngine';
 export * from './stargateEngine';
 export * from './diplomacyEngine';
-export * from './combatResolver';
+export {
+  resolveCombat as resolveSeededCombat,
+  type CombatResult as SeededCombatResult,
+} from './combatResolver';

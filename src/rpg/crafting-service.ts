@@ -22,7 +22,7 @@ export class CraftingService {
     if(!(roll>=0&&roll<1))throw new Error('RNG provider returned an invalid value');
     const result=executeServerUpgrade({item:request.item,state,wallet,playerId:request.playerId,track:request.track,roll,useProtection:request.useProtection,timestamp:request.timestamp});
     const saved=await this.store.save({...result.state,itemId:request.item.id,ownerId:request.playerId,version:state.version,updatedAt:Date.now()},expectedVersion);
-    const event:CraftingAuditEvent={eventId:`craft-${request.requestId}`,requestId:request.requestId,ownerId:request.playerId,itemId:request.item.id,track:request.track,fromLevel:request.track==='tempering'?state.temperLevel:state.masterworkRank,toLevel:request.track==='tempering'?saved.temperLevel:saved.masterworkRank,success:result.success,roll,currencySpent:result.currencySpent,materialsSpent:Object.fromEntries(result.materialsSpent.map(m=>[m.itemId,m.quantity])),createdAt:Date.now()};
+    const event:CraftingAuditEvent={eventId:`craft-${request.requestId}`,requestId:request.requestId,ownerId:request.playerId,itemId:request.item.id,track:request.track==='masterworking'?'masterwork':request.track,fromLevel:request.track==='tempering'?state.temperLevel:state.masterworkRank,toLevel:request.track==='tempering'?saved.temperLevel:saved.masterworkRank,success:result.success,roll,currencySpent:result.currencySpent,materialsSpent:Object.fromEntries(result.materialsSpent.map(m=>[m.itemId,m.quantity])),createdAt:Date.now()};
     await this.store.appendAudit(event); return {result,state:saved};
   }
 

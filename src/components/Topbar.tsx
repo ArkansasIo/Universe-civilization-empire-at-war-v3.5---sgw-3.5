@@ -102,6 +102,8 @@ const ROUTE_LABELS: Record<string, { section: string; title: string }> = {
   'tech-tree': { section: 'TECHNOLOGY ARCHIVE', title: 'Master Technology Tree & Visual Unlock Graph' },
   'tech-library': { section: 'TECHNOLOGY ARCHIVE', title: 'Research Library & Laboratory Focus' },
   'eve-blueprints': { section: 'TECHNOLOGY ARCHIVE', title: 'EVE Blueprints & ME/TE' },
+  'construction-yard': { section: 'IMPERIAL FACILITIES', title: 'Construction Yard' },
+  'tempering-forge': { section: 'IMPERIAL FACILITIES', title: 'Forge & Masterworks Anvil' },
   'tech-offense': { section: 'TECHNOLOGY ARCHIVE', title: 'Offensive Research' },
   'tech-defense': { section: 'TECHNOLOGY ARCHIVE', title: 'Defensive Grids' },
   'tech-covert': { section: 'TECHNOLOGY ARCHIVE', title: 'Covert Operations Tech' },
@@ -512,7 +514,7 @@ export const Topbar: React.FC<TopbarProps> = ({
             <User size={13} className="text-[#555555]" />
             <span className="font-bold text-[#111111]">{profile.username}</span>
             <span className="text-[10px] text-[#777777] uppercase font-mono">
-              ({profile.rankName || 'Imperator'})
+              (Account: {profile.displayName || profile.username})
             </span>
             <span
               className={`px-1.5 py-0.2 text-[9px] font-black uppercase ${

@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
-import { deriveStats, hitChance, armorMitigation, resolveHealing, scaleEnemyStats, calculateItemPower, validateItem, rollLoot, EffectSystem, SAMPLE_STAT_BLOCK, STARTER_ITEMS, STARTER_LOOT_TABLES, DEFAULT_EFFECTS, STARTER_ENEMIES, createScaledEnemy, chooseEnemyAbility, resolveDamage } from "./index.js";
+import { deriveStats, hitChance, armorMitigation, resolveHealing, scaleEnemyStats, calculateItemPower, validateItem, rollLoot, EffectSystem, SAMPLE_STAT_BLOCK, STARTER_ITEMS, DEFAULT_EFFECTS, STARTER_ENEMIES, createScaledEnemy, chooseEnemyAbility, resolveDamage } from "./index.js";
+import { STARTER_LOOT_TABLES } from "./loot.js";
 const attrs={STR:20,DEX:15,CON:12,INT:18,WIS:12,VIT:20,SPI:10,LCK:7,WIL:12,CHA:5};
 const d=deriveStats(attrs);
 assert.equal(d.maxHP,420);
@@ -23,6 +24,7 @@ effects.apply(target,DEFAULT_EFFECTS.find(e=>e.id==="regeneration")!,"ally");
 const healingEvents=effects.tick(target,2);
 assert.equal(healingEvents.length,2);
 assert.ok(target.stats.resources.hp!.current>500,"regeneration must heal rather than damage");
+effects.cleanse(target,"all"); // remove regeneration so the poison tick is measured in isolation
 effects.apply(target,DEFAULT_EFFECTS.find(e=>e.id==="poison")!,"enemy");
 target.stats.resources.hp!.current=500;
 const events=effects.tick(target,2);
@@ -40,7 +42,7 @@ const damage=resolveDamage({attacker,defender,baseDamage:100,damageType:"physica
 assert.ok(damage.finalDamage>=0 && damage.finalDamage<=100);
 assert.equal(damage.critical,false);
 
-import { attemptUpgrade, createCraftingUpgradeState, DEFAULT_TEMPERING_CONFIG, applyUpgradeBonuses, estimateUpgradeCost, repairUpgradedItem, rollLoot, STARTER_LOOT_TABLES } from "./index.js";
+import { attemptUpgrade, createCraftingUpgradeState, DEFAULT_TEMPERING_CONFIG, applyUpgradeBonuses, estimateUpgradeCost, repairUpgradedItem } from "./index.js";
 const craftItem=STARTER_ITEMS[0];
 const freshState=createCraftingUpgradeState(craftItem);
 const baseWallet={currency:1000000,materials:{"tempering-stone":100,"refined-ore":20,"star-metal":20,"astral-core":20,"primordial-ingot":20,"masterwork-core":20,"void-crystal":20,"world-boss-heart":5,"warding-rune":20,"greater-warding-rune":20,"masterwork-seal":20}};
