@@ -199,8 +199,6 @@ export const OGAME_NAV_SECTIONS: OGameNavSection[] = [
     defaultRoute: 'universe',
     items: [
       { id: 'universe', label: '30 Universes & 90 Galaxies' },
-      { id: 'nms-universe', label: 'NMS Procedural Universe' },
-      { id: 'planetary-invasion', label: '1-999,999 Procedural Planets' },
       { id: 'add-worlds-bosses', label: 'Galaxy & Arc Bosses' },
       { id: 'exploration', label: 'Deep Space Reconnaissance' },
       { id: 'stargate-network', label: 'Stargate & Jump Gates' },
