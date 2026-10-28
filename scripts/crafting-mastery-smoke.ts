@@ -1,0 +1,14 @@
+import assert from "node:assert/strict";
+import { CRAFTING_MODULE_COUNT, TEMPERING_MASTERWORKING_MODULES } from "../src/rpg/crafting-mastery-catalog.js";
+import { calculateCraftingModuleStats, getCraftingMasteryCatalogSummary, listCraftingMasteryModules, validateCraftingModuleLoadout } from "../src/rpg/crafting-mastery.js";
+assert.equal(CRAFTING_MODULE_COUNT,90);
+assert.equal(TEMPERING_MASTERWORKING_MODULES.length,90);
+assert.equal(getCraftingMasteryCatalogSummary().domainCount,10);
+assert.ok(Object.values(getCraftingMasteryCatalogSummary().modulesPerDomain).every(count=>count===9));
+assert.equal(listCraftingMasteryModules({domain:"weapon-tempering"}).length,9);
+assert.equal(validateCraftingModuleLoadout({moduleIds:["weapon-tempering-02"]}).valid,false);
+assert.equal(validateCraftingModuleLoadout({moduleIds:["weapon-tempering-01","weapon-tempering-02"]}).valid,true);
+const result=calculateCraftingModuleStats({moduleIds:["weapon-tempering-01","weapon-tempering-02"]});
+assert.ok(Object.keys(result.stats).length>0);assert.ok(Object.keys(result.subStats).length>0);
+assert.throws(()=>calculateCraftingModuleStats({moduleIds:["missing-module"]}));
+console.log("Crafting mastery smoke passed: 90 modules, 10 domains, 9 modules per domain.");
