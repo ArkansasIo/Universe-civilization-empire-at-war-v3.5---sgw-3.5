@@ -212,6 +212,9 @@ export const AddWorldsUniverseBossView: React.FC<AddWorldsUniverseBossViewProps>
       setRaidInProgress(false);
       setCombatLogs((prev) => [
         `🏆 VICTORY! ${selectedBoss.name} HAS BEEN OBLITERATED!`,
+        selectedBoss.type === 'arc_boss'
+          ? `🏭 FABRICATOR CACHE SEIZED: 3× each RELIC-tier component (World-Heart Plate, Gate-Span Drive, Omega Lance, Aegis Prism, Crown Circuit)!`
+          : `🏭 FABRICATOR CACHE SEIZED: 1× each ADVANCED-tier component (Trinium Frame, Hyper Coil, Plasma Lattice, Shield Matrix, Quantum Core)!`,
         `💰 PRECURSOR LOOT CLAIMED: +${selectedBoss.loot.metal.toLocaleString()} Metal, +${selectedBoss.loot.crystal.toLocaleString()} Crystal, +${selectedBoss.loot.deuterium.toLocaleString()} Deuterium, +${selectedBoss.loot.darkMatter.toLocaleString()} Dark Matter, +${selectedBoss.loot.precursorArtifacts} Precursor Relics!`,
         `📜 SCHEMATIC UNLOCKED: ${selectedBoss.loot.schematicDrop}`,
         ...prev,
@@ -224,6 +227,21 @@ export const AddWorldsUniverseBossView: React.FC<AddWorldsUniverseBossViewProps>
         deuterium: resources.deuterium + selectedBoss.loot.deuterium,
         darkMatter: (resources.darkMatter || 0) + selectedBoss.loot.darkMatter,
       });
+
+      // Boss kill feeds the Fabricator: relic-tier components drop from arc bosses,
+      // advanced-tier components from regular galaxy bosses.
+      try {
+        const raw = localStorage.getItem('uc_fabricator_stock');
+        const stock = raw ? (JSON.parse(raw) as Record<string, number>) : {};
+        const droppedIds = selectedBoss.type === 'arc_boss'
+          ? ['fab-world-heart-plate', 'fab-gate-span-drive', 'fab-omega-lance', 'fab-aegis-prism', 'fab-crown-circuit']
+          : ['fab-trinium-frame', 'fab-hyper-coil', 'fab-plasma-lattice', 'fab-shield-matrix', 'fab-quantum-core'];
+        const dropCount = selectedBoss.type === 'arc_boss' ? 3 : 1;
+        for (const id of droppedIds) stock[id] = (stock[id] ?? 0) + dropCount;
+        localStorage.setItem('uc_fabricator_stock', JSON.stringify(stock));
+      } catch {
+        // ignore storage failures
+      }
     } else if (newFleetIntegrity <= 0) {
       sound.play('warning');
       setRaidInProgress(false);
@@ -251,6 +269,10 @@ export const AddWorldsUniverseBossView: React.FC<AddWorldsUniverseBossViewProps>
     if (bossFilter === 'arc_boss') return b.type === 'arc_boss';
     if (bossFilter === 'galaxy_boss') return b.type === 'galaxy_boss';
     return true;
+  }).filter((b) => {
+    if (!bossSearch.trim()) return true;
+    const q = bossSearch.trim().toLowerCase();
+    return b.name.toLowerCase().includes(q) || String(b.galaxyId) === q || b.title.toLowerCase().includes(q);
   });
 
   // ============================================================================
@@ -258,6 +280,7 @@ export const AddWorldsUniverseBossView: React.FC<AddWorldsUniverseBossViewProps>
   // ============================================================================
   const classMatrix90 = getComplete90ClassesMatrix();
   const [classSearch, setClassSearch] = useState<string>('');
+  const [bossSearch, setBossSearch] = useState<string>('');
   const [selectedCategoryFilter, setSelectedCategoryFilter] = useState<string>('All');
   const [selectedClassDetail, setSelectedClassDetail] = useState<Class90Entry | null>(classMatrix90[0]);
 
@@ -732,6 +755,16 @@ export const AddWorldsUniverseBossView: React.FC<AddWorldsUniverseBossViewProps>
                     Galaxy
                   </button>
                 </div>
+              </div>
+
+              <div className="pb-2">
+                <input
+                  type="text"
+                  value={bossSearch}
+                  onChange={(e) => setBossSearch(e.target.value)}
+                  placeholder="Search boss name or galaxy #…"
+                  className="w-full text-[10px] font-mono px-2 py-1.5 border border-[#dedede] bg-[#fafafa] focus:outline-none focus:border-[#111111]"
+                />
               </div>
 
               <div className="space-y-2 max-h-[500px] overflow-y-auto pr-1">
