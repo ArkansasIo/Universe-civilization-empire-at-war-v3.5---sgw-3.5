@@ -90,6 +90,7 @@ export const OGAME_NAV_SECTIONS: OGameNavSection[] = [
     defaultRoute: 'resources',
     items: [
       { id: 'resources', label: 'Resource Vault & Reserves' },
+      { id: 'stash-vaults', label: 'Protected, Inventory & Equipment Stash' },
       { id: 'income', label: 'Resource Income & Mines' },
       { id: 'storage-upgrades', label: 'Storage Silos & Warehouses' },
       { id: 'power-grid', label: 'Power Grid & Energy Network' },
