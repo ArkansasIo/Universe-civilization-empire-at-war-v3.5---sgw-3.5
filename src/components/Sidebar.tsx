@@ -76,7 +76,6 @@ export const OGAME_NAV_SECTIONS: OGameNavSection[] = [
     defaultRoute: 'dashboard',
     items: [
       { id: 'dashboard', label: 'Empire Overview' },
-      { id: 'turn-system', label: 'Turn Engine (6 Turns/Min)' },
       { id: 'civilization', label: 'Civilization & Population' },
       { id: 'government-system', label: '🏛️ 9 Government Systems' },
       { id: 'missions', label: 'Missions & Chapter Quests' },
@@ -304,6 +303,7 @@ export const OGAME_NAV_SECTIONS: OGameNavSection[] = [
     defaultRoute: 'admin-dashboard',
     items: [
       { id: 'admin-dashboard', label: 'Admin Control Panel' },
+      { id: 'turn-system', label: 'Turn Engine (6 Turns/Min)' },
       { id: 'admin-empire-history', label: '📜 Empire History Chronicle' },
       { id: 'admin-universe', label: 'Universe & Physics Config' },
       { id: 'admin-users', label: 'Player Accounts Inspector' },

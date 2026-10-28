@@ -71,7 +71,7 @@ interface TopbarProps {
 
 const ROUTE_LABELS: Record<string, { section: string; title: string }> = {
   dashboard: { section: 'COMMAND CENTER', title: 'Dashboard Overview' },
-  'turn-system': { section: 'COMMAND CENTER', title: 'Empire Turn Engine (6 Turns/Min)' },
+  'turn-system': { section: 'ADMIN SYSTEMS', title: 'Empire Turn Engine (6 Turns/Min)' },
   'commander-hq': { section: 'COMMAND CENTER', title: 'Commander HQ, Officers & Doctrines' },
   'player-profile': { section: 'COMMAND CENTER', title: 'Sovereign Player Profile & Realm Dossier' },
   'account-info': { section: 'COMMAND CENTER', title: 'Commander Information' },
