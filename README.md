@@ -82,7 +82,7 @@ npm run lint
 npm run build
 ```
 
-> **CI note:** The current GitHub Pages workflow treats TypeScript type-checking as non-blocking while existing errors are addressed. A successful Pages deployment should not be treated as proof that `npm run lint` passes.
+> **CI note:** GitHub Pages deployment requires `npm run lint` (TypeScript type-checking) and `npm run build` to pass. A successful deployment confirms those workflow steps passed for that run.
 
 ## 📚 Documentation
 
