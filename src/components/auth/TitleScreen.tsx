@@ -68,16 +68,16 @@ export const TitleScreen: React.FC<TitleScreenProps> = ({
   // Login Form States
   const [usernameInput, setUsernameInput] = useState<string>(profile.username || 'Commander_Stephen');
   const [passwordInput, setPasswordInput] = useState<string>('••••••••••••');
-  const [selectedServer, setSelectedServer] = useState<string>('Alpha-Prime (US-East) - 12ms');
+  const [selectedServer, setSelectedServer] = useState<string>('Aetherion Prime (US-East) - 12ms');
 
   // Detailed Registration Form States
   const [regUsername, setRegUsername] = useState<string>('Commander_Stephen');
-  const [regEmail, setRegEmail] = useState<string>('stephen@empire.stargate');
+  const [regEmail, setRegEmail] = useState<string>('commander@aetherion.example');
   const [regPassword, setRegPassword] = useState<string>('PassCode9982!');
   const [regEmpireName, setRegEmpireName] = useState<string>('Terran Imperial Dominion');
   const [regCapitalName, setRegCapitalName] = useState<string>('Homeworld Earth');
   const [regLeaderTitle, setRegLeaderTitle] = useState<string>('High Commander');
-  const [regOriginSector, setRegOriginSector] = useState<string>('Galaxy 1: Milky Way Core (01:104:04)');
+  const [regOriginSector, setRegOriginSector] = useState<string>('Sector 1: Aetherion Reach (01:104:04)');
   const [selectedRace, setSelectedRace] = useState<RaceId>('tauri');
   const [selectedGov, setSelectedGov] = useState<string>('junta');
 
@@ -119,8 +119,8 @@ export const TitleScreen: React.FC<TitleScreenProps> = ({
             UC
           </div>
           <div>
-            <h1 className="font-black text-sm tracking-[0.22em] text-[#e6f5ff] uppercase">UNIVERSE CIVILIZATION</h1>
-            <span className="text-[10px] text-[#8eafc7] font-mono tracking-wider">MMORPG STRATEGY ENGINE · v2.5.0</span>
+            <h1 className="font-black text-sm tracking-[0.22em] text-[#e6f5ff] uppercase">AETHERION EXPANSE</h1>
+            <span className="text-[10px] text-[#8eafc7] font-mono tracking-wider">GALACTIC STRATEGY MMO · ORIGINAL SCI-FI UNIVERSE</span>
           </div>
         </div>
 
@@ -167,11 +167,11 @@ export const TitleScreen: React.FC<TitleScreenProps> = ({
             <div className="text-center space-y-7 animate-fade-in max-w-4xl mx-auto py-6 sm:py-10">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#10283b]/90 border border-[#426b88] text-[10px] sm:text-xs font-mono text-[#c3e5fb] tracking-[0.18em] uppercase">
                 <Sparkles size={14} className="text-amber-400" />
-                <span>NEXT-GEN BROWSER MMORPG & UNIVERSE CIVILIZATION STRATEGY</span>
+                <span>NEXT-GEN BROWSER MMORPG & AETHERION EXPANSE STRATEGY</span>
               </div>
 
               <h2 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-[0.08em] text-[#e8f6ff] uppercase leading-none drop-shadow-[0_4px_18px_#4f9dce66]">
-                UNIVERSE CIVILIZATION
+                AETHERION EXPANSE
               </h2>
 
               <p className="text-sm sm:text-base text-white/70 leading-relaxed">
@@ -316,7 +316,7 @@ export const TitleScreen: React.FC<TitleScreenProps> = ({
                     onChange={(e) => setSelectedServer(e.target.value)}
                     className="w-full bg-[#111111] border border-white/20 px-3 py-2.5 text-white text-xs focus:outline-none focus:border-white"
                   >
-                    <option>Alpha-Prime (US-East) - 12ms</option>
+                    <option>Aetherion Prime (US-East) - 12ms</option>
                     <option>Beta-Centauri (EU-Central) - 45ms</option>
                     <option>Gamma-Orionis (Asia-Pacific) - 110ms</option>
                   </select>
@@ -831,7 +831,7 @@ export const TitleScreen: React.FC<TitleScreenProps> = ({
       {/* Footer Info */}
       <footer className="relative z-10 border-t border-white/10 px-6 sm:px-8 py-3.5 flex flex-col lg:flex-row items-center justify-between text-xs text-white/50 font-mono bg-black/85 backdrop-blur-md gap-3">
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-white/80 font-bold">UNIVERSE CIVILIZATION: EMPIRE AT WARS</span>
+          <span className="text-white/80 font-bold">AETHERION EXPANSE: EMPIRE AT WARS</span>
           <span className="text-white/30 hidden sm:inline">|</span>
           <span className="hidden sm:inline">BUILD #9825-OG</span>
           <span className="text-white/30 hidden md:inline">|</span>
