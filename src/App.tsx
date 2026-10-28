@@ -107,6 +107,7 @@ import {
 // Views
 import { DashboardView } from './components/views/DashboardView';
 import { ResourcesView } from './components/views/ResourcesView';
+import { StashVaultsView } from './components/views/StashVaultsView';
 import { IncomeView } from './components/views/IncomeView';
 import { MilitaryScoresView } from './components/views/MilitaryScoresView';
 import { CombatView } from './components/views/CombatView';
@@ -3319,6 +3320,8 @@ export default function App() {
                 initialTab={activeRoute === 'account-settings' ? 'settings' : 'dossier'}
               />
             )}
+
+            {activeRoute === 'stash-vaults' && <StashVaultsView />}
 
             {activeRoute === 'resources' && (
               <ResourcesView
