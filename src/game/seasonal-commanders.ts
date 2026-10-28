@@ -27,3 +27,35 @@ export const SEASONAL_COMMANDERS: readonly SeasonalCommander[] = Array.from({ le
 export const COMMANDER_BY_ID: ReadonlyMap<string, SeasonalCommander> = new Map(SEASONAL_COMMANDERS.map((commander) => [commander.id, commander]));
 export const COMMANDERS_BY_SEASON: ReadonlyMap<number, readonly SeasonalCommander[]> = new Map(Array.from({ length: SEASONS_PER_YEAR }, (_, i) => [i+1, SEASONAL_COMMANDERS.filter((commander) => commander.seasonNumber === i+1)]));
 export function validateSeasonalCommanders(rows: readonly SeasonalCommander[] = SEASONAL_COMMANDERS): string[] { const errors: string[] = []; const ids = new Set<string>(); const names = new Set<string>(); for (const c of rows) { if(ids.has(c.id)) errors.push(`Duplicate commander ID: ${c.id}`); ids.add(c.id); if(names.has(c.name)) errors.push(`Duplicate commander name: ${c.name}`); names.add(c.name); if(c.seasonNumber<1 || c.seasonNumber>12) errors.push(`Invalid season for ${c.id}`); for(const [key,value] of Object.entries(c.stats)) if(!Number.isFinite(value)||value<1||value>1000) errors.push(`Invalid ${key} stat on ${c.id}`); if(c.signatureAbility.multiplier<1 || c.signatureAbility.multiplier>2) errors.push(`Out-of-range ability multiplier on ${c.id}`); } if(rows.length!==384) errors.push(`Expected 384 commander slots, got ${rows.length}`); return errors; }
+
+/** Converts a commander instance into bounded, readable contributions.
+ * These values are deliberately capped and should be consumed by a single
+ * authoritative game formula; do not stack them as unrestricted multipliers.
+ */
+export interface CommanderContribution {
+  commandBonus: number;
+  attackBonus: number;
+  defenseBonus: number;
+  researchBonus: number;
+  logisticsBonus: number;
+  covertBonus: number;
+  explorationBonus: number;
+  signatureMultiplier: number;
+  cooldownTurns: number;
+}
+export function calculateCommanderContribution(commander: SeasonalCommander, level = 1): CommanderContribution {
+  const safeLevel = Math.max(1, Math.min(commander.levelCap, Math.floor(Number.isFinite(level) ? level : 1)));
+  const contribution = (key: keyof SeasonalCommander['stats']) =>
+    Math.min(0.25, Math.max(0, (commander.stats[key] + (safeLevel - 1) * commander.growth[key]) / 1000));
+  return {
+    commandBonus: contribution('command'),
+    attackBonus: contribution('attack'),
+    defenseBonus: contribution('defense'),
+    researchBonus: contribution('research'),
+    logisticsBonus: contribution('logistics'),
+    covertBonus: contribution('covert'),
+    explorationBonus: contribution('exploration'),
+    signatureMultiplier: Math.max(1, Math.min(2, commander.signatureAbility.multiplier)),
+    cooldownTurns: Math.max(1, Math.floor(commander.signatureAbility.cooldownTurns)),
+  };
+}
