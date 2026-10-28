@@ -62,19 +62,19 @@ export class CraftingService {
 
   async repair(playerId:string,itemId:string,state:CraftingUpgradeState,wallet:CraftingWallet,rule:RepairRule){
     const persisted=await this.store.load(playerId,itemId);
-    const expectedVersion=persisted?.version??0;
-    const authoritative:CraftingUpgradeState=persisted??{...state,itemId};
-    if(!sameCraftingSnapshot(authoritative,state))
+    if(!persisted) throw new Error('Crafting state not found; load or upgrade the item before repairing');
+    const expectedVersion=persisted.version;
+    if(!sameCraftingSnapshot(persisted,state))
       throw new Error('Crafting state is stale or invalid; reload the item before repairing');
-    const wasDamaged=authoritative.damaged;
-    const result=executeRepair(authoritative,wallet,rule);
-    const saved=await this.store.save({...result.state,itemId,ownerId:playerId,version:authoritative.version??0,updatedAt:Date.now()},expectedVersion);
+    const wasDamaged=persisted.damaged;
+    const result=executeRepair(persisted,wallet,rule);
+    const saved=await this.store.save({...result.state,itemId,ownerId:playerId,version:persisted.version,updatedAt:Date.now()},expectedVersion);
     const materialsSpent=wasDamaged?rule.materials:[];
     const currencySpent=wasDamaged?rule.currencyCost:0;
     const requestId=`repair-${Date.now()}-${itemId}`;
     await this.store.appendAudit({
       eventId:requestId,requestId,ownerId:playerId,itemId,track:'repair',
-      fromLevel:authoritative.temperLevel,toLevel:saved.temperLevel,currencySpent,
+      fromLevel:persisted.temperLevel,toLevel:saved.temperLevel,currencySpent,
       materialsSpent:Object.fromEntries(materialsSpent.map(m=>[m.itemId,m.quantity])),createdAt:Date.now(),
     });
     return {result,state:saved};
