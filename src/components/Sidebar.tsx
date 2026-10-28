@@ -275,7 +275,7 @@ export const OGAME_NAV_SECTIONS: OGameNavSection[] = [
     defaultRoute: 'commander-hq',
     items: [
       { id: 'commander-hq', label: 'Commander HQ & Officers' },
-      { id: 'commander-gacha', label: '👑 72 Commanders Gotcha' },
+      { id: 'commander-gacha', label: 'Seasonal Commander Roster · 32 per Season' },
       { id: 'player-profile', label: 'Sovereign Realm Dossier' },
       { id: 'race', label: 'Race & Government Faction' },
       { id: 'vacation', label: 'Sanctuary / Vacation Shield' },
