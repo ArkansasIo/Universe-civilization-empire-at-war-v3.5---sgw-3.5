@@ -2,6 +2,18 @@
  * Capacity values are provisional. Server persistence and atomic transactions are required for production.
  */
 export type VaultKind = 'protected' | 'inventory' | 'equipment';
+export const STASH_TAB_RULES = { maxTabs: 10, slotsPerTab: 125, maxStackSize: 99, firstAdditionalTabCost: 100_000 } as const;
+export interface StashTabProgress { unlockedTabs: number; maxTabs: number; slotsPerTab: number; totalSlots: number; nextTabCost: number | null; }
+export function getStashTabProgress(unlockedTabs: number): StashTabProgress {
+ const tabs = Math.max(1, Math.min(STASH_TAB_RULES.maxTabs, Math.floor(Number.isFinite(unlockedTabs) ? unlockedTabs : 1)));
+ return { unlockedTabs: tabs, maxTabs: STASH_TAB_RULES.maxTabs, slotsPerTab: STASH_TAB_RULES.slotsPerTab, totalSlots: tabs * STASH_TAB_RULES.slotsPerTab, nextTabCost: tabs >= STASH_TAB_RULES.maxTabs ? null : STASH_TAB_RULES.firstAdditionalTabCost * Math.pow(2, tabs - 1) };
+}
+export function canStackStashItems(existing: { itemId:string; quantity:number; maxStack?:number }, incoming: { itemId:string; quantity:number; maxStack?:number }): { allowed:boolean; resultingQuantity:number; reason:string } {
+ if (existing.itemId !== incoming.itemId) return { allowed:false, resultingQuantity:existing.quantity, reason:'Different item IDs cannot share a stack.' };
+ const maxStack = Math.min(STASH_TAB_RULES.maxStackSize, Math.max(1, existing.maxStack ?? STASH_TAB_RULES.maxStackSize), Math.max(1, incoming.maxStack ?? STASH_TAB_RULES.maxStackSize));
+ if (existing.quantity + incoming.quantity > maxStack) return { allowed:false, resultingQuantity:existing.quantity, reason:'Stack limit exceeded; split the quantity into multiple stacks.' };
+ return { allowed:true, resultingQuantity:existing.quantity + incoming.quantity, reason:'Items can be stacked.' };
+}
 export type VaultUpgradeMaterial = 'metal' | 'crystal' | 'deuterium' | 'naquadah';
 export interface VaultCapacity {
  kind: VaultKind;
