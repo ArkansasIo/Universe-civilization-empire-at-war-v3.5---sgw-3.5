@@ -107,7 +107,7 @@ export function validateCraftedResourceCatalog(): string[] {
     if (!resource.name || !resource.description || resource.usedFor.length === 0) errors.push(`Incomplete resource definition: ${resource.id}`);
     if (resource.outputQuantity < 1 || resource.craftSeconds < 1) errors.push(`Invalid yield or duration: ${resource.id}`);
     for (const [input, amount] of Object.entries(resource.inputs)) {
-      if (!Number.isFinite(amount) || amount <= 0) errors.push(`Invalid recipe input ${input} in ${resource.id}`);
+      if (amount === undefined || !Number.isFinite(amount) || amount <= 0) errors.push(`Invalid recipe input ${input} in ${resource.id}`);
     }
   }
   if (CRAFTED_RESOURCE_CATALOG.length !== 207) errors.push(`Expected 207 recipes (23 classes × 3 subclasses × 3 types); found ${CRAFTED_RESOURCE_CATALOG.length}`);
