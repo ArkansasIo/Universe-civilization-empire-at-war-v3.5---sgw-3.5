@@ -243,7 +243,7 @@ export const OGAME_NAV_SECTIONS: OGameNavSection[] = [
   },
   {
     id: 'alliance',
-    label: 'Alliance & Social',
+    label: 'Guilds & Alliances',
     ogameName: 'ALLIANCE',
     icon: Users,
     defaultRoute: 'alliances',
