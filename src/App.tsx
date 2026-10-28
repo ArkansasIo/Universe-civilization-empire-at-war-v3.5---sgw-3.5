@@ -3796,11 +3796,25 @@ export default function App() {
             )}
 
             {activeRoute === 'turn-system' && (
-              <TurnSystemView
-                resources={resources}
-                onUpdateResources={(res) => setResources((prev) => ({ ...prev, ...res }))}
-                onProcessTurn={handleProcessTurn}
-              />
+              isAdminUser ? (
+                <TurnSystemView
+                  resources={resources}
+                  onUpdateResources={(res) => setResources((prev) => ({ ...prev, ...res }))}
+                  onProcessTurn={handleProcessTurn}
+                />
+              ) : (
+                <section className="border-2 border-red-300 bg-red-50 p-6 text-red-950" role="alert">
+                  <h1 className="text-lg font-bold">Administrator permission required</h1>
+                  <p className="mt-2 text-sm">The Turn Engine controls are restricted to authenticated administrators.</p>
+                  <button
+                    type="button"
+                    className="mt-4 border border-red-800 px-4 py-2 text-sm font-bold"
+                    onClick={() => setActiveRoute('dashboard')}
+                  >
+                    Return to dashboard
+                  </button>
+                </section>
+              )
             )}
 
             {activeRoute === 'planetary-invasion' && (
