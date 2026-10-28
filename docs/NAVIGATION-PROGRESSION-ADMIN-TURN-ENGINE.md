@@ -22,10 +22,10 @@ Branch: feature/ogame-navigation-progression-admin-turns
 ## P0 — turn engine must be administrator-only
 - [x] Keep `turn-system` under Admin Systems in the sidebar.
 - [x] Sidebar hides Admin Systems from non-admin profiles.
-- [ ] Add a route/render guard so non-admins cannot open `turn-system` by setting the active route directly.
+- [x] Add a route/render guard so non-admins cannot open `turn-system` by setting the active route directly (client-side guard; not a substitute for API authorization).
 - [ ] Add server-side authorization to every turn-engine configuration or execution endpoint. UI hiding is not security.
 - [ ] Verify roles from trusted server/session state; do not trust a client-provided `isAdmin` flag alone.
-- [ ] Add tests proving normal players cannot view or invoke admin turn-engine actions.
+- [ ] Add tests proving normal players cannot view or invoke admin turn-engine actions; a progression smoke script now checks the admin-only feature rule, but server endpoint authorization tests remain outstanding.
 - [ ] Keep turn processing separate from its admin-only management UI: game turns may need to continue for all players, while only admins can inspect/configure the engine.
 
 ## P0 — shared progression rules
@@ -46,10 +46,11 @@ Branch: feature/ogame-navigation-progression-admin-turns
 
 ## P1 — automated verification
 - [ ] Automated route coverage for every sidebar item, including the newly wired `stash-vaults` route.
-- [ ] Progression boundary tests: one level below, exact requirement and above.
+- [x] Add `scripts/progression-smoke.ts` covering below-threshold, exact-threshold, building prerequisite, and admin-only feature access.
+- [ ] Add progression boundary tests one level above the requirement and tests for unknown/missing state.
 - [ ] Missing-state and unknown-feature tests.
 - [ ] Direct-route and direct-API bypass tests.
-- [ ] Run `npm run lint`, `npm run build` and existing smoke tests.
+- [ ] Run `npm run lint`, `npm run build`, `npm run progression:smoke`, and existing smoke tests in CI; not yet verified on the current main commit.
 - [ ] Test mobile navigation and admin/non-admin sessions separately.
 
 ## Important distinction
@@ -61,3 +62,10 @@ The feature registry is a foundation, not proof that all 111 pages are integrate
 - Added `src/components/views/StashVaultsView.tsx` with vault tabs, capacity summaries, facility-gated upgrade previews, and explicit demo-only/non-persistent warnings.
 - Wired `stash-vaults` into `src/App.tsx`.
 - Not yet verified: fresh TypeScript check, production build, GitHub Pages run, Vercel deployment, and browser-level route testing. Vercel status currently reports a build-rate limit.
+
+
+## Latest implementation update — 2026-10-28
+- Added the stash vault UI and connected `stash-vaults` to the app route renderer.
+- Added a client-side admin guard around the `turn-system` render path. This prevents ordinary UI navigation from rendering the management view, but trusted server-side authorization is still required for any API or mutation endpoint.
+- Added `scripts/progression-smoke.ts` and the `npm run progression:smoke` script for basic progression/admin rule checks.
+- Validation status: source changes are committed to `main`; no successful fresh lint/build/smoke run has been confirmed in this work session.
