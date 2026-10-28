@@ -108,7 +108,7 @@ export const OGAME_NAV_SECTIONS: OGameNavSection[] = [
       { id: 'construction-yard', label: 'Construction Yard' },
       { id: 'tempering-forge', label: 'Forge & Masterworks Anvil' },
       { id: 'shipyard', label: 'Orbital Shipyard Drydocks' },
-      { id: 'tech-library', label: 'Research Laboratories' },
+      { id: 'tech-library', label: 'Research Lab Facilities' },
       { id: 'megastructures', label: 'Stellar Megastructures' },
       { id: 'repair', label: 'Alliance Depot & Repair' },
       { id: 'space-stations', label: 'Orbital Starbases' },
@@ -123,7 +123,7 @@ export const OGAME_NAV_SECTIONS: OGameNavSection[] = [
     items: [
       { id: 'tech-tree', label: 'Master Tech Tree' },
       { id: 'tech-archive', label: 'Galactic Technology Archive' },
-      { id: 'eve-blueprints', label: 'EVE Blueprints & ME/TE' },
+      { id: 'eve-blueprints', label: 'Blueprints and Research Lab' },
       { id: 'tech-offense', label: 'Weapons Technology' },
       { id: 'tech-defense', label: 'Shield & Armor Tech' },
       { id: 'tech-covert', label: 'Covert Espionage Tech' },
