@@ -30,9 +30,12 @@ assert.equal(getVaultCapacity('inventory', 2).capacity, 80);
 assert.equal(getVaultCapacity('protected', 0).level, 1, 'levels clamp to minimum');
 assert.equal(getVaultCapacity('equipment', 999).level, 30, 'levels clamp to maximum');
 
-const lockedUpgrade = previewVaultUpgrade('inventory', 1, 1);
+const lockedUpgrade = previewVaultUpgrade('inventory', 5, 1);
 assert.equal(lockedUpgrade.canUpgrade, false);
-assert.match(lockedUpgrade.reason, /Requires Storage Silo facility level 1/);
+assert.match(lockedUpgrade.reason, /Requires Storage Silo facility level 2/);
+
+const thresholdUpgrade = previewVaultUpgrade('inventory', 1, 1);
+assert.equal(thresholdUpgrade.canUpgrade, true, 'facility level 1 permits upgrade from level 1 to 2');
 
 const availableUpgrade = previewVaultUpgrade('inventory', 1, 2);
 assert.equal(availableUpgrade.canUpgrade, true);
