@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import { Cpu, Wrench, Shield, ArrowUpRight, CheckCircle2, Clock, Layers } from 'lucide-react';
+import React, { useMemo, useState } from 'react';
+import { Cpu, Wrench, Shield, ArrowUpRight, CheckCircle2, Clock, Layers, Search } from 'lucide-react';
 import { sound } from '../../sound';
 import { PlayerResources } from '../../types';
 import { INITIAL_EVE_BLUEPRINTS, EveBlueprint } from '../../blueprintSystemsData';
+import { EVE_MODULE_MATRIX, MODULE_CLASSES, type ModuleClass } from '../../data/eveModuleMatrix';
 
 interface EveBlueprintsViewProps {
   resources: PlayerResources;
@@ -13,8 +14,28 @@ export const EveBlueprintsView: React.FC<EveBlueprintsViewProps> = ({
   resources,
   onUpdateResources,
 }) => {
-  const [blueprints, setBlueprints] = useState<EveBlueprint[]>(INITIAL_EVE_BLUEPRINTS);
+  const [blueprints, setBlueprints] = useState<EveBlueprint[]>([...INITIAL_EVE_BLUEPRINTS, ...EVE_MODULE_MATRIX]);
   const [feedback, setFeedback] = useState<string | null>(null);
+  const [classFilter, setClassFilter] = useState<ModuleClass | 'all'>('all');
+  const [search, setSearch] = useState('');
+  const [visibleCount, setVisibleCount] = useState(24);
+
+  // Index modules into class buckets by their position in the deterministic matrix.
+  const classOf = (bp: EveBlueprint): ModuleClass | null => {
+    const idx = EVE_MODULE_MATRIX.findIndex((m) => m.id === bp.id);
+    if (idx < 0) return null; // authored starter BPOs
+    return MODULE_CLASSES[Math.floor(idx / 30)]; // 30 per class
+  };
+
+  const filtered = useMemo(() => blueprints.filter((bp) => {
+    const cls = classOf(bp);
+    if (classFilter !== 'all' && cls !== classFilter) return false;
+    if (search.trim()) {
+      const q = search.trim().toLowerCase();
+      if (!bp.name.toLowerCase().includes(q)) return false;
+    }
+    return true;
+  }), [blueprints, classFilter, search]);
 
   const handleResearchME = (bpId: string) => {
     const bp = blueprints.find((b) => b.id === bpId);
@@ -113,9 +134,34 @@ export const EveBlueprintsView: React.FC<EveBlueprintsViewProps> = ({
         </div>
       )}
 
+      {/* Filters */}
+      <div className="border border-[#dedede] bg-white p-4 flex flex-wrap items-center gap-2">
+        <span className="text-[10px] text-[#777777] uppercase font-bold tracking-wider flex items-center gap-1 mr-1"><Layers className="w-3 h-3" /> Module Class</span>
+        <select
+          value={classFilter}
+          onChange={(e) => { setClassFilter(e.target.value as ModuleClass | 'all'); setVisibleCount(24); }}
+          className="text-[11px] font-bold uppercase border border-[#dedede] bg-[#fafafa] px-2 py-1.5 cursor-pointer"
+        >
+          <option value="all">All Classes ({blueprints.length})</option>
+          {MODULE_CLASSES.map((c) => (
+            <option key={c} value={c}>{c} (30)</option>
+          ))}
+        </select>
+        <div className="relative ml-2">
+          <Search className="w-3.5 h-3.5 text-[#777777] absolute left-2 top-2" />
+          <input
+            value={search}
+            onChange={(e) => { setSearch(e.target.value); setVisibleCount(24); }}
+            placeholder="Search blueprints…"
+            className="text-[11px] font-mono pl-7 pr-2 py-1.5 border border-[#dedede] bg-[#fafafa] focus:outline-none focus:border-[#111111] w-56"
+          />
+        </div>
+        <span className="ml-auto font-mono text-[11px] text-[#777777]">Showing {Math.min(visibleCount, filtered.length)} of {filtered.length}</span>
+      </div>
+
       {/* Blueprints Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {blueprints.map((bp) => (
+        {filtered.slice(0, visibleCount).map((bp) => (
           <div key={bp.id} className="border border-[#dedede] bg-white p-6 flex flex-col justify-between space-y-4">
             <div>
               <div className="flex items-center justify-between mb-2">
@@ -127,6 +173,9 @@ export const EveBlueprintsView: React.FC<EveBlueprintsViewProps> = ({
                 </span>
               </div>
               <h3 className="font-bold text-base text-[#111111]">{bp.name}</h3>
+              {classOf(bp) && (
+                <div className="text-[10px] text-[#777777] uppercase font-bold tracking-wider mt-0.5">{classOf(bp)}</div>
+              )}
               <div className="mt-3 grid grid-cols-2 gap-2 text-xs">
                 <div className="bg-[#fafafa] p-2.5 border border-[#dedede]">
                   <span className="text-[10px] text-[#777777] block font-bold uppercase">Material Efficiency</span>
@@ -173,6 +222,16 @@ export const EveBlueprintsView: React.FC<EveBlueprintsViewProps> = ({
           </div>
         ))}
       </div>
+
+      {visibleCount < filtered.length && (
+        <button
+          type="button"
+          onClick={() => setVisibleCount((v) => v + 24)}
+          className="w-full py-3 bg-[#fafafa] border border-[#dedede] hover:border-[#111111] text-[#111111] text-[11px] font-bold uppercase tracking-wider transition-colors cursor-pointer"
+        >
+          Load More Blueprints ({filtered.length - visibleCount} remaining)
+        </button>
+      )}
     </div>
   );
 };
