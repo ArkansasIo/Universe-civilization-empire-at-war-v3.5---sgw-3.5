@@ -55,11 +55,11 @@ export const StargateNetworkView: React.FC<StargateNetworkViewProps> = ({
   const [irisClosed, setIrisClosed] = useState<boolean>(false);
   const [activeTab, setActiveTab] = useState<TabType>('stargate-dhd');
   const [feedback, setFeedback] = useState<string | null>(
-    'Stargate network active: Connected to Atlantis City-Ship (Lantea) in the Pegasus galaxy.'
+    'Aetherion transit network online: relay handshake established with the Lysara Reach.'
   );
   const [logs, setLogs] = useState<string[]>([
-    'Subspace event horizon stabilized between Earth Alpha Site and Atlantis.',
-    'Jump Gate Relay capacitors synchronized across 4 orbital moon bases.',
+    'Subspace event horizon stabilized between Solari Prime and the Lysara Reach.',
+    'Jump-gate relay capacitors synchronized across four orbital stations.',
   ]);
 
   const activeGate = gates.find((g) => g.id === selectedGateId) || gates[0];
@@ -87,7 +87,7 @@ export const StargateNetworkView: React.FC<StargateNetworkViewProps> = ({
   const handleDisconnectWormhole = () => {
     setActiveWormhole(null);
     setGates((prev) => prev.map((g) => ({ ...g, status: 'offline' })));
-    handleLogDebrief('Iris closed. Event horizon collapsed. Stargate wormhole safely disengaged.');
+    handleLogDebrief('Transit shield closed. Event horizon collapsed. Wormhole safely disengaged.');
   };
 
   const handleToggleIris = () => {
@@ -95,63 +95,54 @@ export const StargateNetworkView: React.FC<StargateNetworkViewProps> = ({
       const next = !prev;
       handleLogDebrief(
         next
-          ? 'Titanium-Trinium Iris closed! Incoming matter and energy blasts will be disintegrated on contact.'
-          : 'Iris opened! Stargate event horizon clear for off-world travel and incoming personnel.'
+          ? 'Transit shield closed! Incoming matter and energy signatures will be blocked at the event horizon.'
+          : 'Transit shield opened! Event horizon clear for interstellar travel and incoming personnel.'
       );
       return next;
     });
   };
 
   return (
-    <div id="stargate-network-view" className="space-y-6">
-      {/* Strategic Header */}
-      <div className="border border-[#dedede] bg-white p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <div className="text-[9px] font-bold text-[#777777] tracking-[1.5px] uppercase mb-1 font-mono">
-            ANCIENT ASTRIA PORTA & SUBSPACE FLEET RELAYS
+    <div id="stargate-network-view" className="space-y-6 text-slate-100">
+      {/* Aetherion transit command header */}
+      <div className="relative overflow-hidden border border-cyan-900/70 bg-slate-950 p-5 md:p-7 shadow-xl">
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-30" style={{ backgroundImage: "radial-gradient(circle at 78% 45%, rgba(34,211,238,.28), transparent 28%), linear-gradient(115deg, transparent 30%, rgba(30,64,175,.18), transparent 70%)" }} />
+        <div className="relative flex flex-col md:flex-row md:items-center justify-between gap-5">
+          <div>
+            <div className="text-[10px] font-bold text-cyan-300 tracking-[2.5px] uppercase mb-2 font-mono">AETHERION TRANSIT COMMAND // RELAY CONTROL</div>
+            <h2 className="text-2xl md:text-3xl font-black tracking-tight flex flex-wrap items-center gap-3">
+              <span>Stargate & Jump Gate Network</span>
+              <span className={`text-xs px-2.5 py-0.5 font-mono uppercase font-bold border ${activeWormhole ? "bg-cyan-300/10 text-cyan-200 border-cyan-400/50" : "bg-slate-800 text-slate-400 border-slate-600"}`}>
+                {activeWormhole ? "EVENT HORIZON ACTIVE" : "NETWORK IDLE"}
+              </span>
+            </h2>
+            <p className="text-sm text-slate-300 mt-2 max-w-3xl leading-relaxed">Select a destination, align the glyph sequence, and open a stabilized transit corridor. Manage the dialing interface, relay network, shielding, and exotic-energy upgrades from one command console.</p>
           </div>
-          <h2 className="text-2xl font-bold text-[#111111] flex items-center gap-3">
-            <span>Stargate & Interstellar Jump Gates</span>
-            <span
-              className={`text-xs px-2.5 py-0.5 font-mono uppercase font-bold border ${
-                activeWormhole
-                  ? 'bg-sky-50 text-sky-800 border-sky-300'
-                  : 'bg-neutral-100 text-neutral-600 border-neutral-300'
-              }`}
-            >
-              {activeWormhole ? 'Event Horizon Active' : 'Stargate Idle'}
-            </span>
-          </h2>
-          <p className="text-sm text-[#666666] mt-1 max-w-3xl leading-relaxed">
-            Dial 7-to-9 chevron addresses through the Dial-Home Device (DHD), dispatch SG reconnaissance teams
-            across four galaxies, execute zero-deuterium subspace Jump Gate fleet teleportations, and harness the Ori Supergate.
-          </p>
+          <div className="relative mx-auto md:mx-0 w-40 h-40 shrink-0" role="img" aria-label="Holographic transit dial with nine illuminated glyph nodes">
+            <div className="absolute inset-2 rounded-full border border-cyan-400/50 shadow-[0_0_35px_rgba(34,211,238,0.18)]" />
+            <div className="absolute inset-5 rounded-full border border-blue-400/40 rotate-12" />
+            <div className="absolute inset-8 rounded-full border border-cyan-300/40 -rotate-12" />
+            <div className="absolute inset-[3.7rem] rounded-full bg-cyan-400/10 border border-cyan-200/60 flex items-center justify-center"><span className="text-[10px] text-cyan-200 font-mono tracking-widest">A-09</span></div>
+            {Array.from({ length: 9 }, (_, i) => {
+              const angle = (i * 40 - 90) * (Math.PI / 180);
+              const active = activeWormhole !== null && i < 7;
+              return <span key={i} className={`absolute w-3 h-3 rounded-full border ${active ? "bg-cyan-300 border-white shadow-[0_0_12px_rgba(103,232,249,0.9)]" : "bg-slate-800 border-cyan-700"}`} style={{ left: `calc(50% + ${Math.cos(angle) * 66}px - 6px)`, top: `calc(50% + ${Math.sin(angle) * 66}px - 6px)` }} />;
+            })}
+          </div>
         </div>
-
-        {/* Global Metric Badges */}
-        <div className="flex items-center gap-3 font-mono text-xs">
-          <div className="p-3 bg-[#fafafa] border border-[#dedede] text-right">
-            <span className="text-[9px] text-[#777777] uppercase block font-bold">Wormhole Status</span>
-            <strong className={`text-xs font-bold block ${activeWormhole ? 'text-sky-700' : 'text-neutral-500'}`}>
-              {activeWormhole ? 'CONNECTED' : 'DISCONNECTED'}
-            </strong>
-          </div>
-          <div className="p-3 bg-[#fafafa] border border-[#dedede] text-right">
-            <span className="text-[9px] text-[#777777] uppercase block font-bold">Defense Barrier</span>
-            <strong className={`text-xs font-bold block ${irisClosed ? 'text-amber-700' : 'text-emerald-700'}`}>
-              {irisClosed ? 'IRIS CLOSED' : 'IRIS OPEN'}
-            </strong>
-          </div>
+        <div className="relative mt-5 flex flex-wrap items-center gap-3 font-mono text-xs">
+          <div className="p-3 bg-slate-900/80 border border-slate-700"><span className="text-[9px] text-slate-400 uppercase block font-bold">Wormhole Status</span><strong className={`text-xs font-bold block ${activeWormhole ? "text-cyan-300" : "text-slate-500"}`}>{activeWormhole ? "CONNECTED" : "DISCONNECTED"}</strong></div>
+          <div className="p-3 bg-slate-900/80 border border-slate-700"><span className="text-[9px] text-slate-400 uppercase block font-bold">Transit Shield</span><strong className={`text-xs font-bold block ${irisClosed ? "text-amber-300" : "text-emerald-300"}`}>{irisClosed ? "SHIELD CLOSED" : "SHIELD OPEN"}</strong></div>
+          <div className="p-3 bg-slate-900/80 border border-slate-700"><span className="text-[9px] text-slate-400 uppercase block font-bold">Selected Destination</span><strong className="text-xs font-bold block text-cyan-100">{activeGate?.name ?? "No destination selected"}</strong></div>
         </div>
       </div>
-
       {/* Live Feedback & Alert Notification */}
       {feedback && (
         <div
           id="stargate-feedback-banner"
-          className="p-3.5 bg-white border border-[#111111] border-l-4 text-xs font-mono font-semibold flex justify-between items-center shadow-sm"
+          className="p-3.5 bg-slate-900 border border-cyan-900 border-l-4 border-l-cyan-400 text-xs font-mono font-semibold flex justify-between items-center shadow-sm"
         >
-          <div className="flex items-center gap-2 text-[#111111]">
+          <div className="flex items-center gap-2 text-slate-100">
             <Radio size={14} className="text-sky-600 animate-pulse shrink-0" />
             <span>{feedback}</span>
           </div>
@@ -170,32 +161,32 @@ export const StargateNetworkView: React.FC<StargateNetworkViewProps> = ({
         {[
           {
             id: 'stargate-dhd',
-            label: '1. Ancient Stargate & DHD Console',
+            label: '1. Transit Dial Console',
             icon: Disc,
           },
           {
             id: 'address-directory',
-            label: '2. Off-World Address Book & SG Teams',
+            label: '2. Destination Registry',
             icon: Compass,
           },
           {
             id: 'jump-gates',
-            label: '3. Subspace Jump Gate Relay (Fleet Transit)',
+            label: '3. Jump Gate Relays',
             icon: Rocket,
           },
           {
             id: 'supergate-crystals',
-            label: '4. Ori Supergate & Control Crystals',
+            label: '4. Exotic Energy Matrix',
             icon: Atom,
           },
           {
             id: 'alien-races',
-            label: '5. 18 Stargate Alien Races Dossier',
+            label: '5. Alien Civilization Dossier',
             icon: Globe,
           },
           {
             id: 'gate-tokens',
-            label: '6. Gate Tokens, Anomalies & Raids',
+            label: '6. Transit Tokens & Anomalies',
             icon: Sparkles,
           },
         ].map((tab) => {
@@ -212,11 +203,11 @@ export const StargateNetworkView: React.FC<StargateNetworkViewProps> = ({
               }}
               className={`py-2 px-3.5 text-xs font-bold uppercase tracking-wider font-mono border transition-all cursor-pointer flex items-center gap-2 ${
                 isActive
-                  ? 'bg-[#111111] text-white border-[#111111] shadow-sm'
-                  : 'bg-white text-[#555555] border-[#dedede] hover:border-[#111111] hover:text-[#111111]'
+                  ? 'bg-cyan-300 text-slate-950 border-cyan-200 shadow-[0_0_18px_rgba(34,211,238,0.18)]'
+                  : 'bg-slate-950 text-slate-300 border-slate-700 hover:border-cyan-400 hover:text-cyan-100'
               }`}
             >
-              <Icon size={14} className={isActive ? 'text-amber-400' : 'text-[#777777]'} />
+              <Icon size={14} className={isActive ? 'text-slate-950' : 'text-cyan-500'} />
               <span>{tab.label}</span>
             </button>
           );
