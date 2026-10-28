@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   Globe,
   Plus,
@@ -38,6 +38,7 @@ import {
   GALAXY_AND_ARC_BOSSES,
   getComplete90ClassesMatrix,
 } from '../../data/universeBoss90Data';
+import { GENERATE_BOSS_ROSTER } from '../../data/bossRoster';
 
 interface AddWorldsUniverseBossViewProps {
   resources: PlayerResources;
@@ -124,7 +125,7 @@ export const AddWorldsUniverseBossView: React.FC<AddWorldsUniverseBossViewProps>
   // ============================================================================
   // TAB 2: GALAXY BOSS & ARC BOSS RAID ARENA STATE
   // ============================================================================
-  const [selectedBoss, setSelectedBoss] = useState<GalaxyAndArcBoss>(GALAXY_AND_ARC_BOSSES[0]);
+  const [selectedBoss, setSelectedBoss] = useState<GalaxyAndArcBoss>(() => GENERATE_BOSS_ROSTER(GALAXY_AND_ARC_BOSSES)[0]);
   const [bossFilter, setBossFilter] = useState<'all' | 'arc_boss' | 'galaxy_boss'>('all');
   const [raidInProgress, setRaidInProgress] = useState<boolean>(false);
   const [currentBossHp, setCurrentBossHp] = useState<number>(selectedBoss.maxHealth);
@@ -245,7 +246,8 @@ export const AddWorldsUniverseBossView: React.FC<AddWorldsUniverseBossViewProps>
     setRaidInProgress(false);
   };
 
-  const filteredBosses = GALAXY_AND_ARC_BOSSES.filter((b) => {
+  const bossRoster = useMemo(() => GENERATE_BOSS_ROSTER(GALAXY_AND_ARC_BOSSES), []);
+  const filteredBosses = bossRoster.filter((b) => {
     if (bossFilter === 'arc_boss') return b.type === 'arc_boss';
     if (bossFilter === 'galaxy_boss') return b.type === 'galaxy_boss';
     return true;
@@ -330,7 +332,7 @@ export const AddWorldsUniverseBossView: React.FC<AddWorldsUniverseBossViewProps>
             <Crown size={15} className={activeTab === 'bosses' ? 'text-amber-400' : 'text-amber-600'} />
             <span>👾 Galaxy & Arc Boss Raids</span>
             <span className="px-1.5 py-0.2 bg-amber-500 text-[#111111] text-[10px] font-bold rounded-full">
-              {GALAXY_AND_ARC_BOSSES.length} Bosses
+              {bossRoster.length} Bosses
             </span>
           </button>
 

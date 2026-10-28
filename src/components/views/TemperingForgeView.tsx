@@ -28,7 +28,20 @@ interface ForgeSlot {
 }
 
 const MAX_LEVEL = 100; // tempering 1-100 and masterwork 1-100
-const CURRENCY_COST = 800; // crystal per forge cycle
+
+/** OGame-style economy: exponential metal/crystal/deuterium costs + build time per level.
+ *  cost(level) = base × 1.6^(level-1); time scales the same way (halved by robotic-facility-like reduction). */
+const forgeCost = (level: number, base: { metal: number; crystal: number; deuterium: number }) => ({
+  metal: Math.round(base.metal * Math.pow(1.6, level - 1)),
+  crystal: Math.round(base.crystal * Math.pow(1.6, level - 1)),
+  deuterium: Math.round(base.deuterium * Math.pow(1.6, level - 1)),
+});
+const forgeSeconds = (level: number, baseSeconds: number) => Math.max(2, Math.round(baseSeconds * Math.pow(1.5, level - 1)));
+
+const TEMPER_BASE_COST = { metal: 400, crystal: 800, deuterium: 200 };
+const MASTERWORK_BASE_COST = { metal: 2500, crystal: 5000, deuterium: 1500 };
+const TEMPER_BASE_SECONDS = 4;
+const MASTERWORK_BASE_SECONDS = 12;
 
 /** Procedural tier tables: tempering 1-100 and masterwork 1-100.
  *  Low tiers are cheap and safe; success chance, cost and downgrade depth scale with tier. */
@@ -119,6 +132,7 @@ export const TemperingForgeView: React.FC<TemperingForgeViewProps> = ({ resource
   const [useProtection, setUseProtection] = useState(false);
   const [result, setResult] = useState<{ ok: boolean; message: string } | null>(null);
   const [salvagePreview, setSalvagePreview] = useState<ReturnType<typeof computeRemains> | null>(null);
+  const [queue, setQueue] = useState<{ itemId: string; itemName: string; track: CraftingTrack; targetLevel: number; remaining: number; total: number } | null>(null);
 
   const selected = slots.find((s) => s.item.id === selectedId) ?? slots[0];
 
@@ -142,41 +156,63 @@ export const TemperingForgeView: React.FC<TemperingForgeViewProps> = ({ resource
 
   const handleForge = () => {
     if (!selected || !rule) return;
-    if (resources.crystal < CURRENCY_COST) {
+    if (queue) {
       sound.play('warning');
-      setResult({ ok: false, message: `Requires ${CURRENCY_COST.toLocaleString()} Crystal to run the forge cycle.` });
+      setResult({ ok: false, message: 'The forge queue is busy — cancel or wait for the current cycle.' });
       return;
     }
-    const roll = Math.random();
-    let outcome: UpgradeResult;
-    try {
-      outcome = attemptUpgrade({
-        item: selected.item,
-        state: selected.state,
-        wallet: richWallet(useProtection),
-        playerId: 'commander',
-        track,
-        rules: rule,
-        roll,
-        useProtection,
-        timestamp: Date.now(),
-      });
-    } catch (error) {
+    const cost = track === 'tempering' ? forgeCost(nextLevel!, TEMPER_BASE_COST) : forgeCost(nextLevel!, MASTERWORK_BASE_COST);
+    if (resources.metal < cost.metal || resources.crystal < cost.crystal || resources.deuterium < cost.deuterium) {
       sound.play('warning');
-      setResult({ ok: false, message: error instanceof Error ? error.message : 'Forge cycle failed.' });
+      setResult({ ok: false, message: `Insufficient resources — need ${cost.metal.toLocaleString()} metal, ${cost.crystal.toLocaleString()} crystal, ${cost.deuterium.toLocaleString()} deuterium.` });
       return;
     }
-
-    onUpdateResources({ crystal: resources.crystal - CURRENCY_COST });
-    setSlots((prev) => prev.map((s) => (s.item.id === selected.item.id ? { ...s, state: outcome.state } : s)));
-    if (outcome.success) {
-      sound.play('confirm');
-      setResult({ ok: true, message: `${(track === 'masterworking' ? 'Masterwork' : 'Tempering')} succeeded: level ${outcome.state[track === 'tempering' ? 'temperLevel' : 'masterworkRank']} — ${outcome.message}` });
-    } else {
-      sound.play('warning');
-      setResult({ ok: false, message: outcome.message });
-    }
+    const seconds = track === 'tempering' ? forgeSeconds(nextLevel!, TEMPER_BASE_SECONDS) : forgeSeconds(nextLevel!, MASTERWORK_BASE_SECONDS);
+    onUpdateResources({
+      metal: resources.metal - cost.metal,
+      crystal: resources.crystal - cost.crystal,
+      deuterium: resources.deuterium - cost.deuterium,
+    });
+    setQueue({ itemId: selected.item.id, itemName: selected.item.name, track, targetLevel: nextLevel!, remaining: seconds, total: seconds });
+    sound.play('confirm');
+    setResult({ ok: true, message: `${selected.item.name} queued for ${(track === 'masterworking' ? 'masterwork' : 'temper')} ${currentLevel} → ${nextLevel} — ${seconds}s forge cycle started.` });
   };
+
+  // Queue tick: resolve the forge roll when the countdown completes
+  React.useEffect(() => {
+    if (!queue) return;
+    const timer = window.setInterval(() => {
+      setQueue((q) => {
+        if (!q) return null;
+        if (q.remaining > 1) return { ...q, remaining: q.remaining - 1 };
+        // Cycle complete — resolve the attempt now
+        const slot = slots.find((s) => s.item.id === q.itemId);
+        const tierRule = q.track === 'tempering' ? TEMPER_TIERS.find((l) => l.level === q.targetLevel) : MASTERWORK_RANKS.find((r) => r.rank === q.targetLevel);
+        if (!slot || !tierRule) return null;
+        const roll = Math.random();
+        try {
+          const outcome = attemptUpgrade({
+            item: slot.item,
+            state: slot.state,
+            wallet: richWallet(useProtection),
+            playerId: 'commander',
+            track: q.track,
+            rules: tierRule,
+            roll,
+            useProtection,
+            timestamp: Date.now(),
+          });
+          setSlots((prev) => prev.map((s) => (s.item.id === q.itemId ? { ...s, state: outcome.state } : s)));
+          if (outcome.success) { sound.play('confirm'); setResult({ ok: true, message: `Forge cycle complete — ${outcome.message}` }); }
+          else { sound.play('warning'); setResult({ ok: false, message: outcome.message }); }
+        } catch (error) {
+          setResult({ ok: false, message: error instanceof Error ? error.message : 'Forge cycle failed.' });
+        }
+        return null;
+      });
+    }, 1000);
+    return () => window.clearInterval(timer);
+  }, [queue?.itemId, queue?.targetLevel, queue !== null]);
 
   if (!selected) return <div className="p-6 text-slate-400">No forgeable items available.</div>;
 
@@ -269,8 +305,17 @@ export const TemperingForgeView: React.FC<TemperingForgeViewProps> = ({ resource
                 </div>
                 <div className="bg-[#fafafa] p-3 border border-[#dedede]">
                   <div className="text-[10px] text-[#777777] uppercase font-bold">Forge Cost</div>
-                  <div className="text-lg font-mono font-bold text-[#111111]">{CURRENCY_COST.toLocaleString()} <span className="text-xs font-sans">Crystal</span></div>
-                  <div className="text-[10px] text-[#777777]">Materials: {rule.materials.length} types</div>
+                  {(() => {
+                    const c = track === 'tempering' ? forgeCost(nextLevel!, TEMPER_BASE_COST) : forgeCost(nextLevel!, MASTERWORK_BASE_COST);
+                    const secs = track === 'tempering' ? forgeSeconds(nextLevel!, TEMPER_BASE_SECONDS) : forgeSeconds(nextLevel!, MASTERWORK_BASE_SECONDS);
+                    const short = (v: number, have: number) => v > have ? 'text-red-600' : 'text-[#111111]';
+                    return (
+                      <div>
+                        <div className="text-[11px] font-mono font-bold"><span className={short(c.metal, resources.metal)}>M {c.metal.toLocaleString()}</span> · <span className={short(c.crystal, resources.crystal)}>C {c.crystal.toLocaleString()}</span> · <span className={short(c.deuterium, resources.deuterium)}>D {c.deuterium.toLocaleString()}</span></div>
+                        <div className="text-[10px] text-[#777777]">Cycle time: {secs}s</div>
+                      </div>
+                    );
+                  })()}
                 </div>
               </div>
             ) : (
