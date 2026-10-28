@@ -39,7 +39,7 @@ import {
   INITIAL_SLOT_ASSIGNMENTS,
 } from '../../../commander72Data';
 import { PlayerResources } from '../../../types';
-import { COMMANDERS_BY_SEASON, SEASON_NAMES, SEASONAL_COMMANDERS, SeasonalCommander } from '../../../game/seasonal-commanders';
+import { COMMANDERS_BY_SEASON, SEASON_NAMES, SEASONAL_COMMANDERS, SeasonalCommander, calculateCommanderContribution } from '../../../game/seasonal-commanders';
 
 interface CommanderGachaStorePanelProps {
   resources: PlayerResources;
@@ -900,6 +900,13 @@ export const CommanderGachaStorePanel: React.FC<CommanderGachaStorePanelProps> =
               </div>
               <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2">
                 {Object.entries(selectedSeasonalCommander.stats).map(([key, value]) => <div key={key} className="p-3 bg-[#f0f5f8] border border-[#dbe4ea]"><span className="block text-[9px] uppercase text-[#62798b]">{key}</span><strong className="text-lg text-[#172f42]">{value}</strong><span className="block text-[9px] text-[#62798b]">growth +{selectedSeasonalCommander.growth[key as keyof SeasonalCommander['growth']]}/level</span></div>)}
+              </div>
+              <div className="border border-[#dbe4ea] p-4">
+                <h4 className="text-sm font-black text-[#152a3b]">Calculated level-1 contributions (provisional)</h4>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-3">
+                  {Object.entries(calculateCommanderContribution(selectedSeasonalCommander, 1)).filter(([key]) => key.endsWith('Bonus')).map(([key, value]) => <div key={key} className="bg-[#f0f5f8] p-2"><span className="block text-[9px] uppercase text-[#62798b]">{key.replace('Bonus', '')}</span><strong className="text-sm text-[#172f42]">+{(value * 100).toFixed(1)}%</strong></div>)}
+                </div>
+                <p className="text-[10px] text-[#6b7e8d] mt-2">Contributions are capped at 25% per stat and are not yet wired into authoritative combat/economy services.</p>
               </div>
               <div className="p-4 bg-[#0b1c2a] text-[#e3f3fd]">
                 <p className="text-[10px] uppercase tracking-wider text-[#a7cde5]">Signature ability · {selectedSeasonalCommander.signatureAbility.id}</p>
