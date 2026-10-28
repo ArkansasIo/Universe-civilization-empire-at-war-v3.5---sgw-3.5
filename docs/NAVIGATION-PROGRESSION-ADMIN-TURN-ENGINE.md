@@ -4,15 +4,17 @@ Target repository: Universe Civilization: Empire at War v3.5
 Branch: feature/ogame-navigation-progression-admin-turns
 
 ## Confirmed from source inspection
-- The sidebar declares 111 menu item IDs.
+- The current sidebar source contains 110 menu item IDs, all unique; earlier documentation saying 111 was inaccurate.
 - The sidebar hides the Admin Systems section unless the profile/admin session is recognized as an administrator.
 - The Turn Engine is listed inside Admin Systems.
 - Player profiles have rank level and an optional player level.
 - Existing technology prerequisites do not constitute a global feature-unlock policy.
 
 ## P0 — navigation correctness
-- [ ] Generate a route inventory from `OGAME_NAV_SECTIONS`.
-- [ ] Compare every menu ID with the route renderer; report missing, duplicate and unreachable routes.
+- [x] Generate a source-based route inventory from `OGAME_NAV_SECTIONS` and compare IDs with route conditions in `src/App.tsx`.
+- [x] Initial comparison found 110 unique sidebar item IDs and 117 distinct direct `activeRoute` conditions; `stash-vaults` was the only menu ID without a direct match.
+- [x] Add `StashVaultsView` and wire `stash-vaults` into the main route renderer.
+- [ ] Verify all remaining routes render their intended component/sub-tab; inspect aliases and route conditions not reachable from the sidebar.
 - [ ] Exercise all menu items and confirm expected component and sub-tab.
 - [ ] Test active section expansion, collapsed rail and mobile drawer.
 - [ ] Add a safe fallback for unknown routes.
@@ -43,7 +45,7 @@ Branch: feature/ogame-navigation-progression-admin-turns
 - [ ] Admin controls with role checks and audit logging.
 
 ## P1 — automated verification
-- [ ] Route coverage for every sidebar item.
+- [ ] Automated route coverage for every sidebar item, including the newly wired `stash-vaults` route.
 - [ ] Progression boundary tests: one level below, exact requirement and above.
 - [ ] Missing-state and unknown-feature tests.
 - [ ] Direct-route and direct-API bypass tests.
@@ -52,3 +54,10 @@ Branch: feature/ogame-navigation-progression-admin-turns
 
 ## Important distinction
 The feature registry is a foundation, not proof that all 111 pages are integrated. Its sample thresholds are placeholders. Do not call progression complete until route rendering, server mutations, persistence and tests all use shared rules.
+
+
+## Latest update — 2026-10-28
+- GitHub Pages TypeScript validation is now blocking (`npm run lint` must pass); the README CI note was updated to match.
+- Added `src/components/views/StashVaultsView.tsx` with vault tabs, capacity summaries, facility-gated upgrade previews, and explicit demo-only/non-persistent warnings.
+- Wired `stash-vaults` into `src/App.tsx`.
+- Not yet verified: fresh TypeScript check, production build, GitHub Pages run, Vercel deployment, and browser-level route testing. Vercel status currently reports a build-rate limit.
