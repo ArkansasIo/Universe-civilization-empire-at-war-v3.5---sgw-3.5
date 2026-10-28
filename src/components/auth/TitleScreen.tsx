@@ -68,16 +68,16 @@ export const TitleScreen: React.FC<TitleScreenProps> = ({
   // Login Form States
   const [usernameInput, setUsernameInput] = useState<string>(profile.username || 'Commander_Stephen');
   const [passwordInput, setPasswordInput] = useState<string>('••••••••••••');
-  const [selectedServer, setSelectedServer] = useState<string>('Alpha-Prime (US-East) - 12ms');
+  const [selectedServer, setSelectedServer] = useState<string>('Aetherion Prime (US-East) - 12ms');
 
   // Detailed Registration Form States
   const [regUsername, setRegUsername] = useState<string>('Commander_Stephen');
-  const [regEmail, setRegEmail] = useState<string>('stephen@empire.stargate');
+  const [regEmail, setRegEmail] = useState<string>('commander@aetherion.example');
   const [regPassword, setRegPassword] = useState<string>('PassCode9982!');
   const [regEmpireName, setRegEmpireName] = useState<string>('Terran Imperial Dominion');
   const [regCapitalName, setRegCapitalName] = useState<string>('Homeworld Earth');
   const [regLeaderTitle, setRegLeaderTitle] = useState<string>('High Commander');
-  const [regOriginSector, setRegOriginSector] = useState<string>('Galaxy 1: Milky Way Core (01:104:04)');
+  const [regOriginSector, setRegOriginSector] = useState<string>('Sector 1: Aetherion Reach (01:104:04)');
   const [selectedRace, setSelectedRace] = useState<RaceId>('tauri');
   const [selectedGov, setSelectedGov] = useState<string>('junta');
 
@@ -106,27 +106,28 @@ export const TitleScreen: React.FC<TitleScreenProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-[#090b0e] text-white flex flex-col justify-between relative overflow-x-hidden font-sans select-none">
-      {/* Background Grid & Radial Flare */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(30,41,59,0.4)_0%,transparent_75%)] pointer-events-none" />
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:3rem_3rem] pointer-events-none" />
+    <div className="min-h-screen bg-[#050b13] text-[#d7e7f5] flex flex-col justify-between relative overflow-x-hidden font-sans select-none">
+      {/* OGame 0.84-inspired deep-space backdrop: original layout and assets, not copied game artwork */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_20%_0%,rgba(34,91,137,0.42)_0%,transparent_52%),radial-gradient(ellipse_at_85%_60%,rgba(19,52,80,0.35)_0%,transparent_50%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#7bb9df0a_1px,transparent_1px),linear-gradient(to_bottom,#7bb9df0a_1px,transparent_1px)] bg-[size:2.5rem_2.5rem] pointer-events-none" />
+      <div className="absolute inset-0 opacity-40 pointer-events-none bg-[radial-gradient(2px_2px_at_15%_24%,#c6e8ff_50%,transparent_100%),radial-gradient(1px_1px_at_72%_18%,#ffffff_50%,transparent_100%),radial-gradient(2px_2px_at_82%_72%,#9fd7ff_50%,transparent_100%),radial-gradient(1px_1px_at_35%_80%,#ffffff_50%,transparent_100%)]" />
 
       {/* Top Navigation Bar */}
-      <header className="relative z-10 border-b border-white/10 px-6 py-4 flex items-center justify-between backdrop-blur-md bg-black/60">
+      <header className="relative z-10 border-b border-[#42617a] px-4 sm:px-6 py-3 flex flex-wrap gap-3 items-center justify-between backdrop-blur-md bg-[#071421]/95 shadow-[0_4px_24px_#0009]">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 bg-white text-black font-extrabold flex items-center justify-center text-lg tracking-tighter shadow-sm">
+          <div className="w-10 h-10 bg-gradient-to-b from-[#b7d9ed] to-[#456b86] text-[#071421] font-black flex items-center justify-center text-lg tracking-tighter border border-[#d4ecfa] shadow-[0_0_18px_#4e9bca66]">
             UC
           </div>
           <div>
-            <h1 className="font-bold text-sm tracking-widest text-white uppercase">UNIVERSE CIVILIZATION</h1>
-            <span className="text-[10px] text-white/50 font-mono">MMORPG STRATEGY ENGINE · v2.5.0</span>
+            <h1 className="font-black text-sm tracking-[0.22em] text-[#e6f5ff] uppercase">AETHERION EXPANSE</h1>
+            <span className="text-[10px] text-[#8eafc7] font-mono tracking-wider">GALACTIC STRATEGY MMO · ORIGINAL SCI-FI UNIVERSE</span>
           </div>
         </div>
 
         <div className="flex items-center gap-4 sm:gap-6 text-xs font-mono">
           <div className="hidden sm:flex items-center gap-2 bg-emerald-500/10 text-emerald-400 px-3 py-1 border border-emerald-500/30">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span>REALM SERVER: ONLINE (99.98% UPTIME)</span>
+            <span>REALM STATUS: ONLINE</span>
           </div>
           <button
             type="button"
@@ -163,18 +164,18 @@ export const TitleScreen: React.FC<TitleScreenProps> = ({
 
           {/* 1. SPLASH / HERO MODE */}
           {authMode === 'splash' && (
-            <div className="text-center space-y-8 animate-fade-in max-w-2xl mx-auto py-8">
-              <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/10 border border-white/20 text-xs font-mono text-white/90">
+            <div className="text-center space-y-7 animate-fade-in max-w-4xl mx-auto py-6 sm:py-10">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#10283b]/90 border border-[#426b88] text-[10px] sm:text-xs font-mono text-[#c3e5fb] tracking-[0.18em] uppercase">
                 <Sparkles size={14} className="text-amber-400" />
-                <span>NEXT-GEN BROWSER MMORPG & UNIVERSE CIVILIZATION STRATEGY</span>
+                <span>NEXT-GEN BROWSER MMORPG & AETHERION EXPANSE STRATEGY</span>
               </div>
 
-              <h2 className="text-4xl sm:text-6xl font-black tracking-tight text-white uppercase leading-none">
-                Empire at Wars
+              <h2 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-[0.08em] text-[#e8f6ff] uppercase leading-none drop-shadow-[0_4px_18px_#4f9dce66]">
+                AETHERION EXPANSE
               </h2>
 
               <p className="text-sm sm:text-base text-white/70 leading-relaxed">
-                Command immortal star fleets, customize sovereign alien factions, colonize uncharted biomes across 9 galaxies, construct Dyson megastructures, and establish absolute imperial dominance.
+                Build your empire among the stars. Expand across galaxies, research advanced technology, command fleets, colonize worlds, and compete for control of the universe.
               </p>
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
@@ -184,7 +185,7 @@ export const TitleScreen: React.FC<TitleScreenProps> = ({
                     sound.play('click');
                     setAuthMode('login');
                   }}
-                  className="w-full sm:w-auto px-8 py-3.5 bg-white text-black font-bold text-xs uppercase tracking-widest hover:bg-neutral-200 transition-colors cursor-pointer"
+                  className="w-full sm:w-auto px-8 py-3.5 bg-gradient-to-b from-[#b8d8ed] to-[#638da9] border border-[#d3ecfa] text-[#071421] font-black text-xs uppercase tracking-[0.16em] hover:brightness-110 transition-colors cursor-pointer shadow-[0_0_22px_#4d9dcc33]"
                 >
                   Commander Login →
                 </button>
@@ -195,7 +196,7 @@ export const TitleScreen: React.FC<TitleScreenProps> = ({
                     setAuthMode('register');
                     setRegStep(1);
                   }}
-                  className="w-full sm:w-auto px-8 py-3.5 bg-amber-400 text-black font-bold text-xs uppercase tracking-widest hover:bg-amber-300 transition-colors cursor-pointer"
+                  className="w-full sm:w-auto px-8 py-3.5 bg-gradient-to-b from-[#d4a45c] to-[#8c5d2d] border border-[#f1ca87] text-[#160f07] font-black text-xs uppercase tracking-[0.16em] hover:brightness-110 transition-colors cursor-pointer"
                 >
                   Register New Empire
                 </button>
@@ -216,7 +217,7 @@ export const TitleScreen: React.FC<TitleScreenProps> = ({
                     sound.play('success');
                     onQuickStart();
                   }}
-                  className="w-full sm:w-auto px-6 py-3.5 bg-emerald-600 text-white font-bold text-xs uppercase tracking-widest hover:bg-emerald-500 transition-colors cursor-pointer"
+                  className="w-full sm:w-auto px-6 py-3.5 bg-[#123c3c] border border-[#3a9a87] text-[#c8fff0] font-bold text-xs uppercase tracking-[0.16em] hover:bg-[#18534e] transition-colors cursor-pointer"
                 >
                   Quick Play (Guest)
                 </button>
@@ -237,9 +238,9 @@ export const TitleScreen: React.FC<TitleScreenProps> = ({
                 </button>
               </div>
 
-              <div className="pt-8 grid grid-cols-3 gap-4 border-t border-white/10 text-xs font-mono text-white/60">
-                <div className="p-3 bg-white/5 border border-white/10">
-                  <span className="block text-white font-bold text-sm">499+</span>
+              <div className="pt-6 grid grid-cols-1 sm:grid-cols-3 gap-3 border-t border-[#42617a] text-xs font-mono text-[#8eafc7]">
+                <div className="p-4 bg-[#0b1c2a]/90 border border-[#2b4b64] shadow-[inset_0_1px_0_#ffffff0a]">
+                  <span className="block text-[#e1f3ff] font-black text-sm tracking-wider">499+</span>
                   Solar Systems
                 </div>
                 <div className="p-3 bg-white/5 border border-white/10">
@@ -315,7 +316,7 @@ export const TitleScreen: React.FC<TitleScreenProps> = ({
                     onChange={(e) => setSelectedServer(e.target.value)}
                     className="w-full bg-[#111111] border border-white/20 px-3 py-2.5 text-white text-xs focus:outline-none focus:border-white"
                   >
-                    <option>Alpha-Prime (US-East) - 12ms</option>
+                    <option>Aetherion Prime (US-East) - 12ms</option>
                     <option>Beta-Centauri (EU-Central) - 45ms</option>
                     <option>Gamma-Orionis (Asia-Pacific) - 110ms</option>
                   </select>
@@ -830,7 +831,7 @@ export const TitleScreen: React.FC<TitleScreenProps> = ({
       {/* Footer Info */}
       <footer className="relative z-10 border-t border-white/10 px-6 sm:px-8 py-3.5 flex flex-col lg:flex-row items-center justify-between text-xs text-white/50 font-mono bg-black/85 backdrop-blur-md gap-3">
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-white/80 font-bold">UNIVERSE CIVILIZATION: EMPIRE AT WARS</span>
+          <span className="text-white/80 font-bold">AETHERION EXPANSE: EMPIRE AT WARS</span>
           <span className="text-white/30 hidden sm:inline">|</span>
           <span className="hidden sm:inline">BUILD #9825-OG</span>
           <span className="text-white/30 hidden md:inline">|</span>

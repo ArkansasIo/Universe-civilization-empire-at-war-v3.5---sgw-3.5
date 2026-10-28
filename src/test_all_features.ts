@@ -137,24 +137,22 @@ assert(PLANETARY_CLASSES_A_TO_Z.length >= 20, `Stellar Planetary Encyclopedia co
 assert(INITIAL_BATTLE_PASS_TIERS.length >= 18, `Store & Battle Pass contains ${INITIAL_BATTLE_PASS_TIERS.length} reward tiers`);
 assert(INITIAL_EVE_BLUEPRINTS.length >= 4, `EVE Blueprint system contains ${INITIAL_EVE_BLUEPRINTS.length} blueprint items`);
 assert(OGAME_SERVERS.length >= 3, `MMORPG OGame servers loaded with ${OGAME_SERVERS.length} realms`);
-assert(STARGATE_NPC_RACES.length >= 18, `Stargate NPC Civilizations registry loaded with ${STARGATE_NPC_RACES.length} canonical alien races`);
+assert(STARGATE_NPC_RACES.length >= 18, `Aetherion NPC Civilizations registry loaded with ${STARGATE_NPC_RACES.length} original alien civilizations`);
 assert(
   STARGATE_NPC_RACES.every((r) => r.id && r.name && r.homeworld && r.factionLeader && r.tacticalTraits.length > 0),
-  `All ${STARGATE_NPC_RACES.length} Stargate NPC races have complete dossiers, tactical traits, and faction leaders`
+  `All ${STARGATE_NPC_RACES.length} Aetherion NPC civilizations have complete dossiers, tactical traits, and faction leaders`
 );
 assert(
-  STARGATE_NPC_RACES.some((r) => r.canonicalSeries === 'Stargate SG-1') &&
-  STARGATE_NPC_RACES.some((r) => r.canonicalSeries === 'Stargate Atlantis') &&
-  STARGATE_NPC_RACES.some((r) => r.canonicalSeries === 'Stargate Universe'),
-  'Canonical representation across SG-1, Atlantis, and Universe verified'
+  STARGATE_NPC_RACES.every((r) => r.canonicalSeries === 'Aetherion Expanse'),
+  'All NPC civilizations belong to the original Aetherion Expanse setting'
 );
 assert(
   CONVERT_NPC_RACES_TO_TARGET_REALMS().length === STARGATE_NPC_RACES.length,
-  `All ${STARGATE_NPC_RACES.length} Stargate NPC races convert cleanly into active tactical Target Realms`
+  `All ${STARGATE_NPC_RACES.length} Aetherion NPC civilizations convert cleanly into active tactical Target Realms`
 );
 assert(
   TARGET_REALMS.length >= 23,
-  `Target realms successfully integrated with all 18 Stargate NPC factions (Total: ${TARGET_REALMS.length} targets)`
+  `Target realms successfully integrated with all NPC civilizations (Total: ${TARGET_REALMS.length} targets)`
 );
 
 // =========================================================================

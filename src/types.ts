@@ -1460,7 +1460,7 @@ export interface InterstellarCelestialObject {
   description: string;
 }
 
-export type StargateGalaxy = 'Milky Way' | 'Pegasus' | 'Ori Galaxy' | 'Destiny Cosmic Void' | 'Ida Galaxy';
+export type StargateGalaxy = 'Solari Expanse' | 'Lysara Reach' | 'Orivane Reach' | 'Veyr Expanse' | 'Destiny Cosmic Void';
 export type NpcThreatLevel = 'Harmless / Pacifist' | 'Moderate / Cautious' | 'High / Aggressive' | 'Extinction Level / Cataclysmic';
 export type NpcDiplomaticStatus = 'Hostile' | 'Neutral' | 'Alliance Partner' | 'Rogue / Marauder' | 'Ascended / Beyond Contact';
 
@@ -1468,7 +1468,7 @@ export interface StargateNpcRace {
   id: string;
   name: string;
   designationOrTitle: string;
-  canonicalSeries: 'Stargate SG-1' | 'Stargate Atlantis' | 'Stargate Universe' | 'The Ark of Truth';
+  canonicalSeries: 'Aetherion Expanse';
   galaxy: StargateGalaxy;
   homeworld: string;
   stargateAddress: string;

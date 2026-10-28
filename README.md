@@ -1,30 +1,30 @@
-# Universe Civilization: Empire at Wars
+# Aetherion Expanse
 
-> **Galactic Command Interface & 4X Space MMO Simulator**  
-> Inspired by classic browser space strategy games (*Game*, *Stargate: Universe Civilization*, *EVE Online*).
+> **Original science-fiction 4X strategy and persistent-galaxy MMO**  
+> A standalone universe featuring original civilizations, alien cultures, technology, exploration, and fleet warfare.
 
 ---
 
 ## 🌌 Overview
 
-**Universe Civilization: Empire at Wars** is an expansive, web-based 4X space strategy game and command center simulation. Players govern an interstellar civilization, manage strategic resources, conduct scientific research, build planet-shattering armadas, dial Stargates, command mothership titans, and battle across a persistent galaxy grid.
+**Universe Civilization: Empire at Wars** is an expansive, web-based 4X space strategy game and command center simulation. Players govern an interstellar civilization, manage strategic resources, conduct scientific research, build planet-shattering armadas, dial Transit Gates, command mothership titans, and battle across a persistent galaxy grid.
 
 ## ⚡ Core Features & Systems
 
 ### 1. Faction Races & Governments
 - **5 Iconic Races**:
-  - 🛸 **Asgard**: +25% Technology, Teleportation & Advanced Shielding.
-  - 🐍 **Goa'uld**: +25% Military Might, Sarcophagus Healing, Jaffa Armadas.
-  - 🤖 **Replicator**: +30% Unit Production, Nanite Replication, Rapid Fleet Forging.
-  - 🌍 **Tau'ri (Earth)**: +20% Espionage & Covert Recon, Trinium Composite Tech.
-  - 🏛️ **Tollan**: +25% Income & Planetary Ion Cannons, Phase-Shifting Tech.
+  - 🛸 **Veyr Ascendancy**: +25% Technology, Teleportation & Advanced Shielding.
+  - 🐍 **Kharvaxi Dominion**: +25% Military Might, Sarcophagus Healing, Jaffa Armadas.
+  - 🤖 **Myriad Synth Collective**: +30% Unit Production, Nanite Replication, Rapid Fleet Forging.
+  - 🌍 **Solari Concord (Earth)**: +20% Espionage & Covert Recon, Trinium Composite Tech.
+  - 🏛️ **Thalori Enclave**: +25% Income & Planetary Ion Cannons, Phase-Shifting Tech.
 - **Galactic Governments**: Military Junta, Technocracy, Feudal Empire, Republic, and Cybernetic Hive Mind each offering distinct economic and combat modifiers.
 - **Multi-Commander Profiles**: Switch between saved commander profiles, customize commander details, and review career statistics.
 
 ### 2. Economy & Empire Management
-- **Resources**: Naquadah, Banked Naquadah, Metal, Crystal, Deuterium, Energy, and Dark Matter.
-- **Imperial Bank & Vault**: Deposit and withdraw Naquadah with race-based interest rules.
-- **DEFCON Readiness Levels**: Adjust empire defense posture.
+- **Resources**: Aetherite, Banked Aetherite, Metal, Crystal, Deuterium, Energy, and Dark Matter.
+- **Imperial Bank & Vault**: Deposit and withdraw Aetherite with race-based interest rules.
+- **Threat Readiness Readiness Levels**: Adjust empire defense posture.
 - **Turn Scheduler**: Turn processing, production tick configuration, and execution logs.
 
 ### 3. Armory, Training & Unit Roster
@@ -44,10 +44,10 @@
 - **Debris Recycling**: Recover resources after space battles.
 - **Alliance Combat**: Coordinate joint fleet attacks and planetary defense operations.
 
-### 6. Hyperspace, Stargates & Motherships
+### 6. Hyperspace, Transit Gates & Arkships
 - **Mothership Command**: Capital-ship profiles, subsystem allocation, and flagship abilities.
 - **Tactical Abilities**: Bombardment, shield overcharge, micro-jumps, and fleet auras.
-- **Stargate Network**: Seven-symbol gate addresses, network routes, and iris controls.
+- **Transit Gate Network**: Seven-symbol gate addresses, network routes, and iris controls.
 
 ### 7. Store & Battle Pass
 - **Imperial Store**: Officer contracts, production boosters, and relic caches.
@@ -101,7 +101,7 @@ npm run build
 - [State Management and Engine](docs/STATE_MANAGEMENT_AND_ENGINE.md)
 - [Combat Engine](docs/COMBAT_ENGINE.md)
 - [Economy Specification](docs/ECONOMY_SPEC.md)
-- [Stargate Network](docs/STARGATE_NETWORK.md)
+- [Transit Gate Network](docs/STARGATE_NETWORK.md)
 - [UML Diagrams](docs/UML_DIAGRAMS.md)
 
 ## 📁 Main Source Layout

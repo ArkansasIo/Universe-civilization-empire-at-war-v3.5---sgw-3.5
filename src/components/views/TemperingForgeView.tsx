@@ -16,6 +16,7 @@ import {
 import { STARTER_ITEMS } from '../../../src/rpg/catalog';
 import { computeRemains, breakDownItem, REFORGE_RECIPES } from '../../../src/rpg/remains';
 import type { ItemDefinition } from '../../../src/rpg/types';
+import { FORGE_MODULE_CATALOG, type ForgeModuleClass } from '../../../src/rpg/forge-module-catalog';
 
 interface TemperingForgeViewProps {
   resources: PlayerResources;
@@ -133,6 +134,8 @@ export const TemperingForgeView: React.FC<TemperingForgeViewProps> = ({ resource
   const [result, setResult] = useState<{ ok: boolean; message: string } | null>(null);
   const [salvagePreview, setSalvagePreview] = useState<ReturnType<typeof computeRemains> | null>(null);
   const [queue, setQueue] = useState<{ itemId: string; itemName: string; track: CraftingTrack; targetLevel: number; remaining: number; total: number } | null>(null);
+  const [moduleClassFilter, setModuleClassFilter] = useState<ForgeModuleClass | 'all'>('all');
+  const [moduleSearch, setModuleSearch] = useState('');
 
   const selected = slots.find((s) => s.item.id === selectedId) ?? slots[0];
 
@@ -246,6 +249,64 @@ export const TemperingForgeView: React.FC<TemperingForgeViewProps> = ({ resource
           Upgrade relic gear through {MAX_LEVEL} temper tiers, then forge {MAX_LEVEL} masterwork ranks. Failures can downgrade — protection runes hold the line.
         </p>
       </div>
+
+      <section className="border border-[#dedede] bg-white p-5">
+        <div className="flex flex-wrap items-start justify-between gap-3 mb-4">
+          <div>
+            <div className="text-[10px] text-[#777777] uppercase font-bold tracking-wider">Forge Architecture · 90 Modules</div>
+            <h3 className="text-lg font-bold text-[#111111]">Module Matrix</h3>
+            <p className="text-xs text-[#666666] mt-1">Ten classes, three subclasses per class, and three subtype variants per subclass.</p>
+          </div>
+          <span className="border border-[#dedede] bg-[#fafafa] px-3 py-1 text-xs font-mono text-[#111111]">{FORGE_MODULE_CATALOG.length} catalog entries</span>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_220px] gap-3 mb-4">
+          <input
+            value={moduleSearch}
+            onChange={(event) => setModuleSearch(event.target.value)}
+            placeholder="Search module, subclass, type, mechanic…"
+            aria-label="Search forge modules"
+            className="w-full border border-[#dedede] bg-white px-3 py-2 text-sm text-[#111111] outline-none focus:border-[#555555]"
+          />
+          <select
+            value={moduleClassFilter}
+            onChange={(event) => setModuleClassFilter(event.target.value as ForgeModuleClass | 'all')}
+            aria-label="Filter forge module class"
+            className="border border-[#dedede] bg-white px-3 py-2 text-sm text-[#111111]"
+          >
+            <option value="all">All module classes</option>
+            {Array.from(new Set(FORGE_MODULE_CATALOG.map((module) => module.class))).map((moduleClass) => (
+              <option key={moduleClass} value={moduleClass}>{moduleClass}</option>
+            ))}
+          </select>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
+          {FORGE_MODULE_CATALOG.filter((module) => {
+            const query = moduleSearch.trim().toLowerCase();
+            const matchesClass = moduleClassFilter === 'all' || module.class === moduleClassFilter;
+            const haystack = [module.name, module.class, module.subclass, module.type, module.subtype, module.mechanics, ...module.subsets].join(' ').toLowerCase();
+            return matchesClass && (!query || haystack.includes(query));
+          }).map((module) => (
+            <article key={module.id} className="border border-[#e5e5e5] bg-[#fafafa] p-3">
+              <div className="flex items-start justify-between gap-2">
+                <h4 className="text-sm font-bold text-[#111111]">{module.name}</h4>
+                <span className="shrink-0 border border-[#dedede] bg-white px-2 py-0.5 text-[9px] uppercase text-[#666666]">T{module.tier}</span>
+              </div>
+              <div className="mt-2 flex flex-wrap gap-1.5 text-[10px]">
+                <span className="bg-slate-100 px-2 py-1 text-slate-700">{module.class}</span>
+                <span className="bg-blue-50 px-2 py-1 text-blue-800">{module.type} / {module.subtype}</span>
+                <span className="bg-amber-50 px-2 py-1 text-amber-800">{module.slot} slot</span>
+              </div>
+              <p className="mt-2 text-xs leading-relaxed text-[#555555]">{module.mechanics}</p>
+              <div className="mt-2 border-t border-[#e5e5e5] pt-2 text-[10px] text-[#666666]">
+                Unlock: Forge {module.requiredForgeLevel} · Masterwork {module.requiredMasterworkRank}
+              </div>
+              <div className="mt-1 text-[10px] text-[#777777]">Stats: {Object.entries(module.stats).map(([key, value]) => `${key} +${value}`).join(', ')}</div>
+              <div className="mt-1 text-[10px] text-amber-800">Trade-off: {module.drawbacks.join('; ')}</div>
+            </article>
+          ))}
+        </div>
+        <p className="mt-3 text-[10px] text-[#777777]">Catalog definitions are visible for planning; player ownership, equip slots, and live stat application are not yet connected.</p>
+      </section>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-1 space-y-3">

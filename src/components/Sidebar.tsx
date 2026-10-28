@@ -90,6 +90,7 @@ export const OGAME_NAV_SECTIONS: OGameNavSection[] = [
     defaultRoute: 'resources',
     items: [
       { id: 'resources', label: 'Resource Vault & Reserves' },
+      { id: 'stash-vaults', label: 'Protected, Inventory & Equipment Stash' },
       { id: 'income', label: 'Resource Income & Mines' },
       { id: 'storage-upgrades', label: 'Storage Silos & Warehouses' },
       { id: 'power-grid', label: 'Power Grid & Energy Network' },
@@ -108,7 +109,7 @@ export const OGAME_NAV_SECTIONS: OGameNavSection[] = [
       { id: 'construction-yard', label: 'Construction Yard' },
       { id: 'tempering-forge', label: 'Forge & Masterworks Anvil' },
       { id: 'shipyard', label: 'Orbital Shipyard Drydocks' },
-      { id: 'tech-library', label: 'Research Laboratories' },
+      { id: 'tech-library', label: 'Research Lab Facilities' },
       { id: 'megastructures', label: 'Stellar Megastructures' },
       { id: 'repair', label: 'Alliance Depot & Repair' },
       { id: 'space-stations', label: 'Orbital Starbases' },
@@ -123,7 +124,7 @@ export const OGAME_NAV_SECTIONS: OGameNavSection[] = [
     items: [
       { id: 'tech-tree', label: 'Master Tech Tree' },
       { id: 'tech-archive', label: 'Galactic Technology Archive' },
-      { id: 'eve-blueprints', label: 'EVE Blueprints & ME/TE' },
+      { id: 'eve-blueprints', label: 'Blueprints and Research Lab' },
       { id: 'tech-offense', label: 'Weapons Technology' },
       { id: 'tech-defense', label: 'Shield & Armor Tech' },
       { id: 'tech-covert', label: 'Covert Espionage Tech' },
@@ -199,11 +200,9 @@ export const OGAME_NAV_SECTIONS: OGameNavSection[] = [
     defaultRoute: 'universe',
     items: [
       { id: 'universe', label: '30 Universes & 90 Galaxies' },
-      { id: 'nms-universe', label: 'NMS Procedural Universe' },
-      { id: 'planetary-invasion', label: '1-999,999 Procedural Planets' },
       { id: 'add-worlds-bosses', label: 'Galaxy & Arc Bosses' },
       { id: 'exploration', label: 'Deep Space Reconnaissance' },
-      { id: 'stargate-network', label: 'Stargate & Jump Gates' },
+      { id: 'stargate-network', label: 'Transit Gates & Jump Relays' },
       { id: 'gate-tokens', label: '⚡ Gate Tokens & Anomalies' },
       { id: 'stargate-relics', label: '🏺 Relics & Ancient Artifacts' },
       { id: 'stargate-system-lords', label: '👑 System Lords & PvE Raids' },
@@ -244,13 +243,13 @@ export const OGAME_NAV_SECTIONS: OGameNavSection[] = [
   },
   {
     id: 'alliance',
-    label: 'Alliance & Social',
+    label: 'Guilds & Alliances',
     ogameName: 'ALLIANCE',
     icon: Users,
     defaultRoute: 'alliances',
     items: [
       { id: 'alliances', label: 'Alliance Headquarters' },
-      { id: 'mmorpg-ogame', label: 'MMORPG Guilds & Raids' },
+      { id: 'mmorpg-ogame', label: 'Guilds, Raids & Adventures' },
       { id: 'diplomacy', label: 'Diplomacy & Treaties' },
       { id: 'messages', label: 'Communications & Messages' },
       { id: 'galactic-news', label: 'Holonet News Network' },
@@ -277,7 +276,7 @@ export const OGAME_NAV_SECTIONS: OGameNavSection[] = [
     defaultRoute: 'commander-hq',
     items: [
       { id: 'commander-hq', label: 'Commander HQ & Officers' },
-      { id: 'commander-gacha', label: '👑 72 Commanders Gotcha' },
+      { id: 'commander-gacha', label: 'Seasonal Commander Roster · 32 per Season' },
       { id: 'player-profile', label: 'Sovereign Realm Dossier' },
       { id: 'race', label: 'Race & Government Faction' },
       { id: 'vacation', label: 'Sanctuary / Vacation Shield' },

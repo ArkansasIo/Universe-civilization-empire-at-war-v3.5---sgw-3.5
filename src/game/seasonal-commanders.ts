@@ -1,0 +1,61 @@
+/** Data-driven seasonal commander catalog. Names and IDs are stable and unique; balance values are provisional. */
+export type CommanderRarity = 'common' | 'uncommon' | 'rare' | 'epic' | 'legendary' | 'mythic';
+export type CommanderRole = 'combat' | 'command' | 'exploration' | 'research' | 'economy' | 'covert' | 'engineering';
+export interface SeasonalCommander { id: string; seasonNumber: number; seasonId: string; seasonName: string; name: string; title: string; rank: string; race: string; rarity: CommanderRarity; className: string; subclass: string; type: string; subtype: string; levelCap: number; stats: { command: number; attack: number; defense: number; research: number; logistics: number; covert: number; exploration: number }; growth: { command: number; attack: number; defense: number; research: number; logistics: number; covert: number; exploration: number }; signatureAbility: { id: string; name: string; description: string; cooldownTurns: number; multiplier: number }; portrait: { style: 'original-sci-fi'; palette: string; prompt: string }; }
+export const SEASON_NAMES = ["Frontier Awakening","Rising Empires","First Contact","Colonial Expansion","Warfronts","Ancient Signals","Relic Hunters","Dominion Rising","Sector Wars","Cosmic Threshold","Eternal Warfront","Ascendancy"] as const;
+export const COMMANDERS_PER_SEASON = 32 as const;
+export const SEASONS_PER_YEAR = 12 as const;
+export const SEASONAL_COMMANDER_SLOTS_PER_YEAR = COMMANDERS_PER_SEASON * SEASONS_PER_YEAR;
+const RACES = ["Solari Concord","Veyr Ascendancy","Kharvaxi Dominion","Myriad Synth Collective","Thalori Enclave"] as const;
+const ROLE_DEFS = [["Vanguard","Fleet Marshal","combat","offense"],["Bulwark","Shield Warden","combat","defense"],["Strategist","Grand Tactician","command","support"],["Pathfinder","Void Scout","exploration","recon"],["Scientist","Quantum Savant","research","support"],["Quartermaster","Logistics Prefect","economy","support"],["Infiltrator","Shadow Operative","covert","debuff"],["Engineer","Stellar Architect","engineering","support"]] as const;
+const FIRST_NAMES = ["Astra","Kael","Nyra","Thane","Vexa","Orin","Lyra","Drax","Seren","Korr","Elara","Zarek","Mira","Talon","Ilyra","Vor","Cassia","Rheon","Sable","Tarek","Neris","Juno","Auron","Kestrel","Riven","Maelis","Draven","Solara","Quorin","Isolde","Veyra","Arcturus"] as const;
+const LAST_NAMES = ["Voss","Tan","Korath","Vale","Damar","Quill","Rook","Soren","Kade","Morrow","Tyr","Aven","Nox","Solis","Vey","Thorne","Kallis","Ren","Orlan","Zorin","Ash","Marek","Dane","Korrin","Pryce","Shen","Rell","Dusk","Aster","Khan","Vane","Starling"] as const;
+const TITLES = ["Frontier Captain","Fleet Commander","Sector Marshal","High Strategist","Star Admiral","Void Warden","Imperial Legate","Grand Commander"] as const;
+const RANKS = ["Cadet","Lieutenant","Commander","Senior Commander","Commodore","Admiral","High Admiral","Ascendant"] as const;
+const RARITIES: readonly CommanderRarity[] = ["common","uncommon","rare","epic","legendary","mythic"];
+const PALETTES = ['ice-blue / silver','bronze / deep navy','emerald / charcoal','violet / black','crimson / steel','gold / midnight'] as const;
+const clampStat = (n: number) => Math.max(1, Math.min(1000, Math.round(n)));
+function buildCommander(seasonNumber: number, index: number): SeasonalCommander {
+ const role = ROLE_DEFS[index % ROLE_DEFS.length]; const className = role[0]; const subclass = role[1]; const seasonId = `season-${String(seasonNumber).padStart(2,'0')}`; const id = `cmdr-s${String(seasonNumber).padStart(2,'0')}-${String(index+1).padStart(2,'0')}`;
+ const rarity = RARITIES[Math.min(RARITIES.length-1, Math.floor(index / 6))]; const base = 38 + seasonNumber * 3 + (index % 8) * 4 + Math.floor(index/8)*2;
+ const stats = { command: clampStat(base + (className==='Strategist'?18:0)), attack: clampStat(base + (className==='Vanguard'?22:0)), defense: clampStat(base + (className==='Bulwark'?22:0)), research: clampStat(base + (className==='Scientist'?22:0)), logistics: clampStat(base + (className==='Quartermaster'?22:0)), covert: clampStat(base + (className==='Infiltrator'?22:0)), exploration: clampStat(base + (className==='Pathfinder'?22:0)) };
+ const growth = Object.fromEntries(Object.entries(stats).map(([key,value]) => [key, Number((0.8 + value/250).toFixed(2))])) as SeasonalCommander['growth'];
+ const abilityId = `ability-${id}`; const abilityName = ['Command Surge','Aegis Protocol','Quantum Salvo','Ghost Vector','Frontier Logistics','Singularity Analysis','Phase Breaker','Stellar Foundry'][index%8];
+ return { id, seasonNumber, seasonId, seasonName: SEASON_NAMES[seasonNumber-1], name: `${FIRST_NAMES[(index*7 + seasonNumber*3)%FIRST_NAMES.length]} ${LAST_NAMES[(index*11 + seasonNumber*5)%LAST_NAMES.length]} ${String(seasonNumber).padStart(2,'0')}-${String(index+1).padStart(2,'0')}`, title: TITLES[(index+seasonNumber)%TITLES.length], rank: RANKS[Math.min(7,Math.floor(index/4))], race: RACES[(index+seasonNumber-1)%RACES.length], rarity, className, subclass, type: role[2], subtype: role[3], levelCap: 60 + seasonNumber*2, stats, growth, signatureAbility: { id: abilityId, name: abilityName, description: `${className} signature: improves ${Object.keys(stats)[index%7]} performance for one tactical cycle.`, cooldownTurns: 3 + (index%4), multiplier: Number((1.08 + (index%6)*0.04).toFixed(2)) }, portrait: { style: 'original-sci-fi', palette: PALETTES[(index+seasonNumber)%PALETTES.length], prompt: `Original full-color high-detail sci-fi commander portrait, ${className} / ${subclass}, ${RACES[(index+seasonNumber-1)%RACES.length]} faction-inspired armor, ${PALETTES[(index+seasonNumber)%PALETTES.length]} palette, cinematic rim lighting, intricate insignia, no text, no logos, original design.` } };
+}
+export const SEASONAL_COMMANDERS: readonly SeasonalCommander[] = Array.from({ length: SEASONS_PER_YEAR }, (_, seasonIndex) => Array.from({ length: COMMANDERS_PER_SEASON }, (_, commanderIndex) => buildCommander(seasonIndex+1, commanderIndex))).flat();
+export const COMMANDER_BY_ID: ReadonlyMap<string, SeasonalCommander> = new Map(SEASONAL_COMMANDERS.map((commander) => [commander.id, commander]));
+export const COMMANDERS_BY_SEASON: ReadonlyMap<number, readonly SeasonalCommander[]> = new Map(Array.from({ length: SEASONS_PER_YEAR }, (_, i) => [i+1, SEASONAL_COMMANDERS.filter((commander) => commander.seasonNumber === i+1)]));
+export function validateSeasonalCommanders(rows: readonly SeasonalCommander[] = SEASONAL_COMMANDERS): string[] { const errors: string[] = []; const ids = new Set<string>(); const names = new Set<string>(); for (const c of rows) { if(ids.has(c.id)) errors.push(`Duplicate commander ID: ${c.id}`); ids.add(c.id); if(names.has(c.name)) errors.push(`Duplicate commander name: ${c.name}`); names.add(c.name); if(c.seasonNumber<1 || c.seasonNumber>12) errors.push(`Invalid season for ${c.id}`); for(const [key,value] of Object.entries(c.stats)) if(!Number.isFinite(value)||value<1||value>1000) errors.push(`Invalid ${key} stat on ${c.id}`); if(c.signatureAbility.multiplier<1 || c.signatureAbility.multiplier>2) errors.push(`Out-of-range ability multiplier on ${c.id}`); } if(rows.length!==384) errors.push(`Expected 384 commander slots, got ${rows.length}`); return errors; }
+
+/** Converts a commander instance into bounded, readable contributions.
+ * These values are deliberately capped and should be consumed by a single
+ * authoritative game formula; do not stack them as unrestricted multipliers.
+ */
+export interface CommanderContribution {
+  commandBonus: number;
+  attackBonus: number;
+  defenseBonus: number;
+  researchBonus: number;
+  logisticsBonus: number;
+  covertBonus: number;
+  explorationBonus: number;
+  signatureMultiplier: number;
+  cooldownTurns: number;
+}
+export function calculateCommanderContribution(commander: SeasonalCommander, level = 1): CommanderContribution {
+  const safeLevel = Math.max(1, Math.min(commander.levelCap, Math.floor(Number.isFinite(level) ? level : 1)));
+  const contribution = (key: keyof SeasonalCommander['stats']) =>
+    Math.min(0.25, Math.max(0, (commander.stats[key] + (safeLevel - 1) * commander.growth[key]) / 1000));
+  return {
+    commandBonus: contribution('command'),
+    attackBonus: contribution('attack'),
+    defenseBonus: contribution('defense'),
+    researchBonus: contribution('research'),
+    logisticsBonus: contribution('logistics'),
+    covertBonus: contribution('covert'),
+    explorationBonus: contribution('exploration'),
+    signatureMultiplier: Math.max(1, Math.min(2, commander.signatureAbility.multiplier)),
+    cooldownTurns: Math.max(1, Math.floor(commander.signatureAbility.cooldownTurns)),
+  };
+}
