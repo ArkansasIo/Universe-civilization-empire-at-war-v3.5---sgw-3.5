@@ -248,7 +248,7 @@ export const OGAME_NAV_SECTIONS: OGameNavSection[] = [
     defaultRoute: 'alliances',
     items: [
       { id: 'alliances', label: 'Alliance Headquarters' },
-      { id: 'mmorpg-ogame', label: 'MMORPG Guilds & Raids' },
+      { id: 'mmorpg-ogame', label: 'MMORPG' },
       { id: 'diplomacy', label: 'Diplomacy & Treaties' },
       { id: 'messages', label: 'Communications & Messages' },
       { id: 'galactic-news', label: 'Holonet News Network' },
