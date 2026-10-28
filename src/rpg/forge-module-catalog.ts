@@ -51,7 +51,7 @@ const MODULE_BLUEPRINTS: Array<{
   { class: 'attunement', subclasses: ['Faction Harmonizer', 'Elemental Lens', 'Void Tuner'], type: 'void', subtypes: ['Faction Match', 'Element Match', 'Void Resonance'], stat: 'attunement', base: 1.3, mechanic: 'Adds a small bonus when item, recipe, and catalyst tags match; mismatched tags grant no bonus.', drawback: 'Specialization reduces flexibility for mismatched recipes.' },
 ];
 
-export const FORGE_MODULE_CATALOG: ForgeModuleDefinition[] = MODULE_BLUEPRINTS.flatMap((blueprint, classIndex) =>
+export const FORGE_MODULE_CATALOG: ForgeModuleDefinition[] = MODULE_BLUEPRINTS.flatMap((blueprint) =>
   blueprint.subclasses.flatMap((subclass, subclassIndex) =>
     blueprint.subtypes.map((subtype, subtypeIndex) => {
       const tier = (subclassIndex * 3 + subtypeIndex + 1) as ForgeModuleDefinition['tier'];
@@ -64,7 +64,7 @@ export const FORGE_MODULE_CATALOG: ForgeModuleDefinition[] = MODULE_BLUEPRINTS.f
         type: blueprint.type,
         subtype,
         tier,
-        slot: tier >= 7 ? 'core' : tier >= 4 ? 'matrix' : 'utility',
+        slot: (tier >= 7 ? 'core' : tier >= 4 ? 'matrix' : 'utility') as ForgeModuleDefinition['slot'],
         requiredForgeLevel,
         requiredMasterworkRank: Math.max(0, (tier - 1) * 8),
         stats: { [blueprint.stat]: +(blueprint.base * tier).toFixed(2) },
