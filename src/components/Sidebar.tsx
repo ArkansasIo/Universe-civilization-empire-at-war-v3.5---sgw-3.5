@@ -202,7 +202,7 @@ export const OGAME_NAV_SECTIONS: OGameNavSection[] = [
       { id: 'universe', label: '30 Universes & 90 Galaxies' },
       { id: 'add-worlds-bosses', label: 'Galaxy & Arc Bosses' },
       { id: 'exploration', label: 'Deep Space Reconnaissance' },
-      { id: 'stargate-network', label: 'Stargate & Jump Gates' },
+      { id: 'stargate-network', label: 'Transit Gates & Jump Relays' },
       { id: 'gate-tokens', label: '⚡ Gate Tokens & Anomalies' },
       { id: 'stargate-relics', label: '🏺 Relics & Ancient Artifacts' },
       { id: 'stargate-system-lords', label: '👑 System Lords & PvE Raids' },
@@ -249,7 +249,7 @@ export const OGAME_NAV_SECTIONS: OGameNavSection[] = [
     defaultRoute: 'alliances',
     items: [
       { id: 'alliances', label: 'Alliance Headquarters' },
-      { id: 'mmorpg-ogame', label: 'MMORPG' },
+      { id: 'mmorpg-ogame', label: 'Guilds, Raids & Adventures' },
       { id: 'diplomacy', label: 'Diplomacy & Treaties' },
       { id: 'messages', label: 'Communications & Messages' },
       { id: 'galactic-news', label: 'Holonet News Network' },
