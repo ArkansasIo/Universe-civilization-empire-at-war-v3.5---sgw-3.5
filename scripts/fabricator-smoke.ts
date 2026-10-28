@@ -1,0 +1,13 @@
+import assert from "node:assert/strict";
+import { FABRICATOR_BUILDINGS } from "../src/rpg/fabricator-catalog.js";
+import { FABRICATOR_RECIPES } from "../src/rpg/fabricator-recipes.js";
+import { cancelFabrication, completeFabrication, createFabricatorState, installFabricator, queueFabrication } from "../src/rpg/fabricator.js";
+assert.ok(FABRICATOR_BUILDINGS.length>=10);assert.ok(FABRICATOR_RECIPES.length>=30);
+let state=createFabricatorState({currency:1000000,materials:{"refined-ore":500,"tempering-stone":200,"star-metal":100,"astral-core":100,"masterwork-core":100,"void-crystal":100,"primordial-ingot":100,"raw-ore":500,"fusion-cell":10},items:{}});
+state=installFabricator(state,"p1","construction-yard",2);state=installFabricator(state,"p1","shipyard",2);state=installFabricator(state,"p1","tempering-forge",2);state=installFabricator(state,"p1","masterwork-forge",3);
+assert.throws(()=>queueFabrication(state,"p1","p1:shipyard","building-frame",1,100));
+const queued=queueFabrication(state,"p1","p1:construction-yard","building-frame",2,100);assert.equal(queued.job?.status,"running");assert.equal(queued.state.inventory.materials["refined-ore"],480);assert.throws(()=>completeFabrication(queued.state,"p1",queued.job!.id,100));
+const done=completeFabrication(queued.state,"p1",queued.job!.id,220);assert.equal(done.state.inventory.items["building-frame"],2);assert.equal(done.job?.status,"completed");
+const first=queueFabrication(done.state,"p1","p1:tempering-forge","weapon-tempering-module",1,300);const second=queueFabrication(first.state,"p1","p1:tempering-forge","armor-tempering-module",1,300);assert.equal(second.job?.status,"queued");const cancelled=cancelFabrication(second.state,"p1",second.job!.id);assert.equal(cancelled.jobs.find(j=>j.id===second.job!.id)?.status,"cancelled");
+assert.ok(FABRICATOR_RECIPES.some(r=>r.fabricatorId==="shipyard"));assert.ok(FABRICATOR_RECIPES.some(r=>r.fabricatorId==="masterwork-forge"));
+console.log("Fabricator smoke passed:",FABRICATOR_BUILDINGS.length,"buildings,",FABRICATOR_RECIPES.length,"recipes.");
