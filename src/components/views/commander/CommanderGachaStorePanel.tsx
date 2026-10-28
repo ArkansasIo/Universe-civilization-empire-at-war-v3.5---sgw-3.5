@@ -39,6 +39,7 @@ import {
   INITIAL_SLOT_ASSIGNMENTS,
 } from '../../../commander72Data';
 import { PlayerResources } from '../../../types';
+import { COMMANDERS_BY_SEASON, SEASON_NAMES, SEASONAL_COMMANDERS, SeasonalCommander } from '../../../game/seasonal-commanders';
 
 interface CommanderGachaStorePanelProps {
   resources: PlayerResources;
@@ -49,7 +50,10 @@ export const CommanderGachaStorePanel: React.FC<CommanderGachaStorePanelProps> =
   resources,
   onUpdateResources,
 }) => {
-  const [subTab, setSubTab] = useState<'summon' | 'roster' | 'archive' | 'slots'>('summon');
+  const [subTab, setSubTab] = useState<'summon' | 'roster' | 'archive' | 'slots' | 'seasonal'>('summon');
+  const [seasonFilter, setSeasonFilter] = useState<number>(1);
+  const [seasonalSearch, setSeasonalSearch] = useState<string>('');
+  const [selectedSeasonalCommander, setSelectedSeasonalCommander] = useState<SeasonalCommander | null>(null);
 
   // Load player's recruited commanders
   const [myCommanders, setMyCommanders] = useState<PlayerCommanderInstance[]>(() => {
@@ -403,6 +407,15 @@ export const CommanderGachaStorePanel: React.FC<CommanderGachaStorePanelProps> =
         >
           <Shield size={14} className="text-emerald-600" />
           <span>High Command Council Slots</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => { sound.play('click'); setSubTab('seasonal'); }}
+          className={`px-6 py-3 border-b-2 transition-colors cursor-pointer flex items-center gap-2 shrink-0 ${subTab === 'seasonal' ? 'border-[#111111] text-[#111111] bg-neutral-50' : 'border-transparent text-[#777777] hover:text-[#111111]'}`}
+        >
+          <Crown size={14} className="text-amber-500" />
+          <span>Seasonal Commanders (384)</span>
         </button>
 
         <button
@@ -826,6 +839,81 @@ export const CommanderGachaStorePanel: React.FC<CommanderGachaStorePanelProps> =
       {/* ========================================================================= */}
       {/* SUBTAB 4: ALL 72 COMMANDERS ARCHIVE                                      */}
       {/* ========================================================================= */}
+      {subTab === 'seasonal' && (
+        <section className="space-y-4" aria-label="Seasonal commander catalog">
+          <div className="border border-[#27465e] bg-[#081827] text-[#d9edfb] p-4 sm:p-6">
+            <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4">
+              <div>
+                <p className="text-[10px] uppercase tracking-[0.2em] text-[#7eb7d8]">Annual commander cycle</p>
+                <h3 className="text-xl sm:text-2xl font-black mt-1">12 Seasons · 32 Commanders Each</h3>
+                <p className="text-sm text-[#a8c4d8] mt-2">Browse the data catalog. These entries are catalog definitions; recruitment, persistent ownership, and live ability effects are not yet connected to this seasonal roster.</p>
+              </div>
+              <div className="text-sm font-mono border border-[#42647d] px-4 py-3 bg-[#102638] shrink-0">
+                <strong className="text-white text-xl">384</strong><span className="text-[#a8c4d8]"> total slots / year</span>
+              </div>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-5">
+              <label className="text-[10px] uppercase tracking-wider text-[#9bbbd0]">
+                Season
+                <select value={seasonFilter} onChange={(e) => setSeasonFilter(Number(e.target.value))} className="mt-1 block w-full bg-[#07121c] border border-[#42647d] text-white px-3 py-2.5 text-sm">
+                  {SEASON_NAMES.map((name, i) => <option key={name} value={i+1}>Season {i+1}: {name}</option>)}
+                </select>
+              </label>
+              <label className="text-[10px] uppercase tracking-wider text-[#9bbbd0]">
+                Search commanders
+                <input value={seasonalSearch} onChange={(e) => setSeasonalSearch(e.target.value)} placeholder="Name, rank, class, faction..." className="mt-1 block w-full bg-[#07121c] border border-[#42647d] text-white px-3 py-2.5 text-sm placeholder:text-[#718da1]" />
+              </label>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3">
+            {(COMMANDERS_BY_SEASON.get(seasonFilter) ?? []).filter((commander) => [commander.name, commander.title, commander.rank, commander.race, commander.className, commander.subclass, commander.type, commander.subtype, commander.rarity].some((value) => value.toLowerCase().includes(seasonalSearch.toLowerCase()))).map((commander) => (
+              <button key={commander.id} type="button" onClick={() => setSelectedSeasonalCommander(commander)} className={`text-left p-4 border transition-colors ${selectedSeasonalCommander?.id === commander.id ? 'border-[#b88643] bg-[#fff8eb]' : 'border-[#d5dee5] bg-white hover:border-[#6489a4]'}`}>
+                <div className="flex items-start justify-between gap-2">
+                  <span className="text-[9px] font-mono text-[#61798b]">{commander.id}</span>
+                  <span className="text-[9px] uppercase font-black tracking-wider px-2 py-1 bg-[#e7eef4] text-[#29465b]">{commander.rarity}</span>
+                </div>
+                <h4 className="text-base font-black text-[#152a3b] mt-2">{commander.name}</h4>
+                <p className="text-xs text-[#587084] mt-1">{commander.title} · {commander.rank}</p>
+                <div className="flex flex-wrap gap-1.5 mt-3">
+                  <span className="text-[10px] px-2 py-1 bg-[#eaf1f6] text-[#29465b]">{commander.race}</span>
+                  <span className="text-[10px] px-2 py-1 bg-[#f4eadb] text-[#765124]">{commander.className}</span>
+                  <span className="text-[10px] px-2 py-1 bg-[#eef0f3] text-[#43515d]">{commander.subclass}</span>
+                </div>
+                <div className="grid grid-cols-4 gap-2 mt-4 text-[10px] text-[#4d6476]">
+                  <span>ATK <b className="block text-sm text-[#162e40]">{commander.stats.attack}</b></span>
+                  <span>DEF <b className="block text-sm text-[#162e40]">{commander.stats.defense}</b></span>
+                  <span>CMD <b className="block text-sm text-[#162e40]">{commander.stats.command}</b></span>
+                  <span>RES <b className="block text-sm text-[#162e40]">{commander.stats.research}</b></span>
+                </div>
+              </button>
+            ))}
+          </div>
+          {selectedSeasonalCommander && (
+            <div className="border-2 border-[#b88643] bg-white p-4 sm:p-6 space-y-4">
+              <div className="flex flex-col sm:flex-row justify-between gap-3">
+                <div>
+                  <p className="text-[10px] uppercase tracking-[0.18em] text-[#88602d]">{selectedSeasonalCommander.id} · Season {selectedSeasonalCommander.seasonNumber}</p>
+                  <h3 className="text-xl font-black text-[#152a3b]">{selectedSeasonalCommander.name}</h3>
+                  <p className="text-sm text-[#587084]">{selectedSeasonalCommander.title} · {selectedSeasonalCommander.rank} · {selectedSeasonalCommander.race}</p>
+                </div>
+                <button type="button" onClick={() => setSelectedSeasonalCommander(null)} className="self-start text-xs border border-[#c9d3dc] px-3 py-2 text-[#29465b]">Close details</button>
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2">
+                {Object.entries(selectedSeasonalCommander.stats).map(([key, value]) => <div key={key} className="p-3 bg-[#f0f5f8] border border-[#dbe4ea]"><span className="block text-[9px] uppercase text-[#62798b]">{key}</span><strong className="text-lg text-[#172f42]">{value}</strong><span className="block text-[9px] text-[#62798b]">growth +{selectedSeasonalCommander.growth[key as keyof SeasonalCommander['growth']]}/level</span></div>)}
+              </div>
+              <div className="p-4 bg-[#0b1c2a] text-[#e3f3fd]">
+                <p className="text-[10px] uppercase tracking-wider text-[#a7cde5]">Signature ability · {selectedSeasonalCommander.signatureAbility.id}</p>
+                <h4 className="font-bold mt-1">{selectedSeasonalCommander.signatureAbility.name}</h4>
+                <p className="text-sm text-[#b8d1e2] mt-1">{selectedSeasonalCommander.signatureAbility.description}</p>
+                <p className="text-xs text-[#b8d1e2] mt-2">Cooldown: {selectedSeasonalCommander.signatureAbility.cooldownTurns} turns · Multiplier: {selectedSeasonalCommander.signatureAbility.multiplier.toFixed(2)}×</p>
+              </div>
+              <p className="text-xs text-[#64798a]">Portrait brief: {selectedSeasonalCommander.portrait.prompt}</p>
+            </div>
+          )}
+          <p className="text-[10px] text-[#6b7e8d]">Portrait prompts are placeholders for original artwork. The seasonal catalog does not grant ownership or apply gameplay bonuses yet.</p>
+        </section>
+      )}
+
       {subTab === 'archive' && (
         <div className="space-y-6">
           {/* Filters Bar */}
