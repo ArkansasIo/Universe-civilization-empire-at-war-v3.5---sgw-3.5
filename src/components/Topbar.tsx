@@ -100,6 +100,7 @@ const ROUTE_LABELS: Record<string, { section: string; title: string }> = {
   'academy-wings': { section: 'WORKFORCE & ACADEMY', title: '6 Specialized Academy Wings' },
   'academy-drills': { section: 'WORKFORCE & ACADEMY', title: 'Academy Drills, Readiness & Auto-Draft' },
   'tech-tree': { section: 'TECHNOLOGY ARCHIVE', title: 'Master Technology Tree & Visual Unlock Graph' },
+  'tech-archive': { section: 'TECHNOLOGY ARCHIVE', title: 'Galactic Technology Archive · 90 Modules' },
   'tech-library': { section: 'TECHNOLOGY ARCHIVE', title: 'Research Library & Laboratory Focus' },
   'eve-blueprints': { section: 'TECHNOLOGY ARCHIVE', title: 'EVE Blueprints & ME/TE' },
   'construction-yard': { section: 'IMPERIAL FACILITIES', title: 'Construction Yard' },

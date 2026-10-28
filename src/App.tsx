@@ -137,6 +137,7 @@ import { SpaceStationView } from './components/views/SpaceStationView';
 import { MoonBaseView } from './components/views/MoonBaseView';
 import { BankVaultView } from './components/views/BankVaultView';
 import { EveBlueprintsView } from './components/views/EveBlueprintsView';
+import { TechArchiveView } from './components/views/TechArchiveView';
 import { TemperingForgeView } from './components/views/TemperingForgeView';
 import { ConstructionYardView } from './components/views/ConstructionYardView';
 import { NMSUniverseView } from './components/views/NMSUniverseView';
@@ -3706,6 +3707,8 @@ export default function App() {
                 onUpdateResources={(res) => setResources((prev) => ({ ...prev, ...res }))}
               />
             )}
+
+            {activeRoute === 'tech-archive' && <TechArchiveView />}
 
             {activeRoute === 'eve-blueprints' && (
               <EveBlueprintsView

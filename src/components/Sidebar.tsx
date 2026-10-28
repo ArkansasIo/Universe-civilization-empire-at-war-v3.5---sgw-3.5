@@ -122,6 +122,7 @@ export const OGAME_NAV_SECTIONS: OGameNavSection[] = [
     defaultRoute: 'tech-tree',
     items: [
       { id: 'tech-tree', label: 'Master Tech Tree' },
+      { id: 'tech-archive', label: 'Galactic Technology Archive' },
       { id: 'eve-blueprints', label: 'EVE Blueprints & ME/TE' },
       { id: 'tech-offense', label: 'Weapons Technology' },
       { id: 'tech-defense', label: 'Shield & Armor Tech' },
