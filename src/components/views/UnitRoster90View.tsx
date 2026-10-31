@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { ContentArt } from '../ContentArt';
+import { contentSlug } from '../../utils/contentImages';
 import { Shield, Zap, Cpu, ArrowUpRight, CheckCircle2, Layers, Search } from 'lucide-react';
 import { sound } from '../../sound';
 import { UNITS_90_ROSTER, Unit90Definition } from '../../unitRoster90';
@@ -104,6 +106,12 @@ export const UnitRoster90View: React.FC<UnitRoster90ViewProps> = ({
         {filteredUnits.map((u) => (
           <div key={u.id} className="border border-[#dedede] bg-white p-6 flex flex-col justify-between space-y-4">
             <div>
+              <ContentArt
+                collection="unit_classes"
+                id={contentSlug(u.category)}
+                alt={u.category}
+                className="w-full aspect-video border border-[#dedede] mb-3"
+              />
               <div className="flex items-center justify-between mb-2">
                 <span className="text-[10px] font-mono px-2 py-0.5 bg-[#fafafa] border border-[#dedede] text-[#666666] uppercase">
                   {u.category}

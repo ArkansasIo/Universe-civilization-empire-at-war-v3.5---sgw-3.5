@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { ContentArt } from '../ContentArt';
 import {
   Globe,
   Plus,
@@ -796,6 +797,12 @@ export const AddWorldsUniverseBossView: React.FC<AddWorldsUniverseBossViewProps>
                         <span className="text-[10px] font-extrabold text-[#777777]">Lvl {boss.level}</span>
                       </div>
 
+                      <ContentArt
+                        collection="arc_bosses"
+                        id={boss.id}
+                        alt={boss.name}
+                        className="w-full aspect-video border border-[#dedede] mt-2"
+                      />
                       <h4 className="text-xs font-black text-[#111111] mt-1">{boss.name}</h4>
                       <p className="text-[10px] text-[#666666] truncate">{boss.title}</p>
                     </div>

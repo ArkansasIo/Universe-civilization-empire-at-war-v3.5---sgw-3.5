@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ContentArt } from '../../ContentArt';
 import {
   Sparkles,
   Zap,
@@ -705,7 +706,13 @@ export const StargateRelicsView: React.FC<StargateRelicsViewProps> = ({
                   <div>
                     <div className="flex items-start justify-between gap-2 mb-2">
                       <div className="flex items-center gap-2.5">
-                        <span className="text-3xl">{relic.icon}</span>
+                        <ContentArt
+                          collection="relics"
+                          id={relic.id}
+                          alt={relic.name}
+                          className="w-14 h-14 border border-[#dedede] shrink-0"
+                          fallback={<span className="text-3xl">{relic.icon}</span>}
+                        />
                         <div>
                           <h3 className="font-extrabold text-xs text-[#111] leading-tight">{relic.name}</h3>
                           <div className="flex items-center gap-1.5 mt-0.5">
@@ -900,7 +907,13 @@ export const StargateRelicsView: React.FC<StargateRelicsViewProps> = ({
                 <div key={relic.id} className="p-4 border border-[#dedede] bg-[#fcfcfc] space-y-2">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#eee] pb-2">
                     <div className="flex items-center gap-2">
-                      <span className="text-2xl">{relic.icon}</span>
+                      <ContentArt
+                        collection="relics"
+                        id={relic.id}
+                        alt={relic.name}
+                        className="w-12 h-12 border border-[#dedede] shrink-0"
+                        fallback={<span className="text-2xl">{relic.icon}</span>}
+                      />
                       <div>
                         <h3 className="font-extrabold text-sm text-[#111]">{relic.name}</h3>
                         <span className="text-[10px] font-mono text-cyan-700 font-bold">{relic.seriesProvenance}</span>

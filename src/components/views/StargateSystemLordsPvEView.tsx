@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ContentArt } from '../ContentArt';
 import { 
   Crown, Swords, Shield, Skull, Flame, Sparkles, Zap, Award, 
   Radio, Target, Eye, RefreshCw, ChevronRight, CheckCircle2, AlertTriangle, 
@@ -347,7 +348,13 @@ export const StargateSystemLordsPvEView: React.FC<StargateSystemLordsPvEViewProp
                     }`}
                   >
                     <div className="flex items-center gap-3">
-                      <span className="text-2xl">{lord.avatarEmoji}</span>
+                      <ContentArt
+                        collection="system_lords"
+                        id={lord.id}
+                        alt={lord.name}
+                        className="w-12 h-12 rounded-lg border border-amber-500/40 shrink-0"
+                        fallback={<span className="text-2xl">{lord.avatarEmoji}</span>}
+                      />
                       <div>
                         <div className="font-bold text-white text-sm flex items-center gap-2">
                           {lord.name}

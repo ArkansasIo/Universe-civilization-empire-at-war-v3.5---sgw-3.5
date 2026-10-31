@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ContentArt } from '../ContentArt';
 import {
   Skull,
   Shield,
@@ -632,7 +633,13 @@ export function NemesisSystemView({
                     }`}
                   >
                     <div className="flex items-center gap-2">
-                      <span className="text-2xl">{w.avatar}</span>
+                      <ContentArt
+                        collection="nemesis"
+                        id={w.id}
+                        alt={w.name}
+                        className="w-11 h-11 rounded-md border border-amber-500/40 shrink-0"
+                        fallback={<span className="text-2xl">{w.avatar}</span>}
+                      />
                       <div className="truncate">
                         <h4 className="text-sm font-bold text-white truncate">{w.name}</h4>
                         <span className="text-xs text-amber-400 block font-mono">Lvl {w.level} • {w.power.toLocaleString()} PWR</span>
@@ -664,7 +671,13 @@ export function NemesisSystemView({
                     }`}
                   >
                     <div className="flex items-center gap-2">
-                      <span className="text-2xl">{c.avatar}</span>
+                      <ContentArt
+                        collection="nemesis"
+                        id={c.id}
+                        alt={c.name}
+                        className="w-11 h-11 rounded-md border border-blue-500/40 shrink-0"
+                        fallback={<span className="text-2xl">{c.avatar}</span>}
+                      />
                       <div className="truncate">
                         <h4 className="text-xs font-bold text-white truncate">{c.name}</h4>
                         <span className="text-[11px] text-blue-400 block font-mono">{c.power.toLocaleString()} PWR</span>

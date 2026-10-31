@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { ContentArt } from '../ContentArt';
 import {
   Compass,
   Shield,
@@ -1489,6 +1490,12 @@ export const MothershipView: React.FC<MothershipViewProps> = ({
                         : 'border-[#dedede] bg-white hover:border-[#999999]'
                     }`}
                   >
+                    <ContentArt
+                      collection="mothership_chassis"
+                      id={chassis.id}
+                      alt={chassis.name}
+                      className="w-full aspect-video border border-[#dedede]"
+                    />
                     <div className="flex items-center justify-between">
                       <span className="font-bold text-sm text-[#111]">{chassis.name}</span>
                       <span className="px-1.5 py-0.5 bg-[#111] text-white text-[9px] font-bold">

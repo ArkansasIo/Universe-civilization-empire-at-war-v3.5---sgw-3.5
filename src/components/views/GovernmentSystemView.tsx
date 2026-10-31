@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { ContentArt } from '../ContentArt';
 import {
   Landmark,
   Shield,
@@ -451,9 +452,17 @@ export const GovernmentSystemView: React.FC<GovernmentSystemViewProps> = ({
                   <div>
                     <div className="flex items-start justify-between gap-2 mb-2">
                       <div className="flex items-center gap-2.5">
-                        <span className="text-2xl p-1.5 bg-neutral-100 border border-[#dedede]">
-                          {gov.icon || '🏛️'}
-                        </span>
+                        <ContentArt
+                          collection="governments"
+                          id={gov.id}
+                          alt={gov.name}
+                          className="w-14 h-14 border border-[#dedede] shrink-0"
+                          fallback={
+                            <span className="text-2xl p-1.5 bg-neutral-100 border border-[#dedede]">
+                              {gov.icon || '🏛️'}
+                            </span>
+                          }
+                        />
                         <div>
                           <span className="text-[9px] font-bold uppercase text-[#777777] block">
                             {gov.ideology}

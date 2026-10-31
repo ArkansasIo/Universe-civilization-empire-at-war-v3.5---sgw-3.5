@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ContentArt } from '../ContentArt';
 import {
   Users,
   GraduationCap,
@@ -778,6 +779,12 @@ export const WorkforceAcademyView: React.FC<WorkforceAcademyViewProps> = ({
                   }`}
                 >
                   <div className="space-y-3">
+                    <ContentArt
+                      collection="workforce_branches"
+                      id={unit.branch}
+                      alt={unit.branch.replace(/_/g, ' ')}
+                      className="w-full aspect-video border border-[#dedede]"
+                    />
                     <div className="flex items-start justify-between gap-2">
                       <div>
                         {(() => {

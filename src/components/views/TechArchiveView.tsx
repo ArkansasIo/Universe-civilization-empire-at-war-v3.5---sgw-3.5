@@ -1,4 +1,6 @@
 import React, { useMemo, useState } from 'react';
+import { ContentArt } from '../ContentArt';
+import { contentSlug } from '../../utils/contentImages';
 import { FlaskConical, Search, Layers, Filter } from 'lucide-react';
 import { sound } from '../../sound';
 import { TECH_ARCHIVE, TECH_CLASSES, STAT_LABELS, type TechModule, type TechClass, type StatKey } from '../../data/techArchive';
@@ -75,6 +77,12 @@ export const TechArchiveView: React.FC = () => {
                 onClick={() => select(m)}
                 className={`w-full text-left border p-4 transition-colors cursor-pointer ${isSelected ? 'border-[#111111] bg-amber-50' : 'border-[#dedede] bg-white hover:border-[#111111]'}`}
               >
+                <ContentArt
+                  collection="tech_classes"
+                  id={contentSlug(m.techClass)}
+                  alt={m.techClass}
+                  className="w-full h-20 border border-[#dedede] mb-2"
+                />
                 <div className="flex items-center justify-between mb-1">
                   <span className="font-bold text-sm text-[#111111]"><FlaskConical className="w-3.5 h-3.5 inline mr-1 text-[#777777]" />{m.name}</span>
                   <span className={`text-[10px] font-mono px-2 py-0.5 border uppercase ${m.rarity === 'Mythic' ? 'bg-purple-50 text-purple-800 border-purple-200' :
