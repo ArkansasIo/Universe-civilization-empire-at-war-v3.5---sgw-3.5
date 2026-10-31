@@ -8,3 +8,4 @@ export * from './researchService';
 export * from './combatService';
 export * from './stargateService';
 export * from './sessionService';
+export * from './buildQueueService';

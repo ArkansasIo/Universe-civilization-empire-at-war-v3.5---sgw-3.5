@@ -15,6 +15,7 @@ export * from './factionEngine';
 export * from './blueprintEngine';
 export * from './flagshipEngine';
 export * from './weaponEngine';
+export * from './queueEngine';
 export {
   resolveCombat as resolveSeededCombat,
   type CombatResult as SeededCombatResult,

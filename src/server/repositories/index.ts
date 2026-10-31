@@ -16,3 +16,4 @@ export * from './mysqlCommandRepository';
 export * from './mysqlStateVersionRepository';
 export * from './mysqlAuthoritativeStateRepository';
 export * from './mysqlAuthoritativeCommandExecutor';
+export * from './buildQueueRepository';

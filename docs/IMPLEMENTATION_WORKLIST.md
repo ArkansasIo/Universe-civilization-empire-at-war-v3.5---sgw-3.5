@@ -13,6 +13,7 @@
 - [x] Authentication contracts, idempotency and rate-limit primitives.
 - [x] MySQL migrations for game state, galaxy, planets, Stargates, research, combat and audit events.
 - [x] Authoritative engine smoke test and CI integration.
+- [x] Building, shipyard and research queue engine and service (in-memory; MySQL repository and HTTP routes still to do).
 
 ## Next implementation order
 1. Replace remaining client-authoritative mutations with server commands.

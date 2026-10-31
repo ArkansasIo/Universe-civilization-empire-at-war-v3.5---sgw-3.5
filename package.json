@@ -19,6 +19,7 @@
     "mysql:authoritative:smoke": "tsx scripts/mysql-authoritative-smoke.ts",
     "crafting:service:smoke": "tsx scripts/crafting-service-smoke.ts",
     "crafting:http:smoke": "tsx scripts/crafting-http-smoke.ts",
+    "build:queue:smoke": "tsx scripts/build-queue-smoke.ts",
     "progression:smoke": "tsx scripts/progression-smoke.ts"
   },
   "dependencies": {
