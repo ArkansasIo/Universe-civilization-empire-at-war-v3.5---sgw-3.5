@@ -8,6 +8,7 @@ import {
 } from '../../types';
 import { sound } from '../../sound';
 import { getGameImage } from '../../utils/gameImages';
+import { GameAssetImage } from '../GameAssetImage';
 
 interface ResearchLibraryViewProps {
   technologies: OGameTechnology[];
@@ -316,6 +317,12 @@ export const ResearchLibraryView: React.FC<ResearchLibraryViewProps> = ({
                       : 'border-[#cccccc] hover:border-[#111111] bg-white'
                   }`}
                 >
+                  <GameAssetImage
+                    kind="technologies"
+                    id={tech.id}
+                    alt=""
+                    className="mb-2 h-20 w-full border border-[#dbe3ec] bg-[#081522] object-cover"
+                  />
                   <div className="flex items-start justify-between gap-2">
                     <div className="flex items-start gap-3">
                       {getGameImage('research', tech.id) && (

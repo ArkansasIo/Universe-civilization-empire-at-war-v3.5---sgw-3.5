@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="144" viewBox="0 0 256 144" fill="none">
+  <title>Armor Technology</title>
+  <defs>
+    <linearGradient id="space" x2="0" y2="1"><stop stop-color="#081522"/><stop offset="1" stop-color="#101d2a"/></linearGradient>
+    <radialGradient id="haze"><stop stop-color="#ff806b" stop-opacity=".2"/><stop offset="1" stop-color="#ff806b" stop-opacity="0"/></radialGradient>
+    <linearGradient id="metal" x2=".15" y2="1"><stop stop-color="#dce8f1"/><stop offset=".45" stop-color="#8499a9"/><stop offset="1" stop-color="#354451"/></linearGradient>
+    <filter id="glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <pattern id="grid" width="16" height="16" patternUnits="userSpaceOnUse"><path d="M16 0H0V16" fill="none" stroke="#9ab4c7" stroke-opacity=".08" stroke-width=".6"/></pattern>
+  </defs>
+  <rect width="256" height="144" fill="url(#space)"/>
+  <ellipse cx="176" cy="58" rx="120" ry="76" fill="url(#haze)"/>
+  <rect width="256" height="144" fill="url(#grid)"/>
+  <circle cx="94" cy="59" r="0.45" fill="#d9efff" opacity="0.69"/><circle cx="217" cy="109" r="0.66" fill="#d9efff" opacity="0.36"/><circle cx="50" cy="35" r="0.55" fill="#d9efff" opacity="0.69"/><circle cx="105" cy="60" r="1.05" fill="#d9efff" opacity="0.68"/><circle cx="156" cy="25" r="0.59" fill="#d9efff" opacity="0.28"/><circle cx="235" cy="100" r="0.40" fill="#d9efff" opacity="0.20"/><circle cx="21" cy="82" r="1.13" fill="#d9efff" opacity="0.73"/><circle cx="9" cy="58" r="0.62" fill="#d9efff" opacity="0.29"/><circle cx="225" cy="77" r="1.13" fill="#d9efff" opacity="0.74"/><circle cx="232" cy="61" r="0.75" fill="#d9efff" opacity="0.23"/><circle cx="34" cy="82" r="1.01" fill="#d9efff" opacity="0.48"/><circle cx="44" cy="91" r="1.16" fill="#d9efff" opacity="0.38"/><circle cx="103" cy="94" r="0.54" fill="#d9efff" opacity="0.29"/><circle cx="52" cy="42" r="0.38" fill="#d9efff" opacity="0.59"/><circle cx="225" cy="55" r="0.92" fill="#d9efff" opacity="0.71"/><circle cx="34" cy="76" r="0.61" fill="#d9efff" opacity="0.39"/><circle cx="79" cy="71" r="0.57" fill="#d9efff" opacity="0.42"/><circle cx="124" cy="10" r="1.26" fill="#d9efff" opacity="0.48"/><circle cx="236" cy="73" r="0.68" fill="#d9efff" opacity="0.39"/><circle cx="27" cy="49" r="1.13" fill="#d9efff" opacity="0.52"/><circle cx="204" cy="101" r="1.21" fill="#d9efff" opacity="0.60"/><circle cx="240" cy="35" r="1.31" fill="#d9efff" opacity="0.43"/><circle cx="218" cy="33" r="0.89" fill="#d9efff" opacity="0.65"/><circle cx="57" cy="33" r="0.57" fill="#d9efff" opacity="0.74"/><circle cx="55" cy="38" r="1.32" fill="#d9efff" opacity="0.64"/><circle cx="62" cy="63" r="0.76" fill="#d9efff" opacity="0.35"/><circle cx="108" cy="56" r="1.38" fill="#d9efff" opacity="0.55"/>
+  <path d="M0 126H256" stroke="#ff806b" stroke-opacity=".28"/>
+  <path d="M9 10h24M9 10v12M247 10h-24M247 10v12M9 134h24M9 134v-12M247 134h-24M247 134v-12" fill="none" stroke="#ff806b" stroke-opacity=".55" stroke-width="1"/>
+  <g style="color:#ff806b">
+    <path d="M128 69L175.4 87.3" stroke="#ff806b" stroke-opacity=".32"/><circle cx="175.4" cy="87.3" r="3" fill="#142534" stroke="#ff806b"/><path d="M128 69L80.1 86.7" stroke="#ff806b" stroke-opacity=".32"/><circle cx="80.1" cy="86.7" r="3" fill="#142534" stroke="#ff806b"/><path d="M128 69L128.5 33.0" stroke="#ff806b" stroke-opacity=".32"/><circle cx="128.5" cy="33.0" r="3" fill="#142534" stroke="#ff806b"/>
+    <circle cx="128" cy="69" r="49" fill="none" stroke="#ff806b" stroke-opacity=".18"/>
+    <circle cx="128" cy="69" r="35" fill="#0b1824" fill-opacity=".72" stroke="#ff806b" stroke-opacity=".42"/>
+    <path d="M128 42L151 67L128 94L105 67Z" fill="#132433" stroke="currentColor"/><circle cx="128" cy="67" r="13" fill="none" stroke="currentColor"/><path d="M128 49V58M128 76V85M110 67H119M137 67H146" stroke="currentColor"/>
+    <path d="M128 25V31M128 107V113M80 69H86M170 69H176" stroke="#ff806b" stroke-width="2"/>
+    <path d="M24 111H74M182 111H232" stroke="#ff806b" stroke-opacity=".42"/>
+    <text x="128" y="126" fill="#b9cddd" font-family="monospace" font-size="7" letter-spacing="2" text-anchor="middle" opacity=".72">RESEARCH SYSTEM • 230</text>
+  </g>
+</svg>

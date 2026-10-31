@@ -19,14 +19,12 @@
 
   --border-color: #cbd5e1;
   --border-light: #e2e8f0;
-  --border-[#dedede]: #dedede;
   --border-focus: #0284c7;
 
   --accent-primary: #0284c7;
   --accent-primary-hover: #0369a1;
   --accent-secondary: #0d9488;
   --accent-amber: #d97706;
-  --accent-[#111]: #111111;
 
   --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
   --panel-border: 1px solid #cbd5e1;
@@ -49,14 +47,12 @@
 
   --border-color: #1e293b;
   --border-light: #334155;
-  --border-[#dedede]: #1e293b;
   --border-focus: #38bdf8;
 
   --accent-primary: #38bdf8;
   --accent-primary-hover: #0284c7;
   --accent-secondary: #2dd4bf;
   --accent-amber: #fbbf24;
-  --accent-[#111]: #38bdf8;
 
   --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
   --panel-border: 1px solid #1e293b;
@@ -79,14 +75,12 @@
 
   --border-color: #27272a;
   --border-light: #3f3f46;
-  --border-[#dedede]: #27272a;
   --border-focus: #a1a1aa;
 
   --accent-primary: #e4e4e7;
   --accent-primary-hover: #ffffff;
   --accent-secondary: #3f3f46;
   --accent-amber: #f59e0b;
-  --accent-[#111]: #ffffff;
 
   --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
   --panel-border: 1px solid #27272a;

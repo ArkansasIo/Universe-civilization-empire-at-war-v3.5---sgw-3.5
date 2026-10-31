@@ -3,7 +3,12 @@ import { ContentArt } from '../ContentArt';
 import { contentSlug } from '../../utils/contentImages';
 import { FlaskConical, Search, Layers, Filter } from 'lucide-react';
 import { sound } from '../../sound';
-import { TECH_ARCHIVE, TECH_CLASSES, STAT_LABELS, type TechModule, type TechClass, type StatKey } from '../../data/techArchive';
+import { TECH_ARCHIVE, TECH_CLASSES, STAT_LABELS, MODULES_PER_CLASS, type TechModule, type TechClass, type StatKey } from '../../data/techArchive';
+
+const classCounts = TECH_ARCHIVE.reduce<Partial<Record<TechClass, number>>>((acc, m) => {
+  acc[m.techClass] = (acc[m.techClass] ?? 0) + 1;
+  return acc;
+}, {});
 
 export const TechArchiveView: React.FC = () => {
   const [classFilter, setClassFilter] = useState<TechClass | 'all'>('all');
@@ -34,11 +39,11 @@ export const TechArchiveView: React.FC = () => {
     <div id="tech-archive-view" className="space-y-6">
       <div className="border border-[#dedede] bg-white p-6">
         <div className="text-[9px] font-bold text-[#777777] tracking-[1.5px] uppercase mb-1">
-          GALACTIC TECHNOLOGY ARCHIVE · 90 MODULES · CLASS → SUB-CLASS → TYPE → SUB-TYPE
+          GALACTIC TECHNOLOGY ARCHIVE · {TECH_ARCHIVE.length} MODULES · {MODULES_PER_CLASS} PER CLASS · CLASS → SUB-CLASS → TYPE → SUB-TYPE
         </div>
         <h2 className="text-2xl font-bold text-[#111111]">Galactic Technology Archive</h2>
         <p className="text-sm text-[#666666] mt-1 max-w-3xl leading-relaxed">
-          Ninety imperial tech modules across 9 classes and 10 sub-classes each, with primary stats and sub-stats. Research the archive, compare tiers, and requisition blueprints.
+          {TECH_ARCHIVE.length} imperial tech modules across 9 classes — {MODULES_PER_CLASS} in each, spanning 10 sub-classes × 3 types × 3 sub-types — with primary stats and sub-stats. Research the archive, compare tiers, and requisition blueprints.
         </p>
       </div>
 
@@ -51,7 +56,7 @@ export const TechArchiveView: React.FC = () => {
         >
           <option value="all">All Classes ({TECH_ARCHIVE.length})</option>
           {TECH_CLASSES.map((c) => (
-            <option key={c} value={c}>{c} (10)</option>
+            <option key={c} value={c}>{c} ({classCounts[c] ?? 0})</option>
           ))}
         </select>
         <div className="relative ml-2">

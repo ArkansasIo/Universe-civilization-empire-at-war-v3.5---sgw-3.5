@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="144" viewBox="0 0 256 144" fill="none">
+  <title>Void Cartographer</title>
+  <defs>
+    <linearGradient id="space" x2="0" y2="1"><stop stop-color="#081522"/><stop offset="1" stop-color="#101d2a"/></linearGradient>
+    <radialGradient id="haze"><stop stop-color="#ffd36e" stop-opacity=".2"/><stop offset="1" stop-color="#ffd36e" stop-opacity="0"/></radialGradient>
+    <linearGradient id="metal" x2=".15" y2="1"><stop stop-color="#dce8f1"/><stop offset=".45" stop-color="#8499a9"/><stop offset="1" stop-color="#354451"/></linearGradient>
+    <filter id="glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <pattern id="grid" width="16" height="16" patternUnits="userSpaceOnUse"><path d="M16 0H0V16" fill="none" stroke="#9ab4c7" stroke-opacity=".08" stroke-width=".6"/></pattern>
+  </defs>
+  <rect width="256" height="144" fill="url(#space)"/>
+  <ellipse cx="176" cy="58" rx="120" ry="76" fill="url(#haze)"/>
+  <rect width="256" height="144" fill="url(#grid)"/>
+  <circle cx="197" cy="78" r="0.84" fill="#d9efff" opacity="0.54"/><circle cx="132" cy="73" r="0.41" fill="#d9efff" opacity="0.32"/><circle cx="12" cy="96" r="1.32" fill="#d9efff" opacity="0.73"/><circle cx="144" cy="48" r="1.44" fill="#d9efff" opacity="0.47"/><circle cx="49" cy="57" r="1.36" fill="#d9efff" opacity="0.22"/><circle cx="26" cy="38" r="1.40" fill="#d9efff" opacity="0.48"/><circle cx="105" cy="81" r="0.98" fill="#d9efff" opacity="0.41"/><circle cx="200" cy="24" r="0.78" fill="#d9efff" opacity="0.61"/><circle cx="113" cy="54" r="0.49" fill="#d9efff" opacity="0.35"/><circle cx="91" cy="92" r="1.28" fill="#d9efff" opacity="0.66"/><circle cx="223" cy="86" r="0.61" fill="#d9efff" opacity="0.25"/><circle cx="236" cy="58" r="0.58" fill="#d9efff" opacity="0.33"/><circle cx="97" cy="91" r="0.67" fill="#d9efff" opacity="0.60"/><circle cx="124" cy="100" r="1.38" fill="#d9efff" opacity="0.68"/><circle cx="139" cy="48" r="0.55" fill="#d9efff" opacity="0.26"/><circle cx="216" cy="77" r="1.18" fill="#d9efff" opacity="0.72"/><circle cx="200" cy="10" r="0.75" fill="#d9efff" opacity="0.53"/><circle cx="184" cy="65" r="0.83" fill="#d9efff" opacity="0.58"/><circle cx="219" cy="66" r="0.54" fill="#d9efff" opacity="0.61"/><circle cx="95" cy="12" r="0.85" fill="#d9efff" opacity="0.37"/><circle cx="74" cy="52" r="0.93" fill="#d9efff" opacity="0.66"/><circle cx="49" cy="74" r="0.31" fill="#d9efff" opacity="0.65"/><circle cx="133" cy="43" r="1.30" fill="#d9efff" opacity="0.55"/><circle cx="23" cy="72" r="0.78" fill="#d9efff" opacity="0.30"/><circle cx="17" cy="80" r="0.81" fill="#d9efff" opacity="0.33"/><circle cx="164" cy="50" r="1.32" fill="#d9efff" opacity="0.34"/><circle cx="51" cy="52" r="1.43" fill="#d9efff" opacity="0.65"/>
+  <path d="M0 126H256" stroke="#ffd36e" stroke-opacity=".28"/>
+  <path d="M9 10h24M9 10v12M247 10h-24M247 10v12M9 134h24M9 134v-12M247 134h-24M247 134v-12" fill="none" stroke="#ffd36e" stroke-opacity=".55" stroke-width="1"/>
+  <path d="M128 31L139 54L164 58L146 76L150 102L128 90L106 102L110 76L92 58L117 54Z" fill="#ffd36e" fill-opacity=".45" stroke="#ffd36e" stroke-width="2"/>
+      <circle cx="128" cy="68" r="54" fill="none" stroke="#ffd36e" stroke-opacity=".45"/>
+      <path d="M91 110L103 131L128 119L153 131L165 110" fill="#344b5c" stroke="#ffd36e" stroke-width="2"/>
+</svg>

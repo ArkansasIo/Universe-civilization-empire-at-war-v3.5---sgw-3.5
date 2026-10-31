@@ -2,10 +2,12 @@ import assert from 'node:assert/strict';
 import { createApiApp } from '../src/server/http/app.js';
 import { MemoryCraftingStateStore } from '../src/rpg/crafting-persistence.js';
 import { CraftingService } from '../src/rpg/crafting-service.js';
+import { createCraftingUpgradeState } from '../src/rpg/tempering.js';
 import { STARTER_ITEMS } from '../src/rpg/catalog.js';
 
 const item = STARTER_ITEMS[0];
 if (!item) throw new Error('Starter item catalog is empty');
+const craftingState = createCraftingUpgradeState(item);
 
 const app = createApiApp({
   auth: {
@@ -30,15 +32,21 @@ try {
 
   const preview = await fetch(`${base}/api/v1/crafting/preview`, {
     method: 'POST', headers,
-    body: JSON.stringify({ requestId: 'preview-1', playerId: 'player-1', item, state: { temperLevel: 0, masterworkRank: 0, damaged: false }, inventory: { materials: { 'tempering-stone': 10 } }, currency: 5000, track: 'tempering' }),
+    body: JSON.stringify({ requestId: 'preview-1', playerId: 'player-1', item, state: craftingState, inventory: { materials: { 'tempering-stone': 10 } }, currency: 5000, track: 'tempering' }),
   });
   assert.equal(preview.status, 200);
   const previewBody = await preview.json() as { ok: boolean; nextLevel: number; successChance: number };
   assert.equal(previewBody.ok, true); assert.equal(previewBody.nextLevel, 1); assert.equal(previewBody.successChance, 1);
 
+  const invalidUpgrade = await fetch(`${base}/api/v1/crafting/upgrade`, {
+    method: 'POST', headers,
+    body: JSON.stringify({ requestId: 'invalid-upgrade', playerId: 'player-1', item, state: { temperLevel: 0 }, inventory: { materials: {} }, currency: 5000, track: 'tempering' }),
+  });
+  assert.equal(invalidUpgrade.status, 400);
+
   const upgrade = await fetch(`${base}/api/v1/crafting/upgrade`, {
     method: 'POST', headers,
-    body: JSON.stringify({ requestId: 'upgrade-1', playerId: 'player-1', item, state: { temperLevel: 0, masterworkRank: 0, damaged: false }, inventory: { materials: { 'tempering-stone': 10 } }, currency: 5000, track: 'tempering' }),
+    body: JSON.stringify({ requestId: 'upgrade-1', playerId: 'player-1', item, state: craftingState, inventory: { materials: { 'tempering-stone': 10 } }, currency: 5000, track: 'tempering' }),
   });
   assert.equal(upgrade.status, 200);
   const upgradeBody = await upgrade.json() as { ok: boolean; result: { success: boolean; state: { temperLevel: number } } };

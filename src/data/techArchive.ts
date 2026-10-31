@@ -1,5 +1,5 @@
-/** Galactic Technology Archive — 90 tech modules with full taxonomy:
- *  9 classes × 10 sub-classes, each module carrying primary stats and sub-stats.
+/** Galactic Technology Archive — 810 tech modules (90 per class) with full taxonomy:
+ *  9 classes × 10 sub-classes × 3 types × 3 sub-types, each module carrying primary stats and sub-stats.
  *  Deterministic generation (Murmur-style hash, consistent with the rest of the data layer). */
 
 export type TechClass =
@@ -68,7 +68,7 @@ export interface TechModule {
   subClass: string;
   typeId: number; // 1..3 within sub-class
   type: string;
-  subTypeId: number; // 1..2 within type
+  subTypeId: number; // 1..3 within type
   subType: string;
   name: string;
   tier: number; // 1..10
@@ -80,7 +80,17 @@ export interface TechModule {
 }
 
 const TYPE_NAMES = ['Coaxial', 'Phased', 'Overcharged'];
-const SUB_TYPE_NAMES = ['Compact', 'Extended'];
+const SUB_TYPE_NAMES = ['Compact', 'Extended', 'Hardened'];
+// Variant tuning: Overcharged hits harder but drinks power; Compact trades output for efficiency;
+// Hardened is the steady middle with tougher sub-stats.
+const TYPE_POWER = [1, 1.1, 1.25];
+const TYPE_ENERGY = [1, 1.05, 1.3];
+const SUB_TYPE_POWER = [0.9, 1.1, 1];
+const SUB_TYPE_ENERGY = [0.85, 1.15, 1];
+const SUB_TYPE_SUBSTAT = [0.95, 1, 1.15];
+
+/** Modules per class: 10 sub-classes × 3 types × 3 sub-types. */
+export const MODULES_PER_CLASS = 10 * TYPE_NAMES.length * SUB_TYPE_NAMES.length;
 const RARITIES: TechModule['rarity'][] = ['Common', 'Uncommon', 'Rare', 'Epic', 'Legendary', 'Mythic'];
 const PRIMARY_POOL: StatKey[] = ['attack', 'defense', 'shield', 'accuracy', 'evasion'];
 const SUB_POOL: StatKey[] = ['critChance', 'critDamage', 'attackSpeed', 'armorPenetration', 'damageReduction', 'dodgeChance', 'cooldownReduction', 'poise', 'tenacity', 'shieldPower', 'hpRegen', 'moveSpeed'];
@@ -104,33 +114,37 @@ export const GENERATE_TECH_ARCHIVE = (): TechModule[] => {
     const techClass = TECH_CLASSES[c];
     for (let sc = 0; sc < 10; sc++) {
       const subClass = SUB_CLASSES[techClass][sc];
-      // 3 types × 2 sub-types = 6 modules per sub-class → 9 × 10 × 6 = 540? No — cap to 90 total:
-      // each class contributes 10 modules (one per sub-class), each with 2 type/sub-type variants folded in.
-      for (let v = 0; v < 1; v++) {
+      // Each sub-class yields every type × sub-type variant: 10 × 3 × 3 = 90 modules per class.
+      for (let v = 0; v < TYPE_NAMES.length * SUB_TYPE_NAMES.length; v++) {
         const r = (o: number) => hash(seed, o);
         seed += 17;
 
         const tier = sc + 1; // tier 1..10 within each class
-        const typeIdx = sc % 3;
-        const subTypeIdx = sc % 2;
-        const prefix = TECH_PREFIX[Math.floor(r(1) * TECH_PREFIX.length)];
-        const rarity = RARITIES[Math.min(RARITIES.length - 1, Math.floor(tier / 2) + (r(2) > 0.7 ? 1 : 0))];
+        const typeIdx = Math.floor(v / SUB_TYPE_NAMES.length);
+        const subTypeIdx = v % SUB_TYPE_NAMES.length;
+        const power = TYPE_POWER[typeIdx] * SUB_TYPE_POWER[subTypeIdx];
+        // Skip prefixes already in the sub-class name (avoids "Ion Ion Projector").
+        const prefixPool = TECH_PREFIX.filter((p) => !subClass.includes(p));
+        const prefix = prefixPool[Math.floor(r(1) * prefixPool.length)];
+        const rarityBump = (r(2) > 0.7 ? 1 : 0) + (power >= 1.3 ? 1 : 0);
+        const rarity = RARITIES[Math.min(RARITIES.length - 1, Math.floor(tier / 2) + rarityBump)];
 
         const primaryStat = PRIMARY_POOL[Math.floor(r(3) * PRIMARY_POOL.length)];
-        const primaryValue = Math.round((40 + tier * 55) * (0.85 + r(4) * 0.35));
+        const primaryValue = Math.round((40 + tier * 55) * (0.85 + r(4) * 0.35) * power);
 
         const subA = SUB_POOL[Math.floor(r(5) * SUB_POOL.length)];
         let subB = SUB_POOL[Math.floor(r(6) * SUB_POOL.length)];
         if (subB === subA) subB = SUB_POOL[(SUB_POOL.indexOf(subA) + 1) % SUB_POOL.length];
 
         const pct = (v: number) => +(v).toFixed(3);
+        const subScale = SUB_TYPE_SUBSTAT[subTypeIdx];
         const subStats: Partial<Record<StatKey, number>> = {
-          [subA]: pct(tier * (0.004 + r(7) * 0.004)),
-          [subB]: pct(tier * (1.5 + r(8) * 2.5)),
+          [subA]: pct(tier * (0.004 + r(7) * 0.004) * subScale),
+          [subB]: pct(tier * (1.5 + r(8) * 2.5) * subScale),
         };
 
         const name = `${prefix} ${subClass} ${TYPE_NAMES[typeIdx]} ${SUB_TYPE_NAMES[subTypeIdx]} Mk-${tier}`;
-        const energyCost = Math.round(8 + tier * 7 * (0.8 + r(9) * 0.5));
+        const energyCost = Math.round((8 + tier * 7 * (0.8 + r(9) * 0.5)) * TYPE_ENERGY[typeIdx] * SUB_TYPE_ENERGY[subTypeIdx]);
 
         out.push({
           id: `tech_${out.length + 1}`,

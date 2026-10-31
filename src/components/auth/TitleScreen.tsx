@@ -28,7 +28,9 @@ import {
 import { sound } from '../../sound';
 import { PlayerProfile, RaceId, AdminAuthSession, AdminCredentialAccount } from '../../types';
 import { RACES, GOVERNMENTS } from '../../gameData';
-import { DevelopmentCreditsView } from '../views/DevelopmentCreditsView';
+const DevelopmentCreditsView = React.lazy(() =>
+  import('../views/DevelopmentCreditsView').then((module) => ({ default: module.DevelopmentCreditsView })),
+);
 import { PatchNotesModal } from '../modals/PatchNotesModal';
 import { RootAdminUrlLoginModal } from '../modals/RootAdminUrlLoginModal';
 import { getUiArt } from '../../utils/gameImages';

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="144" viewBox="0 0 256 144" fill="none">
+  <title>Deuterium</title>
+  <defs>
+    <linearGradient id="space" x2="0" y2="1"><stop stop-color="#081522"/><stop offset="1" stop-color="#101d2a"/></linearGradient>
+    <radialGradient id="haze"><stop stop-color="#5ce5c0" stop-opacity=".2"/><stop offset="1" stop-color="#5ce5c0" stop-opacity="0"/></radialGradient>
+    <linearGradient id="metal" x2=".15" y2="1"><stop stop-color="#dce8f1"/><stop offset=".45" stop-color="#8499a9"/><stop offset="1" stop-color="#354451"/></linearGradient>
+    <filter id="glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <pattern id="grid" width="16" height="16" patternUnits="userSpaceOnUse"><path d="M16 0H0V16" fill="none" stroke="#9ab4c7" stroke-opacity=".08" stroke-width=".6"/></pattern>
+  </defs>
+  <rect width="256" height="144" fill="url(#space)"/>
+  <ellipse cx="176" cy="58" rx="120" ry="76" fill="url(#haze)"/>
+  <rect width="256" height="144" fill="url(#grid)"/>
+  <circle cx="104" cy="46" r="0.75" fill="#d9efff" opacity="0.62"/><circle cx="180" cy="101" r="0.60" fill="#d9efff" opacity="0.31"/><circle cx="224" cy="64" r="0.85" fill="#d9efff" opacity="0.46"/><circle cx="34" cy="48" r="0.48" fill="#d9efff" opacity="0.44"/><circle cx="243" cy="24" r="0.45" fill="#d9efff" opacity="0.22"/><circle cx="215" cy="100" r="0.90" fill="#d9efff" opacity="0.57"/><circle cx="45" cy="104" r="1.43" fill="#d9efff" opacity="0.65"/><circle cx="205" cy="10" r="0.97" fill="#d9efff" opacity="0.30"/><circle cx="116" cy="85" r="1.08" fill="#d9efff" opacity="0.42"/><circle cx="230" cy="36" r="0.86" fill="#d9efff" opacity="0.20"/><circle cx="105" cy="102" r="1.35" fill="#d9efff" opacity="0.38"/><circle cx="155" cy="37" r="0.35" fill="#d9efff" opacity="0.36"/><circle cx="175" cy="40" r="0.66" fill="#d9efff" opacity="0.47"/><circle cx="207" cy="57" r="0.55" fill="#d9efff" opacity="0.21"/><circle cx="214" cy="87" r="0.43" fill="#d9efff" opacity="0.66"/><circle cx="24" cy="67" r="0.84" fill="#d9efff" opacity="0.47"/><circle cx="102" cy="34" r="1.04" fill="#d9efff" opacity="0.70"/><circle cx="28" cy="27" r="1.37" fill="#d9efff" opacity="0.32"/><circle cx="70" cy="55" r="1.05" fill="#d9efff" opacity="0.65"/><circle cx="138" cy="70" r="0.69" fill="#d9efff" opacity="0.46"/><circle cx="129" cy="20" r="0.78" fill="#d9efff" opacity="0.62"/><circle cx="50" cy="53" r="1.27" fill="#d9efff" opacity="0.40"/><circle cx="84" cy="78" r="1.08" fill="#d9efff" opacity="0.26"/><circle cx="96" cy="59" r="0.93" fill="#d9efff" opacity="0.46"/><circle cx="118" cy="86" r="0.73" fill="#d9efff" opacity="0.29"/><circle cx="188" cy="76" r="1.39" fill="#d9efff" opacity="0.22"/><circle cx="212" cy="102" r="0.54" fill="#d9efff" opacity="0.37"/>
+  <path d="M0 126H256" stroke="#5ce5c0" stroke-opacity=".28"/>
+  <path d="M9 10h24M9 10v12M247 10h-24M247 10v12M9 134h24M9 134v-12M247 134h-24M247 134v-12" fill="none" stroke="#5ce5c0" stroke-opacity=".55" stroke-width="1"/>
+  <ellipse cx="128" cy="120" rx="88" ry="13" fill="#5ce5c0" opacity=".12" filter="url(#glow)"/>
+    <path d="M64 111L73 64L82 111L75 120H69Z" fill="#5ce5c0" fill-opacity=".68" stroke="#e9fbff" stroke-opacity=".75"/>
+      <path d="M73 64L75 120M73 64L82 111" stroke="#f5ffff" stroke-opacity=".6"/><path d="M88 111L97 55L106 111L99 120H93Z" fill="#5ce5c0" fill-opacity=".68" stroke="#e9fbff" stroke-opacity=".75"/>
+      <path d="M97 55L99 120M97 55L106 111" stroke="#f5ffff" stroke-opacity=".6"/><path d="M112 111L121 84L130 111L123 120H117Z" fill="#5ce5c0" fill-opacity=".68" stroke="#e9fbff" stroke-opacity=".75"/>
+      <path d="M121 84L123 120M121 84L130 111" stroke="#f5ffff" stroke-opacity=".6"/><path d="M136 111L145 75L154 111L147 120H141Z" fill="#5ce5c0" fill-opacity=".68" stroke="#e9fbff" stroke-opacity=".75"/>
+      <path d="M145 75L147 120M145 75L154 111" stroke="#f5ffff" stroke-opacity=".6"/><path d="M160 111L169 66L178 111L171 120H165Z" fill="#5ce5c0" fill-opacity=".68" stroke="#e9fbff" stroke-opacity=".75"/>
+      <path d="M169 66L171 120M169 66L178 111" stroke="#f5ffff" stroke-opacity=".6"/><path d="M184 111L193 57L202 111L195 120H189Z" fill="#5ce5c0" fill-opacity=".68" stroke="#e9fbff" stroke-opacity=".75"/>
+      <path d="M193 57L195 120M193 57L202 111" stroke="#f5ffff" stroke-opacity=".6"/>
+    <path d="M32 123H224" stroke="#5ce5c0" stroke-opacity=".55"/>
+    <circle cx="128" cy="55" r="24" fill="none" stroke="#5ce5c0" stroke-opacity=".2"/>
+</svg>

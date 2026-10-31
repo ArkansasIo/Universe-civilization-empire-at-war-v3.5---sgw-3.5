@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="144" viewBox="0 0 256 144" fill="none">
+  <title>Procurement Catalog</title>
+  <defs>
+    <linearGradient id="space" x2="0" y2="1"><stop stop-color="#081522"/><stop offset="1" stop-color="#101d2a"/></linearGradient>
+    <radialGradient id="haze"><stop stop-color="#f5cb6b" stop-opacity=".2"/><stop offset="1" stop-color="#f5cb6b" stop-opacity="0"/></radialGradient>
+    <linearGradient id="metal" x2=".15" y2="1"><stop stop-color="#dce8f1"/><stop offset=".45" stop-color="#8499a9"/><stop offset="1" stop-color="#354451"/></linearGradient>
+    <filter id="glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <pattern id="grid" width="16" height="16" patternUnits="userSpaceOnUse"><path d="M16 0H0V16" fill="none" stroke="#9ab4c7" stroke-opacity=".08" stroke-width=".6"/></pattern>
+  </defs>
+  <rect width="256" height="144" fill="url(#space)"/>
+  <ellipse cx="176" cy="58" rx="120" ry="76" fill="url(#haze)"/>
+  <rect width="256" height="144" fill="url(#grid)"/>
+  <circle cx="56" cy="47" r="0.91" fill="#d9efff" opacity="0.30"/><circle cx="183" cy="9" r="1.19" fill="#d9efff" opacity="0.38"/><circle cx="144" cy="27" r="1.29" fill="#d9efff" opacity="0.64"/><circle cx="248" cy="11" r="1.30" fill="#d9efff" opacity="0.58"/><circle cx="182" cy="94" r="0.80" fill="#d9efff" opacity="0.39"/><circle cx="144" cy="106" r="1.36" fill="#d9efff" opacity="0.46"/><circle cx="191" cy="23" r="1.25" fill="#d9efff" opacity="0.65"/><circle cx="157" cy="88" r="1.21" fill="#d9efff" opacity="0.40"/><circle cx="52" cy="11" r="0.62" fill="#d9efff" opacity="0.43"/><circle cx="202" cy="15" r="1.16" fill="#d9efff" opacity="0.73"/><circle cx="179" cy="102" r="1.30" fill="#d9efff" opacity="0.27"/><circle cx="104" cy="82" r="0.57" fill="#d9efff" opacity="0.66"/><circle cx="45" cy="28" r="0.77" fill="#d9efff" opacity="0.61"/><circle cx="207" cy="71" r="0.81" fill="#d9efff" opacity="0.31"/><circle cx="251" cy="8" r="0.50" fill="#d9efff" opacity="0.56"/><circle cx="69" cy="77" r="1.18" fill="#d9efff" opacity="0.25"/><circle cx="213" cy="86" r="0.90" fill="#d9efff" opacity="0.75"/><circle cx="225" cy="80" r="1.35" fill="#d9efff" opacity="0.29"/><circle cx="138" cy="96" r="0.51" fill="#d9efff" opacity="0.46"/><circle cx="40" cy="49" r="0.37" fill="#d9efff" opacity="0.21"/><circle cx="109" cy="64" r="0.89" fill="#d9efff" opacity="0.60"/><circle cx="124" cy="57" r="0.95" fill="#d9efff" opacity="0.22"/><circle cx="229" cy="82" r="0.81" fill="#d9efff" opacity="0.35"/><circle cx="92" cy="80" r="1.13" fill="#d9efff" opacity="0.72"/><circle cx="106" cy="92" r="0.63" fill="#d9efff" opacity="0.73"/><circle cx="143" cy="23" r="0.46" fill="#d9efff" opacity="0.59"/><circle cx="154" cy="93" r="0.75" fill="#d9efff" opacity="0.23"/>
+  <path d="M0 126H256" stroke="#f5cb6b" stroke-opacity=".28"/>
+  <path d="M9 10h24M9 10v12M247 10h-24M247 10v12M9 134h24M9 134v-12M247 134h-24M247 134v-12" fill="none" stroke="#f5cb6b" stroke-opacity=".55" stroke-width="1"/>
+  <g style="color:#f5cb6b">
+    <circle cx="128" cy="71" r="59" fill="none" stroke="currentColor" stroke-opacity=".18"/>
+    <path d="M84 55H167L152 42M172 89H89L104 102" fill="none" stroke="currentColor" stroke-width="4"/><circle cx="128" cy="72" r="27" fill="#112433" stroke="currentColor" stroke-width="2"/><path d="M128 52V92M139 60C136 55 119 55 118 64C117 70 139 70 138 79C137 90 119 89 116 83" stroke="currentColor" stroke-width="3"/>
+    <path d="M23 118H67M189 118H233" stroke="currentColor" stroke-opacity=".45"/>
+    <text x="128" y="130" fill="#b9cddd" font-family="monospace" font-size="7" letter-spacing="2" text-anchor="middle" opacity=".72">SYSTEM DOSSIER • 300</text>
+  </g>
+</svg>

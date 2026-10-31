@@ -66,6 +66,7 @@ import {
   CarrierSortieMission,
   FlagshipMilestoneAchievement,
 } from '../../mothershipData';
+import { GameAssetImage } from '../GameAssetImage';
 
 interface MothershipViewProps {
   resources: PlayerResources;
@@ -972,6 +973,13 @@ export const MothershipView: React.FC<MothershipViewProps> = ({
             </div>
           </div>
 
+          <GameAssetImage
+            kind="mothership"
+            id="flagship"
+            alt=""
+            className="hidden xl:block h-32 w-64 shrink-0 border border-[#dbe3ec] bg-[#081522] object-cover"
+          />
+
           {/* Quick HUD Metrics */}
           <div className="flex flex-wrap items-center gap-3 bg-[#fafafa] border border-[#eee] p-3 font-mono text-xs">
             <div>
@@ -1431,6 +1439,12 @@ export const MothershipView: React.FC<MothershipViewProps> = ({
                     const isEquipped = hardpoints.find((h) => h.slotId === selectedHardpointId)?.equippedWeaponId === weapon.id;
                     return (
                       <div key={weapon.id} className="p-4 border border-[#dedede] bg-white space-y-2 text-xs font-mono">
+                        <GameAssetImage
+                          kind="mothership"
+                          id={weapon.id}
+                          alt=""
+                          className="h-24 w-full border border-[#dbe3ec] bg-[#081522] object-cover"
+                        />
                         <div className="flex items-center justify-between">
                           <span className="font-bold text-sm text-[#111] flex items-center gap-1.5">
                             <span>{weapon.icon}</span>
@@ -1536,6 +1550,12 @@ export const MothershipView: React.FC<MothershipViewProps> = ({
                 const cost = m.baseCost * m.level;
                 return (
                   <div key={m.key} className="p-4 border border-[#dedede] bg-[#fafafa] space-y-2 text-xs font-mono">
+                    <GameAssetImage
+                      kind="mothership"
+                      id={m.key}
+                      alt=""
+                      className="h-24 w-full border border-[#dbe3ec] bg-[#081522] object-cover"
+                    />
                     <div className="flex items-center justify-between">
                       <strong className="text-sm text-[#111]">{m.name}</strong>
                       <span className="px-2 py-0.5 bg-[#111] text-white font-bold text-[10px]">
@@ -1584,6 +1604,12 @@ export const MothershipView: React.FC<MothershipViewProps> = ({
                 const pct = Math.round((wing.count / wing.maxCount) * 100);
                 return (
                   <div key={wing.id} className="p-4 border border-[#dedede] bg-[#fafafa] space-y-2 text-xs font-mono">
+                    <GameAssetImage
+                      kind="mothership"
+                      id={wing.id}
+                      alt=""
+                      className="h-24 w-full border border-[#dbe3ec] bg-[#081522] object-cover"
+                    />
                     <div className="flex items-center justify-between">
                       <strong className="text-sm text-[#111]">{wing.name}</strong>
                       <span className="text-[10px] font-bold text-[#555] uppercase">{wing.role}</span>
@@ -1629,6 +1655,12 @@ export const MothershipView: React.FC<MothershipViewProps> = ({
                 const isReadyToClaim = active && active.remainingSec === 0;
                 return (
                   <div key={mission.id} className="p-4 border border-[#dedede] bg-white space-y-3 text-xs font-mono">
+                    <GameAssetImage
+                      kind="mothership"
+                      id={mission.id}
+                      alt=""
+                      className="h-24 w-full border border-[#dbe3ec] bg-[#081522] object-cover"
+                    />
                     <div className="flex items-center justify-between">
                       <div>
                         <strong className="text-sm text-[#111]">{mission.name}</strong>
@@ -1701,6 +1733,12 @@ export const MothershipView: React.FC<MothershipViewProps> = ({
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {officers.map((off) => (
               <div key={off.id} className="p-4 border border-[#dedede] bg-[#fafafa] space-y-2 text-xs font-mono">
+                <GameAssetImage
+                  kind="mothership"
+                  id={off.id}
+                  alt=""
+                  className="h-24 w-full border border-[#dbe3ec] bg-[#081522] object-cover"
+                />
                 <div className="flex items-center gap-2">
                   <span className="text-2xl">{off.avatar}</span>
                   <div>
@@ -1750,6 +1788,12 @@ export const MothershipView: React.FC<MothershipViewProps> = ({
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {DEEP_SPACE_SECTORS.map((sec) => (
                 <div key={sec.id} className="p-4 border border-[#dedede] bg-[#fafafa] space-y-2 text-xs font-mono">
+                  <GameAssetImage
+                    kind="mothership"
+                    id={sec.id}
+                    alt=""
+                    className="h-24 w-full border border-[#dbe3ec] bg-[#081522] object-cover"
+                  />
                   <div className="flex items-center justify-between">
                     <strong className="text-sm text-[#111]">{sec.name}</strong>
                     <span className="text-[10px] px-2 py-0.5 bg-neutral-200 font-bold">
@@ -1774,6 +1818,12 @@ export const MothershipView: React.FC<MothershipViewProps> = ({
           {/* Anomaly Modal */}
           {activeAnomaly && (
             <div className="border border-[#111] bg-white p-6 space-y-4 shadow-lg">
+              <GameAssetImage
+                kind="mothership"
+                id={activeAnomaly.id}
+                alt=""
+                className="h-36 w-full border border-[#dbe3ec] bg-[#081522] object-cover"
+              />
               <div className="flex items-center justify-between border-b border-[#eee] pb-3">
                 <div>
                   <span className="text-[10px] font-bold text-amber-600 uppercase font-mono">
@@ -1826,6 +1876,12 @@ export const MothershipView: React.FC<MothershipViewProps> = ({
       {activeTab === 'superweapon' && (
         <div className="space-y-6">
           <div className="border border-[#dedede] bg-white p-6 space-y-4">
+            <GameAssetImage
+              kind="mothership"
+              id="wpn_chrono_lance"
+              alt=""
+              className="h-36 w-full border border-[#dbe3ec] bg-[#081522] object-cover"
+            />
             <div className="flex items-center justify-between border-b border-[#eee] pb-3">
               <div>
                 <span className="text-[10px] font-bold text-[#777] uppercase font-mono">
@@ -1949,6 +2005,12 @@ export const MothershipView: React.FC<MothershipViewProps> = ({
                       : 'border-[#dedede] bg-white hover:border-[#aaa]'
                   }`}
                 >
+                  <GameAssetImage
+                    kind="mothership"
+                    id={theme.id}
+                    alt=""
+                    className="h-28 w-full border border-[#dbe3ec] bg-[#081522] object-cover"
+                  />
                   <div className="flex items-center justify-between">
                     <strong className="text-sm text-[#111]">{theme.name}</strong>
                     <span className="text-[9px] px-1.5 py-0.5 bg-neutral-100 font-bold uppercase">

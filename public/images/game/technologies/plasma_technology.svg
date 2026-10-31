@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="144" viewBox="0 0 256 144" fill="none">
+  <title>Plasma Technology</title>
+  <defs>
+    <linearGradient id="space" x2="0" y2="1"><stop stop-color="#081522"/><stop offset="1" stop-color="#101d2a"/></linearGradient>
+    <radialGradient id="haze"><stop stop-color="#ff806b" stop-opacity=".2"/><stop offset="1" stop-color="#ff806b" stop-opacity="0"/></radialGradient>
+    <linearGradient id="metal" x2=".15" y2="1"><stop stop-color="#dce8f1"/><stop offset=".45" stop-color="#8499a9"/><stop offset="1" stop-color="#354451"/></linearGradient>
+    <filter id="glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <pattern id="grid" width="16" height="16" patternUnits="userSpaceOnUse"><path d="M16 0H0V16" fill="none" stroke="#9ab4c7" stroke-opacity=".08" stroke-width=".6"/></pattern>
+  </defs>
+  <rect width="256" height="144" fill="url(#space)"/>
+  <ellipse cx="176" cy="58" rx="120" ry="76" fill="url(#haze)"/>
+  <rect width="256" height="144" fill="url(#grid)"/>
+  <circle cx="134" cy="84" r="0.80" fill="#d9efff" opacity="0.40"/><circle cx="47" cy="75" r="0.71" fill="#d9efff" opacity="0.29"/><circle cx="63" cy="22" r="1.07" fill="#d9efff" opacity="0.67"/><circle cx="12" cy="29" r="1.09" fill="#d9efff" opacity="0.22"/><circle cx="46" cy="9" r="1.27" fill="#d9efff" opacity="0.26"/><circle cx="156" cy="87" r="0.71" fill="#d9efff" opacity="0.51"/><circle cx="209" cy="79" r="0.54" fill="#d9efff" opacity="0.36"/><circle cx="164" cy="15" r="0.43" fill="#d9efff" opacity="0.67"/><circle cx="183" cy="82" r="0.67" fill="#d9efff" opacity="0.58"/><circle cx="143" cy="104" r="1.09" fill="#d9efff" opacity="0.22"/><circle cx="128" cy="61" r="0.51" fill="#d9efff" opacity="0.42"/><circle cx="72" cy="16" r="1.24" fill="#d9efff" opacity="0.67"/><circle cx="216" cy="50" r="1.11" fill="#d9efff" opacity="0.32"/><circle cx="199" cy="13" r="1.02" fill="#d9efff" opacity="0.35"/><circle cx="71" cy="41" r="0.83" fill="#d9efff" opacity="0.42"/><circle cx="145" cy="31" r="0.57" fill="#d9efff" opacity="0.27"/><circle cx="153" cy="11" r="1.14" fill="#d9efff" opacity="0.60"/><circle cx="196" cy="76" r="1.22" fill="#d9efff" opacity="0.65"/><circle cx="106" cy="105" r="1.38" fill="#d9efff" opacity="0.43"/><circle cx="74" cy="50" r="1.17" fill="#d9efff" opacity="0.27"/><circle cx="49" cy="52" r="0.65" fill="#d9efff" opacity="0.34"/><circle cx="132" cy="52" r="0.84" fill="#d9efff" opacity="0.24"/><circle cx="77" cy="94" r="1.31" fill="#d9efff" opacity="0.55"/><circle cx="28" cy="6" r="0.41" fill="#d9efff" opacity="0.62"/><circle cx="209" cy="99" r="1.29" fill="#d9efff" opacity="0.69"/><circle cx="83" cy="86" r="1.28" fill="#d9efff" opacity="0.43"/><circle cx="51" cy="86" r="0.54" fill="#d9efff" opacity="0.40"/>
+  <path d="M0 126H256" stroke="#ff806b" stroke-opacity=".28"/>
+  <path d="M9 10h24M9 10v12M247 10h-24M247 10v12M9 134h24M9 134v-12M247 134h-24M247 134v-12" fill="none" stroke="#ff806b" stroke-opacity=".55" stroke-width="1"/>
+  <g style="color:#ff806b">
+    <path d="M128 69L176.3 86.3" stroke="#ff806b" stroke-opacity=".32"/><circle cx="176.3" cy="86.3" r="3" fill="#142534" stroke="#ff806b"/><path d="M128 69L129.3 105.0" stroke="#ff806b" stroke-opacity=".32"/><circle cx="129.3" cy="105.0" r="3" fill="#142534" stroke="#ff806b"/><path d="M128 69L81.0 87.7" stroke="#ff806b" stroke-opacity=".32"/><circle cx="81.0" cy="87.7" r="3" fill="#142534" stroke="#ff806b"/><path d="M128 69L79.7 51.7" stroke="#ff806b" stroke-opacity=".32"/><circle cx="79.7" cy="51.7" r="3" fill="#142534" stroke="#ff806b"/><path d="M128 69L126.7 33.0" stroke="#ff806b" stroke-opacity=".32"/><circle cx="126.7" cy="33.0" r="3" fill="#142534" stroke="#ff806b"/><path d="M128 69L175.0 50.3" stroke="#ff806b" stroke-opacity=".32"/><circle cx="175.0" cy="50.3" r="3" fill="#142534" stroke="#ff806b"/>
+    <circle cx="128" cy="69" r="49" fill="none" stroke="#ff806b" stroke-opacity=".18"/>
+    <circle cx="128" cy="69" r="35" fill="#0b1824" fill-opacity=".72" stroke="#ff806b" stroke-opacity=".42"/>
+    <path d="M128 42L151 67L128 94L105 67Z" fill="#132433" stroke="currentColor"/><circle cx="128" cy="67" r="13" fill="none" stroke="currentColor"/><path d="M128 49V58M128 76V85M110 67H119M137 67H146" stroke="currentColor"/>
+    <path d="M128 25V31M128 107V113M80 69H86M170 69H176" stroke="#ff806b" stroke-width="2"/>
+    <path d="M24 111H74M182 111H232" stroke="#ff806b" stroke-opacity=".42"/>
+    <text x="128" y="126" fill="#b9cddd" font-family="monospace" font-size="7" letter-spacing="2" text-anchor="middle" opacity=".72">RESEARCH SYSTEM • 986</text>
+  </g>
+</svg>

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="144" viewBox="0 0 256 144" fill="none">
+  <title>Derelict Ancient Flagship Discovered</title>
+  <defs>
+    <linearGradient id="space" x2="0" y2="1"><stop stop-color="#081522"/><stop offset="1" stop-color="#101d2a"/></linearGradient>
+    <radialGradient id="haze"><stop stop-color="#74dfa8" stop-opacity=".2"/><stop offset="1" stop-color="#74dfa8" stop-opacity="0"/></radialGradient>
+    <linearGradient id="metal" x2=".15" y2="1"><stop stop-color="#dce8f1"/><stop offset=".45" stop-color="#8499a9"/><stop offset="1" stop-color="#354451"/></linearGradient>
+    <filter id="glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <pattern id="grid" width="16" height="16" patternUnits="userSpaceOnUse"><path d="M16 0H0V16" fill="none" stroke="#9ab4c7" stroke-opacity=".08" stroke-width=".6"/></pattern>
+  </defs>
+  <rect width="256" height="144" fill="url(#space)"/>
+  <ellipse cx="176" cy="58" rx="120" ry="76" fill="url(#haze)"/>
+  <rect width="256" height="144" fill="url(#grid)"/>
+  <circle cx="187" cy="82" r="0.78" fill="#d9efff" opacity="0.38"/><circle cx="62" cy="70" r="0.75" fill="#d9efff" opacity="0.52"/><circle cx="135" cy="84" r="1.22" fill="#d9efff" opacity="0.26"/><circle cx="217" cy="91" r="0.33" fill="#d9efff" opacity="0.40"/><circle cx="224" cy="51" r="0.35" fill="#d9efff" opacity="0.49"/><circle cx="21" cy="76" r="0.92" fill="#d9efff" opacity="0.59"/><circle cx="198" cy="93" r="1.07" fill="#d9efff" opacity="0.37"/><circle cx="244" cy="33" r="1.19" fill="#d9efff" opacity="0.66"/><circle cx="73" cy="63" r="1.14" fill="#d9efff" opacity="0.36"/><circle cx="13" cy="50" r="1.24" fill="#d9efff" opacity="0.60"/><circle cx="124" cy="22" r="0.57" fill="#d9efff" opacity="0.67"/><circle cx="31" cy="55" r="1.08" fill="#d9efff" opacity="0.72"/><circle cx="20" cy="101" r="1.00" fill="#d9efff" opacity="0.70"/><circle cx="235" cy="52" r="0.38" fill="#d9efff" opacity="0.54"/><circle cx="89" cy="88" r="0.59" fill="#d9efff" opacity="0.71"/><circle cx="71" cy="54" r="0.51" fill="#d9efff" opacity="0.65"/><circle cx="233" cy="95" r="0.42" fill="#d9efff" opacity="0.54"/><circle cx="151" cy="63" r="0.97" fill="#d9efff" opacity="0.28"/><circle cx="228" cy="102" r="0.66" fill="#d9efff" opacity="0.50"/><circle cx="75" cy="73" r="0.47" fill="#d9efff" opacity="0.65"/><circle cx="163" cy="62" r="1.39" fill="#d9efff" opacity="0.44"/><circle cx="124" cy="11" r="0.39" fill="#d9efff" opacity="0.59"/><circle cx="26" cy="33" r="1.24" fill="#d9efff" opacity="0.44"/><circle cx="101" cy="17" r="1.40" fill="#d9efff" opacity="0.35"/><circle cx="170" cy="36" r="0.62" fill="#d9efff" opacity="0.74"/><circle cx="65" cy="23" r="1.27" fill="#d9efff" opacity="0.25"/><circle cx="193" cy="41" r="0.46" fill="#d9efff" opacity="0.63"/>
+  <path d="M0 126H256" stroke="#74dfa8" stroke-opacity=".28"/>
+  <path d="M9 10h24M9 10v12M247 10h-24M247 10v12M9 134h24M9 134v-12M247 134h-24M247 134v-12" fill="none" stroke="#74dfa8" stroke-opacity=".55" stroke-width="1"/>
+  <circle cx="128" cy="72" r="39" fill="#142b3a" stroke="#74dfa8" stroke-width="2"/>
+      <path d="M89 66Q127 46 167 66M92 88Q128 104 164 88M128 33V111" fill="none" stroke="#74dfa8" stroke-opacity=".72"/>
+      <ellipse cx="128" cy="72" rx="72" ry="23" fill="none" stroke="#74dfa8" stroke-width="2" transform="rotate(-18 128 72)"/>
+      <circle cx="147" cy="71" r="3" fill="#f3fbff"/>
+</svg>

@@ -24,6 +24,7 @@ import {
 import { FLEET_FORMATIONS } from '../../ogameData';
 import { sound } from '../../sound';
 import { getGameImage } from '../../utils/gameImages';
+import { GameAssetImage } from '../GameAssetImage';
 
 interface ShipyardViewProps {
   ships: OGameShip[];
@@ -1157,6 +1158,12 @@ export const ShipyardView: React.FC<ShipyardViewProps> = ({
             <div className="lg:col-span-4">
               {selectedShip && (
                 <div className="border border-[#111111] bg-white p-5 sticky top-6 space-y-4 font-mono text-xs">
+                  <GameAssetImage
+                    kind="ships"
+                    id={selectedShip.id}
+                    alt=""
+                    className="h-48 w-full border border-[#dbe3ec] bg-[#081522] object-cover"
+                  />
                   <div className="border-b border-[#111111] pb-3">
                     <span className="text-[10px] text-[#666666] uppercase">NAVAL SPECIFICATION</span>
                     <h3 className="text-base font-bold text-[#111111] mt-0.5">{selectedShip.name}</h3>

@@ -39,7 +39,9 @@ import {
   INITIAL_PROFILE_SLOTS,
   INITIAL_CAREER_STATS,
 } from '../../accountProfilesData';
-import { DevelopmentCreditsView } from './DevelopmentCreditsView';
+const DevelopmentCreditsView = React.lazy(() =>
+  import('./DevelopmentCreditsView').then((module) => ({ default: module.DevelopmentCreditsView })),
+);
 
 interface ProfileSystemViewProps {
   profile: PlayerProfile;

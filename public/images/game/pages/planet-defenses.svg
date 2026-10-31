@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="144" viewBox="0 0 256 144" fill="none">
+  <title>Colonial Defenses Grid</title>
+  <defs>
+    <linearGradient id="space" x2="0" y2="1"><stop stop-color="#081522"/><stop offset="1" stop-color="#101d2a"/></linearGradient>
+    <radialGradient id="haze"><stop stop-color="#8de08c" stop-opacity=".2"/><stop offset="1" stop-color="#8de08c" stop-opacity="0"/></radialGradient>
+    <linearGradient id="metal" x2=".15" y2="1"><stop stop-color="#dce8f1"/><stop offset=".45" stop-color="#8499a9"/><stop offset="1" stop-color="#354451"/></linearGradient>
+    <filter id="glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <pattern id="grid" width="16" height="16" patternUnits="userSpaceOnUse"><path d="M16 0H0V16" fill="none" stroke="#9ab4c7" stroke-opacity=".08" stroke-width=".6"/></pattern>
+  </defs>
+  <rect width="256" height="144" fill="url(#space)"/>
+  <ellipse cx="176" cy="58" rx="120" ry="76" fill="url(#haze)"/>
+  <rect width="256" height="144" fill="url(#grid)"/>
+  <circle cx="154" cy="73" r="1.32" fill="#d9efff" opacity="0.75"/><circle cx="241" cy="73" r="0.77" fill="#d9efff" opacity="0.52"/><circle cx="147" cy="36" r="1.18" fill="#d9efff" opacity="0.36"/><circle cx="56" cy="100" r="1.41" fill="#d9efff" opacity="0.61"/><circle cx="62" cy="21" r="0.52" fill="#d9efff" opacity="0.43"/><circle cx="197" cy="55" r="1.41" fill="#d9efff" opacity="0.63"/><circle cx="190" cy="39" r="0.45" fill="#d9efff" opacity="0.36"/><circle cx="120" cy="10" r="1.29" fill="#d9efff" opacity="0.33"/><circle cx="243" cy="96" r="0.84" fill="#d9efff" opacity="0.73"/><circle cx="46" cy="12" r="1.28" fill="#d9efff" opacity="0.70"/><circle cx="147" cy="54" r="1.09" fill="#d9efff" opacity="0.32"/><circle cx="19" cy="89" r="1.27" fill="#d9efff" opacity="0.32"/><circle cx="233" cy="49" r="0.95" fill="#d9efff" opacity="0.69"/><circle cx="112" cy="80" r="0.77" fill="#d9efff" opacity="0.24"/><circle cx="83" cy="100" r="1.41" fill="#d9efff" opacity="0.23"/><circle cx="17" cy="27" r="1.32" fill="#d9efff" opacity="0.64"/><circle cx="231" cy="68" r="1.10" fill="#d9efff" opacity="0.21"/><circle cx="19" cy="65" r="0.86" fill="#d9efff" opacity="0.62"/><circle cx="51" cy="69" r="0.77" fill="#d9efff" opacity="0.30"/><circle cx="125" cy="42" r="0.89" fill="#d9efff" opacity="0.67"/><circle cx="240" cy="74" r="0.93" fill="#d9efff" opacity="0.52"/><circle cx="73" cy="106" r="0.94" fill="#d9efff" opacity="0.60"/><circle cx="230" cy="76" r="0.80" fill="#d9efff" opacity="0.41"/><circle cx="234" cy="71" r="1.31" fill="#d9efff" opacity="0.71"/><circle cx="214" cy="69" r="0.66" fill="#d9efff" opacity="0.22"/><circle cx="159" cy="75" r="1.14" fill="#d9efff" opacity="0.62"/><circle cx="74" cy="71" r="0.92" fill="#d9efff" opacity="0.47"/>
+  <path d="M0 126H256" stroke="#8de08c" stroke-opacity=".28"/>
+  <path d="M9 10h24M9 10v12M247 10h-24M247 10v12M9 134h24M9 134v-12M247 134h-24M247 134v-12" fill="none" stroke="#8de08c" stroke-opacity=".55" stroke-width="1"/>
+  <g style="color:#8de08c">
+    <circle cx="128" cy="71" r="59" fill="none" stroke="currentColor" stroke-opacity=".18"/>
+    <circle cx="128" cy="74" r="42" fill="#172c3c" stroke="currentColor" stroke-width="2"/><path d="M88 66Q127 46 168 66M91 87Q128 103 165 87M128 32V116" fill="none" stroke="currentColor" stroke-opacity=".72"/><ellipse cx="128" cy="74" rx="19" ry="42" fill="none" stroke="currentColor"/>
+    <path d="M23 118H67M189 118H233" stroke="currentColor" stroke-opacity=".45"/>
+    <text x="128" y="130" fill="#b9cddd" font-family="monospace" font-size="7" letter-spacing="2" text-anchor="middle" opacity=".72">SYSTEM DOSSIER • 705</text>
+  </g>
+</svg>

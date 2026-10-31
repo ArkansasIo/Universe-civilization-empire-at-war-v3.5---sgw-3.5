@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="144" viewBox="0 0 256 144" fill="none">
+  <title>Small Shield Dome</title>
+  <defs>
+    <linearGradient id="space" x2="0" y2="1"><stop stop-color="#081522"/><stop offset="1" stop-color="#101d2a"/></linearGradient>
+    <radialGradient id="haze"><stop stop-color="#68c9ff" stop-opacity=".2"/><stop offset="1" stop-color="#68c9ff" stop-opacity="0"/></radialGradient>
+    <linearGradient id="metal" x2=".15" y2="1"><stop stop-color="#dce8f1"/><stop offset=".45" stop-color="#8499a9"/><stop offset="1" stop-color="#354451"/></linearGradient>
+    <filter id="glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <pattern id="grid" width="16" height="16" patternUnits="userSpaceOnUse"><path d="M16 0H0V16" fill="none" stroke="#9ab4c7" stroke-opacity=".08" stroke-width=".6"/></pattern>
+  </defs>
+  <rect width="256" height="144" fill="url(#space)"/>
+  <ellipse cx="176" cy="58" rx="120" ry="76" fill="url(#haze)"/>
+  <rect width="256" height="144" fill="url(#grid)"/>
+  <circle cx="219" cy="45" r="0.39" fill="#d9efff" opacity="0.23"/><circle cx="226" cy="34" r="0.73" fill="#d9efff" opacity="0.48"/><circle cx="66" cy="49" r="0.68" fill="#d9efff" opacity="0.66"/><circle cx="226" cy="64" r="0.71" fill="#d9efff" opacity="0.57"/><circle cx="31" cy="65" r="0.83" fill="#d9efff" opacity="0.46"/><circle cx="223" cy="27" r="1.35" fill="#d9efff" opacity="0.30"/><circle cx="121" cy="85" r="1.32" fill="#d9efff" opacity="0.48"/><circle cx="94" cy="54" r="0.50" fill="#d9efff" opacity="0.22"/><circle cx="114" cy="5" r="0.48" fill="#d9efff" opacity="0.44"/><circle cx="32" cy="84" r="0.98" fill="#d9efff" opacity="0.69"/><circle cx="156" cy="72" r="1.43" fill="#d9efff" opacity="0.38"/><circle cx="219" cy="59" r="0.86" fill="#d9efff" opacity="0.61"/><circle cx="133" cy="62" r="1.17" fill="#d9efff" opacity="0.30"/><circle cx="22" cy="16" r="0.39" fill="#d9efff" opacity="0.74"/><circle cx="54" cy="8" r="1.09" fill="#d9efff" opacity="0.32"/><circle cx="181" cy="38" r="0.51" fill="#d9efff" opacity="0.59"/><circle cx="193" cy="64" r="0.80" fill="#d9efff" opacity="0.59"/><circle cx="46" cy="86" r="0.71" fill="#d9efff" opacity="0.45"/><circle cx="20" cy="40" r="0.76" fill="#d9efff" opacity="0.21"/><circle cx="45" cy="25" r="1.15" fill="#d9efff" opacity="0.27"/><circle cx="107" cy="74" r="0.84" fill="#d9efff" opacity="0.20"/><circle cx="196" cy="42" r="0.64" fill="#d9efff" opacity="0.36"/><circle cx="99" cy="17" r="0.79" fill="#d9efff" opacity="0.59"/><circle cx="122" cy="108" r="1.22" fill="#d9efff" opacity="0.66"/><circle cx="158" cy="64" r="1.25" fill="#d9efff" opacity="0.42"/><circle cx="75" cy="44" r="0.54" fill="#d9efff" opacity="0.64"/><circle cx="196" cy="104" r="0.91" fill="#d9efff" opacity="0.66"/>
+  <path d="M0 126H256" stroke="#68c9ff" stroke-opacity=".28"/>
+  <path d="M9 10h24M9 10v12M247 10h-24M247 10v12M9 134h24M9 134v-12M247 134h-24M247 134v-12" fill="none" stroke="#68c9ff" stroke-opacity=".55" stroke-width="1"/>
+  <ellipse cx="128" cy="119" rx="65" ry="10" fill="#68c9ff" opacity=".12"/>
+      <path d="M66 112A62 62 0 0 1 190 112" fill="#68c9ff" fill-opacity=".08" stroke="#68c9ff" stroke-width="2" filter="url(#glow)"/>
+      <path d="M81 111A47 47 0 0 1 175 111" fill="none" stroke="#68c9ff" stroke-opacity=".6"/>
+      <path d="M95 110A33 33 0 0 1 161 110" fill="none" stroke="#d7f4ff" stroke-opacity=".65"/>
+      <path d="M46 119H210M72 125H184" stroke="#68c9ff" stroke-opacity=".45"/>
+      <circle cx="128" cy="88" r="5" fill="#dff6ff" filter="url(#glow)"/>
+</svg>

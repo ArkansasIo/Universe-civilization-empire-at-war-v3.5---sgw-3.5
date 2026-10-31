@@ -6,6 +6,7 @@ import {
   ResearchQueueItem,
 } from '../../types';
 import { sound } from '../../sound';
+import { GameAssetImage } from '../GameAssetImage';
 
 interface TechTreeViewProps {
   technologies: OGameTechnology[];
@@ -201,6 +202,12 @@ export const TechTreeView: React.FC<TechTreeViewProps> = ({
                       : 'border-[#cccccc] hover:border-[#111111] bg-white'
                   }`}
                 >
+                  <GameAssetImage
+                    kind="technologies"
+                    id={tech.id}
+                    alt=""
+                    className="mb-3 h-24 w-full border border-[#dbe3ec] bg-[#081522] object-cover"
+                  />
                   {/* Status Badges */}
                   <div className="flex items-start justify-between gap-2 mb-2">
                     <div>

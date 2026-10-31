@@ -8,6 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "clean": "rm -rf dist server.js",
+    "assets:generate": "tsx scripts/generate-ogame-assets.ts",
+    "missing:game:logic:smoke": "tsx scripts/missing-game-logic-smoke.ts",
     "lint": "tsc --noEmit",
     "engine:smoke": "tsx scripts/engine-smoke.ts",
     "authoritative:smoke": "tsx scripts/authoritative-engine-smoke.ts",

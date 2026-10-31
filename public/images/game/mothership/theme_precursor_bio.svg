@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="144" viewBox="0 0 256 144" fill="none">
+  <title>Precursor Xenotech &amp; Living Chitin</title>
+  <defs>
+    <linearGradient id="space" x2="0" y2="1"><stop stop-color="#081522"/><stop offset="1" stop-color="#101d2a"/></linearGradient>
+    <radialGradient id="haze"><stop stop-color="#73df9b" stop-opacity=".2"/><stop offset="1" stop-color="#73df9b" stop-opacity="0"/></radialGradient>
+    <linearGradient id="metal" x2=".15" y2="1"><stop stop-color="#dce8f1"/><stop offset=".45" stop-color="#8499a9"/><stop offset="1" stop-color="#354451"/></linearGradient>
+    <filter id="glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <pattern id="grid" width="16" height="16" patternUnits="userSpaceOnUse"><path d="M16 0H0V16" fill="none" stroke="#9ab4c7" stroke-opacity=".08" stroke-width=".6"/></pattern>
+  </defs>
+  <rect width="256" height="144" fill="url(#space)"/>
+  <ellipse cx="176" cy="58" rx="120" ry="76" fill="url(#haze)"/>
+  <rect width="256" height="144" fill="url(#grid)"/>
+  <circle cx="91" cy="54" r="0.95" fill="#d9efff" opacity="0.60"/><circle cx="5" cy="7" r="1.37" fill="#d9efff" opacity="0.70"/><circle cx="150" cy="61" r="1.02" fill="#d9efff" opacity="0.66"/><circle cx="185" cy="72" r="0.58" fill="#d9efff" opacity="0.53"/><circle cx="105" cy="6" r="0.86" fill="#d9efff" opacity="0.67"/><circle cx="68" cy="72" r="0.51" fill="#d9efff" opacity="0.56"/><circle cx="62" cy="106" r="1.24" fill="#d9efff" opacity="0.31"/><circle cx="168" cy="31" r="0.99" fill="#d9efff" opacity="0.27"/><circle cx="218" cy="87" r="0.78" fill="#d9efff" opacity="0.24"/><circle cx="201" cy="104" r="0.61" fill="#d9efff" opacity="0.58"/><circle cx="102" cy="11" r="1.45" fill="#d9efff" opacity="0.71"/><circle cx="161" cy="73" r="0.71" fill="#d9efff" opacity="0.62"/><circle cx="110" cy="64" r="1.24" fill="#d9efff" opacity="0.47"/><circle cx="227" cy="108" r="1.06" fill="#d9efff" opacity="0.23"/><circle cx="162" cy="39" r="0.43" fill="#d9efff" opacity="0.44"/><circle cx="5" cy="66" r="1.17" fill="#d9efff" opacity="0.58"/><circle cx="150" cy="73" r="0.70" fill="#d9efff" opacity="0.46"/><circle cx="84" cy="55" r="1.28" fill="#d9efff" opacity="0.71"/><circle cx="238" cy="41" r="0.59" fill="#d9efff" opacity="0.31"/><circle cx="192" cy="57" r="0.89" fill="#d9efff" opacity="0.43"/><circle cx="230" cy="99" r="1.12" fill="#d9efff" opacity="0.35"/><circle cx="157" cy="94" r="0.54" fill="#d9efff" opacity="0.22"/><circle cx="15" cy="88" r="0.80" fill="#d9efff" opacity="0.41"/><circle cx="208" cy="66" r="0.99" fill="#d9efff" opacity="0.38"/><circle cx="93" cy="92" r="0.82" fill="#d9efff" opacity="0.51"/><circle cx="108" cy="37" r="1.17" fill="#d9efff" opacity="0.41"/><circle cx="182" cy="61" r="0.78" fill="#d9efff" opacity="0.37"/>
+  <path d="M0 126H256" stroke="#73df9b" stroke-opacity=".28"/>
+  <path d="M9 10h24M9 10v12M247 10h-24M247 10v12M9 134h24M9 134v-12M247 134h-24M247 134v-12" fill="none" stroke="#73df9b" stroke-opacity=".55" stroke-width="1"/>
+  <g transform="translate(128 73) scale(1.38)">
+    <path d="M-91 0L-61 -5L-77 -12L-48 -9L-26 -15L25 -11L88 0L25 11L-26 15L-48 9L-77 12L-61 5Z" fill="#73df9b" opacity=".28" filter="url(#glow)"/>
+    
+    <path d="M-48 -8L-82 -29L-63 -4ZM-48 8L-82 29L-63 4Z" fill="#52697a" stroke="#73df9b" stroke-opacity=".72"/>
+    <path d="M-54 -7L-37 -17L9 -16L68 -7L93 0L68 7L9 16L-37 17L-54 7Z" fill="url(#metal)" stroke="#e8f4fc" stroke-opacity=".62"/>
+    <path d="M-24 -14L10 -12L34 -3L-30 -4ZM-24 14L10 12L34 3L-30 4Z" fill="#425969" stroke="#73df9b" stroke-opacity=".45"/>
+    <path d="M-12 -4L48 -2L78 0L48 2L-12 4Z" fill="#eaf7ff" opacity=".8"/>
+    <path d="M-37 -6L-14 -7L-2 -3L-29 -2Z" fill="#70dfff" opacity=".8"/>
+    <path d="M-38 0H-70M-35 3H-62" stroke="#73df9b" stroke-width="2.5" stroke-linecap="round" filter="url(#glow)"/>
+    <circle cx="-43" cy="0" r="3" fill="#73df9b" filter="url(#glow)"/>
+    <path d="M-30 -12L-23 0L-30 12" fill="none" stroke="#f3fbff" stroke-opacity=".65"/>
+    <path d="M53 -4L65 0L53 4" fill="#73df9b" opacity=".8"/>
+  </g>
+</svg>

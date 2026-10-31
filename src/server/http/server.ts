@@ -26,11 +26,16 @@ export async function startHttpServer(app: Express, host = process.env.HOST || '
     server.once('listening', onListening);
     server.listen(port, host);
   });
-  const address = server.address() as AddressInfo;
+  const address = server.address();
+  if (!address || typeof address === 'string') {
+    await new Promise<void>((resolve, reject) => server.close(error => error ? reject(error) : resolve()));
+    throw new Error('HTTP_SERVER_ADDRESS_UNAVAILABLE');
+  }
+  const addressInfo = address as AddressInfo;
   return {
     server,
-    host: typeof address === 'object' && address ? address.address : host,
-    port: typeof address === 'object' && address ? address.port : port,
+    host: addressInfo.address,
+    port: addressInfo.port,
     close: () => new Promise<void>((resolve, reject) => server.close(error => error ? reject(error) : resolve())),
   };
 }

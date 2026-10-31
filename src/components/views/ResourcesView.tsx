@@ -19,6 +19,7 @@ import {
 import { sound } from '../../sound';
 import { PlayerProfile, PlayerResources, Race, ResourceStorageUpgrades } from '../../types';
 import { RACES } from '../../gameData';
+import { GameAssetImage } from '../GameAssetImage';
 import {
   calculateMaxStorageCapacity,
   calculateStorageEfficiencyBonus,
@@ -322,7 +323,12 @@ export const ResourcesView: React.FC<ResourcesViewProps> = ({
                 <div key={card.type} className="border border-[#dedede] bg-white p-5 space-y-4">
                   <div className="flex justify-between items-start">
                     <div className="flex items-center gap-2">
-                      <span className="text-2xl">{card.icon}</span>
+                      <GameAssetImage
+                        kind="resources"
+                        id={card.type}
+                        alt=""
+                        className="h-14 w-20 border border-[#dbe3ec] bg-[#081522] object-cover"
+                      />
                       <div>
                         <span className="text-[10px] font-bold text-[#777777] uppercase block">
                           Tier {card.level} Storage Facility

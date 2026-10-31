@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="144" viewBox="0 0 256 144" fill="none">
+  <title>Protected, Inventory &amp; Equipment Stash</title>
+  <defs>
+    <linearGradient id="space" x2="0" y2="1"><stop stop-color="#081522"/><stop offset="1" stop-color="#101d2a"/></linearGradient>
+    <radialGradient id="haze"><stop stop-color="#71d9a2" stop-opacity=".2"/><stop offset="1" stop-color="#71d9a2" stop-opacity="0"/></radialGradient>
+    <linearGradient id="metal" x2=".15" y2="1"><stop stop-color="#dce8f1"/><stop offset=".45" stop-color="#8499a9"/><stop offset="1" stop-color="#354451"/></linearGradient>
+    <filter id="glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <pattern id="grid" width="16" height="16" patternUnits="userSpaceOnUse"><path d="M16 0H0V16" fill="none" stroke="#9ab4c7" stroke-opacity=".08" stroke-width=".6"/></pattern>
+  </defs>
+  <rect width="256" height="144" fill="url(#space)"/>
+  <ellipse cx="176" cy="58" rx="120" ry="76" fill="url(#haze)"/>
+  <rect width="256" height="144" fill="url(#grid)"/>
+  <circle cx="226" cy="69" r="0.56" fill="#d9efff" opacity="0.63"/><circle cx="43" cy="5" r="0.57" fill="#d9efff" opacity="0.69"/><circle cx="175" cy="37" r="1.43" fill="#d9efff" opacity="0.43"/><circle cx="242" cy="85" r="0.79" fill="#d9efff" opacity="0.65"/><circle cx="69" cy="60" r="0.40" fill="#d9efff" opacity="0.52"/><circle cx="200" cy="97" r="0.35" fill="#d9efff" opacity="0.73"/><circle cx="78" cy="29" r="1.08" fill="#d9efff" opacity="0.51"/><circle cx="17" cy="53" r="1.31" fill="#d9efff" opacity="0.37"/><circle cx="191" cy="36" r="1.14" fill="#d9efff" opacity="0.55"/><circle cx="163" cy="86" r="1.14" fill="#d9efff" opacity="0.36"/><circle cx="251" cy="14" r="0.53" fill="#d9efff" opacity="0.64"/><circle cx="183" cy="33" r="0.79" fill="#d9efff" opacity="0.44"/><circle cx="185" cy="62" r="0.87" fill="#d9efff" opacity="0.55"/><circle cx="81" cy="33" r="0.53" fill="#d9efff" opacity="0.65"/><circle cx="185" cy="96" r="0.52" fill="#d9efff" opacity="0.28"/><circle cx="174" cy="18" r="0.70" fill="#d9efff" opacity="0.65"/><circle cx="108" cy="83" r="0.44" fill="#d9efff" opacity="0.60"/><circle cx="151" cy="9" r="0.53" fill="#d9efff" opacity="0.64"/><circle cx="59" cy="23" r="1.22" fill="#d9efff" opacity="0.27"/><circle cx="72" cy="41" r="0.80" fill="#d9efff" opacity="0.69"/><circle cx="189" cy="87" r="0.35" fill="#d9efff" opacity="0.50"/><circle cx="79" cy="50" r="1.04" fill="#d9efff" opacity="0.68"/><circle cx="200" cy="87" r="0.35" fill="#d9efff" opacity="0.62"/><circle cx="62" cy="24" r="0.62" fill="#d9efff" opacity="0.21"/><circle cx="36" cy="54" r="1.07" fill="#d9efff" opacity="0.37"/><circle cx="22" cy="5" r="1.30" fill="#d9efff" opacity="0.28"/><circle cx="41" cy="29" r="0.42" fill="#d9efff" opacity="0.58"/>
+  <path d="M0 126H256" stroke="#71d9a2" stroke-opacity=".28"/>
+  <path d="M9 10h24M9 10v12M247 10h-24M247 10v12M9 134h24M9 134v-12M247 134h-24M247 134v-12" fill="none" stroke="#71d9a2" stroke-opacity=".55" stroke-width="1"/>
+  <g style="color:#71d9a2">
+    <circle cx="128" cy="71" r="59" fill="none" stroke="currentColor" stroke-opacity=".18"/>
+    <path d="M88 103L104 49L121 102L137 35L157 103L174 65L188 104Z" fill="currentColor" fill-opacity=".48" stroke="currentColor" stroke-width="2"/><path d="M104 49L121 102M137 35L157 103M174 65L157 103" stroke="#e6f8ff"/>
+    <path d="M23 118H67M189 118H233" stroke="currentColor" stroke-opacity=".45"/>
+    <text x="128" y="130" fill="#b9cddd" font-family="monospace" font-size="7" letter-spacing="2" text-anchor="middle" opacity=".72">SYSTEM DOSSIER • 856</text>
+  </g>
+</svg>

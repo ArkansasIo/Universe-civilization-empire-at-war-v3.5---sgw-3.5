@@ -27,6 +27,7 @@ import { sound } from '../sound';
 import { getUiArt } from '../utils/gameImages';
 import { PlayerProfile, PlayerResources } from '../types';
 import { OGAME_NAV_SECTIONS, OGameNavSection } from './Sidebar';
+import { GameAssetImage } from './GameAssetImage';
 
 interface PageHeaderCommandDeckProps {
   activeRoute: string;
@@ -119,6 +120,15 @@ export const PageHeaderCommandDeck: React.FC<PageHeaderCommandDeckProps> = ({
             </h1>
           </div>
         </div>
+
+        {activeItem && (
+          <GameAssetImage
+            kind="pages"
+            id={activeRoute}
+            alt=""
+            className="hidden 2xl:block h-[5.5rem] w-40 shrink-0 border border-[#dbe3ec] bg-[#081522] object-cover"
+          />
+        )}
 
         {/* Telemetry Status & Rapid Chrono Turn Engine Controls */}
         <div className="flex flex-wrap items-center gap-2 self-start md:self-auto font-mono text-xs">
@@ -232,6 +242,12 @@ export const PageHeaderCommandDeck: React.FC<PageHeaderCommandDeckProps> = ({
                   >
                     0{index + 1}.
                   </span>
+                  <GameAssetImage
+                    kind="pages"
+                    id={item.id}
+                    alt=""
+                    className="h-6 w-10 border border-white/20 bg-[#081522] object-cover"
+                  />
                   <span>{item.label}</span>
                 </button>
               );

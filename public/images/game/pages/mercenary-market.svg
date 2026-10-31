@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="144" viewBox="0 0 256 144" fill="none">
+  <title>Mercenary Guild Market</title>
+  <defs>
+    <linearGradient id="space" x2="0" y2="1"><stop stop-color="#081522"/><stop offset="1" stop-color="#101d2a"/></linearGradient>
+    <radialGradient id="haze"><stop stop-color="#f5cb6b" stop-opacity=".2"/><stop offset="1" stop-color="#f5cb6b" stop-opacity="0"/></radialGradient>
+    <linearGradient id="metal" x2=".15" y2="1"><stop stop-color="#dce8f1"/><stop offset=".45" stop-color="#8499a9"/><stop offset="1" stop-color="#354451"/></linearGradient>
+    <filter id="glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <pattern id="grid" width="16" height="16" patternUnits="userSpaceOnUse"><path d="M16 0H0V16" fill="none" stroke="#9ab4c7" stroke-opacity=".08" stroke-width=".6"/></pattern>
+  </defs>
+  <rect width="256" height="144" fill="url(#space)"/>
+  <ellipse cx="176" cy="58" rx="120" ry="76" fill="url(#haze)"/>
+  <rect width="256" height="144" fill="url(#grid)"/>
+  <circle cx="195" cy="61" r="0.86" fill="#d9efff" opacity="0.65"/><circle cx="194" cy="98" r="0.90" fill="#d9efff" opacity="0.35"/><circle cx="200" cy="86" r="0.47" fill="#d9efff" opacity="0.44"/><circle cx="96" cy="86" r="1.42" fill="#d9efff" opacity="0.57"/><circle cx="248" cy="79" r="0.96" fill="#d9efff" opacity="0.21"/><circle cx="149" cy="40" r="1.09" fill="#d9efff" opacity="0.36"/><circle cx="61" cy="56" r="1.39" fill="#d9efff" opacity="0.28"/><circle cx="149" cy="77" r="0.34" fill="#d9efff" opacity="0.39"/><circle cx="57" cy="82" r="0.71" fill="#d9efff" opacity="0.58"/><circle cx="223" cy="89" r="0.93" fill="#d9efff" opacity="0.50"/><circle cx="84" cy="10" r="0.66" fill="#d9efff" opacity="0.57"/><circle cx="37" cy="86" r="1.02" fill="#d9efff" opacity="0.20"/><circle cx="210" cy="67" r="0.39" fill="#d9efff" opacity="0.54"/><circle cx="54" cy="25" r="0.32" fill="#d9efff" opacity="0.57"/><circle cx="106" cy="78" r="1.23" fill="#d9efff" opacity="0.51"/><circle cx="156" cy="62" r="0.47" fill="#d9efff" opacity="0.34"/><circle cx="243" cy="64" r="0.91" fill="#d9efff" opacity="0.50"/><circle cx="71" cy="73" r="0.51" fill="#d9efff" opacity="0.66"/><circle cx="188" cy="8" r="1.38" fill="#d9efff" opacity="0.56"/><circle cx="126" cy="32" r="0.35" fill="#d9efff" opacity="0.71"/><circle cx="205" cy="40" r="1.36" fill="#d9efff" opacity="0.61"/><circle cx="94" cy="64" r="0.40" fill="#d9efff" opacity="0.32"/><circle cx="200" cy="10" r="0.32" fill="#d9efff" opacity="0.53"/><circle cx="104" cy="106" r="1.06" fill="#d9efff" opacity="0.60"/><circle cx="238" cy="4" r="1.02" fill="#d9efff" opacity="0.56"/><circle cx="144" cy="75" r="0.91" fill="#d9efff" opacity="0.56"/><circle cx="142" cy="30" r="1.43" fill="#d9efff" opacity="0.43"/>
+  <path d="M0 126H256" stroke="#f5cb6b" stroke-opacity=".28"/>
+  <path d="M9 10h24M9 10v12M247 10h-24M247 10v12M9 134h24M9 134v-12M247 134h-24M247 134v-12" fill="none" stroke="#f5cb6b" stroke-opacity=".55" stroke-width="1"/>
+  <g style="color:#f5cb6b">
+    <circle cx="128" cy="71" r="59" fill="none" stroke="currentColor" stroke-opacity=".18"/>
+    <path d="M84 55H167L152 42M172 89H89L104 102" fill="none" stroke="currentColor" stroke-width="4"/><circle cx="128" cy="72" r="27" fill="#112433" stroke="currentColor" stroke-width="2"/><path d="M128 52V92M139 60C136 55 119 55 118 64C117 70 139 70 138 79C137 90 119 89 116 83" stroke="currentColor" stroke-width="3"/>
+    <path d="M23 118H67M189 118H233" stroke="currentColor" stroke-opacity=".45"/>
+    <text x="128" y="130" fill="#b9cddd" font-family="monospace" font-size="7" letter-spacing="2" text-anchor="middle" opacity=".72">SYSTEM DOSSIER • 773</text>
+  </g>
+</svg>

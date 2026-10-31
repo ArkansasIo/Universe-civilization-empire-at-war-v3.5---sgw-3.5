@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="144" viewBox="0 0 256 144" fill="none">
+  <title>Construction Yard</title>
+  <defs>
+    <linearGradient id="space" x2="0" y2="1"><stop stop-color="#081522"/><stop offset="1" stop-color="#101d2a"/></linearGradient>
+    <radialGradient id="haze"><stop stop-color="#f1b66f" stop-opacity=".2"/><stop offset="1" stop-color="#f1b66f" stop-opacity="0"/></radialGradient>
+    <linearGradient id="metal" x2=".15" y2="1"><stop stop-color="#dce8f1"/><stop offset=".45" stop-color="#8499a9"/><stop offset="1" stop-color="#354451"/></linearGradient>
+    <filter id="glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <pattern id="grid" width="16" height="16" patternUnits="userSpaceOnUse"><path d="M16 0H0V16" fill="none" stroke="#9ab4c7" stroke-opacity=".08" stroke-width=".6"/></pattern>
+  </defs>
+  <rect width="256" height="144" fill="url(#space)"/>
+  <ellipse cx="176" cy="58" rx="120" ry="76" fill="url(#haze)"/>
+  <rect width="256" height="144" fill="url(#grid)"/>
+  <circle cx="31" cy="41" r="1.09" fill="#d9efff" opacity="0.55"/><circle cx="141" cy="62" r="0.54" fill="#d9efff" opacity="0.23"/><circle cx="201" cy="12" r="1.21" fill="#d9efff" opacity="0.69"/><circle cx="34" cy="14" r="1.34" fill="#d9efff" opacity="0.42"/><circle cx="149" cy="38" r="0.62" fill="#d9efff" opacity="0.31"/><circle cx="221" cy="61" r="0.62" fill="#d9efff" opacity="0.56"/><circle cx="176" cy="91" r="0.54" fill="#d9efff" opacity="0.46"/><circle cx="120" cy="52" r="1.34" fill="#d9efff" opacity="0.55"/><circle cx="108" cy="80" r="0.56" fill="#d9efff" opacity="0.26"/><circle cx="56" cy="7" r="0.83" fill="#d9efff" opacity="0.61"/><circle cx="183" cy="12" r="0.96" fill="#d9efff" opacity="0.40"/><circle cx="179" cy="5" r="1.44" fill="#d9efff" opacity="0.73"/><circle cx="94" cy="83" r="0.51" fill="#d9efff" opacity="0.49"/><circle cx="11" cy="108" r="0.66" fill="#d9efff" opacity="0.65"/><circle cx="155" cy="61" r="1.24" fill="#d9efff" opacity="0.26"/><circle cx="110" cy="105" r="0.81" fill="#d9efff" opacity="0.22"/><circle cx="132" cy="77" r="0.70" fill="#d9efff" opacity="0.53"/><circle cx="170" cy="24" r="0.43" fill="#d9efff" opacity="0.29"/><circle cx="184" cy="74" r="1.41" fill="#d9efff" opacity="0.32"/><circle cx="218" cy="51" r="0.66" fill="#d9efff" opacity="0.65"/><circle cx="226" cy="29" r="0.96" fill="#d9efff" opacity="0.39"/><circle cx="228" cy="56" r="1.36" fill="#d9efff" opacity="0.66"/><circle cx="160" cy="102" r="0.53" fill="#d9efff" opacity="0.70"/><circle cx="118" cy="97" r="0.79" fill="#d9efff" opacity="0.37"/><circle cx="252" cy="84" r="0.80" fill="#d9efff" opacity="0.43"/><circle cx="128" cy="21" r="1.03" fill="#d9efff" opacity="0.35"/><circle cx="162" cy="27" r="1.42" fill="#d9efff" opacity="0.73"/>
+  <path d="M0 126H256" stroke="#f1b66f" stroke-opacity=".28"/>
+  <path d="M9 10h24M9 10v12M247 10h-24M247 10v12M9 134h24M9 134v-12M247 134h-24M247 134v-12" fill="none" stroke="#f1b66f" stroke-opacity=".55" stroke-width="1"/>
+  <g style="color:#f1b66f">
+    <circle cx="128" cy="71" r="59" fill="none" stroke="currentColor" stroke-opacity=".18"/>
+    <path d="M75 105V65L100 77V59L128 75V49L157 69V57L183 75V105Z" fill="#40596b" stroke="currentColor" stroke-width="2"/><path d="M89 88h10v17H89zM117 88h10v17h-10zM146 88h10v17h-10zM165 48V31" stroke="currentColor" stroke-width="3"/>
+    <path d="M23 118H67M189 118H233" stroke="currentColor" stroke-opacity=".45"/>
+    <text x="128" y="130" fill="#b9cddd" font-family="monospace" font-size="7" letter-spacing="2" text-anchor="middle" opacity=".72">SYSTEM DOSSIER • 212</text>
+  </g>
+</svg>

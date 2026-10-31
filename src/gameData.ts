@@ -587,7 +587,8 @@ export const INITIAL_RESOURCES: PlayerResources = {
   raidTokens: 6,
 };
 
-export const INITIAL_TECHNOLOGIES: Technology[] = [
+// Hand-written flagship technologies. Their ids and starting levels are kept stable for existing saves.
+const HANDCRAFTED_TECHNOLOGIES: Technology[] = [
   {
     id: 'tech-1',
     key: 'tech_offense_plasma',
@@ -649,6 +650,122 @@ export const INITIAL_TECHNOLOGIES: Technology[] = [
     description: 'Deep-band subspace radar networks intercepting enemy espionage probes.',
   },
 ];
+
+/** Technologies per doctrine category shown in the Galactic Technology Archive research pages. */
+export const TECHNOLOGIES_PER_CATEGORY = 90;
+
+type TechCategory = Technology['category'];
+
+// 10 systems × 9 marks = 90 candidates per category; hand-written techs count toward the 90.
+const TECH_SYSTEMS: Record<TechCategory, { base: number; label: string; systems: [string, string][] }> = {
+  offense: {
+    base: 25000,
+    label: 'weapon output',
+    systems: [
+      ['Naquadah Railgun Batteries', 'Mass drivers firing naquadah-cored slugs through capital ship armor.'],
+      ['Staff Cannon Arrays', 'Scaled-up plasma staff emitters mounted along broadside hardpoints.'],
+      ['Drone Weapon Launchers', 'Ancient-pattern seeker drones that phase through hull plating before detonating.'],
+      ['Ion Disruptor Turrets', 'Ion bursts that collapse shield harmonics and scramble targeting systems.'],
+      ['Antimatter Torpedo Bays', 'Contained antimatter warheads for decisive strikes against fortified targets.'],
+      ['Graviton Shear Projectors', 'Focused gravity waves that tear apart structural members.'],
+      ['Particle Beam Lances', 'Spinal-mounted accelerators delivering sustained high-energy beams.'],
+      ['Kinetic Swarm Missiles', 'Saturation salvos that overwhelm point defense networks.'],
+      ['Ori Energy Weapon Studies', 'Reverse-engineered Ori beam technology adapted for fleet use.'],
+      ['Siege Bombardment Matrices', 'Coordinated orbital fire patterns for breaking planetary defenses.'],
+    ],
+  },
+  defense: {
+    base: 30000,
+    label: 'shield and hull resilience',
+    systems: [
+      ['Harmonic Shield Emitters', 'Frequency-shifting shields that disperse incoming energy fire.'],
+      ['Neutronium Armor Plating', 'Ultra-dense armor layers forged from collapsed-star material.'],
+      ['Regenerative Hull Lattices', 'Nanite-seeded hull structures that seal breaches mid-battle.'],
+      ['Planetary Shield Grids', 'Linked ground generators projecting continent-wide barriers.'],
+      ['Point Defense Interceptors', 'Rapid-tracking batteries that shoot down missiles and fighters.'],
+      ['Ablative Deflector Coatings', 'Sacrificial surface layers that shed heat from beam impacts.'],
+      ['Damage Control Protocols', 'Automated crews and systems that reroute power around damage.'],
+      ['Zero-Point Shield Capacitors', 'ZPM-fed capacitor banks for sustained shield output.'],
+      ['Inertial Dampening Fields', 'Fields that soak kinetic impacts before they reach the hull.'],
+      ['Bastion Fortification Doctrine', 'Layered orbital and surface defenses for holding key worlds.'],
+    ],
+  },
+  covert: {
+    base: 20000,
+    label: 'covert operation success',
+    systems: [
+      ['Phase-Shift Cloaks', 'Out-of-phase concealment that hides vessels from conventional sensors.'],
+      ['Holographic Identity Masks', 'Projected disguises for agents operating behind enemy lines.'],
+      ['Silent Running Drives', 'Low-emission propulsion that leaves almost no subspace wake.'],
+      ['Infiltration Cell Networks', 'Compartmented agent cells resistant to interrogation and capture.'],
+      ['Sabotage Payload Kits', 'Covert charges and malware for crippling enemy industry.'],
+      ['Ring Transport Hijacking', 'Techniques for seizing control of enemy transport rings.'],
+      ['Signal Spoofing Suites', 'Fake transponder codes and false fleet signatures.'],
+      ['Tok\'ra Symbiote Tradecraft', 'Deep-cover methods learned from the Tok\'ra resistance.'],
+      ['Dead-Drop Relay Beacons', 'Hidden subspace relays for passing intelligence undetected.'],
+      ['Shadow Fleet Staging', 'Concealed anchorages for massing strike forces before an attack.'],
+    ],
+  },
+  'anti-covert': {
+    base: 22000,
+    label: 'counter-espionage strength',
+    systems: [
+      ['Tachyon Detection Grids', 'Sensor webs that reveal cloaked ships by their tachyon emissions.'],
+      ['Subspace Signal Analyzers', 'Traffic analysis that exposes hidden enemy communications.'],
+      ['Agent Vetting Matrices', 'Screening systems that uncover infiltrators and sleeper agents.'],
+      ['Anti-Cloak Sweep Pulses', 'Wide-band pulses that briefly collapse phase-shift cloaks.'],
+      ['Probe Interceptor Swarms', 'Hunter drones that destroy enemy espionage probes on approach.'],
+      ['Secure Command Channels', 'Encrypted links that keep orders out of enemy hands.'],
+      ['Symbiote Detection Scanners', 'Scanners that identify Goa\'uld and Tok\'ra hosts.'],
+      ['Counter-Sabotage Teams', 'Rapid-response crews that defuse sabotage before it strikes.'],
+      ['False Intelligence Feeds', 'Planted data that misleads enemy spymasters.'],
+      ['Sensor Ghost Filters', 'Filters that separate real contacts from spoofed signatures.'],
+    ],
+  },
+};
+
+const MARKS = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX'];
+
+function generateCategoryTechnologies(category: TechCategory, count: number): Technology[] {
+  const { base, label, systems } = TECH_SYSTEMS[category];
+  const out: Technology[] = [];
+  // Ordered by mark first so the cheap tiers of every system come before deeper tiers.
+  for (let m = 0; m < MARKS.length && out.length < count; m++) {
+    for (let s = 0; s < systems.length && out.length < count; s++) {
+      const [systemName, blurb] = systems[s];
+      const n = out.length + 1;
+      out.push({
+        id: `tech-${category}-${String(n).padStart(2, '0')}`,
+        key: `tech_${category.replace('-', '_')}_${systemName.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '')}_mk${m + 1}`,
+        name: `${systemName} Mk ${MARKS[m]}`,
+        category,
+        // Steep cost curve gates stacking: Mk IX costs ~43× Mk I.
+        baseCost: Math.round((base * Math.pow(1.6, m) * (1 + s * 0.04)) / 100) * 100,
+        costGrowth: +(1.3 + m * 0.02).toFixed(2),
+        level: 0,
+        description: `${blurb} Mark ${MARKS[m]} refinement improves ${label}.`,
+      });
+    }
+  }
+  return out;
+}
+
+export const INITIAL_TECHNOLOGIES: Technology[] = [
+  ...HANDCRAFTED_TECHNOLOGIES,
+  ...(['offense', 'defense', 'covert', 'anti-covert'] as TechCategory[]).flatMap((category) =>
+    generateCategoryTechnologies(
+      category,
+      TECHNOLOGIES_PER_CATEGORY - HANDCRAFTED_TECHNOLOGIES.filter((t) => t.category === category).length,
+    ),
+  ),
+];
+
+/** Adds any technologies missing from a saved list (older saves had only the hand-written six), keeping saved levels. */
+export function mergeTechnologies(saved: Technology[] | null | undefined): Technology[] {
+  if (!Array.isArray(saved) || saved.length === 0) return INITIAL_TECHNOLOGIES;
+  const savedIds = new Set(saved.map((t) => t.id));
+  return [...saved, ...INITIAL_TECHNOLOGIES.filter((t) => !savedIds.has(t.id))];
+}
 
 export const WEAPON_TYPES: WeaponType[] = [
   // ==================== 1. WEAPONS (SMALL ARMS) ====================

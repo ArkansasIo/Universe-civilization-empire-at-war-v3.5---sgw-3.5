@@ -10,6 +10,8 @@ interface TechnologyViewProps {
   onUpgradeTech: (techId: string) => { success: boolean; message: string };
 }
 
+const PAGE_SIZE = 18;
+
 export const TechnologyView: React.FC<TechnologyViewProps> = ({
   resources,
   technologies,
@@ -18,12 +20,17 @@ export const TechnologyView: React.FC<TechnologyViewProps> = ({
 }) => {
   const [filter, setFilter] = useState<string>(activeBranchFilter || 'all');
   const [notice, setNotice] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
   React.useEffect(() => {
     if (activeBranchFilter) {
       setFilter(activeBranchFilter);
+      setVisibleCount(PAGE_SIZE);
     }
   }, [activeBranchFilter]);
+
+  const countFor = (id: string) =>
+    id === 'all' ? technologies.length : technologies.filter((t) => t.category === id).length;
 
   const filteredTechs = technologies.filter((t) => {
     if (filter === 'all') return true;
@@ -88,6 +95,7 @@ export const TechnologyView: React.FC<TechnologyViewProps> = ({
             onClick={() => {
               sound.play('click');
               setFilter(tab.id);
+              setVisibleCount(PAGE_SIZE);
             }}
             className={`py-3 px-4 text-xs font-bold transition-colors border-b-2 ${
               filter === tab.id
@@ -95,14 +103,14 @@ export const TechnologyView: React.FC<TechnologyViewProps> = ({
                 : 'border-transparent text-[#666666] hover:text-[#111111]'
             }`}
           >
-            {tab.label}
+            {tab.label} <span className="font-mono text-[10px] text-[#888888]">({countFor(tab.id)})</span>
           </button>
         ))}
       </div>
 
       {/* Tech Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {filteredTechs.map((tech) => {
+        {filteredTechs.slice(0, visibleCount).map((tech) => {
           const cost = getUpgradeCost(tech);
           const canAfford = resources.naquadah >= cost;
 
@@ -153,6 +161,16 @@ export const TechnologyView: React.FC<TechnologyViewProps> = ({
           );
         })}
       </div>
+
+      {visibleCount < filteredTechs.length && (
+        <button
+          type="button"
+          onClick={() => setVisibleCount((v) => v + PAGE_SIZE)}
+          className="w-full py-3 bg-[#fafafa] border border-[#dedede] hover:border-[#111111] text-[#111111] text-[11px] font-bold uppercase tracking-wider transition-colors cursor-pointer"
+        >
+          Load More Technologies ({filteredTechs.length - visibleCount} remaining)
+        </button>
+      )}
     </div>
   );
 };

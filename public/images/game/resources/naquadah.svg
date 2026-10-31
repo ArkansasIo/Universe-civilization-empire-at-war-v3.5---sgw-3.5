@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="144" viewBox="0 0 256 144" fill="none">
+  <title>Naquadah</title>
+  <defs>
+    <linearGradient id="space" x2="0" y2="1"><stop stop-color="#081522"/><stop offset="1" stop-color="#101d2a"/></linearGradient>
+    <radialGradient id="haze"><stop stop-color="#92e568" stop-opacity=".2"/><stop offset="1" stop-color="#92e568" stop-opacity="0"/></radialGradient>
+    <linearGradient id="metal" x2=".15" y2="1"><stop stop-color="#dce8f1"/><stop offset=".45" stop-color="#8499a9"/><stop offset="1" stop-color="#354451"/></linearGradient>
+    <filter id="glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <pattern id="grid" width="16" height="16" patternUnits="userSpaceOnUse"><path d="M16 0H0V16" fill="none" stroke="#9ab4c7" stroke-opacity=".08" stroke-width=".6"/></pattern>
+  </defs>
+  <rect width="256" height="144" fill="url(#space)"/>
+  <ellipse cx="176" cy="58" rx="120" ry="76" fill="url(#haze)"/>
+  <rect width="256" height="144" fill="url(#grid)"/>
+  <circle cx="84" cy="79" r="1.22" fill="#d9efff" opacity="0.54"/><circle cx="222" cy="75" r="0.72" fill="#d9efff" opacity="0.74"/><circle cx="209" cy="35" r="0.48" fill="#d9efff" opacity="0.44"/><circle cx="72" cy="74" r="1.36" fill="#d9efff" opacity="0.44"/><circle cx="123" cy="84" r="0.45" fill="#d9efff" opacity="0.64"/><circle cx="11" cy="97" r="1.22" fill="#d9efff" opacity="0.35"/><circle cx="103" cy="31" r="0.50" fill="#d9efff" opacity="0.22"/><circle cx="183" cy="72" r="0.94" fill="#d9efff" opacity="0.62"/><circle cx="199" cy="28" r="1.40" fill="#d9efff" opacity="0.62"/><circle cx="121" cy="23" r="0.77" fill="#d9efff" opacity="0.71"/><circle cx="62" cy="76" r="0.52" fill="#d9efff" opacity="0.73"/><circle cx="78" cy="35" r="0.59" fill="#d9efff" opacity="0.41"/><circle cx="164" cy="92" r="0.85" fill="#d9efff" opacity="0.27"/><circle cx="17" cy="45" r="1.22" fill="#d9efff" opacity="0.74"/><circle cx="168" cy="106" r="0.48" fill="#d9efff" opacity="0.72"/><circle cx="226" cy="91" r="1.19" fill="#d9efff" opacity="0.34"/><circle cx="176" cy="81" r="0.71" fill="#d9efff" opacity="0.72"/><circle cx="92" cy="57" r="0.48" fill="#d9efff" opacity="0.60"/><circle cx="129" cy="70" r="1.42" fill="#d9efff" opacity="0.74"/><circle cx="236" cy="92" r="0.89" fill="#d9efff" opacity="0.73"/><circle cx="91" cy="96" r="1.20" fill="#d9efff" opacity="0.44"/><circle cx="73" cy="107" r="0.69" fill="#d9efff" opacity="0.48"/><circle cx="171" cy="67" r="0.99" fill="#d9efff" opacity="0.35"/><circle cx="233" cy="55" r="0.93" fill="#d9efff" opacity="0.51"/><circle cx="100" cy="33" r="0.89" fill="#d9efff" opacity="0.70"/><circle cx="149" cy="11" r="1.36" fill="#d9efff" opacity="0.48"/><circle cx="177" cy="63" r="0.44" fill="#d9efff" opacity="0.69"/>
+  <path d="M0 126H256" stroke="#92e568" stroke-opacity=".28"/>
+  <path d="M9 10h24M9 10v12M247 10h-24M247 10v12M9 134h24M9 134v-12M247 134h-24M247 134v-12" fill="none" stroke="#92e568" stroke-opacity=".55" stroke-width="1"/>
+  <ellipse cx="128" cy="120" rx="88" ry="13" fill="#92e568" opacity=".12" filter="url(#glow)"/>
+    <path d="M64 111L73 77L82 111L75 120H69Z" fill="#92e568" fill-opacity=".68" stroke="#e9fbff" stroke-opacity=".75"/>
+      <path d="M73 77L75 120M73 77L82 111" stroke="#f5ffff" stroke-opacity=".6"/><path d="M88 111L97 68L106 111L99 120H93Z" fill="#92e568" fill-opacity=".68" stroke="#e9fbff" stroke-opacity=".75"/>
+      <path d="M97 68L99 120M97 68L106 111" stroke="#f5ffff" stroke-opacity=".6"/><path d="M112 111L121 59L130 111L123 120H117Z" fill="#92e568" fill-opacity=".68" stroke="#e9fbff" stroke-opacity=".75"/>
+      <path d="M121 59L123 120M121 59L130 111" stroke="#f5ffff" stroke-opacity=".6"/><path d="M136 111L145 88L154 111L147 120H141Z" fill="#92e568" fill-opacity=".68" stroke="#e9fbff" stroke-opacity=".75"/>
+      <path d="M145 88L147 120M145 88L154 111" stroke="#f5ffff" stroke-opacity=".6"/><path d="M160 111L169 79L178 111L171 120H165Z" fill="#92e568" fill-opacity=".68" stroke="#e9fbff" stroke-opacity=".75"/>
+      <path d="M169 79L171 120M169 79L178 111" stroke="#f5ffff" stroke-opacity=".6"/><path d="M184 111L193 70L202 111L195 120H189Z" fill="#92e568" fill-opacity=".68" stroke="#e9fbff" stroke-opacity=".75"/>
+      <path d="M193 70L195 120M193 70L202 111" stroke="#f5ffff" stroke-opacity=".6"/><path d="M208 111L217 61L226 111L219 120H213Z" fill="#92e568" fill-opacity=".68" stroke="#e9fbff" stroke-opacity=".75"/>
+      <path d="M217 61L219 120M217 61L226 111" stroke="#f5ffff" stroke-opacity=".6"/>
+    <path d="M32 123H224" stroke="#92e568" stroke-opacity=".55"/>
+    <circle cx="128" cy="55" r="24" fill="none" stroke="#92e568" stroke-opacity=".2"/>
+</svg>

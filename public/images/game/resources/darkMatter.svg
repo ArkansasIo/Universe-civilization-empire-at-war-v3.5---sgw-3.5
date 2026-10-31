@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="144" viewBox="0 0 256 144" fill="none">
+  <title>Dark Matter</title>
+  <defs>
+    <linearGradient id="space" x2="0" y2="1"><stop stop-color="#081522"/><stop offset="1" stop-color="#101d2a"/></linearGradient>
+    <radialGradient id="haze"><stop stop-color="#c180ff" stop-opacity=".2"/><stop offset="1" stop-color="#c180ff" stop-opacity="0"/></radialGradient>
+    <linearGradient id="metal" x2=".15" y2="1"><stop stop-color="#dce8f1"/><stop offset=".45" stop-color="#8499a9"/><stop offset="1" stop-color="#354451"/></linearGradient>
+    <filter id="glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <pattern id="grid" width="16" height="16" patternUnits="userSpaceOnUse"><path d="M16 0H0V16" fill="none" stroke="#9ab4c7" stroke-opacity=".08" stroke-width=".6"/></pattern>
+  </defs>
+  <rect width="256" height="144" fill="url(#space)"/>
+  <ellipse cx="176" cy="58" rx="120" ry="76" fill="url(#haze)"/>
+  <rect width="256" height="144" fill="url(#grid)"/>
+  <circle cx="236" cy="37" r="0.34" fill="#d9efff" opacity="0.48"/><circle cx="6" cy="71" r="1.43" fill="#d9efff" opacity="0.24"/><circle cx="119" cy="69" r="0.46" fill="#d9efff" opacity="0.72"/><circle cx="195" cy="60" r="0.80" fill="#d9efff" opacity="0.24"/><circle cx="128" cy="18" r="0.49" fill="#d9efff" opacity="0.37"/><circle cx="83" cy="66" r="1.12" fill="#d9efff" opacity="0.32"/><circle cx="5" cy="83" r="0.34" fill="#d9efff" opacity="0.68"/><circle cx="114" cy="37" r="0.72" fill="#d9efff" opacity="0.37"/><circle cx="183" cy="83" r="1.40" fill="#d9efff" opacity="0.53"/><circle cx="168" cy="4" r="1.27" fill="#d9efff" opacity="0.59"/><circle cx="139" cy="38" r="1.28" fill="#d9efff" opacity="0.55"/><circle cx="203" cy="97" r="0.87" fill="#d9efff" opacity="0.54"/><circle cx="228" cy="91" r="0.70" fill="#d9efff" opacity="0.26"/><circle cx="188" cy="12" r="0.40" fill="#d9efff" opacity="0.74"/><circle cx="67" cy="103" r="0.67" fill="#d9efff" opacity="0.37"/><circle cx="31" cy="44" r="1.29" fill="#d9efff" opacity="0.41"/><circle cx="151" cy="64" r="0.34" fill="#d9efff" opacity="0.24"/><circle cx="38" cy="96" r="0.55" fill="#d9efff" opacity="0.47"/><circle cx="21" cy="70" r="1.18" fill="#d9efff" opacity="0.56"/><circle cx="134" cy="32" r="1.29" fill="#d9efff" opacity="0.58"/><circle cx="160" cy="63" r="0.38" fill="#d9efff" opacity="0.57"/><circle cx="96" cy="22" r="1.00" fill="#d9efff" opacity="0.23"/><circle cx="191" cy="81" r="0.98" fill="#d9efff" opacity="0.50"/><circle cx="51" cy="14" r="1.14" fill="#d9efff" opacity="0.55"/><circle cx="58" cy="65" r="0.75" fill="#d9efff" opacity="0.32"/><circle cx="242" cy="32" r="1.22" fill="#d9efff" opacity="0.25"/><circle cx="242" cy="73" r="1.34" fill="#d9efff" opacity="0.27"/>
+  <path d="M0 126H256" stroke="#c180ff" stroke-opacity=".28"/>
+  <path d="M9 10h24M9 10v12M247 10h-24M247 10v12M9 134h24M9 134v-12M247 134h-24M247 134v-12" fill="none" stroke="#c180ff" stroke-opacity=".55" stroke-width="1"/>
+  <ellipse cx="128" cy="120" rx="88" ry="13" fill="#c180ff" opacity=".12" filter="url(#glow)"/>
+    <path d="M64 111L73 77L82 111L75 120H69Z" fill="#c180ff" fill-opacity=".68" stroke="#e9fbff" stroke-opacity=".75"/>
+      <path d="M73 77L75 120M73 77L82 111" stroke="#f5ffff" stroke-opacity=".6"/><path d="M88 111L97 68L106 111L99 120H93Z" fill="#c180ff" fill-opacity=".68" stroke="#e9fbff" stroke-opacity=".75"/>
+      <path d="M97 68L99 120M97 68L106 111" stroke="#f5ffff" stroke-opacity=".6"/><path d="M112 111L121 59L130 111L123 120H117Z" fill="#c180ff" fill-opacity=".68" stroke="#e9fbff" stroke-opacity=".75"/>
+      <path d="M121 59L123 120M121 59L130 111" stroke="#f5ffff" stroke-opacity=".6"/><path d="M136 111L145 88L154 111L147 120H141Z" fill="#c180ff" fill-opacity=".68" stroke="#e9fbff" stroke-opacity=".75"/>
+      <path d="M145 88L147 120M145 88L154 111" stroke="#f5ffff" stroke-opacity=".6"/><path d="M160 111L169 79L178 111L171 120H165Z" fill="#c180ff" fill-opacity=".68" stroke="#e9fbff" stroke-opacity=".75"/>
+      <path d="M169 79L171 120M169 79L178 111" stroke="#f5ffff" stroke-opacity=".6"/><path d="M184 111L193 70L202 111L195 120H189Z" fill="#c180ff" fill-opacity=".68" stroke="#e9fbff" stroke-opacity=".75"/>
+      <path d="M193 70L195 120M193 70L202 111" stroke="#f5ffff" stroke-opacity=".6"/>
+    <path d="M32 123H224" stroke="#c180ff" stroke-opacity=".55"/>
+    <circle cx="128" cy="55" r="24" fill="none" stroke="#c180ff" stroke-opacity=".2"/>
+</svg>

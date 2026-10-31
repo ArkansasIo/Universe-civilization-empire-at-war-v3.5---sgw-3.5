@@ -1,4 +1,4 @@
-# Universe Civilization: Empire at Wars — Master Game Design Document (GDD)
+start# Universe Civilization: Empire at Wars — Master Game Design Document (GDD)
 
 > **Document Classification**: Lead Architect & Game Design Specification  
 > **Status**: Living Master Specification (v3.2.0)  

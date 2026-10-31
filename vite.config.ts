@@ -21,4 +21,26 @@ export default defineConfig(() => ({
     hmr: process.env.DISABLE_HMR !== 'true',
     watch: process.env.DISABLE_HMR === 'true' ? null : {},
   },
+  build: {
+    rolldownOptions: {
+      output: {
+        codeSplitting: {
+          groups: [
+            {
+              name: 'game-data',
+              test: /src[\\/](gameData|ogameData|adminData|cronData|dailyMissionsData|planetarySystemData|mothershipData)\.ts$/,
+              maxSize: 300_000,
+              priority: 20,
+            },
+            {
+              name: 'vendor',
+              test: /node_modules[\\/]/,
+              maxSize: 400_000,
+              priority: 10,
+            },
+          ],
+        },
+      },
+    },
+  },
 }));

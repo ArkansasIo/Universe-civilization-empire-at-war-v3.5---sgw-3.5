@@ -26,6 +26,10 @@ const registered = await auth.register('SmokeCommander', 'correct-horse-battery'
 assert.equal(registered.playerId, player.id);
 assert.equal((await auth.validateSession(registered.sessionToken, 2_000)).playerId, player.id);
 await assert.rejects(() => auth.register('smokecommander', 'another-password-123', player, 1_500), /USERNAME_EXISTS/);
+await assert.rejects(
+  () => auth.validateSession(registered.sessionToken, registered.expiresAt),
+  /SESSION_INVALID/,
+);
 
 const loggedIn = await auth.login('smokecommander', 'correct-horse-battery', 3_000);
 assert.equal(loggedIn.username, 'smokecommander');

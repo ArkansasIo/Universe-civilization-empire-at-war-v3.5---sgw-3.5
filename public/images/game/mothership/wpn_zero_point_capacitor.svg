@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="144" viewBox="0 0 256 144" fill="none">
+  <title>Zero-Point Auxiliary Capacitors</title>
+  <defs>
+    <linearGradient id="space" x2="0" y2="1"><stop stop-color="#081522"/><stop offset="1" stop-color="#101d2a"/></linearGradient>
+    <radialGradient id="haze"><stop stop-color="#a58bff" stop-opacity=".2"/><stop offset="1" stop-color="#a58bff" stop-opacity="0"/></radialGradient>
+    <linearGradient id="metal" x2=".15" y2="1"><stop stop-color="#dce8f1"/><stop offset=".45" stop-color="#8499a9"/><stop offset="1" stop-color="#354451"/></linearGradient>
+    <filter id="glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <pattern id="grid" width="16" height="16" patternUnits="userSpaceOnUse"><path d="M16 0H0V16" fill="none" stroke="#9ab4c7" stroke-opacity=".08" stroke-width=".6"/></pattern>
+  </defs>
+  <rect width="256" height="144" fill="url(#space)"/>
+  <ellipse cx="176" cy="58" rx="120" ry="76" fill="url(#haze)"/>
+  <rect width="256" height="144" fill="url(#grid)"/>
+  <circle cx="156" cy="45" r="1.43" fill="#d9efff" opacity="0.35"/><circle cx="85" cy="81" r="0.57" fill="#d9efff" opacity="0.27"/><circle cx="144" cy="57" r="0.99" fill="#d9efff" opacity="0.47"/><circle cx="184" cy="41" r="1.16" fill="#d9efff" opacity="0.66"/><circle cx="76" cy="29" r="0.39" fill="#d9efff" opacity="0.22"/><circle cx="65" cy="69" r="0.61" fill="#d9efff" opacity="0.46"/><circle cx="235" cy="19" r="0.95" fill="#d9efff" opacity="0.27"/><circle cx="54" cy="74" r="1.21" fill="#d9efff" opacity="0.25"/><circle cx="242" cy="73" r="0.48" fill="#d9efff" opacity="0.64"/><circle cx="99" cy="17" r="0.86" fill="#d9efff" opacity="0.32"/><circle cx="113" cy="79" r="0.79" fill="#d9efff" opacity="0.20"/><circle cx="127" cy="78" r="1.06" fill="#d9efff" opacity="0.20"/><circle cx="33" cy="93" r="0.66" fill="#d9efff" opacity="0.60"/><circle cx="102" cy="47" r="0.30" fill="#d9efff" opacity="0.61"/><circle cx="86" cy="100" r="0.60" fill="#d9efff" opacity="0.26"/><circle cx="45" cy="30" r="0.52" fill="#d9efff" opacity="0.31"/><circle cx="179" cy="41" r="1.12" fill="#d9efff" opacity="0.56"/><circle cx="242" cy="60" r="1.14" fill="#d9efff" opacity="0.30"/><circle cx="177" cy="9" r="1.34" fill="#d9efff" opacity="0.50"/><circle cx="180" cy="82" r="0.50" fill="#d9efff" opacity="0.22"/><circle cx="233" cy="73" r="1.39" fill="#d9efff" opacity="0.75"/><circle cx="153" cy="104" r="1.05" fill="#d9efff" opacity="0.41"/><circle cx="81" cy="71" r="0.60" fill="#d9efff" opacity="0.53"/><circle cx="100" cy="92" r="1.06" fill="#d9efff" opacity="0.58"/><circle cx="18" cy="78" r="0.63" fill="#d9efff" opacity="0.69"/><circle cx="128" cy="20" r="0.53" fill="#d9efff" opacity="0.26"/><circle cx="107" cy="104" r="0.94" fill="#d9efff" opacity="0.63"/>
+  <path d="M0 126H256" stroke="#a58bff" stroke-opacity=".28"/>
+  <path d="M9 10h24M9 10v12M247 10h-24M247 10v12M9 134h24M9 134v-12M247 134h-24M247 134v-12" fill="none" stroke="#a58bff" stroke-opacity=".55" stroke-width="1"/>
+  <g style="color:#a58bff">
+    <path d="M60 116H199L183 131H74Z" fill="#253b4a" stroke="#a58bff" stroke-opacity=".7"/>
+    <path d="M82 112L94 88L132 75L159 90L169 113Z" fill="url(#metal)" stroke="#e4f0f7" stroke-opacity=".58"/>
+    <circle cx="126" cy="91" r="10" fill="#172a39" stroke="#a58bff" stroke-width="2"/>
+    <path d="M122 73L176 51L183 55L133 82Z" fill="url(#metal)" stroke="#dce9f3" stroke-opacity=".5"/><path d="M174 53L220 34" stroke="currentColor" stroke-width="2.5" filter="url(#glow)"/>
+    <path d="M99 117V128M159 116V128" stroke="#8ba1b1" stroke-width="4"/>
+    <path d="M54 132H207M69 137H192" stroke="#a58bff" stroke-opacity=".4"/>
+    <circle cx="87" cy="123" r="2" fill="#a58bff" filter="url(#glow)"/>
+  </g>
+</svg>

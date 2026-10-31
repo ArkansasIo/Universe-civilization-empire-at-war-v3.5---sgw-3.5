@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="144" viewBox="0 0 256 144" fill="none">
+  <title>Computer Technology</title>
+  <defs>
+    <linearGradient id="space" x2="0" y2="1"><stop stop-color="#081522"/><stop offset="1" stop-color="#101d2a"/></linearGradient>
+    <radialGradient id="haze"><stop stop-color="#5bd7ff" stop-opacity=".2"/><stop offset="1" stop-color="#5bd7ff" stop-opacity="0"/></radialGradient>
+    <linearGradient id="metal" x2=".15" y2="1"><stop stop-color="#dce8f1"/><stop offset=".45" stop-color="#8499a9"/><stop offset="1" stop-color="#354451"/></linearGradient>
+    <filter id="glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <pattern id="grid" width="16" height="16" patternUnits="userSpaceOnUse"><path d="M16 0H0V16" fill="none" stroke="#9ab4c7" stroke-opacity=".08" stroke-width=".6"/></pattern>
+  </defs>
+  <rect width="256" height="144" fill="url(#space)"/>
+  <ellipse cx="176" cy="58" rx="120" ry="76" fill="url(#haze)"/>
+  <rect width="256" height="144" fill="url(#grid)"/>
+  <circle cx="179" cy="63" r="0.37" fill="#d9efff" opacity="0.44"/><circle cx="99" cy="10" r="1.40" fill="#d9efff" opacity="0.70"/><circle cx="233" cy="14" r="0.57" fill="#d9efff" opacity="0.67"/><circle cx="161" cy="33" r="0.62" fill="#d9efff" opacity="0.62"/><circle cx="52" cy="20" r="0.92" fill="#d9efff" opacity="0.35"/><circle cx="213" cy="46" r="0.65" fill="#d9efff" opacity="0.55"/><circle cx="32" cy="33" r="0.46" fill="#d9efff" opacity="0.74"/><circle cx="82" cy="94" r="1.19" fill="#d9efff" opacity="0.63"/><circle cx="99" cy="85" r="1.14" fill="#d9efff" opacity="0.27"/><circle cx="191" cy="43" r="1.34" fill="#d9efff" opacity="0.47"/><circle cx="87" cy="52" r="1.41" fill="#d9efff" opacity="0.57"/><circle cx="215" cy="23" r="0.49" fill="#d9efff" opacity="0.66"/><circle cx="7" cy="75" r="0.35" fill="#d9efff" opacity="0.46"/><circle cx="96" cy="50" r="0.40" fill="#d9efff" opacity="0.32"/><circle cx="201" cy="74" r="0.60" fill="#d9efff" opacity="0.73"/><circle cx="215" cy="108" r="0.43" fill="#d9efff" opacity="0.65"/><circle cx="161" cy="32" r="1.09" fill="#d9efff" opacity="0.58"/><circle cx="202" cy="52" r="0.98" fill="#d9efff" opacity="0.61"/><circle cx="200" cy="88" r="1.33" fill="#d9efff" opacity="0.60"/><circle cx="138" cy="66" r="1.15" fill="#d9efff" opacity="0.28"/><circle cx="50" cy="53" r="1.14" fill="#d9efff" opacity="0.65"/><circle cx="136" cy="108" r="1.10" fill="#d9efff" opacity="0.74"/><circle cx="75" cy="95" r="0.48" fill="#d9efff" opacity="0.41"/><circle cx="85" cy="15" r="1.11" fill="#d9efff" opacity="0.59"/><circle cx="142" cy="107" r="0.50" fill="#d9efff" opacity="0.41"/><circle cx="12" cy="65" r="0.56" fill="#d9efff" opacity="0.59"/><circle cx="122" cy="40" r="1.19" fill="#d9efff" opacity="0.64"/>
+  <path d="M0 126H256" stroke="#5bd7ff" stroke-opacity=".28"/>
+  <path d="M9 10h24M9 10v12M247 10h-24M247 10v12M9 134h24M9 134v-12M247 134h-24M247 134v-12" fill="none" stroke="#5bd7ff" stroke-opacity=".55" stroke-width="1"/>
+  <g style="color:#5bd7ff">
+    <path d="M128 69L177.1 85.2" stroke="#5bd7ff" stroke-opacity=".32"/><circle cx="177.1" cy="85.2" r="3" fill="#142534" stroke="#5bd7ff"/><path d="M128 69L119.6 104.6" stroke="#5bd7ff" stroke-opacity=".32"/><circle cx="119.6" cy="104.6" r="3" fill="#142534" stroke="#5bd7ff"/><path d="M128 69L73.7 74.8" stroke="#5bd7ff" stroke-opacity=".32"/><circle cx="73.7" cy="74.8" r="3" fill="#142534" stroke="#5bd7ff"/><path d="M128 69L102.8 37.0" stroke="#5bd7ff" stroke-opacity=".32"/><circle cx="102.8" cy="37.0" r="3" fill="#142534" stroke="#5bd7ff"/><path d="M128 69L166.7 43.4" stroke="#5bd7ff" stroke-opacity=".32"/><circle cx="166.7" cy="43.4" r="3" fill="#142534" stroke="#5bd7ff"/>
+    <circle cx="128" cy="69" r="49" fill="none" stroke="#5bd7ff" stroke-opacity=".18"/>
+    <circle cx="128" cy="69" r="35" fill="#0b1824" fill-opacity=".72" stroke="#5bd7ff" stroke-opacity=".42"/>
+    <circle cx="128" cy="68" r="18" fill="#102332" stroke="currentColor"/><ellipse cx="128" cy="68" rx="41" ry="15" fill="none" stroke="currentColor" transform="rotate(-32 128 68)"/><ellipse cx="128" cy="68" rx="41" ry="15" fill="none" stroke="currentColor" transform="rotate(32 128 68)"/><circle cx="128" cy="68" r="5" fill="currentColor" filter="url(#glow)"/>
+    <path d="M128 25V31M128 107V113M80 69H86M170 69H176" stroke="#5bd7ff" stroke-width="2"/>
+    <path d="M24 111H74M182 111H232" stroke="#5bd7ff" stroke-opacity=".42"/>
+    <text x="128" y="126" fill="#b9cddd" font-family="monospace" font-size="7" letter-spacing="2" text-anchor="middle" opacity=".72">RESEARCH SYSTEM • 600</text>
+  </g>
+</svg>

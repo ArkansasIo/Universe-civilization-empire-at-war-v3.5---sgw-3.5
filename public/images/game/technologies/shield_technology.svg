@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="144" viewBox="0 0 256 144" fill="none">
+  <title>Shield Technology</title>
+  <defs>
+    <linearGradient id="space" x2="0" y2="1"><stop stop-color="#081522"/><stop offset="1" stop-color="#101d2a"/></linearGradient>
+    <radialGradient id="haze"><stop stop-color="#ff806b" stop-opacity=".2"/><stop offset="1" stop-color="#ff806b" stop-opacity="0"/></radialGradient>
+    <linearGradient id="metal" x2=".15" y2="1"><stop stop-color="#dce8f1"/><stop offset=".45" stop-color="#8499a9"/><stop offset="1" stop-color="#354451"/></linearGradient>
+    <filter id="glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <pattern id="grid" width="16" height="16" patternUnits="userSpaceOnUse"><path d="M16 0H0V16" fill="none" stroke="#9ab4c7" stroke-opacity=".08" stroke-width=".6"/></pattern>
+  </defs>
+  <rect width="256" height="144" fill="url(#space)"/>
+  <ellipse cx="176" cy="58" rx="120" ry="76" fill="url(#haze)"/>
+  <rect width="256" height="144" fill="url(#grid)"/>
+  <circle cx="223" cy="59" r="0.47" fill="#d9efff" opacity="0.43"/><circle cx="69" cy="61" r="1.07" fill="#d9efff" opacity="0.49"/><circle cx="54" cy="5" r="1.06" fill="#d9efff" opacity="0.58"/><circle cx="144" cy="58" r="0.51" fill="#d9efff" opacity="0.53"/><circle cx="130" cy="46" r="0.31" fill="#d9efff" opacity="0.24"/><circle cx="59" cy="89" r="0.88" fill="#d9efff" opacity="0.30"/><circle cx="29" cy="19" r="1.02" fill="#d9efff" opacity="0.61"/><circle cx="171" cy="66" r="1.29" fill="#d9efff" opacity="0.55"/><circle cx="190" cy="31" r="0.53" fill="#d9efff" opacity="0.72"/><circle cx="151" cy="98" r="1.07" fill="#d9efff" opacity="0.65"/><circle cx="30" cy="55" r="1.40" fill="#d9efff" opacity="0.48"/><circle cx="80" cy="15" r="0.39" fill="#d9efff" opacity="0.30"/><circle cx="162" cy="76" r="0.46" fill="#d9efff" opacity="0.27"/><circle cx="199" cy="88" r="1.13" fill="#d9efff" opacity="0.63"/><circle cx="46" cy="60" r="0.79" fill="#d9efff" opacity="0.48"/><circle cx="53" cy="99" r="0.82" fill="#d9efff" opacity="0.22"/><circle cx="241" cy="70" r="0.85" fill="#d9efff" opacity="0.34"/><circle cx="4" cy="14" r="0.44" fill="#d9efff" opacity="0.38"/><circle cx="80" cy="87" r="0.95" fill="#d9efff" opacity="0.58"/><circle cx="162" cy="66" r="0.88" fill="#d9efff" opacity="0.39"/><circle cx="207" cy="81" r="0.51" fill="#d9efff" opacity="0.39"/><circle cx="192" cy="27" r="0.56" fill="#d9efff" opacity="0.42"/><circle cx="34" cy="12" r="1.18" fill="#d9efff" opacity="0.38"/><circle cx="11" cy="87" r="1.15" fill="#d9efff" opacity="0.39"/><circle cx="58" cy="68" r="0.92" fill="#d9efff" opacity="0.51"/><circle cx="124" cy="88" r="0.79" fill="#d9efff" opacity="0.45"/><circle cx="98" cy="97" r="0.63" fill="#d9efff" opacity="0.60"/>
+  <path d="M0 126H256" stroke="#ff806b" stroke-opacity=".28"/>
+  <path d="M9 10h24M9 10v12M247 10h-24M247 10v12M9 134h24M9 134v-12M247 134h-24M247 134v-12" fill="none" stroke="#ff806b" stroke-opacity=".55" stroke-width="1"/>
+  <g style="color:#ff806b">
+    <path d="M128 69L181.9 76.2" stroke="#ff806b" stroke-opacity=".32"/><circle cx="181.9" cy="76.2" r="3" fill="#142534" stroke="#ff806b"/><path d="M128 69L134.3 104.8" stroke="#ff806b" stroke-opacity=".32"/><circle cx="134.3" cy="104.8" r="3" fill="#142534" stroke="#ff806b"/><path d="M128 69L78.0 84.0" stroke="#ff806b" stroke-opacity=".32"/><circle cx="78.0" cy="84.0" r="3" fill="#142534" stroke="#ff806b"/><path d="M128 69L90.8 42.5" stroke="#ff806b" stroke-opacity=".32"/><circle cx="90.8" cy="42.5" r="3" fill="#142534" stroke="#ff806b"/><path d="M128 69L155.0 37.7" stroke="#ff806b" stroke-opacity=".32"/><circle cx="155.0" cy="37.7" r="3" fill="#142534" stroke="#ff806b"/>
+    <circle cx="128" cy="69" r="49" fill="none" stroke="#ff806b" stroke-opacity=".18"/>
+    <circle cx="128" cy="69" r="35" fill="#0b1824" fill-opacity=".72" stroke="#ff806b" stroke-opacity=".42"/>
+    <path d="M128 42L151 67L128 94L105 67Z" fill="#132433" stroke="currentColor"/><circle cx="128" cy="67" r="13" fill="none" stroke="currentColor"/><path d="M128 49V58M128 76V85M110 67H119M137 67H146" stroke="currentColor"/>
+    <path d="M128 25V31M128 107V113M80 69H86M170 69H176" stroke="#ff806b" stroke-width="2"/>
+    <path d="M24 111H74M182 111H232" stroke="#ff806b" stroke-opacity=".42"/>
+    <text x="128" y="126" fill="#b9cddd" font-family="monospace" font-size="7" letter-spacing="2" text-anchor="middle" opacity=".72">RESEARCH SYSTEM • 843</text>
+  </g>
+</svg>

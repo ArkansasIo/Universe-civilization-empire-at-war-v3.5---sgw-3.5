@@ -159,7 +159,11 @@ const replay = await executor.execute(request, principal);
 assert.deepEqual(replay, first);
 assert.equal(replay.state?.resources.naquadah, 800);
 
-const differentKeySameCommand = await executor.execute({ ...request, idempotencyKey: 'idem-persist-2' }, principal);
+const differentKeySameCommand = await executor.execute({
+  ...request,
+  idempotencyKey: 'idem-persist-2',
+  payload: { ...request.payload, cost: { naquadah: 200 } },
+}, principal);
 assert.equal(differentKeySameCommand.accepted, false);
 assert.equal(differentKeySameCommand.reason, 'COMMAND_ID_REUSED_WITH_DIFFERENT_REQUEST');
 

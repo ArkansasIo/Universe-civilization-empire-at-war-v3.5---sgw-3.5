@@ -51,8 +51,33 @@ export interface CraftingPreviewResponse {
 export function isCraftingUpgradeRequest(value: unknown): value is CraftingUpgradeRequest {
   if (!value || typeof value !== "object") return false;
   const request = value as Partial<CraftingUpgradeRequest>;
-  return typeof request.requestId === "string" && typeof request.playerId === "string" &&
-    !!request.item && !!request.state && !!request.inventory &&
-    typeof request.currency === "number" &&
-    (request.track === "tempering" || request.track === "masterworking");
+  if (
+    typeof request.requestId !== "string" ||
+    request.requestId.length === 0 ||
+    typeof request.playerId !== "string" ||
+    request.playerId.length === 0 ||
+    !request.item ||
+    typeof request.item.id !== "string" ||
+    request.item.id.length === 0 ||
+    !request.state ||
+    request.state.itemId !== request.item.id ||
+    !Number.isSafeInteger(request.state.temperLevel) ||
+    request.state.temperLevel < 0 ||
+    !Number.isSafeInteger(request.state.masterworkRank) ||
+    request.state.masterworkRank < 0 ||
+    typeof request.state.damaged !== "boolean" ||
+    !request.inventory ||
+    !request.inventory.materials ||
+    typeof request.inventory.materials !== "object" ||
+    Array.isArray(request.inventory.materials) ||
+    typeof request.currency !== "number" ||
+    !Number.isFinite(request.currency) ||
+    request.currency < 0 ||
+    (request.track !== "tempering" && request.track !== "masterworking")
+  ) {
+    return false;
+  }
+  return Object.values(request.inventory.materials).every(
+    (quantity) => typeof quantity === "number" && Number.isFinite(quantity) && quantity >= 0,
+  );
 }

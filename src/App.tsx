@@ -36,6 +36,7 @@ import {
   INITIAL_RANKINGS,
   INITIAL_RESOURCES,
   INITIAL_TECHNOLOGIES,
+  mergeTechnologies,
   MERCENARY_CONTRACTS,
   RACES,
   TARGET_REALMS,
@@ -107,75 +108,77 @@ import {
 } from './data/ogameAdminData';
 
 // Views
-import { DashboardView } from './components/views/DashboardView';
-import { ResourcesView } from './components/views/ResourcesView';
-import { StashVaultsView } from './components/views/StashVaultsView';
-import { IncomeView } from './components/views/IncomeView';
-import { MilitaryScoresView } from './components/views/MilitaryScoresView';
-import { CombatView } from './components/views/CombatView';
-import { SpyView } from './components/views/SpyView';
-import { AttackLogView } from './components/views/AttackLogView';
-import { ArmoryView } from './components/views/ArmoryView';
-import { TrainingView } from './components/views/TrainingView';
-import { TechnologyView } from './components/views/TechnologyView';
-import { IntelligenceView } from './components/views/IntelligenceView';
-import { MarketView } from './components/views/MarketView';
-import { RankingsView } from './components/views/RankingsView';
-import { PlanetsView } from './components/views/PlanetsView';
-import { MothershipView } from './components/views/MothershipView';
-import { AccountView } from './components/views/AccountView';
-import { CronSystemView } from './components/views/CronSystemView';
-import { TechTreeView } from './components/views/TechTreeView';
-import { ResearchLibraryView } from './components/views/ResearchLibraryView';
-import { FactoryView } from './components/views/FactoryView';
-import { ShipyardView } from './components/views/ShipyardView';
-import { DefenseView } from './components/views/DefenseView';
-import { ExpeditionView } from './components/views/ExpeditionView';
-import { MegastructureView } from './components/views/MegastructureView';
-import { UniverseView } from './components/views/UniverseView';
+import {
+  DashboardView,
+  ResourcesView,
+  StashVaultsView,
+  IncomeView,
+  MilitaryScoresView,
+  CombatView,
+  SpyView,
+  AttackLogView,
+  ArmoryView,
+  TrainingView,
+  TechnologyView,
+  IntelligenceView,
+  MarketView,
+  RankingsView,
+  PlanetsView,
+  MothershipView,
+  AccountView,
+  CronSystemView,
+  TechTreeView,
+  ResearchLibraryView,
+  FactoryView,
+  ShipyardView,
+  DefenseView,
+  ExpeditionView,
+  MegastructureView,
+  UniverseView,
+  PlanetaryPowerView,
+  SpaceStationView,
+  MoonBaseView,
+  BankVaultView,
+  EveBlueprintsView,
+  TechArchiveView,
+  TemperingForgeView,
+  ConstructionYardView,
+  NMSUniverseView,
+  UnitRoster90View,
+  StargateNetworkView,
+  StargateRelicsView,
+  GateTokensSystemView,
+  TurnSystemView,
+  PlanetaryInvasionView,
+  StoreBattlePassView,
+  AccountProfilesView,
+  CommanderSystemView,
+  ProfileSystemView,
+  MMORPGOgameView,
+  HyperspaceView,
+  StellarEncyclopediaView,
+  StargateNpcRacesView,
+  StargateSystemLordsPvEView,
+  AdminControlPanelView,
+  ShipFittingView,
+  CivilizationView,
+  GovernmentSystemView,
+  DevelopmentCreditsView,
+  DiplomacyView,
+  MissionsView,
+  GalacticNewsView,
+  CodexDocumentationView,
+  AICSystemView,
+  MasterUpgradesView,
+  NemesisSystemView,
+  AddWorldsUniverseBossView,
+  WorkforceAcademyView,
+} from './components/lazyViews';
 import { Footer } from './components/Footer';
 import { TitleScreen } from './components/auth/TitleScreen';
-import { PlanetaryPowerView } from './components/views/PlanetaryPowerView';
-import { SpaceStationView } from './components/views/SpaceStationView';
-import { MoonBaseView } from './components/views/MoonBaseView';
-import { BankVaultView } from './components/views/BankVaultView';
-import { EveBlueprintsView } from './components/views/EveBlueprintsView';
-import { TechArchiveView } from './components/views/TechArchiveView';
-import { TemperingForgeView } from './components/views/TemperingForgeView';
-import { ConstructionYardView } from './components/views/ConstructionYardView';
-import { NMSUniverseView } from './components/views/NMSUniverseView';
-import { UnitRoster90View } from './components/views/UnitRoster90View';
-import { StargateNetworkView } from './components/views/StargateNetworkView';
-import { StargateRelicsView } from './components/views/stargate/StargateRelicsView';
-import { GateTokensSystemView } from './components/views/stargate/GateTokensSystemView';
-import { TurnSystemView } from './components/views/TurnSystemView';
-import { PlanetaryInvasionView } from './components/views/PlanetaryInvasionView';
-import { StoreBattlePassView } from './components/views/StoreBattlePassView';
-import { AccountProfilesView } from './components/views/AccountProfilesView';
-import { CommanderSystemView } from './components/views/CommanderSystemView';
-import { ProfileSystemView } from './components/views/ProfileSystemView';
-import { MMORPGOgameView } from './components/views/MMORPGOgameView';
-import { HyperspaceView } from './components/views/HyperspaceView';
-import { StellarEncyclopediaView } from './components/views/StellarEncyclopediaView';
-import { StargateNpcRacesView } from './components/views/StargateNpcRacesView';
-import { StargateSystemLordsPvEView } from './components/views/StargateSystemLordsPvEView';
-import { AdminControlPanelView } from './components/views/AdminControlPanelView';
-import { ShipFittingView } from './components/views/ShipFittingView';
-import { CivilizationView } from './components/views/CivilizationView';
-import { GovernmentSystemView } from './components/views/GovernmentSystemView';
-import { DevelopmentCreditsView } from './components/views/DevelopmentCreditsView';
-import { DiplomacyView } from './components/views/DiplomacyView';
-import { MissionsView } from './components/views/MissionsView';
-import { GalacticNewsView } from './components/views/GalacticNewsView';
-import { CodexDocumentationView } from './components/views/CodexDocumentationView';
 import { applyThemeToDOM, getActiveThemeId } from './config/themeConfig';
-import { AICSystemView } from './components/views/AICSystemView';
-import { MasterUpgradesView } from './components/views/MasterUpgradesView';
-import { NemesisSystemView } from './components/views/NemesisSystemView';
-import { AddWorldsUniverseBossView } from './components/views/AddWorldsUniverseBossView';
 import { LiveSystemRouteBar } from './components/LiveSystemRouteBar';
 import { PageHeaderCommandDeck } from './components/PageHeaderCommandDeck';
-import { WorkforceAcademyView } from './components/views/WorkforceAcademyView';
 import {
   WorkforceAcademyState,
   DEFAULT_WORKFORCE_ACADEMY_STATE,
@@ -317,7 +320,7 @@ export default function App() {
     return loaded;
   });
   const [technologies, setTechnologies] = useState<Technology[]>(() =>
-    loadStored('technologies', INITIAL_TECHNOLOGIES)
+    mergeTechnologies(loadStored<Technology[] | null>('technologies', null))
   );
   const [playerWeapons, setPlayerWeapons] = useState<PlayerWeapon[]>(() =>
     loadStored('weapons', INITIAL_PLAYER_WEAPONS)
@@ -2847,7 +2850,7 @@ export default function App() {
       const parsed = JSON.parse(json);
       if (parsed.profile) setProfile(parsed.profile);
       if (parsed.resources) setResources(parsed.resources);
-      if (parsed.technologies) setTechnologies(parsed.technologies);
+      if (parsed.technologies) setTechnologies(mergeTechnologies(parsed.technologies));
       if (parsed.ogameTechnologies) setOgameTechnologies(parsed.ogameTechnologies);
       if (parsed.ogameFacilities) setOgameFacilities(parsed.ogameFacilities);
       if (parsed.ogameShips) setOgameShips(parsed.ogameShips);
@@ -3121,16 +3124,18 @@ export default function App() {
 
   if (!isLoggedIn) {
     return (
-      <TitleScreen
-        profile={profile}
-        onLogin={handleLogin}
-        onRegister={handleRegister}
-        onQuickStart={() => {
-          setIsLoggedIn(true);
-          localStorage.setItem('uc_state_isLoggedIn', JSON.stringify(true));
-        }}
-        onRootAdminLogin={handleRootAdminLoginSuccess}
-      />
+      <React.Suspense fallback={<div role="status">Loading sign-in…</div>}>
+        <TitleScreen
+          profile={profile}
+          onLogin={handleLogin}
+          onRegister={handleRegister}
+          onQuickStart={() => {
+            setIsLoggedIn(true);
+            localStorage.setItem('uc_state_isLoggedIn', JSON.stringify(true));
+          }}
+          onRootAdminLogin={handleRootAdminLoginSuccess}
+        />
+      </React.Suspense>
     );
   }
 
@@ -3275,6 +3280,13 @@ export default function App() {
             />
 
             {/* View Routers */}
+            <React.Suspense
+              fallback={
+                <div className="border border-[#dedede] bg-white p-6 text-sm text-[#555555]" role="status">
+                  Loading command view…
+                </div>
+              }
+            >
             {activeRoute === 'dashboard' && (
               <DashboardView
                 profile={profile}
@@ -4134,6 +4146,7 @@ export default function App() {
             {activeRoute === 'codex-doc' && (
               <CodexDocumentationView />
             )}
+            </React.Suspense>
           </div>
         </main>
         <Footer

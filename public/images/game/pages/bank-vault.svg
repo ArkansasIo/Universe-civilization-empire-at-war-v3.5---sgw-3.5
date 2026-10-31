@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="144" viewBox="0 0 256 144" fill="none">
+  <title>Imperial Bank &amp; Vault</title>
+  <defs>
+    <linearGradient id="space" x2="0" y2="1"><stop stop-color="#081522"/><stop offset="1" stop-color="#101d2a"/></linearGradient>
+    <radialGradient id="haze"><stop stop-color="#f5cb6b" stop-opacity=".2"/><stop offset="1" stop-color="#f5cb6b" stop-opacity="0"/></radialGradient>
+    <linearGradient id="metal" x2=".15" y2="1"><stop stop-color="#dce8f1"/><stop offset=".45" stop-color="#8499a9"/><stop offset="1" stop-color="#354451"/></linearGradient>
+    <filter id="glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <pattern id="grid" width="16" height="16" patternUnits="userSpaceOnUse"><path d="M16 0H0V16" fill="none" stroke="#9ab4c7" stroke-opacity=".08" stroke-width=".6"/></pattern>
+  </defs>
+  <rect width="256" height="144" fill="url(#space)"/>
+  <ellipse cx="176" cy="58" rx="120" ry="76" fill="url(#haze)"/>
+  <rect width="256" height="144" fill="url(#grid)"/>
+  <circle cx="170" cy="100" r="0.74" fill="#d9efff" opacity="0.69"/><circle cx="24" cy="49" r="1.08" fill="#d9efff" opacity="0.21"/><circle cx="48" cy="55" r="1.10" fill="#d9efff" opacity="0.32"/><circle cx="122" cy="25" r="1.38" fill="#d9efff" opacity="0.57"/><circle cx="196" cy="44" r="0.64" fill="#d9efff" opacity="0.41"/><circle cx="115" cy="48" r="1.36" fill="#d9efff" opacity="0.29"/><circle cx="145" cy="95" r="0.45" fill="#d9efff" opacity="0.29"/><circle cx="38" cy="43" r="1.10" fill="#d9efff" opacity="0.57"/><circle cx="203" cy="102" r="0.48" fill="#d9efff" opacity="0.33"/><circle cx="208" cy="59" r="1.27" fill="#d9efff" opacity="0.40"/><circle cx="50" cy="56" r="1.25" fill="#d9efff" opacity="0.32"/><circle cx="37" cy="57" r="0.39" fill="#d9efff" opacity="0.42"/><circle cx="129" cy="70" r="0.69" fill="#d9efff" opacity="0.32"/><circle cx="154" cy="17" r="1.08" fill="#d9efff" opacity="0.52"/><circle cx="151" cy="97" r="1.12" fill="#d9efff" opacity="0.75"/><circle cx="135" cy="56" r="1.18" fill="#d9efff" opacity="0.48"/><circle cx="150" cy="74" r="1.14" fill="#d9efff" opacity="0.55"/><circle cx="33" cy="21" r="0.63" fill="#d9efff" opacity="0.39"/><circle cx="126" cy="77" r="1.02" fill="#d9efff" opacity="0.69"/><circle cx="247" cy="40" r="1.43" fill="#d9efff" opacity="0.23"/><circle cx="20" cy="53" r="1.00" fill="#d9efff" opacity="0.72"/><circle cx="233" cy="24" r="1.41" fill="#d9efff" opacity="0.40"/><circle cx="10" cy="95" r="0.53" fill="#d9efff" opacity="0.64"/><circle cx="14" cy="22" r="0.63" fill="#d9efff" opacity="0.23"/><circle cx="138" cy="82" r="0.75" fill="#d9efff" opacity="0.35"/><circle cx="38" cy="49" r="0.56" fill="#d9efff" opacity="0.23"/><circle cx="23" cy="71" r="1.01" fill="#d9efff" opacity="0.48"/>
+  <path d="M0 126H256" stroke="#f5cb6b" stroke-opacity=".28"/>
+  <path d="M9 10h24M9 10v12M247 10h-24M247 10v12M9 134h24M9 134v-12M247 134h-24M247 134v-12" fill="none" stroke="#f5cb6b" stroke-opacity=".55" stroke-width="1"/>
+  <g style="color:#f5cb6b">
+    <circle cx="128" cy="71" r="59" fill="none" stroke="currentColor" stroke-opacity=".18"/>
+    <path d="M84 55H167L152 42M172 89H89L104 102" fill="none" stroke="currentColor" stroke-width="4"/><circle cx="128" cy="72" r="27" fill="#112433" stroke="currentColor" stroke-width="2"/><path d="M128 52V92M139 60C136 55 119 55 118 64C117 70 139 70 138 79C137 90 119 89 116 83" stroke="currentColor" stroke-width="3"/>
+    <path d="M23 118H67M189 118H233" stroke="currentColor" stroke-opacity=".45"/>
+    <text x="128" y="130" fill="#b9cddd" font-family="monospace" font-size="7" letter-spacing="2" text-anchor="middle" opacity=".72">SYSTEM DOSSIER • 495</text>
+  </g>
+</svg>
