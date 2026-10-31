@@ -6,6 +6,7 @@ import {
   FactoryQueueItem,
 } from '../../types';
 import { sound } from '../../sound';
+import { getGameImage } from '../../utils/gameImages';
 
 interface FactoryViewProps {
   facilities: OGameFacility[];
@@ -236,6 +237,14 @@ export const FactoryView: React.FC<FactoryViewProps> = ({
                 className="border border-[#111111] bg-white p-4 flex flex-col justify-between"
               >
                 <div>
+                  {getGameImage('buildings', facility.id) && (
+                    <img
+                      src={getGameImage('buildings', facility.id)}
+                      alt={facility.name}
+                      loading="lazy"
+                      className="w-full aspect-video object-cover border border-[#111111] mb-3"
+                    />
+                  )}
                   <div className="flex items-start justify-between gap-2 mb-2">
                     <div>
                       <span className="text-[10px] font-mono uppercase text-[#666666]">

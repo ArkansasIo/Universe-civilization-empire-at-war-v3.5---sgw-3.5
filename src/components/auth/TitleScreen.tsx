@@ -31,6 +31,7 @@ import { RACES, GOVERNMENTS } from '../../gameData';
 import { DevelopmentCreditsView } from '../views/DevelopmentCreditsView';
 import { PatchNotesModal } from '../modals/PatchNotesModal';
 import { RootAdminUrlLoginModal } from '../modals/RootAdminUrlLoginModal';
+import { getUiArt } from '../../utils/gameImages';
 
 interface TitleScreenProps {
   profile: PlayerProfile;
@@ -108,6 +109,12 @@ export const TitleScreen: React.FC<TitleScreenProps> = ({
   return (
     <div className="min-h-screen bg-[#050b13] text-[#d7e7f5] flex flex-col justify-between relative overflow-x-hidden font-sans select-none">
       {/* OGame 0.84-inspired deep-space backdrop: original layout and assets, not copied game artwork */}
+      <img
+        src={getUiArt('title_keyart')}
+        alt=""
+        className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+      />
+      <div className="absolute inset-0 bg-[#050b13]/70 pointer-events-none" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_20%_0%,rgba(34,91,137,0.42)_0%,transparent_52%),radial-gradient(ellipse_at_85%_60%,rgba(19,52,80,0.35)_0%,transparent_50%)] pointer-events-none" />
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#7bb9df0a_1px,transparent_1px),linear-gradient(to_bottom,#7bb9df0a_1px,transparent_1px)] bg-[size:2.5rem_2.5rem] pointer-events-none" />
       <div className="absolute inset-0 opacity-40 pointer-events-none bg-[radial-gradient(2px_2px_at_15%_24%,#c6e8ff_50%,transparent_100%),radial-gradient(1px_1px_at_72%_18%,#ffffff_50%,transparent_100%),radial-gradient(2px_2px_at_82%_72%,#9fd7ff_50%,transparent_100%),radial-gradient(1px_1px_at_35%_80%,#ffffff_50%,transparent_100%)]" />
@@ -115,9 +122,11 @@ export const TitleScreen: React.FC<TitleScreenProps> = ({
       {/* Top Navigation Bar */}
       <header className="relative z-10 border-b border-[#42617a] px-4 sm:px-6 py-3 flex flex-wrap gap-3 items-center justify-between backdrop-blur-md bg-[#071421]/95 shadow-[0_4px_24px_#0009]">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-gradient-to-b from-[#b7d9ed] to-[#456b86] text-[#071421] font-black flex items-center justify-center text-lg tracking-tighter border border-[#d4ecfa] shadow-[0_0_18px_#4e9bca66]">
-            UC
-          </div>
+          <img
+            src={getUiArt('emblem')}
+            alt="Aetherion Expanse emblem"
+            className="w-10 h-10 object-cover border border-[#d4ecfa] shadow-[0_0_18px_#4e9bca66]"
+          />
           <div>
             <h1 className="font-black text-sm tracking-[0.22em] text-[#e6f5ff] uppercase">AETHERION EXPANSE</h1>
             <span className="text-[10px] text-[#8eafc7] font-mono tracking-wider">GALACTIC STRATEGY MMO · ORIGINAL SCI-FI UNIVERSE</span>
@@ -185,7 +194,7 @@ export const TitleScreen: React.FC<TitleScreenProps> = ({
                     sound.play('click');
                     setAuthMode('login');
                   }}
-                  className="w-full sm:w-auto px-8 py-3.5 bg-gradient-to-b from-[#b8d8ed] to-[#638da9] border border-[#d3ecfa] text-[#071421] font-black text-xs uppercase tracking-[0.16em] hover:brightness-110 transition-colors cursor-pointer shadow-[0_0_22px_#4d9dcc33]"
+                  className="btn-scifi w-full sm:w-auto px-8 py-3.5 bg-gradient-to-b from-[#b8d8ed] to-[#638da9] border border-[#d3ecfa] text-[#071421] font-black text-xs uppercase tracking-[0.16em] hover:brightness-110 transition-colors cursor-pointer shadow-[0_0_22px_#4d9dcc33]"
                 >
                   Commander Login →
                 </button>
@@ -196,7 +205,7 @@ export const TitleScreen: React.FC<TitleScreenProps> = ({
                     setAuthMode('register');
                     setRegStep(1);
                   }}
-                  className="w-full sm:w-auto px-8 py-3.5 bg-gradient-to-b from-[#d4a45c] to-[#8c5d2d] border border-[#f1ca87] text-[#160f07] font-black text-xs uppercase tracking-[0.16em] hover:brightness-110 transition-colors cursor-pointer"
+                  className="btn-scifi w-full sm:w-auto px-8 py-3.5 bg-gradient-to-b from-[#d4a45c] to-[#8c5d2d] border border-[#f1ca87] text-[#160f07] font-black text-xs uppercase tracking-[0.16em] hover:brightness-110 transition-colors cursor-pointer"
                 >
                   Register New Empire
                 </button>
@@ -206,7 +215,7 @@ export const TitleScreen: React.FC<TitleScreenProps> = ({
                     sound.play('click');
                     setShowRootAdminModal(true);
                   }}
-                  className="w-full sm:w-auto px-6 py-3.5 bg-neutral-900 border border-amber-400/50 text-amber-300 font-bold text-xs uppercase tracking-widest hover:bg-neutral-800 transition-colors cursor-pointer flex items-center justify-center gap-2"
+                  className="btn-scifi w-full sm:w-auto px-6 py-3.5 bg-neutral-900 border border-amber-400/50 text-amber-300 font-bold text-xs uppercase tracking-widest hover:bg-neutral-800 transition-colors cursor-pointer flex items-center justify-center gap-2"
                 >
                   <Key size={14} className="text-amber-400" />
                   <span>Root Admin URL</span>
@@ -217,7 +226,7 @@ export const TitleScreen: React.FC<TitleScreenProps> = ({
                     sound.play('success');
                     onQuickStart();
                   }}
-                  className="w-full sm:w-auto px-6 py-3.5 bg-[#123c3c] border border-[#3a9a87] text-[#c8fff0] font-bold text-xs uppercase tracking-[0.16em] hover:bg-[#18534e] transition-colors cursor-pointer"
+                  className="btn-scifi w-full sm:w-auto px-6 py-3.5 bg-[#123c3c] border border-[#3a9a87] text-[#c8fff0] font-bold text-xs uppercase tracking-[0.16em] hover:bg-[#18534e] transition-colors cursor-pointer"
                 >
                   Quick Play (Guest)
                 </button>
@@ -543,6 +552,12 @@ export const TitleScreen: React.FC<TitleScreenProps> = ({
                           }`}
                         >
                           <div>
+                            <img
+                              src={getUiArt(`race_${rc.id}`)}
+                              alt={`${rc.name} portrait`}
+                              loading="lazy"
+                              className="w-full aspect-square object-cover border border-white/20 mb-2"
+                            />
                             <div className="flex items-center justify-between mb-1">
                               <span className={`text-xs font-extrabold uppercase ${isSelected ? 'text-black' : 'text-white'}`}>
                                 {rc.name}

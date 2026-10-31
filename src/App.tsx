@@ -4,6 +4,7 @@ import { Sidebar } from './components/Sidebar';
 import { Topbar } from './components/Topbar';
 import { HudMetrics } from './components/HudMetrics';
 import { sound } from './sound';
+import { getUiArt } from './utils/gameImages';
 import {
   BattleRecord,
   CovertMissionRecord,
@@ -3216,7 +3217,11 @@ export default function App() {
         />
 
         {/* Scrollable Stage Area */}
-        <main id="main-content-scroll" className="flex-1 overflow-y-auto p-3 xs:p-4 sm:p-6 md:p-8 pb-safe">
+        <main
+          id="main-content-scroll"
+          className="flex-1 overflow-y-auto p-3 xs:p-4 sm:p-6 md:p-8 pb-safe bg-[#050b13] bg-cover bg-center"
+          style={{ backgroundImage: `linear-gradient(rgba(5, 11, 19, 0.45), rgba(5, 11, 19, 0.45)), url(${getUiArt('game_background')})` }}
+        >
           <div className="max-w-7xl mx-auto space-y-6">
             {/* Offline Catch-up Notification Banner */}
             {offlineNotice && (

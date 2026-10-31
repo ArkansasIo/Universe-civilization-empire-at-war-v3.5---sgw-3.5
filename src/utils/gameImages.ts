@@ -1,0 +1,39 @@
+// Card art for catalog items lives in public/images/game/<kind>/<id>.webp.
+// Resolved by id so it also works for state restored from localStorage.
+
+export type GameImageKind = 'ships' | 'buildings' | 'research' | 'defenses' | 'megastructures' | 'resources';
+
+const AVAILABLE: Record<GameImageKind, ReadonlySet<string>> = {
+  ships: new Set([
+    'small_cargo', 'large_cargo', 'colony_ship', 'recycler', 'espionage_probe', 'light_fighter', 'heavy_fighter',
+    'cruiser', 'battleship', 'battlecruiser', 'fleet_carrier', 'dreadnought', 'titan_flagship',
+  ]),
+  buildings: new Set([
+    'metal_mine', 'crystal_mine', 'deuterium_synthesizer', 'solar_plant', 'fusion_reactor', 'robotics_factory',
+    'nanite_factory', 'shipyard_facility', 'research_lab',
+  ]),
+  research: new Set([
+    'basic_engineering', 'mineral_processing', 'deep_core_mining', 'asteroid_mining', 'energy_science', 'solar_energy',
+    'fusion_energy', 'antimatter_tech', 'zero_point_energy', 'computer_technology', 'quantum_computing',
+    'artificial_intelligence', 'chemical_propulsion', 'ion_propulsion', 'hyperspace_drive', 'dimensional_propulsion',
+    'kinetic_weapons', 'laser_technology', 'plasma_technology', 'shield_technology', 'armor_technology',
+    'phase_shields', 'espionage_technology', 'astrophysics', 'stellar_engineering',
+  ]),
+  defenses: new Set([
+    'rocket_launcher', 'light_laser', 'heavy_laser', 'gauss_cannon', 'plasma_turret', 'small_shield_dome',
+    'large_shield_dome',
+  ]),
+  megastructures: new Set(['dyson_swarm', 'orbital_ring', 'galactic_gateway']),
+  resources: new Set(['naquadah', 'metal', 'crystal', 'deuterium', 'energy', 'darkMatter']),
+};
+
+// Interface art (title screen, backgrounds, section banners, race portraits)
+// lives in public/images/ui-art/.
+export function getUiArt(name: string): string {
+  return `${import.meta.env.BASE_URL}images/ui-art/${name}.webp`;
+}
+
+export function getGameImage(kind: GameImageKind, id: string): string | undefined {
+  if (!AVAILABLE[kind].has(id)) return undefined;
+  return `${import.meta.env.BASE_URL}images/game/${kind}/${id}.webp`;
+}
