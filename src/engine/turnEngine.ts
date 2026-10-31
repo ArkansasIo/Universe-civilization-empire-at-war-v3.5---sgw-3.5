@@ -1,12 +1,16 @@
 import type { PlanetColony, PlayerResources } from '../types';
 import { grantResources } from './resourceTransactions';
+import { calculateEmpireIncome } from './colonyEconomy';
 
 export interface TurnEngineConfig {
   maxTurns: number;
   turnsGeneratedPerTick: number;
   naquadahPerMiner: number;
   naquadahPerLifer: number;
+  naquadahPerUntrained: number;
   colonyProductionMultiplier: number;
+  raceIncomeMultiplier: number;
+  defconIncomeMultiplier: number;
 }
 
 export interface TurnSnapshot {
@@ -19,9 +23,12 @@ export interface TurnSnapshot {
 export const DEFAULT_TURN_ENGINE_CONFIG: TurnEngineConfig = {
   maxTurns: 10000,
   turnsGeneratedPerTick: 1,
-  naquadahPerMiner: 20,
+  naquadahPerMiner: 80,
   naquadahPerLifer: 80,
+  naquadahPerUntrained: 20,
   colonyProductionMultiplier: 1,
+  raceIncomeMultiplier: 1,
+  defconIncomeMultiplier: 1,
 };
 
 function safeInteger(value: number): number {
@@ -33,20 +40,17 @@ export function calculateNaturalIncome(
   colonies: PlanetColony[],
   config: TurnEngineConfig = DEFAULT_TURN_ENGINE_CONFIG,
 ): number {
-  const workforceIncome =
-    safeInteger(resources.miners) * config.naquadahPerMiner +
-    safeInteger(resources.lifers) * config.naquadahPerLifer;
-
-  const colonyIncome = colonies.reduce((sum, colony) => {
-    const production = colony.naquadahProductionRate ?? 0;
-    const bonus = Math.max(0, colony.incomeBonus ?? 0);
-    return sum + production * (1 + bonus);
-  }, 0);
-
-  return Math.max(
-    0,
-    Math.floor((workforceIncome + colonyIncome) * config.colonyProductionMultiplier),
-  );
+  if (!Number.isFinite(config.colonyProductionMultiplier) || config.colonyProductionMultiplier < 0) {
+    throw new Error('INVALID_COLONY_PRODUCTION_MULTIPLIER');
+  }
+  const income = calculateEmpireIncome(resources, colonies, {
+    race: config.raceIncomeMultiplier,
+    defcon: config.defconIncomeMultiplier,
+    naquadahPerUntrained: config.naquadahPerUntrained,
+    naquadahPerMiner: config.naquadahPerMiner,
+    naquadahPerLifer: config.naquadahPerLifer,
+  }).netIncome;
+  return Math.max(0, Math.floor(income * config.colonyProductionMultiplier));
 }
 
 /**

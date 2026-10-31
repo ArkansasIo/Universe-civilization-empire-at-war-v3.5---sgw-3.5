@@ -48,6 +48,22 @@ if ((await playerService.getPlayer(player.id)).commanderName !== 'Test Commander
 if ((await planetService.listPlayerPlanets(player.id)).length !== 1) throw new Error('PLANET_SERVICE_FAILED');
 const moved = await movement.move(player.id, fleet.id, { galaxy: 1, system: 2, planet: 1 }, 100, 1_000);
 if (!moved.arrivalAt || moved.order !== 'move') throw new Error('FLEET_MOVEMENT_FAILED');
+let unauthorizedMoveRejected = false;
+try {
+  await movement.move('player-2', fleet.id, { galaxy: 1, system: 3, planet: 1 }, 100, 2_000);
+} catch (error) {
+  unauthorizedMoveRejected = error instanceof Error && error.message === 'FLEET_COMMAND_FORBIDDEN';
+}
+if (!unauthorizedMoveRejected) throw new Error('FLEET_OWNER_VALIDATION_FAILED');
+if ((await fleetRepo.getById(fleet.id))?.destination?.system !== 2) throw new Error('UNAUTHORIZED_FLEET_MOVE_MUTATED_STATE');
+
+let invalidDestinationRejected = false;
+try {
+  await movement.move(player.id, fleet.id, { galaxy: 0, system: 2, planet: 1 }, 100, 2_000);
+} catch (error) {
+  invalidDestinationRejected = error instanceof Error && error.message === 'INVALID_COORDINATES';
+}
+if (!invalidDestinationRejected) throw new Error('FLEET_COORDINATE_VALIDATION_FAILED');
 
 const sourceGate = { id: 'gate-1', planetId: planet.id, address: 'ABC123', active: true, cooldownUntil: 0 };
 const targetGate = { id: 'gate-2', planetId: 'planet-2', address: 'XYZ789', active: true, cooldownUntil: 0 };

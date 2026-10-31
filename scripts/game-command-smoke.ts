@@ -64,7 +64,7 @@ const turn = executeGameCommand(
 );
 assert.equal(turn.accepted, true);
 assert.equal(turn.details?.processedTurns, 2);
-assert.equal(turn.state?.resources.naquadah, 1520);
+assert.equal(turn.state?.resources.naquadah, 2720);
 
 const research = executeGameCommand(
   { commandId: 'cmd-3', idempotencyKey: 'idem-3', command: 'research', payload: { technologyId: 'hyperdrive', cost: { crystal: 100 } } },
@@ -87,7 +87,7 @@ const attack = executeGameCommand(
 assert.equal(attack.accepted, true);
 assert.equal(attack.details?.victory, true);
 assert.equal(attack.state?.resources.attackTurns, 2);
-assert.equal(attack.state?.resources.naquadah, 2520);
+assert.equal(attack.state?.resources.naquadah, 3720);
 
 const unauthorized = executeGameCommand(
   { commandId: 'cmd-6', idempotencyKey: 'idem-6', command: 'purchase', payload: { itemId: 'exploit', quantity: 1, cost: { naquadah: 1 } } },

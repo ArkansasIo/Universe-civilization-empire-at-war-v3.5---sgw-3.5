@@ -1,4 +1,5 @@
 import { PlanetColony } from '../types';
+import { calculateColonyMaintenance as calculateEngineMaintenance } from '../engine/colonyEconomy';
 
 export interface ColonyMaintenanceBreakdown {
   baseCost: number;
@@ -38,50 +39,26 @@ export interface EmpireColonialSummary {
  * and overall empire scale.
  */
 export function calculateColonyMaintenance(colony: PlanetColony, totalColonies: number = 3): number {
-  const level = Math.max(1, colony.level || 1);
-  
-  // Base cost per level with scalable overhead for higher tiers
-  const baseCost = level * 1800 + Math.round(Math.pow(level, 1.25) * 450);
-  
-  // Homeworld central command discount (-25%)
-  const homeworldMult = colony.isHomeworld ? 0.75 : 1.0;
-  
-  // Logistical strain from multi-world expanse (8% per extra colony beyond 2)
-  const logisticalStrain = 1.0 + Math.max(0, (totalColonies - 2) * 0.08);
-  
-  // Specialization modifier
-  let specMult = 1.0;
-  if (colony.specialization === 'mining') specMult = 0.90; // Local raw materials offset logistics
-  else if (colony.specialization === 'industrial') specMult = 1.10; // Heavy machinery upkeep
-  else if (colony.specialization === 'research') specMult = 1.15; // High-energy containment
-  else if (colony.specialization === 'fortress') specMult = 1.20; // Garrison & shield load
-  else if (colony.specialization === 'trade') specMult = 0.85; // Free trade commercial offsets
-  
-  // Tax policy modifier
-  let taxMult = 1.0;
-  if (colony.taxPolicy === 'subsidized') taxMult = 1.25; // Welfare subsidies increase state upkeep
-  else if (colony.taxPolicy === 'extractive') taxMult = 0.85; // Austerity reduces public expenditure
-  
-  const finalCost = Math.round(baseCost * homeworldMult * logisticalStrain * specMult * taxMult);
-  return Math.max(1200, finalCost);
+  return calculateEngineMaintenance(colony, totalColonies).maintenance;
 }
 
 /**
  * Generates an in-depth maintenance breakdown and economic projection for a colony.
  */
 export function getColonyMaintenanceDetails(colony: PlanetColony, totalColonies: number = 3): ColonyMaintenanceBreakdown {
-  const totalCost = calculateColonyMaintenance(colony, totalColonies);
-  const gross = colony.incomeBonus || (colony.level * 10000 + 5000);
+  const maintenance = calculateEngineMaintenance(colony, totalColonies);
+  const totalCost = maintenance.maintenance;
+  const gross = colony.naquadahProductionRate ?? colony.incomeBonus ?? 0;
   const net = gross - totalCost;
   const margin = gross > 0 ? Math.round((net / gross) * 100) : 0;
   
   return {
-    baseCost: (colony.level || 1) * 2500,
+    baseCost: colony.level * 2500 + Math.pow(colony.level, 1.45) * 850,
     levelMultiplier: colony.level || 1,
-    homeworldDiscount: colony.isHomeworld ? 0.25 : 0,
-    logisticalStrain: Math.max(0, (totalColonies - 2) * 0.08),
-    specializationModifier: colony.specialization === 'mining' ? -0.10 : colony.specialization === 'trade' ? -0.15 : colony.specialization === 'fortress' ? 0.20 : colony.specialization === 'research' ? 0.15 : 0,
-    taxPolicyModifier: colony.taxPolicy === 'subsidized' ? 0.25 : colony.taxPolicy === 'extractive' ? -0.15 : 0,
+    homeworldDiscount: 1 - maintenance.modifiers.homeworld,
+    logisticalStrain: maintenance.modifiers.logisticalStrain - 1,
+    specializationModifier: maintenance.modifiers.specialization - 1,
+    taxPolicyModifier: maintenance.modifiers.taxPolicy - 1,
     totalMaintenanceCost: totalCost,
     grossIncome: gross,
     netIncome: net,
@@ -106,7 +83,7 @@ export function getEmpireColonialSummary(planets: PlanetColony[]): EmpireColonia
   let totalLevels = 0;
 
   planets.forEach((p) => {
-    totalGross += p.incomeBonus || (p.level * 10000 + 5000);
+    totalGross += p.naquadahProductionRate ?? p.incomeBonus ?? 0;
     totalMaintenance += calculateColonyMaintenance(p, totalColonies);
     totalLevels += p.level || 1;
   });

@@ -8,6 +8,8 @@
 - [x] Stargate dial/cooldown engine.
 - [x] Diplomacy state model.
 - [x] Deterministic combat resolver scaffold.
+- [x] GDD-based colony maintenance and empire income calculations.
+- [x] Race/government modifier composition, blueprint efficiency, flagship power/fitting, and weapon durability/repair engines.
 - [x] Authentication contracts, idempotency and rate-limit primitives.
 - [x] MySQL migrations for game state, galaxy, planets, Stargates, research, combat and audit events.
 - [x] Authoritative engine smoke test and CI integration.
