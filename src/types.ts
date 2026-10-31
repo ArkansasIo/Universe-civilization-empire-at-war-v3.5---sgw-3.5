@@ -122,6 +122,10 @@ export interface PlayerProfile {
   turnCapMode?: TurnCapMode;
   customTurnCap?: number;
   allianceId?: string | null;
+  /** Lifetime commander XP; drives the commander level and route level locks. */
+  commanderXp?: number;
+  /** Highest commander level whose story beats the player has already seen. */
+  storySeenLevel?: number;
 }
 
 export interface Technology {

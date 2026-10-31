@@ -30,10 +30,10 @@ Branch: feature/ogame-navigation-progression-admin-turns
 
 ## P0 — shared progression rules
 - [x] Add typed, data-driven feature requirement evaluator in `src/game/progression.ts`.
-- [ ] Connect evaluator to every page and gameplay action.
+- [x] Connect commander level locks to every page (sidebar badges + route guard); see `docs/LEVEL_LOCKS_AND_STORY.md`. Gameplay actions are not yet gated.
 - [ ] Use the same requirement definitions in server command handlers; reject locked actions server-side.
 - [ ] Persist levels, quests, buildings, technologies and unlocks in authoritative storage.
-- [ ] Show lock reason, current value, required value and path to unlock.
+- [x] Show lock reason, current value, required value and path to unlock (`LevelLockedPanel`).
 - [ ] Balance final requirements; starter thresholds are provisional.
 
 ## P1 — systems integration
@@ -47,7 +47,7 @@ Branch: feature/ogame-navigation-progression-admin-turns
 ## P1 — automated verification
 - [ ] Automated route coverage for every sidebar item, including the newly wired `stash-vaults` route.
 - [x] Add `scripts/progression-smoke.ts` covering below-threshold, exact-threshold, building prerequisite, and admin-only feature access.
-- [ ] Add progression boundary tests one level above the requirement and tests for unknown/missing state.
+- [x] Add progression boundary tests one level above the requirement and tests for unknown/missing state (level-lock checks in `scripts/progression-smoke.ts`).
 - [ ] Missing-state and unknown-feature tests.
 - [ ] Direct-route and direct-API bypass tests.
 - [ ] Run `npm run lint`, `npm run build`, `npm run progression:smoke`, and existing smoke tests in CI; not yet verified on the current main commit.

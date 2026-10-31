@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Target, Trophy, Flame, Compass, CheckCircle2, Clock, Gift, ShieldAlert, Zap, ChevronRight, Sparkles } from 'lucide-react';
+import { Target, Trophy, Flame, Compass, CheckCircle2, Clock, Gift, ShieldAlert, Zap, ChevronRight, Sparkles, BookOpen } from 'lucide-react';
 import { sound } from '../../sound';
 import { PlayerProfile, PlayerResources } from '../../types';
 import { DailyMissionsPanel } from './missions/DailyMissionsPanel';
+import { StoryLogPanel } from '../progression/StoryLogPanel';
 
 interface MissionsViewProps {
   profile: PlayerProfile;
@@ -10,8 +11,11 @@ interface MissionsViewProps {
   onUpdateResources: (res: Partial<PlayerResources>) => void;
   onUpdateProfile: (updates: Partial<PlayerProfile>) => void;
   onNavigate: (route: string) => void;
-  defaultTab?: 'missions' | 'campaign' | 'events' | 'achievements';
+  defaultTab?: MissionsTab;
+  isAdmin?: boolean;
 }
+
+type MissionsTab = 'missions' | 'story' | 'campaign' | 'events' | 'achievements';
 
 interface CampaignMission {
   id: string;
@@ -58,8 +62,9 @@ export const MissionsView: React.FC<MissionsViewProps> = ({
   onUpdateProfile,
   onNavigate,
   defaultTab = 'missions',
+  isAdmin = false,
 }) => {
-  const [activeTab, setActiveTab] = useState<'missions' | 'campaign' | 'events' | 'achievements'>(defaultTab);
+  const [activeTab, setActiveTab] = useState<MissionsTab>(defaultTab);
 
   const [campaignMissions, setCampaignMissions] = useState<CampaignMission[]>([
     {
@@ -253,6 +258,18 @@ export const MissionsView: React.FC<MissionsViewProps> = ({
         </button>
 
         <button
+          id="tab-btn-story"
+          type="button"
+          onClick={() => { sound.play('click'); setActiveTab('story'); }}
+          className={`px-4 py-2.5 text-xs font-bold uppercase transition-colors border-b-2 cursor-pointer flex items-center gap-2 shrink-0 ${
+            activeTab === 'story' ? 'border-[#111111] text-[#111111]' : 'border-transparent text-[#666666] hover:text-[#111111]'
+          }`}
+        >
+          <BookOpen className="w-3.5 h-3.5 text-amber-600" />
+          <span>Commander Story</span>
+        </button>
+
+        <button
           type="button"
           onClick={() => { sound.play('click'); setActiveTab('campaign'); }}
           className={`px-4 py-2.5 text-xs font-bold uppercase transition-colors border-b-2 cursor-pointer shrink-0 ${
@@ -290,6 +307,11 @@ export const MissionsView: React.FC<MissionsViewProps> = ({
           onUpdateProfile={onUpdateProfile}
           onNavigate={onNavigate}
         />
+      )}
+
+      {/* Tab: Commander Story (level-lock campaign) */}
+      {activeTab === 'story' && (
+        <StoryLogPanel commanderXp={profile.commanderXp ?? 0} isAdmin={isAdmin} onNavigate={onNavigate} />
       )}
 
       {/* Tab: Story Campaign */}

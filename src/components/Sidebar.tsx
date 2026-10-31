@@ -30,9 +30,11 @@ import {
   FolderClosed,
   X,
   Menu,
+  Lock,
 } from 'lucide-react';
 import { sound } from '../sound';
 import { getNavIcon } from '../utils/gameImages';
+import { getCommanderLevelProgress, getRouteUnlockLevel } from '../game/levelLocks';
 import { PlayerProfile, Race } from '../types';
 import { RACES } from '../gameData';
 import { getAdminAuthSession } from '../config/adminAuthConfig';
@@ -433,6 +435,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   const adminSession = getAdminAuthSession();
   const isAdminUser = profile.role === 'admin' || profile.isAdmin === true || (adminSession && adminSession.isAuthenticated);
+  const commanderProgress = getCommanderLevelProgress(profile.commanderXp ?? 0);
+  /** Commander level a menu entry needs, or null when it is open (admins bypass level locks). */
+  const lockedLevel = (route: string): number | null => {
+    const required = getRouteUnlockLevel(route);
+    return !isAdminUser && commanderProgress.level < required ? required : null;
+  };
 
   return (
     <>
@@ -534,6 +542,22 @@ export const Sidebar: React.FC<SidebarProps> = ({
               <span className="block text-[10px] text-[#666666] truncate font-mono">
                 {currentRace?.name || "Tau'ri"} · Rank {profile.rankLevel || 1}
               </span>
+              <div
+                id="sidebar-commander-level"
+                className="mt-1"
+                title={
+                  commanderProgress.nextLevelXp === null
+                    ? `Commander level ${commanderProgress.level} (max)`
+                    : `Commander level ${commanderProgress.level}: ${commanderProgress.xp.toLocaleString()} / ${commanderProgress.nextLevelXp.toLocaleString()} XP`
+                }
+              >
+                <span className="block text-[9px] font-mono font-bold uppercase text-amber-700">
+                  Commander Lv {commanderProgress.level}
+                </span>
+                <div className="h-1 bg-neutral-200">
+                  <div className="h-1 bg-amber-500" style={{ width: `${Math.round(commanderProgress.fraction * 100)}%` }} />
+                </div>
+              </div>
             </div>
           )}
         </div>
@@ -667,23 +691,32 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   <div className="pl-4 pr-1 py-1 space-y-0.5 border-l-2 border-neutral-200 ml-3.5 my-0.5">
                     {sec.items.map((item) => {
                       const isCurrent = activeRoute === item.id;
+                      const lockLevel = lockedLevel(item.id);
                       return (
                         <button
                           key={item.id}
                           type="button"
                           id={`subnav-item-${item.id}`}
+                          data-locked={lockLevel !== null ? 'true' : undefined}
                           onClick={() => handleItemClick(item.id)}
                           className={`w-full text-left px-2.5 py-1.5 text-[11px] font-mono flex items-center gap-2 transition-colors cursor-pointer border-l-2 ${
                             isCurrent
                               ? 'border-[#111111] text-[#111111] font-bold bg-[#f0f0f0]'
+                              : lockLevel !== null
+                              ? 'border-transparent text-[#aaaaaa] hover:text-[#666666] hover:bg-[#fafafa]'
                               : 'border-transparent text-[#666666] hover:text-[#111111] hover:border-neutral-400 hover:bg-[#fafafa]'
                           }`}
-                          title={item.label}
+                          title={lockLevel !== null ? `${item.label} — locked until commander level ${lockLevel}` : item.label}
                         >
                           {getNavIcon(item.id) && (
                             <img src={getNavIcon(item.id)} alt="" loading="lazy" className="w-5 h-5 rounded-sm shrink-0" />
                           )}
-                          <span className="truncate">{item.label}</span>
+                          <span className="truncate flex-1">{item.label}</span>
+                          {lockLevel !== null && (
+                            <span className="shrink-0 flex items-center gap-0.5 px-1 py-px text-[9px] font-bold bg-neutral-100 border border-neutral-300 text-[#777777]">
+                              <Lock size={9} /> Lv {lockLevel}
+                            </span>
+                          )}
                         </button>
                       );
                     })}
@@ -739,6 +772,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               <div className="max-h-72 overflow-y-auto space-y-0.5 py-1">
                 {activeSection.items.map((item) => {
                   const isCurrent = activeRoute === item.id;
+                  const lockLevel = lockedLevel(item.id);
                   return (
                     <button
                       key={item.id}
@@ -750,13 +784,21 @@ export const Sidebar: React.FC<SidebarProps> = ({
                       className={`w-full text-left px-2.5 py-1.5 text-[11px] flex items-center gap-2 transition-colors cursor-pointer ${
                         isCurrent
                           ? 'bg-amber-100 text-amber-950 font-bold border-l-2 border-amber-600'
+                          : lockLevel !== null
+                          ? 'text-[#aaaaaa] hover:bg-neutral-100'
                           : 'text-[#444444] hover:bg-neutral-100 hover:text-[#111111]'
                       }`}
+                      title={lockLevel !== null ? `${item.label} — locked until commander level ${lockLevel}` : item.label}
                     >
                       {getNavIcon(item.id) && (
                         <img src={getNavIcon(item.id)} alt="" loading="lazy" className="w-5 h-5 rounded-sm shrink-0" />
                       )}
-                      <span className="truncate">{item.label}</span>
+                      <span className="truncate flex-1">{item.label}</span>
+                      {lockLevel !== null && (
+                        <span className="shrink-0 flex items-center gap-0.5 text-[9px] font-bold text-[#888888]">
+                          <Lock size={9} /> Lv {lockLevel}
+                        </span>
+                      )}
                     </button>
                   );
                 })}
