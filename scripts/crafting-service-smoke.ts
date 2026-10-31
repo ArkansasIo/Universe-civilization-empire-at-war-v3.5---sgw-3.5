@@ -14,4 +14,8 @@ assert.equal(result.result.success,true);
 assert.equal(result.state.temperLevel,1);
 assert.equal(store.audit.length,1);
 assert.equal(store.audit[0]?.track,"tempering");
+
+// A never-upgraded item cannot skip levels by claiming a higher starting state.
+const forged={...createCraftingUpgradeState(item),temperLevel:9};
+await assert.rejects(()=>new CraftingService(new MemoryCraftingStateStore(),()=>0).upgrade({requestId:"smoke-forged",playerId:"player-2",item,state:forged,inventory:{materials:{"tempering-stone":99}},currency:1_000_000,track:"tempering"}),/stale/);
 console.log("Crafting service smoke test passed",{temperLevel:result.state.temperLevel,version:result.state.version,auditEvents:store.audit.length});

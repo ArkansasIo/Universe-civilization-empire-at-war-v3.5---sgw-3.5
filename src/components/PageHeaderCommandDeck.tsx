@@ -24,6 +24,7 @@ import {
   RotateCw,
 } from 'lucide-react';
 import { sound } from '../sound';
+import { getUiArt } from '../utils/gameImages';
 import { PlayerProfile, PlayerResources } from '../types';
 import { OGAME_NAV_SECTIONS, OGameNavSection } from './Sidebar';
 
@@ -67,6 +68,26 @@ export const PageHeaderCommandDeck: React.FC<PageHeaderCommandDeckProps> = ({
       id="page-header-command-deck"
       className="border border-[#dedede] bg-white shadow-xs overflow-hidden transition-all duration-200"
     >
+      {/* Section key art strip */}
+      {currentSection && (
+        <div className="relative h-24 sm:h-32 overflow-hidden border-b border-[#111111]">
+          <img
+            src={getUiArt(`sections/${currentSection.id}`)}
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#050b13]/85 via-[#050b13]/30 to-transparent" />
+          <div className="absolute left-4 bottom-3 text-white">
+            <div className="text-[10px] font-mono font-bold uppercase tracking-[0.2em] text-amber-300">
+              {currentSection.ogameName}
+            </div>
+            <div className="text-lg sm:text-2xl font-black uppercase tracking-wide drop-shadow">
+              {activeItem?.label ?? currentSection.label}
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Top Banner: Breadcrumb, Sector Telemetry, and Rapid Turn Controls */}
       <div className="p-3.5 sm:p-4 bg-gradient-to-r from-neutral-50 via-white to-neutral-50 border-b border-[#eeeeee] flex flex-col md:flex-row md:items-center justify-between gap-3">
         <div className="flex items-start sm:items-center gap-3">

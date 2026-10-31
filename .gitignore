@@ -18,3 +18,6 @@ forge*.png
 page.png
 vite.err
 .codegpt-game.json
+
+# Full-size generated art masters (web copies live in public/images)
+art/

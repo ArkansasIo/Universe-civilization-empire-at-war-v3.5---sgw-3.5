@@ -25,7 +25,7 @@ const auth = new AuthService(
 const registered = await auth.register('SmokeCommander', 'correct-horse-battery', player, 1_000);
 assert.equal(registered.playerId, player.id);
 assert.equal((await auth.validateSession(registered.sessionToken, 2_000)).playerId, player.id);
-assert.throws(() => {}, undefined);
+await assert.rejects(() => auth.register('smokecommander', 'another-password-123', player, 1_500), /USERNAME_EXISTS/);
 
 const loggedIn = await auth.login('smokecommander', 'correct-horse-battery', 3_000);
 assert.equal(loggedIn.username, 'smokecommander');

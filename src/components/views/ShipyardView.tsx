@@ -23,6 +23,7 @@ import {
 } from '../../types';
 import { FLEET_FORMATIONS } from '../../ogameData';
 import { sound } from '../../sound';
+import { getGameImage } from '../../utils/gameImages';
 
 interface ShipyardViewProps {
   ships: OGameShip[];
@@ -949,6 +950,14 @@ export const ShipyardView: React.FC<ShipyardViewProps> = ({
                       }`}
                     >
                       <div>
+                        {getGameImage('ships', ship.id) && (
+                          <img
+                            src={getGameImage('ships', ship.id)}
+                            alt={ship.name}
+                            loading="lazy"
+                            className="w-full aspect-video object-cover border border-[#111111] mb-3"
+                          />
+                        )}
                         <div className="flex items-start justify-between gap-2 mb-1.5">
                           <div className="flex items-start gap-2.5">
                             {/* Checkbox next to ship type */}

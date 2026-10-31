@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ContentArt } from '../ContentArt';
 import {
   Shield,
   Swords,
@@ -333,9 +334,17 @@ export const StargateNpcRacesView: React.FC<StargateNpcRacesViewProps> = ({
               <div className="p-4 border-b border-[#eeeeee] space-y-2">
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex items-center gap-2.5">
-                    <span className="text-2xl p-1.5 bg-neutral-100 rounded-sm border border-neutral-200 leading-none">
-                      {race.avatarEmoji}
-                    </span>
+                    <ContentArt
+                      collection="npc_races"
+                      id={race.id}
+                      alt={race.name}
+                      className="w-14 h-14 rounded-sm border border-neutral-300 shrink-0"
+                      fallback={
+                        <span className="text-2xl p-1.5 bg-neutral-100 rounded-sm border border-neutral-200 leading-none">
+                          {race.avatarEmoji}
+                        </span>
+                      }
+                    />
                     <div>
                       <h3 className="font-bold text-sm text-[#111111] leading-tight flex items-center gap-1.5">
                         {race.name}

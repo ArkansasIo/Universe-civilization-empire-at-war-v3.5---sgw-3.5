@@ -10,7 +10,8 @@ export interface HttpServerHandle {
 }
 
 export async function startHttpServer(app: Express, host = process.env.HOST || '0.0.0.0', port = Number(process.env.PORT || 8080)): Promise<HttpServerHandle> {
-  if (!Number.isInteger(port) || port < 1 || port > 65535) throw new Error('INVALID_PORT');
+  // 0 asks the OS for a free ephemeral port (used by the smoke tests).
+  if (!Number.isInteger(port) || port < 0 || port > 65535) throw new Error('INVALID_PORT');
   const server = createServer(app);
   await new Promise<void>((resolve, reject) => {
     const onError = (error: Error) => {

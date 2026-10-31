@@ -36,8 +36,8 @@ export function registerCraftingRoutes(router: Router, services: CraftingRouteSe
     if (body.playerId !== req.auth!.playerId) { res.status(403).json({ ok: false, requestId: body.requestId, error: 'PLAYER_MISMATCH' }); return; }
     try {
       const request: CraftingServiceRequest = { requestId: body.requestId, playerId: req.auth!.playerId, item: body.item, state: body.state, inventory: body.inventory, currency: body.currency, track: body.track, useProtection: body.useProtection };
-      const result = await services.crafting.upgrade(request);
-      res.json({ ok: true, requestId: body.requestId, result });
+      const { result, state } = await services.crafting.upgrade(request);
+      res.json({ ok: true, requestId: body.requestId, result, state });
     } catch (error) { sendCraftingError(res, 409, body.requestId, error); }
   });
 

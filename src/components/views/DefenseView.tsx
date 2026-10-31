@@ -6,6 +6,7 @@ import {
   DefenseQueueItem,
 } from '../../types';
 import { sound } from '../../sound';
+import { getGameImage } from '../../utils/gameImages';
 
 interface DefenseViewProps {
   defenses: OGameDefense[];
@@ -201,6 +202,14 @@ export const DefenseView: React.FC<DefenseViewProps> = ({
               className="border border-[#111111] bg-white p-4 flex flex-col justify-between"
             >
               <div>
+                {getGameImage('defenses', defense.id) && (
+                  <img
+                    src={getGameImage('defenses', defense.id)}
+                    alt={defense.name}
+                    loading="lazy"
+                    className="w-full aspect-video object-cover border border-[#111111] mb-3"
+                  />
+                )}
                 <div className="flex items-start justify-between gap-2 mb-1.5">
                   <div>
                     <span className="text-[10px] font-mono uppercase text-[#666666]">

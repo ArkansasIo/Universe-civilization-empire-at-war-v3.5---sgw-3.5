@@ -96,3 +96,32 @@
 .tactical-table tr:nth-child(even) {
   background-color: var(--bg-alt);
 }
+
+/* Sci-fi command button: clipped corners, inner bevel and a sheen sweep on hover.
+   Add alongside the button's own colour classes. */
+.btn-scifi {
+  position: relative;
+  overflow: hidden;
+  clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), inset 0 -2px 0 rgba(0, 0, 0, 0.35);
+}
+
+.btn-scifi::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.35) 50%, transparent 70%);
+  transform: translateX(-120%);
+  transition: transform 0.5s ease;
+  pointer-events: none;
+}
+
+.btn-scifi:hover::after {
+  transform: translateX(120%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-scifi::after {
+    transition: none;
+  }
+}

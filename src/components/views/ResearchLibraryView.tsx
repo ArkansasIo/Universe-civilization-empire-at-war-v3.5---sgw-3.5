@@ -7,6 +7,7 @@ import {
   LabSpecialization,
 } from '../../types';
 import { sound } from '../../sound';
+import { getGameImage } from '../../utils/gameImages';
 
 interface ResearchLibraryViewProps {
   technologies: OGameTechnology[];
@@ -316,11 +317,21 @@ export const ResearchLibraryView: React.FC<ResearchLibraryViewProps> = ({
                   }`}
                 >
                   <div className="flex items-start justify-between gap-2">
-                    <div>
-                      <div className="text-[10px] font-mono text-[#666666] uppercase">
-                        {tech.category}
+                    <div className="flex items-start gap-3">
+                      {getGameImage('research', tech.id) && (
+                        <img
+                          src={getGameImage('research', tech.id)}
+                          alt=""
+                          loading="lazy"
+                          className="w-12 h-12 object-cover border border-[#111111] shrink-0"
+                        />
+                      )}
+                      <div>
+                        <div className="text-[10px] font-mono text-[#666666] uppercase">
+                          {tech.category}
+                        </div>
+                        <h4 className="text-sm font-bold text-[#111111]">{tech.name}</h4>
                       </div>
-                      <h4 className="text-sm font-bold text-[#111111]">{tech.name}</h4>
                     </div>
 
                     <div className="text-right">
@@ -369,6 +380,13 @@ export const ResearchLibraryView: React.FC<ResearchLibraryViewProps> = ({
           {activeTech && (
             <div className="border border-[#111111] bg-white p-5 sticky top-6 font-mono text-xs space-y-4">
               <div className="border-b border-[#111111] pb-3">
+                {getGameImage('research', activeTech.id) && (
+                  <img
+                    src={getGameImage('research', activeTech.id)}
+                    alt={activeTech.name}
+                    className="w-full aspect-video object-cover border border-[#111111] mb-3"
+                  />
+                )}
                 <div className="text-[10px] text-[#666666] uppercase tracking-wider">
                   SPEC §14 TECHNOLOGY SHEET
                 </div>

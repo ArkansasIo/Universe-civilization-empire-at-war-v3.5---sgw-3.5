@@ -44,6 +44,7 @@ import { PlayerProfile, PlayerResources, PlanetColony } from '../types';
 import { getAdminAuthSession } from '../config/adminAuthConfig';
 import { GalacticCreditsModal } from './modals/GalacticCreditsModal';
 import { ConscriptRecruitsModal } from './modals/ConscriptRecruitsModal';
+import type { TurnProduction } from '../utils/productionCalculations';
 
 interface TopbarProps {
   activeRoute: string;
@@ -56,6 +57,7 @@ interface TopbarProps {
   nextTickSeconds?: number;
   netIncome?: number;
   bankCapacity?: number;
+  turnYield?: TurnProduction;
   onProcessTurn: (count?: number) => void;
   onUpdateAllSystems?: () => void;
   onResetGame?: () => void;
@@ -172,6 +174,7 @@ export const Topbar: React.FC<TopbarProps> = ({
   nextTickSeconds = 60,
   netIncome = 18500,
   bankCapacity = 350000,
+  turnYield,
   onProcessTurn,
   onUpdateAllSystems,
   onNavigate,
@@ -183,6 +186,14 @@ export const Topbar: React.FC<TopbarProps> = ({
   onUpdatePlanets,
   onColonizePlanet,
 }) => {
+  // Per-turn mine yield from the same formula turn processing uses; 360 turns per hour at 6 turns/min.
+  const metalPerTurn = turnYield?.metal ?? 0;
+  const crystalPerTurn = turnYield?.crystal ?? 0;
+  const deutPerTurn = turnYield?.deuterium ?? 0;
+  const perHour = (perTurn: number) => {
+    const hourly = perTurn * 360;
+    return hourly >= 1000 ? `${(hourly / 1000).toFixed(1)}k` : String(hourly);
+  };
   const currentMeta = ROUTE_LABELS[activeRoute] || {
     section: 'UNIVERSE CIVILIZATION',
     title: 'Command Interface',
@@ -705,7 +716,7 @@ export const Topbar: React.FC<TopbarProps> = ({
               </span>
               <span className="text-[9px] font-mono text-emerald-800 bg-emerald-100/90 border border-emerald-300/80 px-1 py-0.2 rounded-2xs font-bold flex items-center gap-0.5 shadow-2xs">
                 <TrendingUp size={8} strokeWidth={3} />
-                +120/t
+                +{metalPerTurn}/t
               </span>
             </div>
             <div className="flex items-baseline justify-between font-mono">
@@ -756,7 +767,7 @@ export const Topbar: React.FC<TopbarProps> = ({
                 </div>
                 <div className="flex justify-between text-[11px] text-neutral-300">
                   <span>Mine Yield:</span>
-                  <span className="font-mono text-emerald-400">+120/turn (+7.2k/h)</span>
+                  <span className="font-mono text-emerald-400">+{metalPerTurn}/turn (+{perHour(metalPerTurn)}/h)</span>
                 </div>
                 <div className="text-[10px] text-neutral-400 pt-1 border-t border-white/10">
                   Essential for warship frames, orbital defenses, and heavy armor.
@@ -781,7 +792,7 @@ export const Topbar: React.FC<TopbarProps> = ({
               </span>
               <span className="text-[9px] font-mono text-emerald-800 bg-emerald-100/90 border border-emerald-300/80 px-1 py-0.2 rounded-2xs font-bold flex items-center gap-0.5 shadow-2xs">
                 <TrendingUp size={8} strokeWidth={3} />
-                +80/t
+                +{crystalPerTurn}/t
               </span>
             </div>
             <div className="flex items-baseline justify-between font-mono">
@@ -832,7 +843,7 @@ export const Topbar: React.FC<TopbarProps> = ({
                 </div>
                 <div className="flex justify-between text-[11px] text-neutral-300">
                   <span>Mine Yield:</span>
-                  <span className="font-mono text-emerald-400">+80/turn (+4.8k/h)</span>
+                  <span className="font-mono text-emerald-400">+{crystalPerTurn}/turn (+{perHour(crystalPerTurn)}/h)</span>
                 </div>
                 <div className="text-[10px] text-neutral-400 pt-1 border-t border-white/10">
                   Required for electronic circuits, laser cannons, and research disciplines.
@@ -857,7 +868,7 @@ export const Topbar: React.FC<TopbarProps> = ({
               </span>
               <span className="text-[9px] font-mono text-emerald-800 bg-emerald-100/90 border border-emerald-300/80 px-1 py-0.2 rounded-2xs font-bold flex items-center gap-0.5 shadow-2xs">
                 <TrendingUp size={8} strokeWidth={3} />
-                +45/t
+                +{deutPerTurn}/t
               </span>
             </div>
             <div className="flex items-baseline justify-between font-mono">
@@ -908,7 +919,7 @@ export const Topbar: React.FC<TopbarProps> = ({
                 </div>
                 <div className="flex justify-between text-[11px] text-neutral-300">
                   <span>Synthesizer Yield:</span>
-                  <span className="font-mono text-emerald-400">+45/turn (+2.7k/h)</span>
+                  <span className="font-mono text-emerald-400">+{deutPerTurn}/turn (+{perHour(deutPerTurn)}/h)</span>
                 </div>
                 <div className="text-[10px] text-neutral-400 pt-1 border-t border-white/10">
                   Used as hyperspace warship fuel, fusion reaction feed, and sensor probes.

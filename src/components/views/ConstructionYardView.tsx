@@ -1,4 +1,6 @@
 import React, { useMemo, useState, useEffect } from 'react';
+import { ContentArt } from '../ContentArt';
+import { contentSlug } from '../../utils/contentImages';
 import { Building2, Hammer, Clock, Layers, Zap, Filter, Factory } from 'lucide-react';
 import { sound } from '../../sound';
 import { PlayerResources } from '../../types';
@@ -415,6 +417,12 @@ export const ConstructionYardView: React.FC<ConstructionYardViewProps> = ({ reso
             return (
               <div key={bp.id} className="border border-[#dedede] bg-white p-6 flex flex-col justify-between space-y-4">
                 <div>
+                  <ContentArt
+                    collection="blueprint_classes"
+                    id={contentSlug(bp.category)}
+                    alt={bp.category}
+                    className="w-full aspect-video border border-[#dedede] mb-3"
+                  />
                   <div className="flex items-center justify-between mb-2">
                     <span className={`text-[10px] font-mono px-2 py-0.5 border uppercase ${bp.isOriginal ? 'bg-amber-50 text-amber-800 border-amber-200' : 'bg-blue-50 text-blue-800 border-blue-200'}`}>
                       {bp.isOriginal ? 'Original (BPO)' : 'Copy (BPC)'}

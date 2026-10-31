@@ -1,6 +1,7 @@
 import React from 'react';
 import { MegastructureProject, PlayerResources } from '../../types';
 import { sound } from '../../sound';
+import { getGameImage } from '../../utils/gameImages';
 
 interface MegastructureViewProps {
   projects: MegastructureProject[];
@@ -69,6 +70,14 @@ export const MegastructureView: React.FC<MegastructureViewProps> = ({
               className="border border-[#111111] bg-white p-5 flex flex-col justify-between space-y-4"
             >
               <div>
+                {getGameImage('megastructures', project.id) && (
+                  <img
+                    src={getGameImage('megastructures', project.id)}
+                    alt={project.name}
+                    loading="lazy"
+                    className="w-full aspect-video object-cover border border-[#111111] mb-3"
+                  />
+                )}
                 <div className="flex items-start justify-between gap-2 border-b border-[#111111] pb-3">
                   <div>
                     <div className="text-2xl mb-1">{project.icon}</div>
