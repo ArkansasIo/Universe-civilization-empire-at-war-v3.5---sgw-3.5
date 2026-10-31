@@ -232,15 +232,17 @@ export const DiplomacyView: React.FC<DiplomacyViewProps> = ({
                 </button>
                 <button
                   onClick={() => handleSignPact(f.id, 'Trade Agreement')}
-                  className="px-3 py-1.5 border border-[#ccc] text-xs font-bold text-[#333] hover:bg-[#fafafa] cursor-pointer"
+                  disabled={f.pacts.includes('Trade Agreement')}
+                  className="px-3 py-1.5 border border-[#ccc] text-xs font-bold text-[#333] hover:bg-[#fafafa] cursor-pointer disabled:bg-emerald-50 disabled:text-emerald-800 disabled:border-emerald-300 disabled:cursor-default"
                 >
-                  Propose Trade Pact
+                  {f.pacts.includes('Trade Agreement') ? '✓ Trade Pact Active' : 'Propose Trade Pact'}
                 </button>
                 <button
                   onClick={() => handleSignPact(f.id, 'Scientific Exchange Protocol')}
-                  className="px-3 py-1.5 border border-[#ccc] text-xs font-bold text-[#333] hover:bg-[#fafafa] cursor-pointer"
+                  disabled={f.pacts.includes('Scientific Exchange Protocol')}
+                  className="px-3 py-1.5 border border-[#ccc] text-xs font-bold text-[#333] hover:bg-[#fafafa] cursor-pointer disabled:bg-emerald-50 disabled:text-emerald-800 disabled:border-emerald-300 disabled:cursor-default"
                 >
-                  Propose Research Pact
+                  {f.pacts.includes('Scientific Exchange Protocol') ? '✓ Research Pact Active' : 'Propose Research Pact'}
                 </button>
               </div>
             </div>

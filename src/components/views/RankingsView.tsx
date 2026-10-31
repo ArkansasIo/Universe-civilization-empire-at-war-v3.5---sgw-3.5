@@ -10,6 +10,8 @@ interface RankingsViewProps {
   defaultTab?: 'rankings' | 'alliances' | 'messages';
   onSendMessage: (recipient: string, subject: string, body: string) => void;
   onMarkMessageRead: (messageId: string) => void;
+  joinedAllianceId?: string | null;
+  onJoinAlliance?: (allianceId: string | null) => void;
 }
 
 export const RankingsView: React.FC<RankingsViewProps> = ({
@@ -19,6 +21,8 @@ export const RankingsView: React.FC<RankingsViewProps> = ({
   defaultTab = 'rankings',
   onSendMessage,
   onMarkMessageRead,
+  joinedAllianceId = null,
+  onJoinAlliance,
 }) => {
   const [activeTab, setActiveTab] = useState<'rankings' | 'alliances' | 'messages'>(defaultTab);
   const [composeTo, setComposeTo] = useState('Supreme Commander Thor');
@@ -170,7 +174,7 @@ export const RankingsView: React.FC<RankingsViewProps> = ({
                 </div>
                 <div className="flex justify-between">
                   <span>Members:</span>
-                  <b className="font-mono text-[#111111]">{a.membersCount} realms</b>
+                  <b className="font-mono text-[#111111]">{a.membersCount + (joinedAllianceId === a.id ? 1 : 0)} realms</b>
                 </div>
                 <div className="flex justify-between">
                   <span>Treasury:</span>
@@ -178,12 +182,30 @@ export const RankingsView: React.FC<RankingsViewProps> = ({
                 </div>
               </div>
 
-              <button
-                type="button"
-                className="w-full py-2 bg-white border border-[#111111] text-[#111111] text-xs font-bold uppercase hover:bg-[#111111] hover:text-white transition-colors"
-              >
-                {a.isOpen ? 'Apply for Membership →' : 'Closed Treaty'}
-              </button>
+              {joinedAllianceId === a.id ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    sound.play('warning');
+                    onJoinAlliance?.(null);
+                  }}
+                  className="w-full py-2 bg-[#111111] border border-[#111111] text-white text-xs font-bold uppercase hover:bg-red-700 transition-colors cursor-pointer"
+                >
+                  ✓ Member · Leave Alliance
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  disabled={!a.isOpen || !onJoinAlliance}
+                  onClick={() => {
+                    sound.play('confirm');
+                    onJoinAlliance?.(a.id);
+                  }}
+                  className="w-full py-2 bg-white border border-[#111111] text-[#111111] text-xs font-bold uppercase hover:bg-[#111111] hover:text-white transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-[#111111]"
+                >
+                  {!a.isOpen ? 'Closed Treaty' : joinedAllianceId ? 'Switch to This Alliance →' : 'Join Alliance →'}
+                </button>
+              )}
             </div>
           ))}
         </div>

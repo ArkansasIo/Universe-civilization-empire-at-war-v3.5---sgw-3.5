@@ -266,6 +266,8 @@ export const AddWorldsUniverseBossView: React.FC<AddWorldsUniverseBossViewProps>
   };
 
   const bossRoster = useMemo(() => GENERATE_BOSS_ROSTER(GALAXY_AND_ARC_BOSSES), []);
+  // Declared before the filter below reads it (was declared after, crashing the page on load).
+  const [bossSearch, setBossSearch] = useState<string>('');
   const filteredBosses = bossRoster.filter((b) => {
     if (bossFilter === 'arc_boss') return b.type === 'arc_boss';
     if (bossFilter === 'galaxy_boss') return b.type === 'galaxy_boss';
@@ -281,7 +283,6 @@ export const AddWorldsUniverseBossView: React.FC<AddWorldsUniverseBossViewProps>
   // ============================================================================
   const classMatrix90 = getComplete90ClassesMatrix();
   const [classSearch, setClassSearch] = useState<string>('');
-  const [bossSearch, setBossSearch] = useState<string>('');
   const [selectedCategoryFilter, setSelectedCategoryFilter] = useState<string>('All');
   const [selectedClassDetail, setSelectedClassDetail] = useState<Class90Entry | null>(classMatrix90[0]);
 

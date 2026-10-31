@@ -121,6 +121,7 @@ export interface PlayerProfile {
   planetName?: string;
   turnCapMode?: TurnCapMode;
   customTurnCap?: number;
+  allianceId?: string | null;
 }
 
 export interface Technology {

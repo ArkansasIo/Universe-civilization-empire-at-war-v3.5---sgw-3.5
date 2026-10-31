@@ -3634,6 +3634,8 @@ export default function App() {
                 }
                 onSendMessage={handleSendMessage}
                 onMarkMessageRead={handleMarkMessageRead}
+                joinedAllianceId={profile.allianceId ?? null}
+                onJoinAlliance={(allianceId) => setProfile((prev) => ({ ...prev, allianceId }))}
               />
             )}
 
