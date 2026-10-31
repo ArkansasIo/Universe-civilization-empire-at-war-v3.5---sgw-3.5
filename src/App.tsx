@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ShieldAlert, Key } from 'lucide-react';
 import { Sidebar } from './components/Sidebar';
 import { Topbar } from './components/Topbar';
@@ -174,6 +174,10 @@ import { AddWorldsUniverseBossView } from './components/views/AddWorldsUniverseB
 import { LiveSystemRouteBar } from './components/LiveSystemRouteBar';
 import { PageHeaderCommandDeck } from './components/PageHeaderCommandDeck';
 import { WorkforceAcademyView } from './components/views/WorkforceAcademyView';
+import { LevelLockedPanel } from './components/progression/LevelLockedPanel';
+import { StoryBeatModal } from './components/progression/StoryBeatModal';
+import { COMMANDER_XP_PER_TURN, commanderLevelFromXp, isRouteUnlocked } from './game/levelLocks';
+import { getStoryBeatsBetween } from './game/storyCampaign';
 import {
   WorkforceAcademyState,
   DEFAULT_WORKFORCE_ACADEMY_STATE,
@@ -415,6 +419,27 @@ export default function App() {
   } | null>(null);
 
   const isAdminUser = profile.role === 'admin' || profile.isAdmin === true || (adminSession && adminSession.isAuthenticated);
+
+  // Commander level: every glory gain is also banked as lifetime commander XP
+  // (glory can be spent, XP cannot). Level drives route locks and story beats.
+  const commanderXp = profile.commanderXp ?? 0;
+  const commanderLevel = commanderLevelFromXp(commanderXp);
+  const routeLocked = !isRouteUnlocked(activeRoute, commanderLevel, !!isAdminUser);
+  const pendingStoryBeats = getStoryBeatsBetween(profile.storySeenLevel ?? 0, commanderLevel);
+  const lastGloryRef = useRef({ id: profile.id, glory: profile.glory });
+  useEffect(() => {
+    const last = lastGloryRef.current;
+    lastGloryRef.current = { id: profile.id, glory: profile.glory };
+    if (profile.commanderXp === undefined) {
+      // Saves from before commander XP existed: seed from glory so returning players keep their progress.
+      setProfile((prev) => ({ ...prev, commanderXp: Math.max(0, prev.glory) }));
+      return;
+    }
+    const gained = profile.glory - last.glory;
+    if (last.id === profile.id && gained > 0) {
+      setProfile((prev) => ({ ...prev, commanderXp: (prev.commanderXp ?? 0) + gained }));
+    }
+  }, [profile.id, profile.glory, profile.commanderXp]);
 
   // Auto-Detect and Process Root Admin URL Login & Creation
   useEffect(() => {
@@ -1573,6 +1598,7 @@ export default function App() {
   // Turn Settlement logic (triggered by UI button or keyboard shortcut)
   const handleProcessTurn = (count: number = 1) => {
     handleRunCronJob('turn_cron', false, count);
+    setProfile((prev) => ({ ...prev, commanderXp: (prev.commanderXp ?? 0) + COMMANDER_XP_PER_TURN * count }));
   };
 
   // Bank Deposit
@@ -3275,7 +3301,13 @@ export default function App() {
               planetsCount={planets.length}
             />
 
+            {/* Commander level lock: locked routes render the lock panel instead of the screen */}
+            {routeLocked && (
+              <LevelLockedPanel route={activeRoute} commanderXp={commanderXp} onNavigate={setActiveRoute} />
+            )}
+
             {/* View Routers */}
+            {!routeLocked && (<>
             {activeRoute === 'dashboard' && (
               <DashboardView
                 profile={profile}
@@ -4125,6 +4157,7 @@ export default function App() {
                 onUpdateResources={(res) => setResources((prev) => ({ ...prev, ...res }))}
                 onUpdateProfile={(updates) => setProfile((prev) => ({ ...prev, ...updates }))}
                 onNavigate={setActiveRoute}
+                isAdmin={!!isAdminUser}
               />
             )}
 
@@ -4135,6 +4168,7 @@ export default function App() {
             {activeRoute === 'codex-doc' && (
               <CodexDocumentationView />
             )}
+            </>)}
           </div>
         </main>
         <Footer
@@ -4153,6 +4187,18 @@ export default function App() {
       </div>
 
       {/* Global Modals */}
+      {pendingStoryBeats.length > 0 && (
+        <StoryBeatModal
+          beat={pendingStoryBeats[0]}
+          remaining={pendingStoryBeats.length - 1}
+          onNavigate={handleNavigate}
+          onClose={() => {
+            const seenLevel = pendingStoryBeats[0].level;
+            setProfile((prev) => ({ ...prev, storySeenLevel: Math.max(prev.storySeenLevel ?? 0, seenLevel) }));
+          }}
+        />
+      )}
+
       <PatchNotesModal
         isOpen={isPatchNotesOpen}
         onClose={() => setIsPatchNotesOpen(false)}

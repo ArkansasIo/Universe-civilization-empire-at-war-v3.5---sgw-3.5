@@ -551,6 +551,7 @@ export const INITIAL_PROFILE: PlayerProfile = {
   rankName: 'Commander',
   rankLevel: 3,
   glory: 1250,
+  commanderXp: 0,
   reputation: 680,
   defconLevel: 0,
   vacationUntil: null,

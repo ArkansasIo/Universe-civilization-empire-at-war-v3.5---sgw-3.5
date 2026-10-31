@@ -4,6 +4,8 @@
  * UI code may use this to render locks, but authoritative server commands must
  * independently evaluate the same requirements before mutating game state.
  */
+import { ADMIN_ONLY_ROUTES, ROUTE_LEVEL_LOCKS } from './levelLocks';
+
 export type ProgressionRequirement =
   | { type: 'player-level'; minimum: number }
   | { type: 'building-level'; buildingId: string; minimum: number }
@@ -36,41 +38,45 @@ export interface FeatureAccessResult {
   reasons: string[];
 }
 
-export const FEATURE_PROGRESSION: readonly FeatureDefinition[] = [
-  { id: 'dashboard', label: 'Empire Overview', visibility: 'player', requirements: [] },
-  { id: 'resources', label: 'Resource Vault', visibility: 'player', requirements: [] },
-  { id: 'income', label: 'Resource Income & Mines', visibility: 'player', requirements: [] },
-  { id: 'construction-yard', label: 'Construction Yard', visibility: 'player', requirements: [
-    { type: 'player-level', minimum: 2 },
-  ] },
-  { id: 'tech-tree', label: 'Research & Technology', visibility: 'player', requirements: [
-    { type: 'player-level', minimum: 2 },
-    { type: 'building-level', buildingId: 'research-lab', minimum: 1 },
-  ] },
-  { id: 'shipyard', label: 'Shipyard', visibility: 'player', requirements: [
-    { type: 'player-level', minimum: 3 },
-    { type: 'building-level', buildingId: 'shipyard', minimum: 1 },
-  ] },
-  { id: 'tempering-forge', label: 'Tempering Forge', visibility: 'player', requirements: [
-    { type: 'player-level', minimum: 5 },
-    { type: 'building-level', buildingId: 'tempering-forge', minimum: 1 },
-  ] },
-  { id: 'master-upgrades', label: 'Masterworking & Advanced Facilities', visibility: 'player', requirements: [
-    { type: 'player-level', minimum: 10 },
+/**
+ * Requirements beyond commander level. The level itself always comes from
+ * `ROUTE_LEVEL_LOCKS`; these are for server-side checks once building and
+ * technology state is authoritative.
+ */
+const EXTRA_REQUIREMENTS: Readonly<Record<string, readonly ProgressionRequirement[]>> = {
+  'tech-tree': [{ type: 'building-level', buildingId: 'research-lab', minimum: 1 }],
+  shipyard: [{ type: 'building-level', buildingId: 'shipyard', minimum: 1 }],
+  'tempering-forge': [{ type: 'building-level', buildingId: 'tempering-forge', minimum: 1 }],
+  'master-upgrades': [
     { type: 'building-level', buildingId: 'tempering-forge', minimum: 5 },
     { type: 'technology-level', technologyId: 'masterworking', minimum: 1 },
-  ] },
-  { id: 'stargate-network', label: 'Stargate Network', visibility: 'player', requirements: [
-    { type: 'player-level', minimum: 12 },
-    { type: 'technology-level', technologyId: 'stargate-theory', minimum: 1 },
-  ] },
-  { id: 'megastructures', label: 'Stellar Megastructures', visibility: 'player', requirements: [
-    { type: 'player-level', minimum: 20 },
-    { type: 'technology-level', technologyId: 'megastructure-engineering', minimum: 1 },
-  ] },
-  { id: 'turn-system', label: 'Turn Engine', visibility: 'admin', requirements: [] },
-  { id: 'admin-dashboard', label: 'Admin Control Panel', visibility: 'admin', requirements: [] },
-] as const;
+  ],
+  'stargate-network': [{ type: 'technology-level', technologyId: 'stargate-theory', minimum: 1 }],
+  megastructures: [{ type: 'technology-level', technologyId: 'megastructure-engineering', minimum: 1 }],
+};
+
+const ADMIN_LABELS: Readonly<Record<string, string>> = {
+  'turn-system': 'Turn Engine',
+  'admin-dashboard': 'Admin Control Panel',
+};
+
+export const FEATURE_PROGRESSION: readonly FeatureDefinition[] = [
+  ...ROUTE_LEVEL_LOCKS.map((entry): FeatureDefinition => ({
+    id: entry.route,
+    label: entry.label,
+    visibility: 'player',
+    requirements: [
+      ...(entry.level > 1 ? [{ type: 'player-level', minimum: entry.level } as const] : []),
+      ...(EXTRA_REQUIREMENTS[entry.route] ?? []),
+    ],
+  })),
+  ...ADMIN_ONLY_ROUTES.map((route): FeatureDefinition => ({
+    id: route,
+    label: ADMIN_LABELS[route] ?? route,
+    visibility: 'admin',
+    requirements: [],
+  })),
+];
 
 /** Returns the feature lock state and human-readable reasons. */
 export function evaluateFeatureAccess(
