@@ -32,6 +32,7 @@ import {
   Menu,
 } from 'lucide-react';
 import { sound } from '../sound';
+import { getNavIcon } from '../utils/gameImages';
 import { PlayerProfile, Race } from '../types';
 import { RACES } from '../gameData';
 import { getAdminAuthSession } from '../config/adminAuthConfig';
@@ -672,14 +673,17 @@ export const Sidebar: React.FC<SidebarProps> = ({
                           type="button"
                           id={`subnav-item-${item.id}`}
                           onClick={() => handleItemClick(item.id)}
-                          className={`w-full text-left px-2.5 py-1.5 text-[11px] font-mono block truncate transition-colors cursor-pointer border-l-2 ${
+                          className={`w-full text-left px-2.5 py-1.5 text-[11px] font-mono flex items-center gap-2 transition-colors cursor-pointer border-l-2 ${
                             isCurrent
                               ? 'border-[#111111] text-[#111111] font-bold bg-[#f0f0f0]'
                               : 'border-transparent text-[#666666] hover:text-[#111111] hover:border-neutral-400 hover:bg-[#fafafa]'
                           }`}
                           title={item.label}
                         >
-                          {item.label}
+                          {getNavIcon(item.id) && (
+                            <img src={getNavIcon(item.id)} alt="" loading="lazy" className="w-5 h-5 rounded-sm shrink-0" />
+                          )}
+                          <span className="truncate">{item.label}</span>
                         </button>
                       );
                     })}
@@ -743,13 +747,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
                         handleItemClick(item.id);
                         setActiveFlyout(null);
                       }}
-                      className={`w-full text-left px-2.5 py-1.5 text-[11px] block truncate transition-colors cursor-pointer ${
+                      className={`w-full text-left px-2.5 py-1.5 text-[11px] flex items-center gap-2 transition-colors cursor-pointer ${
                         isCurrent
                           ? 'bg-amber-100 text-amber-950 font-bold border-l-2 border-amber-600'
                           : 'text-[#444444] hover:bg-neutral-100 hover:text-[#111111]'
                       }`}
                     >
-                      {item.label}
+                      {getNavIcon(item.id) && (
+                        <img src={getNavIcon(item.id)} alt="" loading="lazy" className="w-5 h-5 rounded-sm shrink-0" />
+                      )}
+                      <span className="truncate">{item.label}</span>
                     </button>
                   );
                 })}

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ContentArt } from '../ContentArt';
 import { Zap, Sun, Flame, Cpu, Shield, Globe, ArrowUpRight, CheckCircle2, AlertTriangle, Layers } from 'lucide-react';
 import { sound } from '../../sound';
 import { PlanetColony, PlayerResources } from '../../types';
@@ -158,6 +159,12 @@ export const PlanetaryPowerView: React.FC<PlanetaryPowerViewProps> = ({
               <div className="border border-[#dedede] bg-[#fafafa] p-4 space-y-3 text-xs">
                 {PLANETARY_CLASSES_42.map((cat) => (
                   <div key={cat.classId} className="border-b border-[#eeeeee] pb-2 last:border-b-0">
+                    <ContentArt
+                      collection="planet_categories"
+                      id={cat.classId}
+                      alt={cat.className}
+                      className="w-full h-24 border border-[#dedede] mb-2"
+                    />
                     <span className="font-bold text-[#111111] block text-[11px]">{cat.className}</span>
                     <div className="text-[11px] text-[#666666] mt-0.5 grid grid-cols-2 gap-2">
                       <div>Category Code: <strong className="font-mono text-[#111111]">{cat.categoryCode}</strong></div>

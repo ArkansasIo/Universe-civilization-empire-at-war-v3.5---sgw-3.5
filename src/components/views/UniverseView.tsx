@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { ContentArt } from '../ContentArt';
+import { contentSlug } from '../../utils/contentImages';
 import {
   Compass,
   Globe,
@@ -517,6 +519,12 @@ export const UniverseView: React.FC<UniverseViewProps> = ({
                         <span className="text-[9px] text-[#777777]">SLOT</span>
                         <span className="text-sm text-[#111111]">#{body.position}</span>
                       </div>
+                      <ContentArt
+                        collection="planet_biomes"
+                        id={contentSlug(body.biome)}
+                        alt={`${body.biome} planet`}
+                        className="w-16 h-16 rounded-full border border-[#111111] shrink-0"
+                      />
                       <div>
                         <div className="flex items-center gap-2 flex-wrap">
                           <span className="text-sm font-bold text-[#111111]">{body.name}</span>

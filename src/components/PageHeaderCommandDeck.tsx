@@ -24,7 +24,7 @@ import {
   RotateCw,
 } from 'lucide-react';
 import { sound } from '../sound';
-import { getUiArt } from '../utils/gameImages';
+import { getNavIcon, getUiArt } from '../utils/gameImages';
 import { PlayerProfile, PlayerResources } from '../types';
 import { OGAME_NAV_SECTIONS, OGameNavSection } from './Sidebar';
 
@@ -232,6 +232,9 @@ export const PageHeaderCommandDeck: React.FC<PageHeaderCommandDeckProps> = ({
                   >
                     0{index + 1}.
                   </span>
+                  {getNavIcon(item.id) && (
+                    <img src={getNavIcon(item.id)} alt="" loading="lazy" className="w-6 h-6 rounded-sm shrink-0" />
+                  )}
                   <span>{item.label}</span>
                 </button>
               );

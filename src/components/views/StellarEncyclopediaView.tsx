@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { ContentArt } from '../ContentArt';
 import {
   Globe,
   Moon,
@@ -203,6 +204,12 @@ export const StellarEncyclopediaView: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Left: Hero Summary Card */}
             <div className="border border-[#dedede] bg-white p-6 space-y-4">
+              <ContentArt
+                collection="planet_az"
+                id={activePlanet.letter}
+                alt={activePlanet.className}
+                className="w-full aspect-square border border-[#dedede]"
+              />
               <div className="flex items-center justify-between border-b border-[#dedede] pb-3">
                 <div>
                   <span className="text-[10px] font-mono font-bold uppercase text-[#777777]">
@@ -424,6 +431,12 @@ export const StellarEncyclopediaView: React.FC = () => {
           {/* Detailed Moon Dossier */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="border border-[#dedede] bg-white p-6 space-y-4">
+              <ContentArt
+                collection="moon_classes"
+                id={activeMoon.classCode}
+                alt={activeMoon.className}
+                className="w-full aspect-square border border-[#dedede]"
+              />
               <div className="flex items-center justify-between border-b border-[#dedede] pb-3">
                 <div>
                   <span className="text-[10px] font-mono font-bold uppercase text-[#777777]">
