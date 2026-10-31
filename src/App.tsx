@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ShieldAlert, Key } from 'lucide-react';
 import { Sidebar } from './components/Sidebar';
 import { Topbar } from './components/Topbar';
 import { HudMetrics } from './components/HudMetrics';
 import { sound } from './sound';
 import { getUiArt } from './utils/gameImages';
+import { computeTurnProduction } from './utils/productionCalculations';
 import {
   BattleRecord,
   CovertMissionRecord,
@@ -349,6 +350,9 @@ export default function App() {
       return p;
     });
   });
+  // Latest planets for turn processing, which can run from the long-lived auto-tick interval.
+  const planetsRef = useRef(planets);
+  planetsRef.current = planets;
   const [activePlanetId, setActivePlanetId] = useState<string>(() =>
     loadStored('active_planet_id', 'pl-homeworld')
   );
@@ -539,6 +543,7 @@ export default function App() {
   const [nextTickSeconds, setNextTickSeconds] = useState<number>(() =>
     loadStored('cron_config', DEFAULT_CRON_CONFIG).tickIntervalSeconds || 60
   );
+  const nextTickRef = useRef(nextTickSeconds);
   const [offlineNotice, setOfflineNotice] = useState<string | null>(null);
 
   // Admin Systems & Imperial Crown State
@@ -1180,14 +1185,15 @@ export default function App() {
       );
 
       // 7. Advance Cron Heartbeat Timer
+      // The turn runs here, not inside a state updater, so it fires exactly once per tick.
       if (cronConfig.autoTickEnabled) {
-        setNextTickSeconds((prev) => {
-          if (prev <= 1) {
-            handleRunCronJob('turn_cron', true);
-            return cronConfig.tickIntervalSeconds;
-          }
-          return prev - 1;
-        });
+        if (nextTickRef.current <= 1) {
+          handleRunCronJob('turn_cron', true);
+          nextTickRef.current = cronConfig.tickIntervalSeconds;
+        } else {
+          nextTickRef.current -= 1;
+        }
+        setNextTickSeconds(nextTickRef.current);
       }
     }, 1000);
 
@@ -1205,29 +1211,13 @@ export default function App() {
     let logDetails: CronExecutionLog['details'] = {};
 
     if (jobId === 'turn_cron') {
-      const metalMineLevel = ogameFacilities.find((f) => f.id === 'metal_mine')?.level || 1;
-      const crystalMineLevel = ogameFacilities.find((f) => f.id === 'crystal_mine')?.level || 1;
-      const deutMineLevel = ogameFacilities.find((f) => f.id === 'deuterium_synthesizer')?.level || 1;
-      const solarLevel = ogameFacilities.find((f) => f.id === 'solar_plant')?.level || 1;
-      const fusionLevel = ogameFacilities.find((f) => f.id === 'fusion_reactor')?.level || 0;
+      const production = computeTurnProduction(ogameFacilities);
+      const { energyProduced, energyRatio } = production;
+      const totalEnergyNeeded = production.energyNeeded;
 
-      // Authentic Base Production Formulas
-      const baseMetal = Math.round(30 * metalMineLevel * Math.pow(1.1, metalMineLevel)) + 30;
-      const baseCrystal = Math.round(20 * crystalMineLevel * Math.pow(1.1, crystalMineLevel)) + 15;
-      const baseDeut = Math.round(10 * deutMineLevel * Math.pow(1.1, deutMineLevel) * 1.36);
-
-      // Authentic Energy Formulas
-      const energyProduced = Math.round(20 * solarLevel * Math.pow(1.1, solarLevel)) + Math.round(30 * fusionLevel * Math.pow(1.05, fusionLevel)) + 100;
-      const energyNeededMetal = Math.round(10 * metalMineLevel * Math.pow(1.1, metalMineLevel));
-      const energyNeededCrystal = Math.round(10 * crystalMineLevel * Math.pow(1.1, crystalMineLevel));
-      const energyNeededDeut = Math.round(20 * deutMineLevel * Math.pow(1.1, deutMineLevel));
-      const totalEnergyNeeded = Math.max(1, energyNeededMetal + energyNeededCrystal + energyNeededDeut);
-
-      const energyRatio = Math.min(1.0, Math.max(0.0, energyProduced / totalEnergyNeeded));
-
-      const metalAdded = Math.round(baseMetal * energyRatio) * mult;
-      const crystalAdded = Math.round(baseCrystal * energyRatio) * mult;
-      const deutAdded = Math.round(baseDeut * energyRatio) * mult;
+      const metalAdded = production.metal * mult;
+      const crystalAdded = production.crystal * mult;
+      const deutAdded = production.deuterium * mult;
       const incomeAdded = netIncome * mult;
       const recruitsAdded = resources.unitProduction * mult;
 
@@ -1238,8 +1228,10 @@ export default function App() {
       let totalWaterProduced = 0;
       let totalWaterConsumed = 0;
 
-      setPlanets((prevPlanets) => {
-        const updated = prevPlanets.map((p) => {
+      // Computed outside any state updater: React may invoke updaters twice, which used to
+      // apply this turn's resource yield twice when setResources ran inside setPlanets.
+      {
+        const updated = planetsRef.current.map((p) => {
           const lf = p.lifeSupportFacilities || {
             hydroponicsDomes: 4,
             bioFarms: 3,
@@ -1371,8 +1363,8 @@ export default function App() {
           totalPopulation: empPop,
         }));
 
-        return updated;
-      });
+        setPlanets(updated);
+      }
 
       // Advance Workforce Unit Combat XP & Veterancy over time
       setWorkforceAcademyState((prevState) => {
@@ -1565,6 +1557,7 @@ export default function App() {
     setCronConfig((prev) => {
       const updated = { ...prev, ...newConfig };
       if (newConfig.tickIntervalSeconds) {
+        nextTickRef.current = newConfig.tickIntervalSeconds;
         setNextTickSeconds(newConfig.tickIntervalSeconds);
       }
       return updated;
@@ -3192,6 +3185,7 @@ export default function App() {
           nextTickSeconds={nextTickSeconds}
           netIncome={netIncome}
           bankCapacity={bankCapacity}
+          turnYield={computeTurnProduction(ogameFacilities)}
           onProcessTurn={handleProcessTurn}
           onResetGame={handleResetGame}
           onNavigate={handleNavigate}

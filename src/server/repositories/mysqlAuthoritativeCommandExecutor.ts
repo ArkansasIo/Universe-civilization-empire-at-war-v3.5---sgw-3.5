@@ -29,7 +29,8 @@ export class MySqlAuthoritativeCommandExecutor {
 
       const existingCommand = await this.idempotencyRepository.getByCommandId(principal.userId, request.commandId, tx);
       if (existingCommand) {
-        if (existingCommand.requestHash !== requestHash) return rejected(request, 'COMMAND_ID_REUSED_WITH_DIFFERENT_REQUEST');
+        // A command ID belongs to exactly one idempotency key; reusing it under a new key is a different request.
+        if (existingCommand.requestHash !== requestHash || existingCommand.idempotencyKey !== request.idempotencyKey) return rejected(request, 'COMMAND_ID_REUSED_WITH_DIFFERENT_REQUEST');
         if (existingCommand.response) return existingCommand.response;
         return rejected(request, 'COMMAND_ALREADY_IN_PROGRESS');
       }
@@ -50,7 +51,7 @@ export class MySqlAuthoritativeCommandExecutor {
         if (duplicateKey?.response) return duplicateKey.response;
 
         const duplicateCommand = await this.idempotencyRepository.getByCommandId(principal.userId, request.commandId, tx);
-        if (duplicateCommand?.requestHash !== requestHash) return rejected(request, 'COMMAND_ID_REUSED_WITH_DIFFERENT_REQUEST');
+        if (duplicateCommand?.requestHash !== requestHash || duplicateCommand.idempotencyKey !== request.idempotencyKey) return rejected(request, 'COMMAND_ID_REUSED_WITH_DIFFERENT_REQUEST');
         if (duplicateCommand?.response) return duplicateCommand.response;
         return rejected(request, 'COMMAND_ALREADY_IN_PROGRESS');
       }

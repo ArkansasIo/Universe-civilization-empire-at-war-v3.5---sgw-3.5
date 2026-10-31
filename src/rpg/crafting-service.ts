@@ -1,6 +1,6 @@
 import { executeRepair, executeServerUpgrade, type CraftingInventory } from './crafting.js';
 import type { ItemDefinition } from './types.js';
-import type { CraftingTrack, CraftingUpgradeState, CraftingWallet, RepairRule, UpgradeResult } from './tempering.js';
+import { createCraftingUpgradeState, type CraftingTrack, type CraftingUpgradeState, type CraftingWallet, type RepairRule, type UpgradeResult } from './tempering.js';
 import type { CraftingAuditEvent, CraftingStateStore, PersistedCraftingState } from './crafting-persistence.js';
 
 export interface CraftingServiceRequest { requestId:string; playerId:string; item:ItemDefinition; state:CraftingUpgradeState; inventory:CraftingInventory; currency:number; track:CraftingTrack; useProtection?:boolean; timestamp?:number; }
@@ -16,7 +16,8 @@ export class CraftingService {
 
   async upgrade(request:CraftingServiceRequest):Promise<CraftingServiceResponse>{
     const persisted=await this.store.load(request.playerId,request.item.id); const expectedVersion=persisted?.version??0;
-    const state=persisted??{...request.state,itemId:request.item.id,ownerId:request.playerId,version:0,updatedAt:Date.now()};
+    // A first-time upgrade starts from server defaults; client-claimed levels only pass the stale check below if they match.
+    const state=persisted??{...createCraftingUpgradeState(request.item),ownerId:request.playerId,version:0,updatedAt:Date.now()};
     if(state.temperLevel!==request.state.temperLevel||state.masterworkRank!==request.state.masterworkRank)throw new Error('Crafting state is stale; reload the item before upgrading');
     const wallet:CraftingWallet={currency:request.currency,materials:{...request.inventory.materials}}; const roll=this.rng();
     if(!(roll>=0&&roll<1))throw new Error('RNG provider returned an invalid value');
