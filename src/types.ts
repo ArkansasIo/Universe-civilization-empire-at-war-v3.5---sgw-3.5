@@ -421,7 +421,7 @@ export interface ColonialPlungeStatus {
 export interface MarketOrder {
   id: string;
   sellerName: string;
-  resourceType: 'naquadah' | 'super-weapon' | 'energy-core';
+  resourceType: 'naquadah' | 'super-weapon' | 'energy-core' | 'metal' | 'crystal' | 'deuterium';
   quantity: number;
   pricePerUnit: number;
   totalCost: number;

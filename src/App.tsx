@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { ShieldAlert, Key } from 'lucide-react';
 import { Sidebar } from './components/Sidebar';
 import { Topbar } from './components/Topbar';
@@ -28,6 +28,7 @@ import {
 import {
   INITIAL_ALLIANCES,
   INITIAL_MARKET_ORDERS,
+  createMarketOrder,
   INITIAL_MESSAGES,
   INITIAL_MOTHERSHIP_MODULES,
   INITIAL_PLANETS,
@@ -365,6 +366,17 @@ export default function App() {
   }, [activePlanetId]);
   const [orders, setOrders] = useState<MarketOrder[]>(() =>
     loadStored('orders', INITIAL_MARKET_ORDERS)
+  );
+  // Remaining hire slots per mercenary contract (contract id -> slots left).
+  const [mercStock, setMercStock] = useState<Record<string, number>>(() =>
+    loadStored('merc_stock', {} as Record<string, number>)
+  );
+  useEffect(() => {
+    localStorage.setItem('uc_state_merc_stock', JSON.stringify(mercStock));
+  }, [mercStock]);
+  const mercenaryListings = useMemo(
+    () => MERCENARY_CONTRACTS.map((c) => ({ ...c, available: mercStock[c.id] ?? c.available })),
+    [mercStock]
   );
   const [battles, setBattles] = useState<BattleRecord[]>(() =>
     loadStored('battles', [])
@@ -1440,17 +1452,20 @@ export default function App() {
         creditsAdded: 15000,
       };
     } else if (jobId === 'market_cron') {
-      setOrders((prev) =>
-        prev.map((o) => {
+      setOrders((prev) => {
+        const repriced = prev.map((o) => {
           const delta = Math.round((Math.random() * 0.1 - 0.05) * o.pricePerUnit);
-          const newPrice = Math.max(10, o.pricePerUnit + delta);
+          const newPrice = Math.max(1, o.pricePerUnit + delta);
           return {
             ...o,
             pricePerUnit: newPrice,
             totalCost: newPrice * o.quantity,
           };
-        })
-      );
+        });
+        // Restock: merchant syndicates post up to two new listings per tick, max 8 open.
+        const restock = Math.min(2, Math.max(0, 8 - repriced.length));
+        return [...repriced, ...Array.from({ length: restock }, () => createMarketOrder())];
+      });
       logMessage = 'Commodity exchange index updated with dynamic supply & demand variance.';
       logDetails = {
         marketFluctuation: 'Trinium +2.4%, Deuterium -1.1%, Naquadah +0.8%',
@@ -2223,22 +2238,40 @@ export default function App() {
 
   // Market: Hire Mercenary
   const handleHireMercenary = (contractId: string) => {
-    const contract = MERCENARY_CONTRACTS.find((c) => c.id === contractId);
+    const contract = mercenaryListings.find((c) => c.id === contractId);
     if (!contract) return { success: false, message: 'Contract not found.' };
+    if (contract.available <= 0) {
+      return { success: false, message: `${contract.name} has no squads left for hire.` };
+    }
     if (resources.naquadah < contract.cost) {
       return { success: false, message: `Need ${contract.cost.toLocaleString()} Naquadah.` };
     }
 
-    setResources((prev) => ({
-      ...prev,
-      naquadah: prev.naquadah - contract.cost,
-      attackUnits: prev.attackUnits + Math.round(contract.attackPower / 5),
-      defenseUnits: prev.defenseUnits + Math.round(contract.defensePower / 5),
-    }));
+    const attackGain = Math.round(contract.attackPower / 5);
+    const defenseGain = Math.round(contract.defensePower / 5);
+    setResources((prev) =>
+      contract.type === 'infiltrator'
+        ? {
+            ...prev,
+            naquadah: prev.naquadah - contract.cost,
+            spies: prev.spies + attackGain,
+            antiSpies: prev.antiSpies + defenseGain,
+          }
+        : {
+            ...prev,
+            naquadah: prev.naquadah - contract.cost,
+            attackUnits: prev.attackUnits + attackGain,
+            defenseUnits: prev.defenseUnits + defenseGain,
+          }
+    );
+    setMercStock((prev) => ({ ...prev, [contract.id]: contract.available - 1 }));
 
     return {
       success: true,
-      message: `Enlisted ${contract.name}. Troops deployed to defense lines.`,
+      message:
+        contract.type === 'infiltrator'
+          ? `Enlisted ${contract.name}: +${attackGain} spies, +${defenseGain} counter-spies.`
+          : `Enlisted ${contract.name}: +${attackGain} attack, +${defenseGain} defense units.`,
     };
   };
 
@@ -2250,17 +2283,39 @@ export default function App() {
       return { success: false, message: `Need ${order.totalCost.toLocaleString()} Naquadah.` };
     }
 
-    setResources((prev) => ({
-      ...prev,
-      naquadah: prev.naquadah - order.totalCost,
-      superUnits: prev.superUnits + (order.resourceType === 'super-weapon' ? 3 : 1),
-    }));
+    // Grant exactly what the listing sells. Energy cores each restore 5,000 energy (capped).
+    const ENERGY_PER_CORE = 5000;
+    let receipt = '';
+    setResources((prev) => {
+      const next = { ...prev, naquadah: prev.naquadah - order.totalCost };
+      switch (order.resourceType) {
+        case 'super-weapon':
+          next.superUnits = prev.superUnits + order.quantity;
+          break;
+        case 'energy-core':
+          next.energy = Math.min(prev.maxEnergy, prev.energy + order.quantity * ENERGY_PER_CORE);
+          break;
+        default:
+          next[order.resourceType] = prev[order.resourceType] + order.quantity;
+      }
+      return next;
+    });
+    switch (order.resourceType) {
+      case 'super-weapon':
+        receipt = `+${order.quantity.toLocaleString()} super units`;
+        break;
+      case 'energy-core':
+        receipt = `+${(order.quantity * ENERGY_PER_CORE).toLocaleString()} energy`;
+        break;
+      default:
+        receipt = `+${order.quantity.toLocaleString()} ${order.resourceType}`;
+    }
 
     setOrders((prev) => prev.filter((o) => o.id !== orderId));
 
     return {
       success: true,
-      message: `Completed order transaction with ${order.sellerName}.`,
+      message: `Completed order with ${order.sellerName}: ${receipt}.`,
     };
   };
 
@@ -3082,6 +3137,7 @@ export default function App() {
     setModules(INITIAL_MOTHERSHIP_MODULES);
     setPlanets(INITIAL_PLANETS);
     setOrders(INITIAL_MARKET_ORDERS);
+    setMercStock({});
     setBattles([]);
     setMissions([]);
     setMessages(INITIAL_MESSAGES);
@@ -3450,6 +3506,7 @@ export default function App() {
               activeRoute === 'workforce-roster' ||
               activeRoute === 'academy-drills') && (
               <WorkforceAcademyView
+                key={activeRoute}
                 resources={resources}
                 onUpdateResources={(res) => setResources((prev) => ({ ...prev, ...res }))}
                 academyState={workforceAcademyState}
@@ -3622,9 +3679,11 @@ export default function App() {
             {(activeRoute === 'resource-exchange' ||
               activeRoute === 'mercenary-market') && (
               <MarketView
+                key={activeRoute}
+                defaultTab={activeRoute === 'mercenary-market' ? 'mercenaries' : 'resources'}
                 resources={resources}
                 orders={orders}
-                mercenaries={MERCENARY_CONTRACTS}
+                mercenaries={mercenaryListings}
                 onHireMercenary={handleHireMercenary}
                 onFulfillOrder={handleFulfillOrder}
               />
@@ -3634,6 +3693,7 @@ export default function App() {
               activeRoute === 'alliances' ||
               activeRoute === 'messages') && (
               <RankingsView
+                key={activeRoute}
                 rankings={rankings}
                 alliances={INITIAL_ALLIANCES}
                 messages={messages}
@@ -4065,6 +4125,7 @@ export default function App() {
 
             {(activeRoute === 'store-battlepass' || activeRoute === 'commander-gacha') && (
               <StoreBattlePassView
+                key={activeRoute}
                 resources={resources}
                 onUpdateResources={(res) => setResources((prev) => ({ ...prev, ...res }))}
                 defaultTab={activeRoute === 'commander-gacha' ? 'commander-gotcha' : 'battlepass'}

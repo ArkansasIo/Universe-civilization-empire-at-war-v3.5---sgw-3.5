@@ -9,6 +9,7 @@ interface MarketViewProps {
   mercenaries: MercenaryContract[];
   onHireMercenary: (contractId: string) => { success: boolean; message: string };
   onFulfillOrder: (orderId: string) => { success: boolean; message: string };
+  defaultTab?: 'resources' | 'mercenaries';
 }
 
 export const MarketView: React.FC<MarketViewProps> = ({
@@ -17,8 +18,9 @@ export const MarketView: React.FC<MarketViewProps> = ({
   mercenaries,
   onHireMercenary,
   onFulfillOrder,
+  defaultTab = 'resources',
 }) => {
-  const [activeTab, setActiveTab] = useState<'resources' | 'mercenaries'>('resources');
+  const [activeTab, setActiveTab] = useState<'resources' | 'mercenaries'>(defaultTab);
   const [notice, setNotice] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
   const handleHire = (contractId: string) => {

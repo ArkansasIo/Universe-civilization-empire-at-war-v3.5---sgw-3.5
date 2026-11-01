@@ -2496,10 +2496,48 @@ export const INITIAL_PLANETS: PlanetColony[] = [
 ];
 
 export const INITIAL_MARKET_ORDERS: MarketOrder[] = [
-  { id: 'mkt-1', sellerName: 'Rebel Jaffa Cartel', resourceType: 'naquadah', quantity: 250000, pricePerUnit: 1.0, totalCost: 250000 },
+  { id: 'mkt-1', sellerName: 'Rebel Jaffa Cartel', resourceType: 'metal', quantity: 120000, pricePerUnit: 2, totalCost: 240000 },
   { id: 'mkt-2', sellerName: 'Free Asgard Guild', resourceType: 'super-weapon', quantity: 15, pricePerUnit: 14000, totalCost: 210000 },
   { id: 'mkt-3', sellerName: 'Tok\'ra Logistics', resourceType: 'energy-core', quantity: 5, pricePerUnit: 48000, totalCost: 240000 },
+  { id: 'mkt-4', sellerName: 'Langaran Ore Consortium', resourceType: 'crystal', quantity: 60000, pricePerUnit: 3, totalCost: 180000 },
+  { id: 'mkt-5', sellerName: 'Lucian Alliance Smugglers', resourceType: 'deuterium', quantity: 40000, pricePerUnit: 4, totalCost: 160000 },
+  { id: 'mkt-6', sellerName: 'Tollan Trade Envoy', resourceType: 'energy-core', quantity: 3, pricePerUnit: 52000, totalCost: 156000 },
+  { id: 'mkt-7', sellerName: 'Serrakin Freight Guild', resourceType: 'metal', quantity: 300000, pricePerUnit: 2, totalCost: 600000 },
+  { id: 'mkt-8', sellerName: 'Unas Salvage Collective', resourceType: 'crystal', quantity: 25000, pricePerUnit: 3, totalCost: 75000 },
 ];
+
+const MARKET_SELLERS = [
+  'Rebel Jaffa Cartel', 'Free Asgard Guild', "Tok'ra Logistics", 'Langaran Ore Consortium',
+  'Lucian Alliance Smugglers', 'Tollan Trade Envoy', 'Serrakin Freight Guild', 'Unas Salvage Collective',
+  'Nox Wayfarers', 'Hebridan Merchant Fleet',
+];
+
+/** Base price (NQ per unit) and quantity range for each tradable commodity. */
+const MARKET_COMMODITIES: Record<MarketOrder['resourceType'], { price: number; min: number; max: number }> = {
+  naquadah: { price: 1, min: 50000, max: 250000 },
+  metal: { price: 2, min: 50000, max: 300000 },
+  crystal: { price: 3, min: 20000, max: 120000 },
+  deuterium: { price: 4, min: 15000, max: 80000 },
+  'energy-core': { price: 50000, min: 2, max: 6 },
+  'super-weapon': { price: 14000, min: 5, max: 20 },
+};
+
+/** Generates a fresh exchange listing; used to restock the market on each market tick. */
+export const createMarketOrder = (rand: () => number = Math.random): MarketOrder => {
+  const types = (Object.keys(MARKET_COMMODITIES) as MarketOrder['resourceType'][]).filter((t) => t !== 'naquadah');
+  const resourceType = types[Math.floor(rand() * types.length)];
+  const spec = MARKET_COMMODITIES[resourceType];
+  const quantity = Math.round(spec.min + rand() * (spec.max - spec.min));
+  const pricePerUnit = Math.max(1, Math.round(spec.price * (0.85 + rand() * 0.3)));
+  return {
+    id: `mkt-${Date.now().toString(36)}-${Math.floor(rand() * 1e6).toString(36)}`,
+    sellerName: MARKET_SELLERS[Math.floor(rand() * MARKET_SELLERS.length)],
+    resourceType,
+    quantity,
+    pricePerUnit,
+    totalCost: quantity * pricePerUnit,
+  };
+};
 
 export const MERCENARY_CONTRACTS: MercenaryContract[] = [
   {
@@ -2531,6 +2569,56 @@ export const MERCENARY_CONTRACTS: MercenaryContract[] = [
     cost: 28000,
     upkeepPerTurn: 600,
     available: 8,
+  },
+  {
+    id: 'merc-4',
+    name: 'Sodan Cloaked Warrior Clan',
+    type: 'infiltrator',
+    attackPower: 140,
+    defensePower: 70,
+    cost: 42000,
+    upkeepPerTurn: 900,
+    available: 6,
+  },
+  {
+    id: 'merc-5',
+    name: 'Hak\'tyl Resistance Rangers',
+    type: 'infantry',
+    attackPower: 95,
+    defensePower: 110,
+    cost: 16000,
+    upkeepPerTurn: 380,
+    available: 15,
+  },
+  {
+    id: 'merc-6',
+    name: 'Lucian Alliance Strike Raiders',
+    type: 'infantry',
+    attackPower: 160,
+    defensePower: 60,
+    cost: 24000,
+    upkeepPerTurn: 520,
+    available: 10,
+  },
+  {
+    id: 'merc-7',
+    name: 'Unas Stonehide Brutes',
+    type: 'heavy',
+    attackPower: 260,
+    defensePower: 380,
+    cost: 48000,
+    upkeepPerTurn: 1050,
+    available: 5,
+  },
+  {
+    id: 'merc-8',
+    name: 'Serrakin Jump-Trooper Wing',
+    type: 'heavy',
+    attackPower: 420,
+    defensePower: 240,
+    cost: 68000,
+    upkeepPerTurn: 1500,
+    available: 3,
   },
 ];
 
