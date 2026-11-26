@@ -27,6 +27,7 @@ import {
   Award,
 } from 'lucide-react';
 import { sound } from '../../sound';
+import { getGalaxyImage, getPlanetImage } from '../../utils/gameImages';
 import { PlayerResources, PlanetColony } from '../../types';
 import {
   MULTIVERSE_UNIVERSES,
@@ -513,10 +514,24 @@ export const UniverseView: React.FC<UniverseViewProps> = ({
                     className="p-4 sm:p-6 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 hover:bg-[#fafafa]/60 transition-colors"
                   >
                     <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 border border-[#111111] flex flex-col items-center justify-center font-mono font-bold bg-white shrink-0">
-                        <span className="text-[9px] text-[#777777]">SLOT</span>
-                        <span className="text-sm text-[#111111]">#{body.position}</span>
-                      </div>
+                      {getPlanetImage(body.biome) ? (
+                        <div className="relative w-16 h-16 sm:w-20 sm:h-20 border border-[#111111] bg-[#050b13] overflow-hidden shrink-0">
+                          <img
+                            src={getPlanetImage(body.biome)}
+                            alt={`${body.biome} planet`}
+                            loading="lazy"
+                            className="absolute inset-0 w-full h-full object-cover"
+                          />
+                          <span className="absolute left-0 bottom-0 px-1 bg-[#111111]/85 text-white font-mono font-bold text-[10px] leading-4">
+                            #{body.position}
+                          </span>
+                        </div>
+                      ) : (
+                        <div className="w-12 h-12 border border-[#111111] flex flex-col items-center justify-center font-mono font-bold bg-white shrink-0">
+                          <span className="text-[9px] text-[#777777]">SLOT</span>
+                          <span className="text-sm text-[#111111]">#{body.position}</span>
+                        </div>
+                      )}
                       <div>
                         <div className="flex items-center gap-2 flex-wrap">
                           <span className="text-sm font-bold text-[#111111]">{body.name}</span>
@@ -648,6 +663,16 @@ export const UniverseView: React.FC<UniverseViewProps> = ({
                       : 'bg-white border-[#dedede] hover:border-[#111111]'
                   }`}
                 >
+                  {getGalaxyImage(g.galaxyType, g.galaxyNumber) && (
+                    <div className="-mx-5 -mt-5 mb-4 h-28 overflow-hidden bg-[#03070d] border-b border-[#111111]">
+                      <img
+                        src={getGalaxyImage(g.galaxyType, g.galaxyNumber)}
+                        alt={`${g.galaxyType} galaxy`}
+                        loading="lazy"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  )}
                   <div className="flex items-start justify-between gap-2">
                     <span
                       className={`px-2 py-0.5 text-[10px] font-mono font-bold border ${

@@ -265,6 +265,7 @@ export const AddWorldsUniverseBossView: React.FC<AddWorldsUniverseBossViewProps>
     setRaidInProgress(false);
   };
 
+  const [bossSearch, setBossSearch] = useState<string>('');
   const bossRoster = useMemo(() => GENERATE_BOSS_ROSTER(GALAXY_AND_ARC_BOSSES), []);
   const filteredBosses = bossRoster.filter((b) => {
     if (bossFilter === 'arc_boss') return b.type === 'arc_boss';
@@ -281,7 +282,6 @@ export const AddWorldsUniverseBossView: React.FC<AddWorldsUniverseBossViewProps>
   // ============================================================================
   const classMatrix90 = getComplete90ClassesMatrix();
   const [classSearch, setClassSearch] = useState<string>('');
-  const [bossSearch, setBossSearch] = useState<string>('');
   const [selectedCategoryFilter, setSelectedCategoryFilter] = useState<string>('All');
   const [selectedClassDetail, setSelectedClassDetail] = useState<Class90Entry | null>(classMatrix90[0]);
 
