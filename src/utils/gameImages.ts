@@ -25,14 +25,14 @@ const AVAILABLE: Record<GameImageKind, ReadonlySet<string>> = {
   ]),
   megastructures: new Set(['dyson_swarm', 'orbital_ring', 'galactic_gateway']),
   resources: new Set(['naquadah', 'metal', 'crystal', 'deuterium', 'energy', 'darkMatter']),
-  // Procedurally rendered by scripts/art/planets.py, one per galaxy-view biome.
+  // Procedurally rendered by scripts/artgen/planets.py, one per galaxy-view biome.
   planets: new Set([
     'terrestrial', 'desert', 'ice', 'volcanic', 'ocean', 'gas_giant', 'jungle', 'tomb_world', 'metallic',
     'crystalline',
   ]),
 };
 
-// Galaxy banners, rendered by scripts/art/galaxies.py: 6 types x 3 colour variants.
+// Galaxy banners, rendered by scripts/artgen/galaxies.py: 6 types x 3 colour variants.
 const GALAXY_TYPES = new Set(['spiral', 'barred_spiral', 'elliptical', 'ring_cluster', 'irregular_rift', 'dwarf_nebula']);
 
 // Galaxy type ("Barred Spiral") + number -> banner art; the number picks one of 3 variants.

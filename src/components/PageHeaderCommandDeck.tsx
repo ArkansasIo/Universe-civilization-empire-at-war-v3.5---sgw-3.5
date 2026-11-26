@@ -25,6 +25,7 @@ import {
 } from 'lucide-react';
 import { sound } from '../sound';
 import { getUiArt } from '../utils/gameImages';
+import { getPageArt } from '../utils/pageArt';
 import { PlayerProfile, PlayerResources } from '../types';
 import { OGAME_NAV_SECTIONS, OGameNavSection } from './Sidebar';
 
@@ -72,7 +73,7 @@ export const PageHeaderCommandDeck: React.FC<PageHeaderCommandDeckProps> = ({
       {currentSection && (
         <div className="relative h-24 sm:h-32 overflow-hidden border-b border-[#111111]">
           <img
-            src={getUiArt(`sections/${currentSection.id}`)}
+            src={getPageArt(activeItem?.id) ?? getUiArt(`sections/${currentSection.id}`)}
             alt=""
             className="absolute inset-0 w-full h-full object-cover"
           />
